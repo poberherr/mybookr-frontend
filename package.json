@@ -1,0 +1,23 @@
+{
+  "name": "mybookr-frontend",
+  "author": {
+    "name": "Benedikt Rötsch",
+    "email": "benedikt@hashbite.net"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.29.0",
+    "@tanstack/react-query-devtools": "^5.29.0",
+    "ky": "^1.2.0",
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resolve-from": "^5.0.0",
+    "web-streams-polyfill": "^4.0.0"
+  }
+}
