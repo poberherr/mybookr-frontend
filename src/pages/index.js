@@ -1,16 +1,13 @@
 import React from 'react'
 import { dehydrate, QueryClient } from '@tanstack/react-query'
-import { Layout, Header, InfoBox, PostList } from '../components'
-import { fetchPosts } from '../hooks'
+import {Layout} from '../components/Layout/index.js'
 import { ListingsComponent } from '../components/Listings.tsx'
+import { coreListingsListQueryOptions } from '../api/hooks/useCoreListingsList.ts'
 
 const Home = () => {
   return (
     <Layout>
-      <Header />
-      <InfoBox>ℹ️ This page shows how to use SSG with React-Query.</InfoBox>
       <ListingsComponent/>
-      <PostList />
     </Layout>
   )
 }
@@ -18,10 +15,7 @@ const Home = () => {
 export async function getStaticProps() {
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery({
-    queryKey: ['posts', 10],
-    queryFn: () => fetchPosts(10),
-  })
+  await queryClient.prefetchQuery(coreListingsListQueryOptions());
 
   return {
     props: {

@@ -1,10 +1,17 @@
-# Example
+# mybookr
 
-In this simple example, we integrate React-Query seamlessly with Next.js data fetching methods to fetch queries in the server and hydrate them in the browser.
+NextJS + TypeScript + TanStack Query + Swagger + Stripe + Clerk
 
-In addition to fetching and mutating data, React-Query analyzes your queries and their results to construct a client-side cache of your data, which is kept up to date as further queries and mutations are run.
+## How to install
 
-To run this example:
+- `npm install`
+- `cp .envrc.example .envrc` (if you have direnv, otherwise use any other way fitting to your OS to set the environment variables.)
+
+## How to develop
+
+- `npm run dev`
+
+## How to build
 
 - `npm install`
 - `npm run dev`
