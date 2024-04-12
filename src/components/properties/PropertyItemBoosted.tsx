@@ -27,7 +27,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
       }}
     >
       <div className="relative w-full">
-        <img className="w-full" src={property.images[0]} alt="" />
+        {property.images && <img className="w-full" src={property.images[0]} alt="" />}
 
         <Typography
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center !text-3xl !tracking-wider !text-white md:!text-4xl"
@@ -40,7 +40,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
       <div className={`flex flex-col p-8`}>
         <div className="mb-6 flex flex-row justify-between">
           <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-            {property.meta.location.city}
+            {property.meta.city}
           </Typography>
 
           <Typography className="flex flex-row items-center !text-xs !font-medium">

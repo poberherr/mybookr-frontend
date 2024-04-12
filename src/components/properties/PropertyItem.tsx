@@ -16,7 +16,7 @@ interface IProps {
 export default function PropertyItem({ property }: IProps) {
   const router = useRouter();
   // const today = moment().format("YYYY-MM-DD");
-  const isBoosted = property.boost_dates.includes("2024-02-19");
+  const isBoosted = property.boost_dates?.includes("2024-02-19");
 
   return (
     <div
@@ -54,11 +54,11 @@ export default function PropertyItem({ property }: IProps) {
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              {property.meta.location.city}
+              {property.meta.city}
             </Typography>
           ) : (
             <Typography variant="body2">
-              {property.meta.location.city}
+              {property.meta.city}
             </Typography>
           )}
 
