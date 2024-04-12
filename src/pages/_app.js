@@ -1,4 +1,6 @@
 import React from "react";
+
+import { ClerkProvider } from "@clerk/nextjs";
 import {
   HydrationBoundary,
   QueryClient,

@@ -1,6 +1,6 @@
-const CheckoutPage = () => null
+const CheckoutPage = () => null;
 
-export default CheckoutPage
+export default CheckoutPage;
 
 // import { useForm } from "react-hook-form";
 

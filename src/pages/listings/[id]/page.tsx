@@ -1,6 +1,6 @@
-const ListingPage = () => null
+const ListingPage = () => null;
 
-export default ListingPage
+export default ListingPage;
 
 // import { useEffect, useState } from "react";
 // import { useRouter, useParams } from "next/navigation";
@@ -25,7 +25,6 @@ export default ListingPage
 
 // import { useGetPrice } from "../../utils/price";
 // import reserveDate from "../../utils/reserveDate";
-
 
 // import CheckoutAndPay from "./checkout";
 

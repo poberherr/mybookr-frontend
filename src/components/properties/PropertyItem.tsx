@@ -6,8 +6,9 @@ import { default as HeartIcon } from "../../assets/icons/heart.svg";
 import { default as ShareIcon } from "../../assets/icons/share.svg";
 import { default as StarIcon } from "../../assets/icons/star.svg";
 
-import BoostedBadge from "../decorational/BoostedBadge";
 import { Listing } from "@/api";
+
+import BoostedBadge from "../decorational/BoostedBadge";
 
 interface IProps {
   property: Listing;
@@ -57,14 +58,11 @@ export default function PropertyItem({ property }: IProps) {
               {property.meta.city}
             </Typography>
           ) : (
-            <Typography variant="body2">
-              {property.meta.city}
-            </Typography>
+            <Typography variant="body2">{property.meta.city}</Typography>
           )}
 
           <Typography className="flex flex-row items-center !text-xs !font-medium">
-            <StarIcon className="mr-1 h-2.5 w-2.5 min-w-fit" alt="rating" />{" "}
-            {5}
+            <StarIcon className="mr-1 h-2.5 w-2.5 min-w-fit" alt="rating" /> {5}
           </Typography>
         </div>
 
@@ -80,8 +78,8 @@ export default function PropertyItem({ property }: IProps) {
           </Typography>
 
           <div className="flex flex-row items-center">
-            <HeartIcon className="h-4 w-4 first:mr-4" alt="Add to wishlist"/>
-                        <ShareIcon className="h-4 w-4 first:mr-4" alt="Share"/>
+            <HeartIcon className="h-4 w-4 first:mr-4" alt="Add to wishlist" />
+            <ShareIcon className="h-4 w-4 first:mr-4" alt="Share" />
           </div>
         </div>
       </div>

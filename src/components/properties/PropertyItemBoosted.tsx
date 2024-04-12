@@ -6,8 +6,9 @@ import { default as heartIcon } from "../../assets/icons/heart.svg";
 import { default as shareIcon } from "../../assets/icons/share.svg";
 import { default as starIcon } from "../../assets/icons/star.svg";
 
-import BoostedBadge from "../decorational/BoostedBadge";
 import { Listing } from "@/api";
+
+import BoostedBadge from "../decorational/BoostedBadge";
 
 interface IProps {
   property: Listing;
@@ -27,7 +28,9 @@ export default function PropertyItemBoosted({ property }: IProps) {
       }}
     >
       <div className="relative w-full">
-        {property.images && <img className="w-full" src={property.images[0]} alt="" />}
+        {property.images && (
+          <img className="w-full" src={property.images[0]} alt="" />
+        )}
 
         <Typography
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center !text-3xl !tracking-wider !text-white md:!text-4xl"

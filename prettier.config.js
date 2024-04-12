@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   trailingComma: "all",
   importOrder: [
     "^react(.*)",
@@ -19,6 +19,9 @@ module.exports = {
   ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  plugins: [require("prettier-plugin-tailwindcss")],
-  tailwindConfig: "./tailwind.config.js",
+  plugins: [
+    "prettier-plugin-tailwindcss",
+    "@trivago/prettier-plugin-sort-imports",
+  ],
+  tailwindConfig: "./tailwind.config.cjs",
 };
