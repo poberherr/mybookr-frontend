@@ -17,5 +17,10 @@ export function ListingsComponent() {
   // if (isLoading) return <div>Loading...</div>;
   // if (error) return <div>An error occurred: {error.message}</div>;
 
-  return <PropertiesList listings={data} loading={isLoading} />;
+  return (
+    <div className="flex w-full flex-col gap-6 rounded bg-gray-50 p-12">
+      <h2>API Data Fetching:</h2>
+      <PropertiesList listings={data} loading={isLoading} />
+    </div>
+  );
 }
