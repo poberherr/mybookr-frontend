@@ -1,3 +1,7 @@
+const ListingPage = () => null
+
+export default ListingPage
+
 // import { useEffect, useState } from "react";
 // import { useRouter, useParams } from "next/navigation";
 

@@ -1,3 +1,7 @@
+const CheckoutPage = () => null
+
+export default CheckoutPage
+
 // import { useForm } from "react-hook-form";
 
 // import { Divider, Typography } from "@mui/material";
