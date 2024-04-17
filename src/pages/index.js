@@ -36,4 +36,4 @@ export async function getStaticProps() {
 
 export default Home;
 
-export const revalidate = false
+export const revalidate = false;

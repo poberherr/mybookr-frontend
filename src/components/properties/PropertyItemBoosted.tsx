@@ -8,7 +8,7 @@ import { default as starIcon } from "../../assets/icons/star.svg";
 
 import { Listing } from "@/api";
 
-import BoostedBadge from "../decorational/BoostedBadge";
+import BoostedBadge from "../others/BoostedBadge";
 
 interface IProps {
   property: Listing;

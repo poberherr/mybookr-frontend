@@ -2,7 +2,6 @@ import React from "react";
 
 import {
   useCoreListingsList,
-  useCoreListingsListSuspense,
 } from "../api/hooks/useCoreListingsList";
 
 // Adjust the import path

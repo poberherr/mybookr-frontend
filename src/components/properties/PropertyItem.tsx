@@ -8,7 +8,7 @@ import { default as StarIcon } from "../../assets/icons/star.svg";
 
 import { Listing } from "@/api";
 
-import BoostedBadge from "../decorational/BoostedBadge";
+import BoostedBadge from "../others/BoostedBadge";
 
 interface IProps {
   property: Listing;
@@ -16,7 +16,6 @@ interface IProps {
 
 export default function PropertyItem({ property }: IProps) {
   const router = useRouter();
-  // const today = moment().format("YYYY-MM-DD");
   const isBoosted = property.boost_dates?.includes("2024-02-19");
 
   return (
@@ -29,7 +28,7 @@ export default function PropertyItem({ property }: IProps) {
       }
       `}
       onClick={() => {
-        router.push(`/reserve/${property.id}`);
+        router.push(`/listings/${property.id}`);
       }}
     >
       <div className="relative">
