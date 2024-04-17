@@ -2137,6 +2137,13 @@
   resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.7.tgz"
   integrity sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==
 
+"@types/react-show-more-text@^1.4.5":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@types/react-show-more-text/-/react-show-more-text-1.4.5.tgz#b6b39b63de14b050badbcd6afe69b371b2b5f130"
+  integrity sha512-tpo+we9AwkSBvQoeZfEGUJt6ZwkLov3vak/ZTNXLlW5K1q2drKDqlQ7K1Yo+0CuYF7aK5j9gjxJkbesgr0tP4A==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.10":
   version "4.4.10"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.10.tgz"
@@ -4298,7 +4305,7 @@ react-is@^18.2.0:
 
 react-show-more-text@^1.7.1:
   version "1.7.1"
-  resolved "https://registry.npmjs.org/react-show-more-text/-/react-show-more-text-1.7.1.tgz"
+  resolved "https://registry.yarnpkg.com/react-show-more-text/-/react-show-more-text-1.7.1.tgz#9123995d7ee5ea2597bb5941b13e2cd323faa155"
   integrity sha512-k+NyTogrBgPVpE84r6AdDLgf60k9cR4F0zlhp3w8Hoquq+UStKjAOatsVYDLwfWD8wqF6smRXohi2rvQZRpQDQ==
   dependencies:
     prop-types "^15.7.2"
