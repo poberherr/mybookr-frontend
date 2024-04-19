@@ -67,18 +67,15 @@ export default function SMenu({
           ".MuiMenu-list": { width: "100%" },
         }}
       >
-        {menuEl}
-
-        {/* Close button */}
+        [menuEl, fullScreenMobile && ({/* Close button */}
         {/* Only for mobile when menu is fullscreen */}
-        {fullScreenMobile && (
-          <div
-            className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
-            onClick={handleMenuClose}
-          >
-            <CloseIcon className="w-4" alt="Close" />
-          </div>
-        )}
+        <div
+          className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
+          onClick={handleMenuClose}
+        >
+          <CloseIcon className="w-4" alt="Close" />
+        </div>
+        )]
       </Menu>
     </>
   );

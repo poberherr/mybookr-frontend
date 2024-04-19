@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { SignIn, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { useMediaQuery, useTheme } from "@mui/material";
 
