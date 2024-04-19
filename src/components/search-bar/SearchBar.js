@@ -191,7 +191,6 @@ export default function SearchBar() {
               <div className="flex justify-center gap-6">
                 {/* Filter Button */}
                 <SButton
-                  secondaryFont
                   variant="outlined"
                   endIcon={<FilterIcon alt="Filter" />}
                   onClick={toggleDrawer(true)}
@@ -238,7 +237,6 @@ export default function SearchBar() {
               {/* Filter button */}
               <SButton
                 className="xl:!absolute xl:right-0"
-                secondaryFont
                 variant="outlined"
                 endIcon={<FilterIcon className="h-4" alt="Filter" />}
                 onClick={toggleDrawer(true)}
@@ -333,7 +331,6 @@ export default function SearchBar() {
 // Generates each filter item
 const FilteredItem = ({ deleteFilteredItem, title, name, type }) => (
   <SButton
-    secondaryFont
     variant="outlined"
     size="small"
     endIcon={
