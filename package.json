@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start",
     "api:swagger": "wget -O swagger.json \"$NEXT_PUBLIC_AXIOS_BASE/core/swagger/?format=openapi\"",
-    "api:generate": "npm run api:swagger && kubb",
+    "api:generate": "npm run api:swagger && kubb && prettier -w src/api",
     "format": "npm run format:check -- -w",
     "format:check": "prettier src ./*.*js"
   },
