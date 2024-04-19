@@ -1,20 +1,19 @@
+"use client";
+
 import React from "react";
 
-
-
 import { Elements } from "@stripe/react-stripe-js";
-import { Appearance, StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
-
-
+import {
+  Appearance,
+  StripeElementsOptions,
+  loadStripe,
+} from "@stripe/stripe-js";
 
 import CheckoutForm from "./CheckoutForm";
-
 
 export const Stripe = () => {
   const [clientSecret, setClientSecret] = React.useState("");
   const [paymentIntentId, setPaymentIntentId] = React.useState("");
-
-  
 
   const stripe = React.useMemo(() => {
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {

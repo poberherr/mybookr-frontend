@@ -2,6 +2,7 @@ import React from "react";
 
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 
+import { Layout } from "@/components/Layout";
 import { ListingsComponent } from "@/components/Listings";
 import SearchBar from "@/components/search-bar/SearchBar";
 
@@ -9,10 +10,12 @@ import { coreListingsListQueryOptions } from "../api/hooks/useCoreListingsList";
 
 const HomePage = () => {
   return (
-    <div className="my-12 grid gap-12 px-4 py-0 md:px-40">
-      <SearchBar />
-      <ListingsComponent />
-    </div>
+    <Layout>
+      <div className="my-12 grid gap-12 px-4 py-0 md:px-40">
+        {/* <SearchBar /> */}
+        <ListingsComponent />
+      </div>
+    </Layout>
   );
 };
 

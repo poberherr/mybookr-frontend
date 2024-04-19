@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 
-import { Typography } from "@mui/material";
-
 import Logo from "../../assets/mybookr.svg";
 
 export default function Footer() {
@@ -17,12 +15,12 @@ export default function Footer() {
           window.scrollTo(0, 0);
         }}
       >
-        <Logo className="h-12" alt="mybookr logo"/>
+        <Logo className="h-12" alt="mybookr logo" />
       </div>
       {/* Copyright */}
-      <Typography className="!text-xs" variant="h6">
+      <h6 className="!text-xs">
         © 2024, MyBookR
-      </Typography>
+      </h6>
     </div>
   );
 }

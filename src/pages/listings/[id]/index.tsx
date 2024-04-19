@@ -12,12 +12,13 @@ import ReviewCard from "../../../components/ReviewCard/ReviewCard";
 import Gallery from "../../../components/others/Gallery";
 import { SButton } from "../../../components/ui/SButton";
 import StyledDialog from "../../../components/ui/StyledDialog";
+import { Layout } from "@/components/Layout";
 
-import heartIcon from "../../../assets/icons/heart.svg";
-import listBulletIcon from "../../../assets/icons/listBullet.svg";
-import shareIcon from "../../../assets/icons/share.svg";
-import starGrayIcon from "../../../assets/icons/starGray.svg";
-import { CloseCircle, TickCircle } from "iconsax-react";
+import HeartIcon from "../../../assets/icons/heart.svg";
+import ListBulletIcon from "../../../assets/icons/listBullet.svg";
+import ShareIcon from "../../../assets/icons/share.svg";
+import StarGrayIcon from "../../../assets/icons/starGray.svg";
+import { CloseCircle, Share, TickCircle } from "iconsax-react";
 
 import {
   Accessibility,
@@ -81,228 +82,219 @@ export default function ListingPage({
   }
 
   return (
-    <div className="relative flex w-full flex-col">
-      {/* Hero */}
-      <div className="flex flex-col gap-8">
-        {/* Hero title */}
-        <div className="px-4 py-0 md:px-40">
-          <Typography className="!mt-8 flex w-full !text-xl !font-extrabold md:!text-3xl">
-            {listing.meta.title}
-          </Typography>
-
-          {/* Rate, Number of reviews, Like and Share button */}
-          <div className="mt-4 grid-cols-[1fr_auto] gap-5 md:grid">
-            <Typography
-              className="flex flex-wrap items-center !text-gray-500 md:!text-base"
-              variant="body2"
-            >
-              <span className="flex items-center [&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
-                <img className="w-3" src={starGrayIcon} alt={"Star"} />
-                &#8194;{rating}
-              </span>
-
-              <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
-                <u>{reviews?.length} Reviews</u>
-              </span>
-
-              <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
-                <u>
-                  {listing.meta.city}, {listing.meta.country}
-                </u>
-              </span>
+    <Layout>
+      <div className="relative flex w-full flex-col">
+        {/* Hero */}
+        <div className="flex flex-col gap-8">
+          {/* Hero title */}
+          <div className="px-4 py-0 md:px-40">
+            <Typography className="!mt-8 flex w-full !text-xl !font-extrabold md:!text-3xl">
+              {listing.meta.title}
             </Typography>
 
-            {/* Like and Share button */}
-            <div className="hidden items-center justify-end gap-6 md:flex">
-              {[heartIcon, shareIcon].map((icon) => (
-                <div className="cursor-pointer items-center">
-                  <img src={icon} className="h-auto w-5" alt="" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Hero Image */}
-        {/* Hero Image: Mobile */}
-        {listing.images && (
-          <div className="relative block md:hidden">
-            {flagGallery ? (
-              <Gallery
-                flagGallery={flagGallery}
-                setFlagGallery={setFlagGallery}
-                images={listing.images}
-              />
-            ) : (
-              <div>
-                {/* Image */}
-                {listing.images && (
-                  <img
-                    className="h-72 w-full object-cover"
-                    src={listing.images[0]}
-                    alt=""
-                  />
-                )}
-
-                {/* Share and Heart icons */}
-                {[shareIcon, heartIcon].map((icon) => (
-                  <div
-                    className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white ${
-                      icon === shareIcon ? "right-4" : "right-16"
-                    }`}
-                  >
-                    <img className="h-auto w-3.5" src={icon} alt="" />
-                  </div>
-                ))}
-
-                {/* Show all images */}
-                <Typography
-                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
-                  onClick={() => {
-                    setFlagGallery(true);
-                  }}
-                >
-                  Show all
-                </Typography>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Hero Image: Desktop */}
-        {listing.images && (
-          <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
-            {flagGallery ? (
-              <Gallery
-                flagGallery={flagGallery}
-                setFlagGallery={setFlagGallery}
-                images={listing.images}
-              />
-            ) : (
-              <>
-                {listing.images[0] && (
-                  <img
-                    className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[0]}
-                    alt=""
-                  />
-                )}
-                {listing.images[1] && (
-                  <img
-                    className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[1]}
-                    alt=""
-                  />
-                )}
-                {listing.images[2] && (
-                  <img
-                    className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[2]}
-                    alt=""
-                  />
-                )}
-                {listing.images[3] && (
-                  <img
-                    className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[3]}
-                    alt=""
-                  />
-                )}
-                {listing.images[4] && (
-                  <img
-                    className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[4]}
-                    alt=""
-                  />
-                )}
-
-                <Typography
-                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
-                  onClick={() => {
-                    setFlagGallery(true);
-                  }}
-                >
-                  Show all
-                </Typography>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-
-      <Divider className="!mt-16" />
-
-      {/* Content */}
-      <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,600px)]">
-        {/* Left content */}
-        <div className="p-0 pt-16 md:pb-16">
-          {/* Introduction */}
-          <div className="px-4 py-0 md:pl-40 md:pr-16">
-            <Typography
-              className="w-full !text-xl !font-extrabold md:!text-3xl"
-              variant="h3"
-            >
-              Quick Introduction
-            </Typography>
-
-            {/* Stats - Desktop */}
-            <Typography
-              className="!mt-5 !font-medium !text-gray-500 md:!text-base"
-              variant="body2"
-            >
-              {listing.space.guests_capacity} guests • {listing.space.bedrooms}{" "}
-              bedrooms • {listing.space.double_beds} double •
-              {listing.space.single_beds} single bed • {listing.space.bathrooms}{" "}
-              baths
-            </Typography>
-
-            {/* Description */}
-            <Typography className="!mt-8 !leading-relaxed" variant="body1">
-              {listing.meta.description}
-            </Typography>
-          </div>
-
-          <Divider className="!mt-16" />
-
-          {/* Amenities */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
-            <Typography
-              className="w-full !text-xl !font-extrabold md:!text-3xl"
-              variant="h3"
-            >
-              What this place offers
-            </Typography>
-
-            <AmenityItems amenities={listing.amenities} />
-          </div>
-
-          <Divider className="!mt-16" />
-
-          {/* Reviews */}
-          {reviews && reviews.length && (
-            <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+            {/* Rate, Number of reviews, Like and Share button */}
+            <div className="mt-4 grid-cols-[1fr_auto] gap-5 md:grid">
               <Typography
-                className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
-                variant="h3"
+                className="flex flex-wrap items-center !text-gray-500 md:!text-base"
+                variant="body2"
               >
-                Reviews
+                <span className="flex items-center [&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                  <StarGrayIcon className="w-3" alt={"Star"} />
+                  &#8194;{rating}
+                </span>
+
+                <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                  <u>{reviews?.length} Reviews</u>
+                </span>
+
+                <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                  <u>
+                    {listing.meta.city}, {listing.meta.country}
+                  </u>
+                </span>
               </Typography>
 
-              <div className="mb-4 grid w-full grid-cols-1 gap-9 md:grid-cols-2">
-                {reviews
-                  ?.slice(0, 2)
-                  .map((item) => (
-                    <ReviewCard
-                      key={item.id}
-                      id={item.id || 0}
-                      name={"John"}
-                      date={item.date || `${Date.now()}`}
-                      message={item.review_text}
+              {/* Like and Share button */}
+              <div className="hidden items-center justify-end gap-6 md:flex">
+                <div className="cursor-pointer items-center">
+                  <HeartIcon className="h-auto w-5" alt="" />
+                </div>
+                <div className="cursor-pointer items-center">
+                  <ShareIcon className="h-auto w-5" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Image */}
+          {/* Hero Image: Mobile */}
+          {listing.images && (
+            <div className="relative block md:hidden">
+              {flagGallery ? (
+                <Gallery
+                  flagGallery={flagGallery}
+                  setFlagGallery={setFlagGallery}
+                  images={listing.images}
+                />
+              ) : (
+                <div>
+                  {/* Image */}
+                  {listing.images && (
+                    <img
+                      className="h-72 w-full object-cover"
+                      src={listing.images[0]}
+                      alt=""
                     />
-                  ))}
-                {ShowAllReview &&
-                  reviews
-                    ?.slice(2)
+                  )}
+
+                  {/* Share and Heart icons */}
+                  <div
+                    className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white right-4`}
+                  >
+                    <ShareIcon className="h-auto w-3.5" alt="Share" />
+                  </div>
+                  <div
+                    className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white right-16`}
+                  >
+                    <HeartIcon className="h-auto w-3.5" alt="Like" />
+                  </div>
+
+                  {/* Show all images */}
+                  <Typography
+                    className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
+                    onClick={() => {
+                      setFlagGallery(true);
+                    }}
+                  >
+                    Show all
+                  </Typography>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Hero Image: Desktop */}
+          {listing.images && (
+            <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
+              {flagGallery ? (
+                <Gallery
+                  flagGallery={flagGallery}
+                  setFlagGallery={setFlagGallery}
+                  images={listing.images}
+                />
+              ) : (
+                <>
+                  {listing.images[0] && (
+                    <img
+                      className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
+                      src={listing.images[0]}
+                      alt=""
+                    />
+                  )}
+                  {listing.images[1] && (
+                    <img
+                      className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
+                      src={listing.images[1]}
+                      alt=""
+                    />
+                  )}
+                  {listing.images[2] && (
+                    <img
+                      className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
+                      src={listing.images[2]}
+                      alt=""
+                    />
+                  )}
+                  {listing.images[3] && (
+                    <img
+                      className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
+                      src={listing.images[3]}
+                      alt=""
+                    />
+                  )}
+                  {listing.images[4] && (
+                    <img
+                      className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
+                      src={listing.images[4]}
+                      alt=""
+                    />
+                  )}
+
+                  <Typography
+                    className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
+                    onClick={() => {
+                      setFlagGallery(true);
+                    }}
+                  >
+                    Show all
+                  </Typography>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+        <Divider className="!mt-16" />
+
+        {/* Content */}
+        <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,600px)]">
+          {/* Left content */}
+          <div className="p-0 pt-16 md:pb-16">
+            {/* Introduction */}
+            <div className="px-4 py-0 md:pl-40 md:pr-16">
+              <Typography
+                className="w-full !text-xl !font-extrabold md:!text-3xl"
+                variant="h3"
+              >
+                Quick Introduction
+              </Typography>
+
+              {/* Stats - Desktop */}
+              <Typography
+                className="!mt-5 !font-medium !text-gray-500 md:!text-base"
+                variant="body2"
+              >
+                {listing.space.guests_capacity} guests •{" "}
+                {listing.space.bedrooms} bedrooms • {listing.space.double_beds}{" "}
+                double •{listing.space.single_beds} single bed •{" "}
+                {listing.space.bathrooms} baths
+              </Typography>
+
+              {/* Description */}
+              <Typography className="!mt-8 !leading-relaxed" variant="body1">
+                {listing.meta.description}
+              </Typography>
+            </div>
+
+            <Divider className="!mt-16" />
+
+            {/* Amenities */}
+            <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+              <Typography
+                className="w-full !text-xl !font-extrabold md:!text-3xl"
+                variant="h3"
+              >
+                What this place offers
+              </Typography>
+
+              <AmenityItems amenities={listing.amenities} />
+            </div>
+
+            <Divider className="!mt-16" />
+
+            {/* Reviews */}
+            {reviews && reviews.length && (
+              <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+                <Typography
+                  className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+                  variant="h3"
+                >
+                  Reviews
+                </Typography>
+
+                <div className="mb-4 grid w-full grid-cols-1 gap-9 md:grid-cols-2">
+                  {reviews
+                    ?.slice(0, 2)
                     .map((item) => (
                       <ReviewCard
                         key={item.id}
@@ -312,170 +304,171 @@ export default function ListingPage({
                         message={item.review_text}
                       />
                     ))}
-              </div>
+                  {ShowAllReview &&
+                    reviews
+                      ?.slice(2)
+                      .map((item) => (
+                        <ReviewCard
+                          key={item.id}
+                          id={item.id || 0}
+                          name={"John"}
+                          date={item.date || `${Date.now()}`}
+                          message={item.review_text}
+                        />
+                      ))}
+                </div>
 
-              <SButton
-                variant="outlined"
-                size="small"
-                onClick={() => setShowAllReviews((prevState) => !prevState)}
+                <SButton
+                  variant="outlined"
+                  size="small"
+                  onClick={() => setShowAllReviews((prevState) => !prevState)}
+                >
+                  {ShowAllReview
+                    ? "Show less reviews"
+                    : `Show all ${reviews?.length} reviews`}
+                </SButton>
+              </div>
+            )}
+
+            <Divider className="!mt-16" />
+
+            {/* Location */}
+            <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+              <Typography
+                className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+                variant="h3"
               >
-                {ShowAllReview
-                  ? "Show less reviews"
-                  : `Show all ${reviews?.length} reviews`}
-              </SButton>
+                Location
+              </Typography>
+
+              <div className="grid gap-2">
+                <Typography>{listing.meta.street}</Typography>
+                <Typography>
+                  {listing.meta.city}, {listing.meta.country},{" "}
+                  {listing.meta.zip}
+                </Typography>
+                <Typography>
+                  {listing.meta.latitude}, {listing.meta.longitude}
+                </Typography>
+                <Typography>{listing.meta.country}</Typography>
+              </div>
             </div>
-          )}
 
-          <Divider className="!mt-16" />
+            <Divider className="!mt-16" />
 
-          {/* Location */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
-            <Typography
-              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
-              variant="h3"
-            >
-              Location
-            </Typography>
-
-            <div className="grid gap-2">
-              <Typography>{listing.meta.street}</Typography>
-              <Typography>
-                {listing.meta.city}, {listing.meta.country}, {listing.meta.zip}
+            {/* Things to know */}
+            <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+              <Typography
+                className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+                variant="h3"
+              >
+                Things to know
               </Typography>
-              <Typography>
-                {listing.meta.latitude}, {listing.meta.longitude}
+
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div>
+                  <Typography className="!mb-4" variant="body1">
+                    House rules
+                  </Typography>
+
+                  {houseRulesItems.map((item) => (
+                    <Typography
+                      className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                      component="div"
+                      variant="caption"
+                      key={item}
+                    >
+                      <ListBulletIcon /> {item}
+                    </Typography>
+                  ))}
+                </div>
+
+                <div>
+                  <Typography className="!mb-4" variant="body1">
+                    Health / safety
+                  </Typography>
+
+                  {healthSafetyItems.map((item) => (
+                    <Typography
+                      key={item}
+                      className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                      component="div"
+                      variant="caption"
+                    >
+                      <ListBulletIcon /> {item}
+                    </Typography>
+                  ))}
+                </div>
+
+                <div>
+                  <Typography className="!mb-4" variant="body1">
+                    Accessibility
+                  </Typography>
+
+                  {accessibilityItems.map((item) => (
+                    <Typography
+                      key={item}
+                      className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                      component="div"
+                      variant="caption"
+                    >
+                      <ListBulletIcon /> {item}
+                    </Typography>
+                  ))}
+                </div>
+              </div>
+
+              <Typography className="!mt-8">
+                <b>Cancellation policy:</b>{" "}
+                {listing.free_cancellation
+                  ? "Free cancellation within 48 hours."
+                  : "No refund!"}
               </Typography>
-              <Typography>{listing.meta.country}</Typography>
             </div>
           </div>
 
-          <Divider className="!mt-16" />
-
-          {/* Things to know */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
-            <Typography
-              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
-              variant="h3"
-            >
-              Things to know
-            </Typography>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              <div>
-                <Typography className="!mb-4" variant="body1">
-                  House rules
-                </Typography>
-
-                {houseRulesItems.map((item) => (
-                  <Typography
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
-                    component="div"
-                    variant="caption"
-                    sx={{
-                      "&::before": {
-                        backgroundImage: `url(${listBulletIcon})`,
-                      },
-                    }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </div>
-
-              <div>
-                <Typography className="!mb-4" variant="body1">
-                  Health / safety
-                </Typography>
-
-                {healthSafetyItems.map((item) => (
-                  <Typography
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
-                    component="div"
-                    variant="caption"
-                    sx={{
-                      "&::before": {
-                        backgroundImage: `url(${listBulletIcon})`,
-                      },
-                    }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </div>
-
-              <div>
-                <Typography className="!mb-4" variant="body1">
-                  Accessibility
-                </Typography>
-
-                {accessibilityItems.map((item) => (
-                  <Typography
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
-                    component="div"
-                    variant="caption"
-                    sx={{
-                      "&::before": {
-                        backgroundImage: `url(${listBulletIcon})`,
-                      },
-                    }}
-                  >
-                    {item}
-                  </Typography>
-                ))}
-              </div>
-            </div>
-
-            <Typography className="!mt-8">
-              <b>Cancellation policy:</b>{" "}
-              {listing.free_cancellation
-                ? "Free cancellation within 48 hours."
-                : "No refund!"}
-            </Typography>
+          {/* Right content - Desktop */}
+          <div className="mr-40 hidden border-0 border-l border-r border-solid border-gray-100 md:block">
+            <CircularProgress />
           </div>
         </div>
 
-        {/* Right content - Desktop */}
-        <div className="mr-40 hidden border-0 border-l border-r border-solid border-gray-100 md:block">
-          <CircularProgress />
-        </div>
-      </div>
+        {/* Reserve Mobile */}
+        <div className="block md:hidden">
+          <Divider className="!mt-16" />
 
-      {/* Reserve Mobile */}
-      <div className="block md:hidden">
-        <Divider className="!mt-16" />
+          <div className="sticky bottom-0 my-12 grid grid-cols-[1fr_min-content] bg-white bg-opacity-30 p-4 backdrop-blur-xl">
+            <div className="flex flex-col justify-center">
+              <Typography className="!text-base !font-bold">
+                {price} $
+              </Typography>
 
-        <div className="sticky bottom-0 my-12 grid grid-cols-[1fr_min-content] bg-white bg-opacity-30 p-4 backdrop-blur-xl">
-          <div className="flex flex-col justify-center">
-            <Typography className="!text-base !font-bold">
-              {/* {(price * eth_price).toFixed(2)} $ */}
-            </Typography>
+              <Typography className="!mt-1" variant="caption">
+                {formatDateSpan(new Date(), new Date())}
+              </Typography>
+            </div>
 
-            <Typography className="!mt-1" variant="caption">
-              {/* {formatDateSpan(selectedDate, selectedDate1)} */}
-            </Typography>
+            <SButton
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                setShowDialog(true);
+              }}
+            >
+              Reserve
+            </SButton>
           </div>
+        </div>
 
-          <SButton
-            fullWidth
-            variant="contained"
-            onClick={() => {
-              setShowDialog(true);
-            }}
+        {/* Checkout Dialog */}
+        {showDialog && listing && (
+          <StyledDialog
+            showDialog={showDialog}
+            setShowDialog={setShowDialog}
+            title={"Checkout and pay"}
           >
-            Reserve
-          </SButton>
-        </div>
-      </div>
-
-      {/* Checkout Dialog */}
-      {showDialog && listing && (
-        <StyledDialog
-          showDialog={showDialog}
-          setShowDialog={setShowDialog}
-          title={"Checkout and pay"}
-        >
-          null
-          {/* <CheckoutAndPay
+            null
+            {/* <CheckoutAndPay
             price={price}
             eth_price={eth_price}
             setFlagCalender={setFlagCalender}
@@ -498,11 +491,11 @@ export default function ListingPage({
               reviewCount: reviews.data?.length || 0,
             }}
           /> */}
-        </StyledDialog>
-      )}
+          </StyledDialog>
+        )}
 
-      {/* Calendar */}
-      {/* {flagCalender && (
+        {/* Calendar */}
+        {/* {flagCalender && (
         <Calendar
           flagCalender={flagCalender}
           setFlagCalender={setFlagCalender}
@@ -516,7 +509,8 @@ export default function ListingPage({
           tomorrow={tomorrow}
         />
       )} */}
-    </div>
+      </div>
+    </Layout>
   );
 }
 

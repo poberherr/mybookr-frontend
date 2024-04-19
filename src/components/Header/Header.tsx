@@ -1,11 +1,12 @@
-import { useRouter } from "next/router";
+"use client"
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/router";
 
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import Logo from "../../assets/mybookr.svg";
 import useScrollDirection from "../../helpers/useScrollDirection";
+import { ClerkAuth } from "./ClerkAuth";
 
 export default function Header() {
   const router = useRouter();
@@ -39,13 +40,7 @@ export default function Header() {
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
+          <ClerkAuth />
         </div>
       </div>
     </>
