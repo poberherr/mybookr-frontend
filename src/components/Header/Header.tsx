@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 
+import { SignIn, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 import { useMediaQuery, useTheme } from "@mui/material";
 
 import Logo from "../../assets/mybookr.svg";
-
 import useScrollDirection from "../../helpers/useScrollDirection";
 
 export default function Header() {
@@ -33,13 +34,18 @@ export default function Header() {
             window.scrollTo(0, 0);
           }}
         >
-          <Logo className="h-12" alt="mybookr logo"/>
+          <Logo className="h-12" alt="mybookr logo" />
         </div>
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">
-          {/* Navigation menu: Mobile and Desktop */}
-          "@todo sign in/up"
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
         </div>
       </div>
     </>
