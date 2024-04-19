@@ -3,31 +3,20 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useForm } from "react-hook-form";
 
-
-
 import { useRouter } from "next/router";
-
-
 
 import moment from "moment";
 
-
-
 import { Divider, Typography, useMediaQuery } from "@mui/material";
-
-
 
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import CloseIcon from "../../assets/icons/close.svg";
 import FilterIcon from "../../assets/icons/filter.svg";
 
-
-
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
 import FilterBox from "./FilterBox";
 import LocationMenu from "./LocationMenu";
-
 
 const features = {
   wifi: "Wifi",
@@ -51,6 +40,16 @@ const features = {
   smoking_allowed: "Smoking allowed",
   carbon_monoxide_alarm: "Carbon monoxide alarm",
 };
+
+const SelectedDate = ({ date, handleRangeSelectionDialog }) => (
+  <div
+    className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 md:justify-center md:h-full"
+    onClick={handleRangeSelectionDialog}
+  >
+    <Typography variant="body1">{moment(date).format("MMM D")}</Typography>
+    <CalendarIcon className="h-4" alt="Select Check In Date" />
+  </div>
+);
 
 export default function SearchBar() {
   const today = useMemo(() => moment().toDate(), []);
@@ -183,25 +182,9 @@ export default function SearchBar() {
 
               {/* Selected Dates */}
               <div className="flex items-center justify-between rounded-[32px] border border-solid border-gray-100 px-6 py-3">
-                {[selectedDate, selectedDate1].map((date, index) => (
-                  <>
-                    <div
-                      className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8"
-                      onClick={handleRangeSelectionDialog}
-                    >
-                      <Typography variant="body1">
-                        {moment(date).format("MMM D")}
-                      </Typography>
-
-                      <CalendarIcon
-                        className="h-4"
-                        alt="Select Check In Date"
-                      />
-                    </div>
-
-                    {index === 0 && <Divider orientation="vertical" flexItem />}
-                  </>
-                ))}
+                <SelectedDate date={selectedDate} />
+                <Divider orientation="vertical" flexItem />
+                <SelectedDate date={selectedDate1} />
               </div>
 
               {/* Filter and Search Buttons */}
@@ -237,31 +220,9 @@ export default function SearchBar() {
 
                 {/* Selected Dates */}
                 <div className="flex items-center justify-between gap-8">
-                  {[selectedDate, selectedDate1].map((date, index) => (
-                    <>
-                      <div
-                        className="flex h-full min-w-[120px] cursor-pointer items-center justify-center gap-8"
-                        onClick={handleRangeSelectionDialog}
-                      >
-                        <Typography variant="body1">
-                          {moment(date).format("MMM D")}
-                        </Typography>
-
-                        <CalendarIcon
-                          className="h-4"
-                          alt="Select Check In Date"
-                        />
-                      </div>
-
-                      {index === 0 && (
-                        <Divider
-                          flexItem
-                          orientation="vertical"
-                          variant="middle"
-                        />
-                      )}
-                    </>
-                  ))}
+                  <SelectedDate date={selectedDate} />
+                  <Divider flexItem orientation="vertical" variant="middle" />
+                  <SelectedDate date={selectedDate1} />
                 </div>
 
                 {/* Search button */}
