@@ -1,8 +1,6 @@
 import React from "react";
 import { DateRangePicker } from "react-date-range";
 
-import { addDays } from "date-fns";
-
 import {
   Box,
   Typography,
@@ -14,7 +12,6 @@ import {
 
 import { SButton } from "../ui/SButton";
 import StyledDialog from "../ui/StyledDialog";
-import "./Calendar.css";
 
 // One day in milliseconds
 const ONE_DAY = 86400000;
@@ -87,7 +84,7 @@ export default function Calendar({
               setDate([item.selection]);
               handleDate([item.selection]);
             }}
-            minDate={addDays(new Date(), 0)}
+            minDate={today}
             showSelectionPreview={true}
             moveRangeOnFirstSelection={false}
             months={isMobile ? 1 : 2}

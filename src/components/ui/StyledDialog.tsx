@@ -10,8 +10,8 @@ import {
   useTheme,
 } from "@mui/material";
 
-import closeIcon from "../../assets/icons/close.svg";
-import leftArrowIcon from "../../assets/icons/leftArrow.svg";
+import CloseIcon from "../../assets/icons/close.svg";
+import LeftArrowIcon from "../../assets/icons/leftArrow.svg";
 
 interface IProps {
   showDialog: boolean;
@@ -77,12 +77,7 @@ export default function StyledDialog({
         {/* By defautl, do not show the back button */}
         {BackButton && (
           <TitleButton left={"16px"}>
-            <img
-              src={leftArrowIcon}
-              width={"11px"}
-              height={"auto"}
-              alt={"back button"}
-            />
+            <LeftArrowIcon width={"11px"} height={"auto"} alt={"back button"} />
           </TitleButton>
         )}
 
@@ -91,12 +86,7 @@ export default function StyledDialog({
 
         {/* Close button */}
         <TitleButton onClick={handleClose} right={"16px"}>
-          <img
-            src={closeIcon}
-            width={"14px"}
-            height={"auto"}
-            alt={"close button"}
-          />
+          <CloseIcon width={"14px"} height={"auto"} alt={"close"} />
         </TitleButton>
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>

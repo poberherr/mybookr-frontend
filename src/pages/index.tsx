@@ -2,19 +2,16 @@ import React from "react";
 
 import { QueryClient, dehydrate } from "@tanstack/react-query";
 
-import { Clerk } from "../components/Clerk.tsx";
-import { ListingsComponent } from "../components/Listings.tsx";
-import { Stripe } from "../components/Stripe.tsx";
+import { ListingsComponent } from "@/components/Listings";
+import SearchBar from "@/components/search-bar/SearchBar";
 
-import { coreListingsListQueryOptions } from "../api/hooks/useCoreListingsList.ts";
+import { coreListingsListQueryOptions } from "../api/hooks/useCoreListingsList";
 
-const Home = () => {
+const HomePage = () => {
   return (
-    <div className="gap-12 flex flex-col">
-      <h1>mybookr initial feature test</h1>
+    <div className="my-12 grid gap-12 px-4 py-0 md:px-40">
+      <SearchBar />
       <ListingsComponent />
-      <Stripe />
-      <Clerk />
     </div>
   );
 };
@@ -31,6 +28,6 @@ export async function getStaticProps() {
   };
 }
 
-export default Home;
+export default HomePage;
 
 export const revalidate = false;

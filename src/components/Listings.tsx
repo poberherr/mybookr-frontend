@@ -1,3 +1,4 @@
+// @todo we should get rid of the whole wrapper component? yes no? maybe? cleaner? no?
 import React from "react";
 
 import {
@@ -17,9 +18,6 @@ export function ListingsComponent() {
   // if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
-    <div className="flex w-full flex-col gap-6 rounded bg-gray-50 p-12">
-      <h2>API Data Fetching:</h2>
-      <PropertiesList listings={data} loading={isLoading} />
-    </div>
+    <PropertiesList listings={data} loading={isLoading} />
   );
 }

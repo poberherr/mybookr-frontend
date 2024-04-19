@@ -2,7 +2,7 @@ import React from "react";
 
 import { Menu, useMediaQuery, useTheme } from "@mui/material";
 
-import { closeIcon } from "../../assets/icons";
+import CloseIcon from "@/assets/icons/close.svg";
 
 // You need to provide buttonEl and menuEl as props for this component to work properly
 // Please create buttonEl and menuEl as anonymous functions
@@ -76,7 +76,7 @@ export default function SMenu({
             className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
             onClick={handleMenuClose}
           >
-            <img className="w-4" src={closeIcon} alt="" />
+            <CloseIcon className="w-4" alt="Close" />
           </div>
         )}
       </Menu>
