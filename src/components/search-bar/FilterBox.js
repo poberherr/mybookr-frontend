@@ -66,7 +66,7 @@ export default function FilterBox({
                   ["beds", ["Any", "1", "2", "3", "4", "5", "6+"]],
                   ["bathrooms", ["Any", "1", "2", "3", "4", "5+"]],
                 ].map(([category, items]) => (
-                  <div>
+                  <div key={items}>
                     {/* Category */}
                     <Typography className="!mb-4" variant="body1">
                       {category}
