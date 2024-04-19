@@ -12,8 +12,8 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { SButton } from "../UI/SButton";
-import StyledDialog from "../UI/StyledDialog";
+import { SButton } from "../ui/SButton";
+import StyledDialog from "../ui/StyledDialog";
 import "./Calendar.css";
 
 // One day in milliseconds

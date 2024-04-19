@@ -1,5 +1,7 @@
 import React from "react";
 
+import { AppProps } from "next/app";
+
 import { ClerkProvider } from "@clerk/nextjs";
 import {
   HydrationBoundary,
@@ -8,8 +10,9 @@ import {
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
+import { Layout } from "@/components/Layout";
+
 import "../global.css";
-import { AppProps } from "next/app";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient({}));
@@ -18,7 +21,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <ClerkProvider {...pageProps}>
       <QueryClientProvider client={queryClient}>
         <HydrationBoundary state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </HydrationBoundary>
         <ReactQueryDevtools />
       </QueryClientProvider>

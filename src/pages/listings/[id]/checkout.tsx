@@ -9,7 +9,7 @@ export default CheckoutPage;
 // import Bonus from "../../components/Others/Bonus";
 // import GuestNumberForm from "../../components/Others/GuestNumberForm";
 // import PriceDetail from "../../components/Others/PriceDetail";
-// import { SButton } from "../../components/UI/SButton";
+// import { SButton } from "../../components/ui/SButton";
 
 // import { starIcon } from "../../assets/icons";
 

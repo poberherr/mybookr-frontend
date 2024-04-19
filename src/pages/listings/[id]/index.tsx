@@ -43,8 +43,6 @@ export default function ListingPage({
   const { data: listing } = useCoreListingsRead<Listing>(id);
   const { data: reviews } = useCoreReviewsList<Review[]>();
 
-  console.dir({ listing, reviews });
-
   // eslint-disable-next-line no-unused-vars
   const [price, setPrice] = useState(0.01);
   const [rating, setRating] = useState(0);
@@ -127,47 +125,49 @@ export default function ListingPage({
 
         {/* Hero Image */}
         {/* Hero Image: Mobile */}
-        <div className="relative block md:hidden">
-          {flagGallery ? (
-            <Gallery
-              flagGallery={flagGallery}
-              setFlagGallery={setFlagGallery}
-              images={listing.images}
-            />
-          ) : (
-            <div>
-              {/* Image */}
-              {listing.images && (
-                <img
-                  className="h-72 w-full object-cover"
-                  src={listing.images[0]}
-                  alt=""
-                />
-              )}
+        {listing.images && (
+          <div className="relative block md:hidden">
+            {flagGallery ? (
+              <Gallery
+                flagGallery={flagGallery}
+                setFlagGallery={setFlagGallery}
+                images={listing.images}
+              />
+            ) : (
+              <div>
+                {/* Image */}
+                {listing.images && (
+                  <img
+                    className="h-72 w-full object-cover"
+                    src={listing.images[0]}
+                    alt=""
+                  />
+                )}
 
-              {/* Share and Heart icons */}
-              {[shareIcon, heartIcon].map((icon) => (
-                <div
-                  className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white ${
-                    icon === shareIcon ? "right-4" : "right-16"
-                  }`}
+                {/* Share and Heart icons */}
+                {[shareIcon, heartIcon].map((icon) => (
+                  <div
+                    className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white ${
+                      icon === shareIcon ? "right-4" : "right-16"
+                    }`}
+                  >
+                    <img className="h-auto w-3.5" src={icon} alt="" />
+                  </div>
+                ))}
+
+                {/* Show all images */}
+                <Typography
+                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
+                  onClick={() => {
+                    setFlagGallery(true);
+                  }}
                 >
-                  <img className="h-auto w-3.5" src={icon} alt="" />
-                </div>
-              ))}
-
-              {/* Show all images */}
-              <Typography
-                className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
-                onClick={() => {
-                  setFlagGallery(true);
-                }}
-              >
-                Show all
-              </Typography>
-            </div>
-          )}
-        </div>
+                  Show all
+                </Typography>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Hero Image: Desktop */}
         {listing.images && (
@@ -294,9 +294,9 @@ export default function ListingPage({
                   .map((item) => (
                     <ReviewCard
                       key={item.id}
-                      id={item.id}
+                      id={item.id || 0}
                       name={"John"}
-                      date={item.date}
+                      date={item.date || `${Date.now()}`}
                       message={item.review_text}
                     />
                   ))}
@@ -306,9 +306,9 @@ export default function ListingPage({
                     .map((item) => (
                       <ReviewCard
                         key={item.id}
-                        id={item.id}
+                        id={item.id || 0}
                         name={"John"}
-                        date={item.date}
+                        date={item.date || `${Date.now()}`}
                         message={item.review_text}
                       />
                     ))}
@@ -621,9 +621,9 @@ export const revalidate = false;
 
 export async function getStaticPaths() {
   const queryClient = new QueryClient();
-  
+
   const res = await queryClient.fetchQuery(coreListingsListQueryOptions());
-  
+
   const paths = res.map((listing) => `/listings/${listing.id}`);
 
   return {
