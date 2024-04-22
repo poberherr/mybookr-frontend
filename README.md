@@ -15,3 +15,7 @@ NextJS + TypeScript + TanStack Query + Swagger + Stripe + Clerk
 
 - `npm install`
 - `npm run dev`
+
+## How to update TS types + API hooks
+
+- `npm api:generate`

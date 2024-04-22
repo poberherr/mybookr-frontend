@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Drawer, Typography, styled } from "@mui/material";
+import { Drawer, styled } from "@mui/material";
 
 import CloseIcon from "../../assets/icons/close.svg";
 
@@ -34,9 +34,9 @@ export default function FilterBox({
           {/* Header: Title and Close button */}
           <div className="sticky top-0 z-10 grid w-full place-items-center border-b border-solid !border-gray-100 bg-white py-4 px-12">
             {/* Title */}
-            <Typography className="!text-base !font-semibold" variant="h2">
+            <div className="!text-base !font-semibold">
               Filter
-            </Typography>
+            </div>
 
             {/* Close button */}
             <div
@@ -52,12 +52,11 @@ export default function FilterBox({
             {/* Rooms and beds */}
             <div>
               {/* Title */}
-              <Typography
+              <div
                 className="!mb-8 !text-base !font-semibold"
-                variant="h6"
               >
                 Rooms and beds
-              </Typography>
+              </div>
 
               {/* Show all categories */}
               <div className="grid gap-6">
@@ -68,9 +67,9 @@ export default function FilterBox({
                 ].map(([category, items]) => (
                   <div key={items}>
                     {/* Category */}
-                    <Typography className="!mb-4" variant="body1">
+                    <div className="!mb-4">
                       {category}
-                    </Typography>
+                    </div>
 
                     {/* Items */}
                     <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-4">
@@ -100,12 +99,11 @@ export default function FilterBox({
             {/* Features */}
             <div>
               {/* Title */}
-              <Typography
+              <div
                 className="!mb-8 !text-base !font-semibold"
-                variant="h6"
               >
                 Features
-              </Typography>
+              </div>
 
               {/* Show all features */}
               <div className="grid grid-cols-[repeat(auto-fill,minmax(225px,1fr))] gap-2">

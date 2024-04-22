@@ -24,7 +24,7 @@ export default function LocationMenu({ children }) {
       className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 px-6 py-3 sm:border-none md:ml-8"
       onClick={handleClick}
     >
-      <Typography variant="body1">{locationValue || "Location"}</Typography>
+      <Typography>{locationValue || "Location"}</Typography>
       <LocationIcon className="h-4" alt="Select Location" />
     </div>
   );
