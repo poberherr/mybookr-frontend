@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 @import url("./styles/Calendar.css");
+
+
+body {
+  @apply font-sans;
+}

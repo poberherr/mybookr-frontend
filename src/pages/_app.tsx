@@ -1,7 +1,5 @@
 import React from "react";
 
-import { AppProps } from "next/app";
-
 import { ClerkProvider } from "@clerk/nextjs";
 import {
   HydrationBoundary,
@@ -9,11 +7,13 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AppProps } from "next/app";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
 import { BookingContext } from "@/contexts/booking";
+import { inter, montserrat } from "@/styles/fonts";
 
 import "../global.css";
 import { theme } from "../theme";
@@ -29,26 +29,28 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const [selectedDate1, setSelectedDate1] = React.useState(tomorrow);
 
   return (
-    <BookingContext.Provider
-      value={{
-        selectedDate,
-        setSelectedDate,
-        selectedDate1,
-        setSelectedDate1,
-      }}
-    >
-      <AppRouterCacheProvider>
-        <ThemeProvider theme={theme}>
-          <ClerkProvider {...pageProps}>
-            <QueryClientProvider client={queryClient}>
-              <HydrationBoundary state={pageProps.dehydratedState}>
-                <Component {...pageProps} />
-              </HydrationBoundary>
-              <ReactQueryDevtools />
-            </QueryClientProvider>
-          </ClerkProvider>
-        </ThemeProvider>
-      </AppRouterCacheProvider>
-    </BookingContext.Provider>
+    <div className={`${montserrat.className} ${inter.className}`}>
+      <BookingContext.Provider
+        value={{
+          selectedDate,
+          setSelectedDate,
+          selectedDate1,
+          setSelectedDate1,
+        }}
+      >
+        <AppRouterCacheProvider>
+          <ThemeProvider theme={theme}>
+            <ClerkProvider {...pageProps}>
+              <QueryClientProvider client={queryClient}>
+                <HydrationBoundary state={pageProps.dehydratedState}>
+                  <Component {...pageProps} />
+                </HydrationBoundary>
+                <ReactQueryDevtools />
+              </QueryClientProvider>
+            </ClerkProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
+      </BookingContext.Provider>
+    </div>
   );
 }

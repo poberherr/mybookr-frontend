@@ -2,7 +2,8 @@
 
 import { grey } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-import shadows from "@mui/material/styles/shadows";
+
+import { montserrat, inter } from "@/styles/fonts";
 
 const primary = "#303030";
 
@@ -24,43 +25,43 @@ export const theme = createTheme({
       color: primary,
     },
     h1: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     h2: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     h3: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     h4: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     h5: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     h6: {
-      fontFamily: "Montserrat",
+      ...montserrat.style,
     },
     subtitle1: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     subtitle2: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     body1: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     body2: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     button: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     caption: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     overline: {
-      fontFamily: "AvenueMono",
+      ...inter.style,
     },
     // CMontserrat: {
     //   fontFamily: "Montserrat",
