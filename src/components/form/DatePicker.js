@@ -23,7 +23,7 @@ export default function StyledDatePicker({
         id={`${id}-label`}
         sx={{
           marginBottom: "4px",
-          fontFamily: "AvenueMono",
+          fontFamily: "Inter",
           fontSize: "12px",
           color: "#303030",
           textTransform: "uppercase",

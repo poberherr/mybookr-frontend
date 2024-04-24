@@ -43,7 +43,7 @@ export default function StyledTextField({
         id={`${id}-label`}
         sx={{
           marginBottom: "8px",
-          fontFamily: "AvenueMono",
+          fontFamily: "Inter",
           fontSize: "12px",
           color: "#303030",
           textTransform: "uppercase",
@@ -91,7 +91,7 @@ export default function StyledTextField({
                     },
                     "& input": {
                       padding: "12px 20px",
-                      fontFamily: "AvenueMono",
+                      fontFamily: "Inter",
                     },
                     boxShadow: "0px 3px 10px 3px rgba(0, 0, 0, 0.05)",
                     ".MuiOutlinedInput-notchedOutline": { border: 0 },
@@ -122,7 +122,7 @@ export default function StyledTextField({
                 },
                 "& input": {
                   padding: "12px 20px",
-                  fontFamily: "AvenueMono",
+                  fontFamily: "Inter",
                 },
                 boxShadow: "0px 3px 10px 3px rgba(0, 0, 0, 0.05)",
                 ".MuiOutlinedInput-notchedOutline": { border: 0 },

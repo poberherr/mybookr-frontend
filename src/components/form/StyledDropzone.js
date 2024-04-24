@@ -142,7 +142,7 @@ const DropZone = styled("div")`
   flex-direction: column;
   align-items: center;
 
-  font-family: "AvenueMono";
+  font-family: "Inter";
   font-size: 18px;
   color: #303030;
 

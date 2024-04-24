@@ -41,7 +41,7 @@ const StyledCheckbox: React.FC<StyledCheckboxProps> = ({
       }
     : {
         ".MuiTypography-root": {
-          fontFamily: "AvenueMono",
+          fontFamily: "Inter",
           fontSize: "14px",
           color: "#303030",
         },

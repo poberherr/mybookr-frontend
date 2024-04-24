@@ -36,7 +36,7 @@ export default function StyledSelect({
       <InputLabel
         id={`${id}-label`}
         sx={{
-          fontFamily: "AvenueMono",
+          fontFamily: "Inter",
           fontSize: "12px",
           color: "#303030",
           textTransform: "uppercase",
@@ -80,7 +80,7 @@ export default function StyledSelect({
               ".MuiOutlinedInput-notchedOutline": { border: 0 },
               ".MuiSelect-select": {
                 padding: "12px 20px",
-                fontFamily: "AvenueMono",
+                fontFamily: "Inter",
               },
               ".MuiSelect-icon": {
                 right: 20,
@@ -95,7 +95,7 @@ export default function StyledSelect({
                   key={index}
                   value={item}
                   sx={{
-                    fontFamily: "AvenueMono",
+                    fontFamily: "Inter",
                   }}
                 >
                   {item}

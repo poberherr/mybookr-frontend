@@ -39,7 +39,7 @@ export default function ReviewCard({ id, name, date, message }: IProps) {
       </div>
 
       {/* Body */}
-      <div className="py-2 font-[AvenueMono] [&_.anchor]:block [&_.anchor]:text-sm">
+      <div className="py-2 font-[Inter] [&_.anchor]:block [&_.anchor]:text-sm">
         <ShowMoreText
           lines={isMobile ? 5 : 3}
           more="Show more"
