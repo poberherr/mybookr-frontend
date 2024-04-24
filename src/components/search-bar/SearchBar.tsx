@@ -53,7 +53,7 @@ const features: { [index: string]: string } = {
   carbon_monoxide_alarm: "Carbon monoxide alarm",
 };
 
-const defaultValues = {
+export const defaultValues = {
   wifi: false,
   bbq_grill: false,
   washer: false,
@@ -283,7 +283,7 @@ export default function SearchBar() {
       </div>
 
       {/* Filter drawer */}
-      {/* <FilterBox
+      <FilterBox
         control={control}
         handleFilterData={handleFilterData}
         filterData={filterData}
@@ -291,7 +291,7 @@ export default function SearchBar() {
         drawerMenu={drawerMenu}
         features={features}
         deleteFilteredItem={deleteFilteredItem}
-      /> */}
+      />
 
       {/* Calendar */}
       {flagCalendar && (
