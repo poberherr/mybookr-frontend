@@ -55,7 +55,7 @@ export default function StyledDialog({
         ".MuiDialog-paper": {
           borderRadius: isMobile ? "0px" : "8px",
           width: "100%",
-          maxWidth: "600px",
+          maxWidth: "680px",
         },
       }}
     >
@@ -63,7 +63,6 @@ export default function StyledDialog({
         id="dialog-title"
         sx={{
           position: "relative",
-          fontFamily: "Montserrat",
           fontSize: "16px",
           fontWeight: "600",
           textAlign: "center",

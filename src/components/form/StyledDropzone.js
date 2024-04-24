@@ -183,7 +183,6 @@ const ThumbsItem = styled("div")`
 `;
 
 const ErrorsItem = styled("p")`
-  font-family: "Montserrat";
   font-size: 16px;
   color: #303030;
   margin-bottom: 16px;

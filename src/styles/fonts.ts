@@ -4,7 +4,7 @@ import { Inter, Montserrat } from "next/font/google";
 // import localFont from "next/font/local";
 
 // define your variable fonts
-const montserrat = Montserrat({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"], weight: ["400", "500", "700"] });
 const inter = Inter({ weight: "400", subsets: ["latin"] });
 
 // define 2 weights of a non-variable font
