@@ -1,24 +1,10 @@
 "use client";
 
-import React, {
-  KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import {
-  FieldValues,
-  FormProvider,
-  SubmitHandler,
-  UseFormWatch,
-  useForm,
-} from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 
 import moment from "moment";
 import { useRouter } from "next/router";
@@ -115,14 +101,14 @@ const SelectedDate = ({
   date,
   handleRangeSelectionDialog,
 }: {
-  date: Date;
+  date?: Date;
   handleRangeSelectionDialog: any;
 }) => (
   <div
     className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 md:justify-center md:h-full"
     onClick={handleRangeSelectionDialog}
   >
-    <div>{moment(date).format("MMM D")}</div>
+    <div>{date && moment(date).format("MMM D")}</div>
     <CalendarIcon className="h-4" alt="Select Check In Date" />
   </div>
 );
@@ -196,21 +182,18 @@ export default function SearchBar() {
     defaultValues,
   });
 
-  const deleteFilteredItem = useCallback(
-    (key: any, type: string) => {
-      // if (type === "features") {
-      //   handleFilterData(
-      //     "features",
-      //     filterData.features.find((item) => item !== key),
-      //   );
-      //   if (key === "all") reset();
-      //   else {
-      //     setValue(key, false, { shouldValidate: true });
-      //   }
-      // } else if (type === "roomsAndBeds") handleFilterData(key, "Any");
-    },
-    [],
-  );
+  const deleteFilteredItem = useCallback((key: any, type: string) => {
+    // if (type === "features") {
+    //   handleFilterData(
+    //     "features",
+    //     filterData.features.find((item) => item !== key),
+    //   );
+    //   if (key === "all") reset();
+    //   else {
+    //     setValue(key, false, { shouldValidate: true });
+    //   }
+    // } else if (type === "roomsAndBeds") handleFilterData(key, "Any");
+  }, []);
 
   const onSubmit = formMethods.handleSubmit((data: FormData) => {
     const searchParams = new URLSearchParams();
@@ -231,7 +214,10 @@ export default function SearchBar() {
         selectedDate1.getTime() - selectedDate.getTime();
       setNights(Math.floor(diffInMilliseconds / millisecondsPerDay));
 
-      router.push(`/?${searchParams.toString()}`);
+      // router.push(`/?${searchParams.toString()}`);
+      console.dir({ data });
+      alert("@todo");
+      return;
     }
 
     throw new Error("Select start and end date");
@@ -255,12 +241,12 @@ export default function SearchBar() {
               {/* Selected Dates */}
               <div className="flex items-center justify-between gap-8">
                 <SelectedDate
-                  date={values.dateRange.startDate || selectedDate}
+                  date={values.dateRange.startDate}
                   handleRangeSelectionDialog={handleRangeSelectionDialog}
                 />
                 <Divider flexItem orientation="vertical" variant="middle" />
                 <SelectedDate
-                  date={values.dateRange.endDate || selectedDate1}
+                  date={values.dateRange.endDate}
                   handleRangeSelectionDialog={handleRangeSelectionDialog}
                 />
               </div>
