@@ -4,22 +4,32 @@ import { Menu, useMediaQuery, useTheme } from "@mui/material";
 
 import CloseIcon from "@/assets/icons/close.svg";
 
-// You need to provide buttonEl and menuEl as props for this component to work properly
-// Please create buttonEl and menuEl as anonymous functions
-export default function SMenu({
-  fullScreenMobile,
+interface SMenuProps {
+  fullScreenMobile?: boolean;
+  menuAnchorEl: HTMLElement | null;
+  setMenuAnchorEl: (el: HTMLElement | null) => void;
+  buttonEl: JSX.Element;
+  menuEl: JSX.Element;
+}
+
+const SMenu: React.FC<SMenuProps> = ({
+  fullScreenMobile = false,
   menuAnchorEl,
   setMenuAnchorEl,
   buttonEl,
   menuEl,
-}) {
-  const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
+}) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const menuOpen = Boolean(menuAnchorEl);
 
-  const handleMenuClick = (event) => {
-    setMenuAnchorEl(event.currentTarget);
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  ) => {
+    setMenuAnchorEl(event.currentTarget as HTMLElement);
   };
+
   const handleMenuClose = () => {
     setMenuAnchorEl(null);
   };
@@ -49,10 +59,8 @@ export default function SMenu({
 
   return (
     <>
-      {/* Button: Menu toggle */}
       <div onClick={handleMenuClick}>{buttonEl}</div>
 
-      {/* Menu */}
       <Menu
         disableAutoFocusItem
         elevation={0}
@@ -67,16 +75,18 @@ export default function SMenu({
           ".MuiMenu-list": { width: "100%" },
         }}
       >
-        [menuEl, fullScreenMobile && ({/* Close button */}
-        {/* Only for mobile when menu is fullscreen */}
-        <div
-          className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
-          onClick={handleMenuClose}
-        >
-          <CloseIcon className="w-4" alt="Close" />
-        </div>
-        )]
+        {menuEl}
+        {fullScreenMobile && isMobile && (
+          <div
+            className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
+            onClick={handleMenuClose}
+          >
+            <CloseIcon className="w-4" alt="Close" />
+          </div>
+        )}
       </Menu>
     </>
   );
-}
+};
+
+export default SMenu;

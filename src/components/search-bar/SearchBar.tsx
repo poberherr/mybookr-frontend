@@ -204,7 +204,7 @@ export default function SearchBar() {
           {/* Search bar */}
           <div className="flex h-[50px] gap-8 rounded-[32px] border border-solid border-gray-100">
             {/* Location menu */}
-            {/* <LocationMenu /> */}
+            <LocationMenu />
             <Divider flexItem orientation="vertical" variant="middle" />
 
             {/* Selected Dates */}
