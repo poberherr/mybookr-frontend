@@ -1,37 +1,40 @@
 "use client";
 
-import React, { KeyboardEvent, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { FieldValues, FormProvider, SubmitHandler, UseFormWatch, useForm } from "react-hook-form";
-
-
+import {
+  FieldValues,
+  FormProvider,
+  SubmitHandler,
+  UseFormWatch,
+  useForm,
+} from "react-hook-form";
 
 import moment from "moment";
 import { useRouter } from "next/router";
 
-
-
 import { Divider, useMediaQuery } from "@mui/material";
-
-
 
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import CloseIcon from "../../assets/icons/close.svg";
 import FilterIcon from "../../assets/icons/filter.svg";
 
-
-
 import { BookingContext } from "@/contexts/booking";
-
-
 
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
 import FilterBox from "./FilterBox";
 import LocationMenu from "./LocationMenu";
-
 
 export interface Features {
   wifi: boolean;
@@ -125,9 +128,13 @@ const SelectedDate = ({
 );
 
 export default function SearchBar() {
-  const { selectedDate, setSelectedDate, selectedDate1, setSelectedDate1 } =
-    useContext(BookingContext);
-  const [nights, setNights] = useState(0);
+  const {
+    selectedDate,
+    setSelectedDate,
+    selectedDate1,
+    setSelectedDate1,
+    setNights,
+  } = useContext(BookingContext);
 
   const showFiltered = true;
 
@@ -215,10 +222,19 @@ export default function SearchBar() {
       }
     });
 
-    data.dateRange.startDate && setSelectedDate(data.dateRange.startDate);
-    data.dateRange.endDate && setSelectedDate(data.dateRange.endDate);
+    if (data.dateRange.startDate && data.dateRange.endDate) {
+      setSelectedDate(data.dateRange.startDate);
+      setSelectedDate1(data.dateRange.endDate);
 
-    router.push(`/?${searchParams.toString()}`);
+      const millisecondsPerDay = 24 * 60 * 60 * 1000; // number of milliseconds in a day
+      const diffInMilliseconds =
+        selectedDate1.getTime() - selectedDate.getTime();
+      setNights(Math.floor(diffInMilliseconds / millisecondsPerDay));
+
+      router.push(`/?${searchParams.toString()}`);
+    }
+
+    throw new Error("Select start and end date");
   });
 
   const values = formMethods.getValues();

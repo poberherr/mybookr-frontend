@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { DehydratedState, QueryClient, dehydrate } from "@tanstack/react-query";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import { useParams, useRouter } from "next/navigation";
-
-import { DehydratedState, QueryClient, dehydrate } from "@tanstack/react-query";
 
 import { CircularProgress, Divider, Typography } from "@mui/material";
 
@@ -34,6 +33,7 @@ import {
   useCoreReviewsList,
 } from "@/api";
 import formatDateSpan from "@/helpers/date-format";
+import CheckoutStart from "@/components/checkout/CheckoutStart";
 
 // import CheckoutAndPay from "./checkout";
 
@@ -429,7 +429,10 @@ export default function ListingPage({
 
           {/* Right content - Desktop */}
           <div className="mr-40 hidden border-0 border-l border-r border-solid border-gray-100 md:block">
-            <CircularProgress />
+            <CheckoutStart
+              listing={listing}
+              setFlagCalender={setFlagCalender}
+            />
           </div>
         </div>
 
@@ -495,20 +498,12 @@ export default function ListingPage({
         )}
 
         {/* Calendar */}
-        {/* {flagCalender && (
-        <Calendar
-          flagCalender={flagCalender}
-          setFlagCalender={setFlagCalender}
-          setSelectedDate={setSelectedDate}
-          setSelectedDate1={setSelectedDate1}
-          date={date}
-          setDate={setDate}
-          nights={nights}
-          setNights={setNights}
-          today={today}
-          tomorrow={tomorrow}
-        />
-      )} */}
+        {flagCalender && (
+          <Calendar
+            flagCalender={flagCalender}
+            setFlagCalender={setFlagCalender}
+          />
+        )}
       </div>
     </Layout>
   );

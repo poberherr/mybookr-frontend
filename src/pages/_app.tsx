@@ -1,22 +1,27 @@
 import React from "react";
 
+
+
 import { ClerkProvider } from "@clerk/nextjs";
-import {
-  HydrationBoundary,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { HydrationBoundary, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AppProps } from "next/app";
+
+
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
+
+
 import { BookingContext } from "@/contexts/booking";
 import { inter, montserrat } from "@/styles/fonts";
 
+
+
 import "../global.css";
 import { theme } from "../theme";
+
 
 const today = new Date();
 const tomorrow = new Date();
@@ -27,6 +32,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   const [selectedDate, setSelectedDate] = React.useState(today);
   const [selectedDate1, setSelectedDate1] = React.useState(tomorrow);
+  const [nights, setNights] = React.useState(1);
+  const [guest, setGuest] = React.useState(0);
 
   return (
     <div className={`${montserrat.className} ${inter.className}`}>
@@ -36,6 +43,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           setSelectedDate,
           selectedDate1,
           setSelectedDate1,
+          nights,
+          setNights,
+          guest,
+          setGuest
         }}
       >
         <AppRouterCacheProvider>

@@ -1,17 +1,28 @@
 import React from "react";
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldError, FieldValues } from "react-hook-form";
 
-import {
-  FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  styled,
-} from "@mui/material";
 
-import { ReactComponent as DownArrowIcon } from "../../assets/icons/downArrow.svg";
 
-export default function StyledSelect({
+import { FormHelperText, InputLabel, MenuItem, Select, styled } from "@mui/material";
+
+
+
+import DownArrowIcon from "@/assets/icons/downArrow.svg";
+
+
+interface StyledSelectProps<TFieldValues extends FieldValues> {
+  control: Control<TFieldValues>;
+  rules?: any;
+  errors?: Partial<FieldError>;
+  fieldRef?: React.Ref<any>;
+  id: string;
+  label: string;
+  name: string;
+  placeholder: string;
+  menuItems: (string | number)[];
+}
+
+function StyledSelect<TFieldValues extends FieldValues>({
   control,
   rules,
   errors,
@@ -21,7 +32,7 @@ export default function StyledSelect({
   name,
   placeholder,
   menuItems,
-}) {
+}: StyledSelectProps<TFieldValues>) {
   const classes = {
     paper: {
       maxHeight: "200px",
@@ -47,7 +58,7 @@ export default function StyledSelect({
       </InputLabel>
 
       <Controller
-        name={name}
+        name={name as any}
         control={control}
         rules={rules}
         render={({
@@ -89,28 +100,16 @@ export default function StyledSelect({
               },
             }}
           >
-            {menuItems.map((item, index) => {
-              return (
-                <MenuItem
-                  key={index}
-                  value={item}
-                  sx={{
-                    fontFamily: "Inter",
-                  }}
-                >
-                  {item}
-                </MenuItem>
-              );
-            })}
+            {menuItems.map((item, index) => (
+              <MenuItem key={index} value={item} sx={{ fontFamily: "Inter" }}>
+                {item}
+              </MenuItem>
+            ))}
           </Select>
         )}
       />
       {errors && (
-        <FormHelperText
-          style={{
-            color: "#d32f2f",
-          }}
-        >
+        <FormHelperText style={{ color: "#d32f2f" }}>
           {errors.message}
         </FormHelperText>
       )}
@@ -122,3 +121,5 @@ const Wrapper = styled("div")`
   width: 100%;
   height: min-content;
 `;
+
+export default StyledSelect;
