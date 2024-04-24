@@ -222,7 +222,7 @@ export default function SearchBar() {
 
           {/* Filter button */}
           <SButton
-            className="xl:!absolute xl:right-0"
+            className="xl:!absolute xl:right-0 flex items-center"
             variant="outlined"
             endIcon={<FilterIcon className="h-4" alt="Filter" />}
             onClick={() => toggleDrawer(true)}
