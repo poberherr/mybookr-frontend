@@ -14,7 +14,7 @@ import createPersistedState from "use-persisted-state";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
-import { BookingContext } from "@/contexts/booking";
+import { BookingContext } from "@/app/contexts/booking";
 import { inter, montserrat } from "@/styles/fonts";
 
 import "../global.css";

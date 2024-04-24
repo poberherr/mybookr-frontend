@@ -8,7 +8,7 @@ export default defineConfig({
     path: "./swagger.json",
   },
   output: {
-    path: "./src/api",
+    path: "./src/app/api-helpers",
   },
   plugins: [
     createSwagger({ output: false }),
