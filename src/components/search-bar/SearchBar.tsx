@@ -197,7 +197,7 @@ export default function SearchBar() {
   });
 
   const deleteFilteredItem = useCallback(
-    (key: keyof typeof defaultValues | "all", type: string) => {
+    (key: any, type: string) => {
       // if (type === "features") {
       //   handleFilterData(
       //     "features",
