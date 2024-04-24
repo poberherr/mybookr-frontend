@@ -1,36 +1,62 @@
 "use client";
 
-import React, {
-  KeyboardEvent,
-  MouseEvent,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { KeyboardEvent, MouseEvent, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { Range } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { useForm } from "react-hook-form";
+import { FieldValues, FormProvider, SubmitHandler, UseFormWatch, useForm } from "react-hook-form";
 
-import { useRouter } from "next/router";
+
 
 import moment from "moment";
+import { useRouter } from "next/router";
 
-import { Divider, Typography, useMediaQuery } from "@mui/material";
+
+
+import { Divider, useMediaQuery } from "@mui/material";
+
+
 
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import CloseIcon from "../../assets/icons/close.svg";
 import FilterIcon from "../../assets/icons/filter.svg";
 
+
+
 import { BookingContext } from "@/contexts/booking";
+
+
 
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
 import FilterBox from "./FilterBox";
 import LocationMenu from "./LocationMenu";
 
-const features: { [index: string]: string } = {
+
+export interface Features {
+  wifi: boolean;
+  bbq_grill: boolean;
+  washer: boolean;
+  breakfast: boolean;
+  dryer: boolean;
+  hot_tube: boolean;
+  kitchen: boolean;
+  free_parking_on_premises: boolean;
+  dedicated_workplace: boolean;
+  gym: boolean;
+  heating: boolean;
+  pets_allowed: boolean;
+  air_conditioning: boolean;
+  kids_friendly: boolean;
+  iron: boolean;
+  crib: boolean;
+  tv: boolean;
+  smoke_alarm: boolean;
+  smoking_allowed: boolean;
+  carbon_monoxide_alarm: boolean;
+}
+
+export const featureLabels: { [key in keyof Features]: string } = {
   wifi: "Wifi",
   bbq_grill: "BBQ grill",
   washer: "Washer",
@@ -53,7 +79,7 @@ const features: { [index: string]: string } = {
   carbon_monoxide_alarm: "Carbon monoxide alarm",
 };
 
-export const defaultValues = {
+export const defaultValues: { [key in keyof Features]: boolean } = {
   wifi: false,
   bbq_grill: false,
   washer: false,
@@ -76,6 +102,12 @@ export const defaultValues = {
   carbon_monoxide_alarm: false,
 };
 
+export interface FormData {
+  dateRange: Range;
+  rooms: { bedrooms: string; beds: string; bathrooms: string };
+  features: (keyof Features)[];
+}
+
 const SelectedDate = ({
   date,
   handleRangeSelectionDialog,
@@ -96,39 +128,17 @@ export default function SearchBar() {
   const { selectedDate, setSelectedDate, selectedDate1, setSelectedDate1 } =
     useContext(BookingContext);
   const [nights, setNights] = useState(0);
-  const [date, setDate] = useState([
-    {
-      startDate: selectedDate,
-      endDate: selectedDate1,
-      key: "selection",
-    },
-  ]);
 
-  const showFiltered = false;
+  const showFiltered = true;
 
   const [flagCalendar, setFlagCalender] = useState(false);
   const [drawerMenu, setDrawerMenu] = useState(false);
-  const [filterData, setFilterData] = useState<{
-    bedrooms: string;
-    beds: string;
-    bathrooms: string;
-    features: string[];
-  }>({
-    bedrooms: "Any",
-    beds: "Any",
-    bathrooms: "Any",
-    features: [],
-  });
   // const mediaQueryDown700 = useMediaQuery("(max-width: 700px)");
   const router = useRouter();
 
   const handleRangeSelectionDialog = useCallback(() => {
     setFlagCalender(true);
   }, [setFlagCalender]);
-
-  const handleSearchButton = useCallback(() => {
-    router.push("/search");
-  }, [router]);
 
   const toggleDrawer = useCallback(
     (open: boolean) => {
@@ -138,177 +148,192 @@ export default function SearchBar() {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleFilterData = useCallback(
-    (key: string, value: string | null = null) =>
-      setFilterData((prevFilterData) => {
-        if (key !== "clear")
-          return {
-            ...prevFilterData,
-            [key]: value,
-          };
-        else
-          return {
-            bedrooms: "Any",
-            beds: "Any",
-            bathrooms: "Any",
-            features: [],
-          };
-      }),
+  // const handleFilterData = useCallback(
+  //   (key: string, value: string | null = null) =>
+  //     setFilterData((prevFilterData) => {
+  //       if (key !== "clear")
+  //         return {
+  //           ...prevFilterData,
+  //           [key]: value,
+  //         };
+  //       else
+  //         return {
+  //           bedrooms: "Any",
+  //           beds: "Any",
+  //           bathrooms: "Any",
+  //           features: [],
+  //         };
+  //     }),
+  //   [],
+  // );
+
+  const defaultValues: FormData = useMemo(
+    () => ({
+      dateRange: {
+        startDate: selectedDate,
+        endDate: selectedDate1,
+        key: "selection",
+      },
+      rooms: {
+        bedrooms: "Any",
+        beds: "Any",
+        bathrooms: "Any",
+      },
+      features: [],
+    }),
     [],
   );
 
-  const { control, watch, setValue, reset } = useForm({
+  const formMethods = useForm<FormData>({
     mode: "onChange",
+    defaultValues,
   });
 
   const deleteFilteredItem = useCallback(
     (key: keyof typeof defaultValues | "all", type: string) => {
-      if (type === "features") {
-        handleFilterData(
-          "features",
-          filterData.features.find((item) => item !== key),
-        );
-        if (key === "all") reset();
-        else {
-          setValue(key, false, { shouldValidate: true });
-        }
-      } else if (type === "roomsAndBeds") handleFilterData(key, "Any");
+      // if (type === "features") {
+      //   handleFilterData(
+      //     "features",
+      //     filterData.features.find((item) => item !== key),
+      //   );
+      //   if (key === "all") reset();
+      //   else {
+      //     setValue(key, false, { shouldValidate: true });
+      //   }
+      // } else if (type === "roomsAndBeds") handleFilterData(key, "Any");
     },
     [],
   );
 
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const filterFeatures = (features: string[]) =>
-  //   Object.keys(features).reduce((p, c) => {
-  //     if (features[c]) p[c] = features[c];
-  //     return p;
-  //   }, {});
+  const onSubmit = formMethods.handleSubmit((data: FormData) => {
+    const searchParams = new URLSearchParams();
+    Object.entries(data).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item) => searchParams.append(key, item));
+      } else {
+        searchParams.append(key, value);
+      }
+    });
 
-  // // noinspection JSCheckFunctionSignatures
-  // useEffect(() => {
-  //   const subscription = watch((data) =>
-  //     handleFilterData(
-  //       "features",
-  //       Object.keys(filterFeatures(data)).map((key) => key),
-  //     ),
-  //   );
-  //   return () => subscription.unsubscribe;
-  // }, [filterData, filterFeatures, handleFilterData, watch]);
+    data.dateRange.startDate && setSelectedDate(data.dateRange.startDate);
+    data.dateRange.endDate && setSelectedDate(data.dateRange.endDate);
+
+    router.push(`/?${searchParams.toString()}`);
+  });
+
+  const values = formMethods.getValues();
 
   return (
-    <>
-      {/* Search bar */}
-      <div className="mb-12">
-        {/* Search bar and Filter button */}
-        <div className="flex flex-col items-center justify-center gap-4 py-12 lg:flex-row lg:gap-8 xl:relative">
-          {/* Search bar */}
-          <div className="flex h-[50px] gap-8 rounded-[32px] border border-solid border-gray-100">
-            {/* Location menu */}
-            <LocationMenu />
-            <Divider flexItem orientation="vertical" variant="middle" />
-
-            {/* Selected Dates */}
-            <div className="flex items-center justify-between gap-8">
-              <SelectedDate date={selectedDate} handleRangeSelectionDialog={handleRangeSelectionDialog}/>
+    <FormProvider {...formMethods}>
+      <form onSubmit={onSubmit}>
+        {/* Search bar */}
+        <div className="mb-12">
+          {/* Search bar and Filter button */}
+          <div className="flex flex-col items-center justify-center gap-4 py-12 lg:flex-row lg:gap-8 xl:relative">
+            {/* Search bar */}
+            <div className="flex h-[50px] gap-8 rounded-[32px] border border-solid border-gray-100">
+              {/* Location menu */}
+              <LocationMenu />
               <Divider flexItem orientation="vertical" variant="middle" />
-              <SelectedDate date={selectedDate1} handleRangeSelectionDialog={handleRangeSelectionDialog}/>
+
+              {/* Selected Dates */}
+              <div className="flex items-center justify-between gap-8">
+                <SelectedDate
+                  date={values.dateRange.startDate || selectedDate}
+                  handleRangeSelectionDialog={handleRangeSelectionDialog}
+                />
+                <Divider flexItem orientation="vertical" variant="middle" />
+                <SelectedDate
+                  date={values.dateRange.endDate || selectedDate1}
+                  handleRangeSelectionDialog={handleRangeSelectionDialog}
+                />
+              </div>
+
+              {/* Search button */}
+              <SButton fullWidth variant="contained">
+                Search
+              </SButton>
             </div>
 
-            {/* Search button */}
-            <SButton fullWidth variant="contained" onClick={handleSearchButton}>
-              Search
+            {/* Filter button */}
+            <SButton
+              className="xl:!absolute xl:right-0 flex items-center"
+              variant="outlined"
+              endIcon={<FilterIcon className="h-4" alt="Filter" />}
+              onClick={() => toggleDrawer(true)}
+            >
+              Filter
             </SButton>
           </div>
 
-          {/* Filter button */}
-          <SButton
-            className="xl:!absolute xl:right-0 flex items-center"
-            variant="outlined"
-            endIcon={<FilterIcon className="h-4" alt="Filter" />}
-            onClick={() => toggleDrawer(true)}
-          >
-            Filter
-          </SButton>
+          <Divider />
+
+          {/* Selected items from filters */}
+          {/* Shows up at below the search bar */}
+          {showFiltered &&
+            (values.rooms.bedrooms !== "Any" ||
+              values.rooms.beds !== "Any" ||
+              values.rooms.bathrooms !== "Any" ||
+              values.features.length > 0) && (
+              <>
+                <div className="mx-auto flex max-w-6xl flex-wrap gap-4 py-12">
+                  {values.rooms.bedrooms && values.rooms.bedrooms !== "Any" && (
+                    <FilteredItem
+                      deleteFilteredItem={deleteFilteredItem}
+                      title={`${values.rooms.bedrooms || 3} bedroom(s)`}
+                      name="bedrooms"
+                      type="roomsAndBeds"
+                    />
+                  )}
+                  {values.rooms.beds && values.rooms.beds !== "Any" && (
+                    <FilteredItem
+                      deleteFilteredItem={deleteFilteredItem}
+                      title={`${values.rooms.beds || 3} bed(s)`}
+                      name="beds"
+                      type="roomsAndBeds"
+                    />
+                  )}
+                  {values.rooms.bathrooms &&
+                    values.rooms.bathrooms !== "Any" && (
+                      <FilteredItem
+                        deleteFilteredItem={deleteFilteredItem}
+                        title={`${values.rooms.bathrooms || 3} bathroom(s)`}
+                        name="bathrooms"
+                        type="roomsAndBeds"
+                      />
+                    )}
+                  {values.features.map((item, key) => (
+                    <FilteredItem
+                      key={key}
+                      deleteFilteredItem={deleteFilteredItem}
+                      title={featureLabels[item]}
+                      name={item}
+                      type="features"
+                    />
+                  ))}
+                </div>
+
+                <Divider />
+              </>
+            )}
         </div>
-
-        <Divider />
-
-        {/* Selected items from filters */}
-        {/* Shows up at below the search bar */}
-        {showFiltered &&
-          (filterData.bedrooms !== "Any" ||
-            filterData.beds !== "Any" ||
-            filterData.bathrooms !== "Any" ||
-            filterData.features.length > 0) && (
-            <>
-              <div className="mx-auto flex max-w-6xl flex-wrap gap-4 py-12">
-                {filterData.bedrooms && filterData.bedrooms !== "Any" && (
-                  <FilteredItem
-                    deleteFilteredItem={deleteFilteredItem}
-                    title={`${filterData.bedrooms || 3} bedroom(s)`}
-                    name="bedrooms"
-                    type="roomsAndBeds"
-                  />
-                )}
-                {filterData.beds && filterData.beds !== "Any" && (
-                  <FilteredItem
-                    deleteFilteredItem={deleteFilteredItem}
-                    title={`${filterData.beds || 3} bed(s)`}
-                    name="beds"
-                    type="roomsAndBeds"
-                  />
-                )}
-                {filterData.bathrooms && filterData.bathrooms !== "Any" && (
-                  <FilteredItem
-                    deleteFilteredItem={deleteFilteredItem}
-                    title={`${filterData.bathrooms || 3} bathroom(s)`}
-                    name="bathrooms"
-                    type="roomsAndBeds"
-                  />
-                )}
-                {filterData.features.map((item, key) => (
-                  <FilteredItem
-                    key={key}
-                    deleteFilteredItem={deleteFilteredItem}
-                    title={features[item]}
-                    name={item}
-                    type="features"
-                  />
-                ))}
-              </div>
-
-              <Divider />
-            </>
-          )}
-      </div>
-
-      {/* Filter drawer */}
-      <FilterBox
-        control={control}
-        handleFilterData={handleFilterData}
-        filterData={filterData}
-        toggleDrawer={toggleDrawer}
-        drawerMenu={drawerMenu}
-        features={features}
-        deleteFilteredItem={deleteFilteredItem}
-      />
-
-      {/* Calendar */}
-      {flagCalendar && (
-        <Calendar
-          flagCalender={flagCalendar}
-          setFlagCalender={setFlagCalender}
-          setSelectedDate={setSelectedDate}
-          setSelectedDate1={setSelectedDate1}
-          date={date}
-          setDate={setDate}
-          nights={nights}
-          setNights={setNights}
-          today={new Date()}
-          tomorrow={new Date()}
+        {/* Filter drawer */}
+        <FilterBox
+          control={formMethods.control}
+          values={values}
+          toggleDrawer={toggleDrawer}
+          drawerMenu={drawerMenu}
+          deleteFilteredItem={deleteFilteredItem}
         />
-      )}
-    </>
+        {/* Calendar */}
+        {flagCalendar && (
+          <Calendar
+            flagCalender={flagCalendar}
+            setFlagCalender={setFlagCalender}
+          />
+        )}
+      </form>
+    </FormProvider>
   );
 }
 

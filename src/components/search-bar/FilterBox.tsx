@@ -1,45 +1,26 @@
 import React from "react";
 
-
-
 import { Drawer, styled } from "@mui/material";
-
-
 
 import CloseIcon from "../../assets/icons/close.svg";
 
-
-
 import StyledCheckbox from "../form/StyledCheckbox";
 import { SButton } from "../ui/SButton";
-import { defaultValues } from "./SearchBar";
-
-
-// Interface for the FilterData structure
-interface FilterData {
-  bedrooms: string;
-  beds: string;
-  bathrooms: string;
-  features: string[];
-}
-
-// Interface for the Features structure
-interface Features {
-  [key: string]: string;
-}
+import { Features, FormData, defaultValues, featureLabels } from "./SearchBar";
 
 // Props for the FilterBox component
 interface FilterBoxProps {
   control: any; // Specify the correct type based on the library or context used
   drawerMenu: boolean;
   toggleDrawer: (open: boolean) => void;
-  filterData: FilterData;
-  handleFilterData: (category: string, value: string) => void;
-  features: Features;
-  deleteFilteredItem: (item: keyof typeof defaultValues | "all", context: string) => void;
+  values: FormData;
+  deleteFilteredItem: (
+    item: keyof typeof defaultValues | "all",
+    context: string,
+  ) => void;
 }
 
-const roomOptions: [string, string[]][] = [
+const roomOptions: [keyof FormData["rooms"], string[]][] = [
   ["bedrooms", ["Any", "1", "2", "3", "4+"]],
   ["beds", ["Any", "1", "2", "3", "4", "5", "6+"]],
   ["bathrooms", ["Any", "1", "2", "3", "4", "5+"]],
@@ -49,9 +30,7 @@ export default function FilterBox({
   control,
   drawerMenu,
   toggleDrawer,
-  filterData,
-  handleFilterData,
-  features,
+  values,
   deleteFilteredItem,
 }: FilterBoxProps) {
   const clearAllFilters = () => {
@@ -72,15 +51,11 @@ export default function FilterBox({
               variant="contained"
               key={value}
               value={value}
-              data={Array.from(filterData[category as keyof FilterData])[0]}
-              onClick={() =>
-                handleFilterData(
-                  category,
-                  filterData[category as keyof FilterData] === value
-                    ? "Any"
-                    : value,
-                )
-              }
+              data={values.rooms[category]}
+              onClick={() => {
+                values.rooms[category] =
+                  values.rooms[category] === value ? "Any" : value;
+              }}
             >
               {value}
             </ItemNumber>
@@ -92,7 +67,11 @@ export default function FilterBox({
 
   return (
     <>
-      <Drawer anchor="right" open={drawerMenu} onClose={() => toggleDrawer(false)}>
+      <Drawer
+        anchor="right"
+        open={drawerMenu}
+        onClose={() => toggleDrawer(false)}
+      >
         <div
           className="relative h-screen w-screen max-w-[960px] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw]"
           role="presentation"
@@ -116,13 +95,15 @@ export default function FilterBox({
             <div>
               <div className="!mb-8 !text-base !font-semibold">Features</div>
               <div className="grid grid-cols-[repeat(auto-fill,minmax(225px,1fr))] gap-2">
-                {Object.keys(features).map((value) => (
+                {Object.entries(featureLabels).map(([id, name]) => (
                   <StyledCheckbox
-                    key={value}
-                    defaultChecked={filterData.features.includes(value)}
+                    key={id}
+                    defaultChecked={values.features.includes(
+                      id as keyof Features,
+                    )}
                     control={control}
-                    name={value}
-                    label={features[value]}
+                    name={id}
+                    label={name}
                   />
                 ))}
               </div>
