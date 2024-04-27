@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { Range } from "react-date-range";
 import { FormProvider, useForm } from "react-hook-form";
 
 
@@ -21,7 +22,7 @@ import { SButton } from "@/app/components/ui/SButton";
 
 
 import { Listing } from "@/app/api-helpers";
-import { BookingContext } from "@/app/contexts/booking";
+import { BookingContext, useWatchDateRange, useWatchGuest } from "@/app/contexts/booking";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 
@@ -29,23 +30,20 @@ interface IProps {
   listing: Listing;
 }
 
+interface CheckoutFormProps {
+  dateRange: Range
+  guest: number
+}
+
 export default function CheckoutStart({ listing }: IProps) {
   const router = useRouter();
-  const {
-    selectedDate,
-    setSelectedDate,
-    selectedDate1,
-    setSelectedDate1,
-    guest,
-    setGuest,
-    nights,
-    setNights,
-  } = useContext(BookingContext);
+  const { selectedDate, selectedDate1, guest, nights } =
+    useContext(BookingContext);
   const [flagCalender, setFlagCalender] = useState(false);
   const isClient = useIsClient();
 
   // Initialize the form with react-hook-form
-  const methods = useForm({
+  const methods = useForm<CheckoutFormProps>({
     defaultValues: {
       guest,
       dateRange: {
@@ -57,38 +55,9 @@ export default function CheckoutStart({ listing }: IProps) {
   });
 
   // Watch all form values
-  const guestValue = methods.watch("guest");
-  const dateRangeValue = methods.watch("dateRange");
-
-  useEffect(() => {
-    // Here you can implement the logic to store values, perhaps in state or send to an API
-    if (
-      dateRangeValue.startDate &&
-      dateRangeValue.endDate &&
-      dateRangeValue.startDate !== selectedDate &&
-      dateRangeValue.endDate !== selectedDate1
-    ) {
-      const nights = differenceInDays(
-        dateRangeValue.endDate,
-        dateRangeValue.startDate,
-      );
-      if (nights > 0) {
-        console.log("Updating dates + nights in context");
-        setSelectedDate(dateRangeValue.startDate);
-        setSelectedDate1(dateRangeValue.endDate);
-        setNights(nights);
-      }
-    }
-  }, [dateRangeValue]);
-
-
-  // Use useEffect to perform actions on value change
-  useEffect(() => {
-    if (guestValue > 0 && guestValue !== guest) {
-      console.log("Updating guest in context");
-      setGuest(guestValue);
-    }
-  }, [guestValue]);
+  const dateRangeValue = methods.watch("dateRange")
+  useWatchDateRange<CheckoutFormProps>(methods.control, "dateRange");
+  useWatchGuest<CheckoutFormProps>(methods.control, "guest");
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {

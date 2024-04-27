@@ -1,23 +1,39 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext, useCallback } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useCallback,
+  useContext,
+} from "react";
 import React, { useEffect } from "react";
+import { Range } from "react-date-range";
+import {
+  Control,
+  DeepPartialSkipArrayKey,
+  FieldValues,
+  Path,
+  useWatch,
+} from "react-hook-form";
 
-
-
-import { formatISO, isBefore, parseISO, startOfToday, startOfTomorrow } from "date-fns";
+import {
+  differenceInDays,
+  formatISO,
+  isBefore,
+  parseISO,
+  startOfToday,
+  startOfTomorrow,
+} from "date-fns";
 import createPersistedState from "use-persisted-state";
 
-
-
 import "@/global.css";
-
 
 interface BookingStateStore {
   selectedDate: string;
   selectedDate1: string;
-  guest: number;
   nights: number;
+  guest: number;
 }
 
 const useBookingStateStore =
@@ -25,22 +41,18 @@ const useBookingStateStore =
 
 export const BookingContext = createContext<{
   selectedDate?: Date;
-  setSelectedDate: (date: string | Date) => void;
   selectedDate1?: Date;
-  setSelectedDate1: (date: string | Date) => void;
+  nights: number;
+  setDates: (startDate: Date, endDate: Date) => void;
   guest: number;
   setGuest: (guest: number) => void;
-  nights: number;
-  setNights: (nights: number) => void;
 }>({
   selectedDate: undefined,
-  setSelectedDate: () => {},
   selectedDate1: undefined,
-  setSelectedDate1: () => {},
+  nights: 1,
+  setDates: () => {},
   guest: 1,
   setGuest: () => {},
-  nights: 1,
-  setNights: () => {},
 });
 
 export const BookingContextProvider = ({
@@ -55,56 +67,52 @@ export const BookingContextProvider = ({
     nights: 1,
   });
 
-  const setSelectedDate = useCallback(
-    (date: string | Date) => {
-      const newDate = typeof date === "string" ? date : formatISO(date);
-      if (newDate !== bookingState.selectedDate) {
+  const setDates = useCallback(
+    (startDate: Date, endDate: Date) => {
+      const nights = differenceInDays(endDate, startDate);
+
+      if (nights > 0) {
+        console.log("Updating dates", {
+          startDate,
+          endDate,
+          nights,
+          bookingState,
+        });
         setBookingState((prevState) => ({
           ...prevState,
-          selectedDate: newDate,
+          selectedDate: formatISO(startDate),
+          selectedDate1: formatISO(endDate),
+          nights,
         }));
       }
     },
     [bookingState, setBookingState],
   );
 
-  const setSelectedDate1 = useCallback(
-    (date: string | Date) => {
-      const newDate = typeof date === "string" ? date : formatISO(date);
-      if (newDate !== bookingState.selectedDate1) {
+  const setGuest = useCallback(
+    (guest: number) => {
+      if (bookingState.guest !== guest) {
+        console.log("Updating guest", {
+          guest,
+          bookingState,
+        });
         setBookingState((prevState) => ({
           ...prevState,
-          selectedDate1: newDate,
+          guest,
         }));
       }
     },
     [bookingState, setBookingState],
   );
-
-  const setGuest = useCallback((guest: number) => {
-    if (bookingState.guest !==guest) {setBookingState((prevState) => ({
-      ...prevState,
-      guest,
-    }));}
-  }, [bookingState, setBookingState])
-
-  const setNights = useCallback((nights: number) => {
-    if (bookingState.nights !==nights) {setBookingState((prevState) => ({
-      ...prevState,
-      nights,
-    }));}
-  }, [bookingState, setBookingState])
 
   useEffect(() => {
     if (
       !bookingState.selectedDate ||
       isBefore(parseISO(bookingState.selectedDate), startOfToday())
     ) {
-      setSelectedDate(startOfToday());
-      setSelectedDate1(startOfTomorrow());
-      setNights(1);
+      setDates(startOfToday(), startOfTomorrow());
     }
-  }, [bookingState, setSelectedDate, setSelectedDate1, setNights]);
+  }, [bookingState, setDates]);
 
   return (
     <BookingContext.Provider
@@ -112,18 +120,49 @@ export const BookingContextProvider = ({
         selectedDate: bookingState.selectedDate
           ? parseISO(bookingState.selectedDate)
           : undefined,
-        setSelectedDate,
         selectedDate1: bookingState.selectedDate1
           ? parseISO(bookingState.selectedDate1)
           : undefined,
-        setSelectedDate1,
+        nights: bookingState.nights,
+        setDates,
         guest: bookingState.guest,
         setGuest,
-        nights: bookingState.nights,
-        setNights,
       }}
     >
       {children}
     </BookingContext.Provider>
   );
 };
+
+export function useWatchDateRange<T extends FieldValues>(
+  control: Control<T>,
+  name: Path<T>,
+) {
+  const value: Range = useWatch({ name, control });
+  const { selectedDate, selectedDate1, setDates } = useContext(BookingContext);
+  useEffect(() => {
+    if (!selectedDate || !selectedDate1 || !value.startDate || !value.endDate) {
+      return;
+    }
+    if (
+      value.startDate.getTime() !== selectedDate.getTime() ||
+      value.endDate.getTime() !== selectedDate1.getTime()
+    ) {
+      setDates(value.startDate, value.endDate);
+    }
+  }, [value]);
+}
+
+export function useWatchGuest<T extends FieldValues>(
+  control: Control<T>,
+  name: Path<T>,
+) {
+  const value: number = useWatch({ name, control });
+  const { guest, setGuest } = useContext(BookingContext);
+  useEffect(() => {
+    if (value > 0 && value !== guest) {
+      console.log("setting guest", guest);
+      setGuest(value);
+    }
+  }, [value]);
+}

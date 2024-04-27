@@ -1,9 +1,8 @@
-import React, { MouseEventHandler } from "react";
+import React, { ButtonHTMLAttributes, MouseEventHandler } from "react";
 
 
-interface IProps {
+interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  className?: string;
   customWidth?: string;
   secondaryFont?: Boolean;
   uppercase?: Boolean;

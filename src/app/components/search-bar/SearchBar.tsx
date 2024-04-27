@@ -1,30 +1,36 @@
 "use client";
 
-import React, {
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import { FormProvider, useForm } from "react-hook-form";
+
+
 
 import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
 
+
+
 import { Divider } from "@mui/material";
+
+
 
 import CalendarIcon from "@/assets/icons/calendar.svg";
 import CloseIcon from "@/assets/icons/close.svg";
 import FilterIcon from "@/assets/icons/filter.svg";
 
-import { BookingContext } from "@/app/contexts/booking";
+
+
+import { BookingContext, useWatchDateRange, useWatchGuest } from "@/app/contexts/booking";
 import { useIsClient } from "@/app/helpers/useIsClient";
+
+
 
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
 import FilterBox from "./FilterBox";
 import LocationMenu from "./LocationMenu";
+
 
 export interface Features {
   wifi: boolean;
@@ -124,10 +130,8 @@ const SelectedDate = ({
 export default function SearchBar() {
   const {
     selectedDate,
-    setSelectedDate,
     selectedDate1,
-    setSelectedDate1,
-    setNights,
+    setDates
   } = useContext(BookingContext);
 
   const showFiltered = true;
@@ -203,6 +207,8 @@ export default function SearchBar() {
     // } else if (type === "roomsAndBeds") handleFilterData(key, "Any");
   }, []);
 
+  useWatchDateRange(formMethods.control, "dateRange");
+
   const onSubmit = formMethods.handleSubmit((data: FormData) => {
     const searchParams = new URLSearchParams();
     Object.entries(data).forEach(([key, value]) => {
@@ -214,11 +220,7 @@ export default function SearchBar() {
     });
 
     if (data.dateRange.startDate && data.dateRange.endDate) {
-      setSelectedDate(data.dateRange.startDate);
-      setSelectedDate1(data.dateRange.endDate);
-      setNights(
-        differenceInDays(data.dateRange.endDate, data.dateRange.startDate),
-      );
+      setDates(data.dateRange.startDate,data.dateRange.endDate);
 
       // router.push(`/?${searchParams.toString()}`);
       console.dir({ data });
