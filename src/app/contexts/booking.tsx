@@ -1,35 +1,41 @@
 "use client";
 
-import { Dispatch, SetStateAction, createContext } from "react";
+import { Dispatch, SetStateAction, createContext, useCallback } from "react";
 import React, { useEffect } from "react";
 
-import { isBefore, startOfToday, startOfTomorrow } from "date-fns";
+
+
+import { formatISO, isBefore, parseISO, startOfToday, startOfTomorrow } from "date-fns";
 import createPersistedState from "use-persisted-state";
+
+
 
 import "@/global.css";
 
-const useSelectedDateStateStore = createPersistedState<Date>(
-  "mybook-selectedDate",
-);
-const useSelectedDate1StateStore = createPersistedState<Date>(
-  "mybook-selectedDate1",
-);
-const useNightsStateStore = createPersistedState<number>("mybook-nights");
-const useGuestStateStore = createPersistedState<number>("mybook-guest");
+
+interface BookingStateStore {
+  selectedDate: string;
+  selectedDate1: string;
+  guest: number;
+  nights: number;
+}
+
+const useBookingStateStore =
+  createPersistedState<BookingStateStore>("mybookr-booking");
 
 export const BookingContext = createContext<{
-  selectedDate: Date;
-  setSelectedDate: Dispatch<SetStateAction<Date>>;
-  selectedDate1: Date;
-  setSelectedDate1: Dispatch<SetStateAction<Date>>;
+  selectedDate?: Date;
+  setSelectedDate: (date: string | Date) => void;
+  selectedDate1?: Date;
+  setSelectedDate1: (date: string | Date) => void;
   guest: number;
-  setGuest: Dispatch<SetStateAction<number>>;
+  setGuest: (guest: number) => void;
   nights: number;
-  setNights: Dispatch<SetStateAction<number>>;
+  setNights: (nights: number) => void;
 }>({
-  selectedDate: new Date(),
+  selectedDate: undefined,
   setSelectedDate: () => {},
-  selectedDate1: new Date(),
+  selectedDate1: undefined,
   setSelectedDate1: () => {},
   guest: 1,
   setGuest: () => {},
@@ -42,32 +48,79 @@ export const BookingContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [selectedDate, setSelectedDate] =
-    useSelectedDateStateStore(startOfToday());
-  const [selectedDate1, setSelectedDate1] =
-    useSelectedDate1StateStore(startOfTomorrow());
-  const [nights, setNights] = useNightsStateStore(1);
-  const [guest, setGuest] = useGuestStateStore(0);
+  const [bookingState, setBookingState] = useBookingStateStore({
+    selectedDate: formatISO(startOfToday()),
+    selectedDate1: formatISO(startOfTomorrow()),
+    guest: 0,
+    nights: 1,
+  });
+
+  const setSelectedDate = useCallback(
+    (date: string | Date) => {
+      const newDate = typeof date === "string" ? date : formatISO(date);
+      if (newDate !== bookingState.selectedDate) {
+        setBookingState((prevState) => ({
+          ...prevState,
+          selectedDate: newDate,
+        }));
+      }
+    },
+    [bookingState, setBookingState],
+  );
+
+  const setSelectedDate1 = useCallback(
+    (date: string | Date) => {
+      const newDate = typeof date === "string" ? date : formatISO(date);
+      if (newDate !== bookingState.selectedDate1) {
+        setBookingState((prevState) => ({
+          ...prevState,
+          selectedDate1: newDate,
+        }));
+      }
+    },
+    [bookingState, setBookingState],
+  );
+
+  const setGuest = useCallback((guest: number) => {
+    if (bookingState.guest !==guest) {setBookingState((prevState) => ({
+      ...prevState,
+      guest,
+    }));}
+  }, [bookingState, setBookingState])
+
+  const setNights = useCallback((nights: number) => {
+    if (bookingState.nights !==nights) {setBookingState((prevState) => ({
+      ...prevState,
+      nights,
+    }));}
+  }, [bookingState, setBookingState])
 
   useEffect(() => {
-    if (isBefore(selectedDate, startOfToday())) {
+    if (
+      !bookingState.selectedDate ||
+      isBefore(parseISO(bookingState.selectedDate), startOfToday())
+    ) {
       setSelectedDate(startOfToday());
       setSelectedDate1(startOfTomorrow());
       setNights(1);
     }
-  }, [selectedDate, setSelectedDate, setSelectedDate1, setNights]);
+  }, [bookingState, setSelectedDate, setSelectedDate1, setNights]);
 
   return (
     <BookingContext.Provider
       value={{
-        selectedDate,
+        selectedDate: bookingState.selectedDate
+          ? parseISO(bookingState.selectedDate)
+          : undefined,
         setSelectedDate,
-        selectedDate1,
+        selectedDate1: bookingState.selectedDate1
+          ? parseISO(bookingState.selectedDate1)
+          : undefined,
         setSelectedDate1,
-        nights,
-        setNights,
-        guest,
+        guest: bookingState.guest,
         setGuest,
+        nights: bookingState.nights,
+        setNights,
       }}
     >
       {children}

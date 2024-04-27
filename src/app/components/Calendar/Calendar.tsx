@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
 import { DateRangePicker, Range } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { Controller, useFormContext } from "react-hook-form";
 
 import differenceInDays from "date-fns/differenceInDays";
@@ -35,15 +37,15 @@ export default function Calendar({
     setFlagCalender(false);
   };
 
-  const values = getValues();
+  const dateRange = getValues("dateRange");
 
   const nights = useMemo(() => {
-    const { startDate, endDate } = values.dateRange;
+    const { startDate, endDate } = dateRange;
     if (!startDate || !endDate) {
       return 0;
     }
     return differenceInDays(endDate, startDate);
-  }, [values]);
+  }, [dateRange]);
 
   return (
     <StyledDialog

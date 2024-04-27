@@ -3,26 +3,23 @@
 import React, {
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
 import { Range } from "react-date-range";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
-import { useRouter } from "next/navigation";
 
-import { Divider, useMediaQuery } from "@mui/material";
+import { Divider } from "@mui/material";
 
 import CalendarIcon from "@/assets/icons/calendar.svg";
 import CloseIcon from "@/assets/icons/close.svg";
 import FilterIcon from "@/assets/icons/filter.svg";
 
 import { BookingContext } from "@/app/contexts/booking";
+import { useIsClient } from "@/app/helpers/useIsClient";
 
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
@@ -111,8 +108,7 @@ const SelectedDate = ({
   date?: Date;
   handleRangeSelectionDialog: any;
 }) => {
-  const [isClient, setIsClient] = useState(false);
-  useEffect(() => setIsClient(true));
+  const isClient = useIsClient();
 
   return (
     <div
@@ -139,7 +135,7 @@ export default function SearchBar() {
   const [flagCalendar, setFlagCalender] = useState(false);
   const [drawerMenu, setDrawerMenu] = useState(false);
   // const mediaQueryDown700 = useMediaQuery("(max-width: 700px)");
-  const router = useRouter();
+  // const router = useRouter();
 
   const handleRangeSelectionDialog = useCallback(() => {
     setFlagCalender(true);
@@ -220,7 +216,9 @@ export default function SearchBar() {
     if (data.dateRange.startDate && data.dateRange.endDate) {
       setSelectedDate(data.dateRange.startDate);
       setSelectedDate1(data.dateRange.endDate);
-      setNights(differenceInDays(selectedDate1, selectedDate));
+      setNights(
+        differenceInDays(data.dateRange.endDate, data.dateRange.startDate),
+      );
 
       // router.push(`/?${searchParams.toString()}`);
       console.dir({ data });
@@ -336,12 +334,10 @@ export default function SearchBar() {
           deleteFilteredItem={deleteFilteredItem}
         />
         {/* Calendar */}
-        {flagCalendar && (
-          <Calendar
-            flagCalender={flagCalendar}
-            setFlagCalender={setFlagCalender}
-          />
-        )}
+        <Calendar
+          flagCalender={flagCalendar}
+          setFlagCalender={setFlagCalender}
+        />
       </form>
     </FormProvider>
   );

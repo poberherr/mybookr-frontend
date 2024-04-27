@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
 import { Divider, Typography } from "@mui/material";
 
-import Calendar from "../../components/Calendar/Calendar";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import Gallery from "../../components/others/Gallery";
 import { SButton } from "../../components/ui/SButton";
-import StyledDialog from "../../components/ui/StyledDialog";
 import CheckoutStart from "@/app/components/checkout/CheckoutStart";
 
 import HeartIcon from "@/assets/icons/heart.svg";
@@ -29,36 +27,36 @@ import {
   useCoreListingsRead,
   useCoreReviewsList,
 } from "@/app/api-helpers";
-import formatDateSpan from "@/app/helpers/date-format";
 
 // import CheckoutAndPay from "./checkout";
 
 export default function ListingComponent({ id }: { id: string }) {
   const router = useRouter();
   const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
-  const { data: reviews } = useCoreReviewsList<Review[]>();
+  // const { data: reviews } = useCoreReviewsList<Review[]>();
 
   // eslint-disable-next-line no-unused-vars
-  const [price, setPrice] = useState(0.01);
-  const [rating, setRating] = useState(0);
+  // const [price, setPrice] = useState(0.01);
+  const reviews: Review[] = [];
+  const [rating, setRating] = useState(5);
   const [ShowAllReview, setShowAllReviews] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
   const [flagGallery, setFlagGallery] = useState(false);
-  const [flagCalender, setFlagCalender] = useState(false);
 
   // Calculate rating of the listing
-  useEffect(() => {
-    if (reviews && reviews.length > 0) {
-      let sumOfRatings = 0;
-      reviews.forEach((review) => {
-        sumOfRatings += review.rating;
-      });
+  // @todo this should use useMemo to allow SSR ;)
+  // useEffect(() => {
+  //   if (reviews && reviews.length > 0) {
+  //     let sumOfRatings = 0;
+  //     reviews.forEach((review) => {
+  //       sumOfRatings += review.rating;
+  //     });
 
-      const rating = Number((sumOfRatings / reviews.length).toFixed(1));
-      setRating(rating);
-    }
-  }, [reviews]);
+  //     const rating = Number((sumOfRatings / reviews.length).toFixed(1));
+  //     setRating(rating);
+  //   }
+  // }, [reviews]);
 
   const houseRulesItems = getHouseRulesItems({
     houseRules: listing?.house_rules,
@@ -420,77 +418,10 @@ export default function ListingComponent({ id }: { id: string }) {
         </div>
 
         {/* Right content - Desktop */}
-        <div className="mr-40 hidden border-0 border-l border-r border-solid border-gray-100 md:block">
-          <CheckoutStart listing={listing} setFlagCalender={setFlagCalender} />
+        <div className="px-4 md:px-0 mt-10 py-4 md:py-0 md:mt-0 md:mr-40 border-0 border-t border-l border-r border-solid border-gray-100">
+          <CheckoutStart listing={listing} />
         </div>
       </div>
-
-      {/* Reserve Mobile */}
-      <div className="block md:hidden">
-        <Divider className="!mt-16" />
-
-        <div className="sticky bottom-0 my-12 grid grid-cols-[1fr_min-content] bg-white bg-opacity-30 p-4 backdrop-blur-xl">
-          <div className="flex flex-col justify-center">
-            <Typography className="!text-base !font-bold">{price} $</Typography>
-
-            <Typography className="!mt-1" variant="caption">
-              {formatDateSpan(new Date(), new Date())}
-            </Typography>
-          </div>
-
-          <SButton
-            fullWidth
-            variant="contained"
-            onClick={() => {
-              setShowDialog(true);
-            }}
-          >
-            Reserve
-          </SButton>
-        </div>
-      </div>
-
-      {/* Checkout Dialog */}
-      {showDialog && listing && (
-        <StyledDialog
-          showDialog={showDialog}
-          setShowDialog={setShowDialog}
-          title={"Checkout and pay"}
-        >
-          null
-          {/* <CheckoutAndPay
-            price={price}
-            eth_price={eth_price}
-            setFlagCalender={setFlagCalender}
-            selectedDate={selectedDate}
-            selectedDate1={selectedDate1}
-            guest={guest}
-            setGuest={setGuest}
-            connected={connected}
-            booknfts={booknfts}
-            setMetamaskDialog={setMetamaskDialog}
-            nights={nights}
-            navigate={router}
-            vouchersCounter={vouchersCounter}
-            setVouchersCounter={setVouchersCounter}
-            pricesFormData={pricesFormData}
-            setPricesFormData={setPricesFormData}
-            listing={listing}
-            listingRelated={{
-              rating: rating,
-              reviewCount: reviews.data?.length || 0,
-            }}
-          /> */}
-        </StyledDialog>
-      )}
-
-      {/* Calendar */}
-      {flagCalender && (
-        <Calendar
-          flagCalender={flagCalender}
-          setFlagCalender={setFlagCalender}
-        />
-      )}
     </div>
   );
 }

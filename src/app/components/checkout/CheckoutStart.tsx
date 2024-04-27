@@ -1,45 +1,108 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
+
+
+import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
 import { useRouter } from "next/navigation";
 
+
+
 import { Divider, Typography } from "@mui/material";
 
+
+
+import Calendar from "../../components/Calendar/Calendar";
 import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import PriceDetail from "@/app/components/others/PriceDetail";
 import { SButton } from "@/app/components/ui/SButton";
 
+
+
 import { Listing } from "@/app/api-helpers";
 import { BookingContext } from "@/app/contexts/booking";
+import { useIsClient } from "@/app/helpers/useIsClient";
+
 
 interface IProps {
-  setFlagCalender: any;
   listing: Listing;
 }
 
-export default function CheckoutStart({ setFlagCalender, listing }: IProps) {
+export default function CheckoutStart({ listing }: IProps) {
   const router = useRouter();
-  const { selectedDate, selectedDate1, guest, setGuest, nights } =
-    useContext(BookingContext);
+  const {
+    selectedDate,
+    setSelectedDate,
+    selectedDate1,
+    setSelectedDate1,
+    guest,
+    setGuest,
+    nights,
+    setNights,
+  } = useContext(BookingContext);
+  const [flagCalender, setFlagCalender] = useState(false);
+  const isClient = useIsClient();
 
   // Initialize the form with react-hook-form
   const methods = useForm({
-    mode: "onChange",
     defaultValues: {
       guest,
+      dateRange: {
+        startDate: selectedDate,
+        endDate: selectedDate1,
+        key: "selection",
+      },
     },
   });
 
+  // Watch all form values
+  const guestValue = methods.watch("guest");
+  const dateRangeValue = methods.watch("dateRange");
+
+  useEffect(() => {
+    // Here you can implement the logic to store values, perhaps in state or send to an API
+    if (
+      dateRangeValue.startDate &&
+      dateRangeValue.endDate &&
+      dateRangeValue.startDate !== selectedDate &&
+      dateRangeValue.endDate !== selectedDate1
+    ) {
+      const nights = differenceInDays(
+        dateRangeValue.endDate,
+        dateRangeValue.startDate,
+      );
+      if (nights > 0) {
+        console.log("Updating dates + nights in context");
+        setSelectedDate(dateRangeValue.startDate);
+        setSelectedDate1(dateRangeValue.endDate);
+        setNights(nights);
+      }
+    }
+  }, [dateRangeValue]);
+
+
+  // Use useEffect to perform actions on value change
+  useEffect(() => {
+    if (guestValue > 0 && guestValue !== guest) {
+      console.log("Updating guest in context");
+      setGuest(guestValue);
+    }
+  }, [guestValue]);
+
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {
+    console.dir({ data });
     if (data.guest !== 0) {
-      router.push("/checkout");
-      window.scrollTo(0, 0);
+      router.push(`/listings/${listing.id}/checkout`);
     } else {
       methods.trigger("guest");
     }
   });
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <FormProvider {...methods}>
@@ -66,7 +129,8 @@ export default function CheckoutStart({ setFlagCalender, listing }: IProps) {
                     variant="body1"
                     onClick={() => setFlagCalender(true)}
                   >
-                    {format(selectedDate, "MMM d")}
+                    {dateRangeValue.startDate &&
+                      format(dateRangeValue.startDate, "MMM d")}
                   </Typography>
                 </div>
 
@@ -83,7 +147,8 @@ export default function CheckoutStart({ setFlagCalender, listing }: IProps) {
                     variant="body1"
                     onClick={() => setFlagCalender(true)}
                   >
-                    {format(selectedDate1, "MMM d")}
+                    {dateRangeValue.endDate &&
+                      format(dateRangeValue.endDate, "MMM d")}
                   </Typography>
                 </div>
               </div>
@@ -128,6 +193,12 @@ export default function CheckoutStart({ setFlagCalender, listing }: IProps) {
             </Typography>
           </div>
         </div>
+
+        {/* Calendar */}
+        <Calendar
+          flagCalender={flagCalender}
+          setFlagCalender={setFlagCalender}
+        />
       </form>
     </FormProvider>
   );
