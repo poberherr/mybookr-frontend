@@ -58,8 +58,6 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   const user = useUser();
 
-  console.dir({ booking });
-
   const totalPrice = useMemo(
     () => listing && (parseFloat(listing.price_per_night) * nights).toFixed(2),
     [listing, nights],
@@ -104,9 +102,6 @@ export default function CheckoutPage({ id }: { id: string }) {
     isError,
   ]);
 
-  const router = useRouter();
-
-  // eslint-disable-next-line no-unused-vars
   const [flagCalender, setFlagCalender] = useState(false);
   const [flagEditGuestsDialog, setFlagEditGuestsDialog] = useState(false);
 
@@ -158,8 +153,8 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   const guestValue = methods.watch("guest");
   const dateRangeValue = methods.watch("dateRange");
-  // useWatchDateRange(methods.control, "dateRange");
-  // useWatchGuest(methods.control, "guest");
+  useWatchDateRange(methods.control, "dateRange");
+  useWatchGuest(methods.control, "guest");
 
   const isClient = useIsClient();
 
