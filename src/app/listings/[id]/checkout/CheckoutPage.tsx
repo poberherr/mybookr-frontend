@@ -26,6 +26,7 @@ import formatDateSpan from "@/app/helpers/date-format";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import AddCardDetailForm from "./AddCardDetailForm";
+import { PaymentForm } from "./PaymentForm";
 
 export default function CheckoutPage({ id }: { id: string }) {
   const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
@@ -182,46 +183,9 @@ export default function CheckoutPage({ id }: { id: string }) {
             <Divider />
 
             {/* Pay with */}
-            {!connected && (
-              <>
-                <div className="px-4 py-0 md:pl-40 md:pr-16">
-                  <div className="mb-4 flex flex-col justify-between md:flex-row">
-                    <Typography
-                      className="!mb-4 p-0 !font-extrabold md:!text-2xl"
-                      variant="h6"
-                    >
-                      Pay With
-                    </Typography>
-
-                    <div className="flex items-center">
-                      <img
-                        className="h-6"
-                        src={
-                          payment === "Credit or debit card"
-                            ? payment02.src
-                            : IMG_Payment01.src
-                        }
-                        alt=""
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid gap-12">
-                    <Typography>@todo Add payment form</Typography>
-
-                    {payment === "Credit or debit card" && (
-                      <>
-                        <Divider />
-
-                        <AddCardDetailForm setIsFormValid={setIsFormValid} />
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                <Divider />
-              </>
-            )}
+            <div className="px-4 py-0 md:pl-40 md:pr-16">
+              <PaymentForm />
+            </div>
 
             <Divider />
 
