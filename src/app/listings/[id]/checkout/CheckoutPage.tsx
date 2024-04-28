@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useMemo, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useRouter } from "next/navigation";
@@ -14,36 +14,29 @@ import PriceDetail from "@/app/components/others/PriceDetail";
 import { SButton } from "@/app/components/ui/SButton";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 
-import IMG_Back01 from "@/assets/img/LIVING_ROOM.png";
-import IMG_Payment01 from "@/assets/img/payment01.png";
-import payment02 from "@/assets/img/payment02.png";
-
 import CalendarIcon from "@/assets/icons/calendar.svg";
 
 import { Listing, useCoreListingsRead } from "@/app/api-helpers";
-import { BookingContext } from "@/app/contexts/booking";
+import {
+  BookingContext,
+  useWatchDateRange,
+  useWatchGuest,
+} from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
-import AddCardDetailForm from "./AddCardDetailForm";
 import { PaymentForm } from "./PaymentForm";
 
 export default function CheckoutPage({ id }: { id: string }) {
   const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
-  const { selectedDate, selectedDate1, nights, guest, setDates } =
+  const { selectedDate, selectedDate1, nights, guest } =
     useContext(BookingContext);
 
   const router = useRouter();
 
   // eslint-disable-next-line no-unused-vars
-  const [price, setPrice] = useState(0.01);
-  const [payment, setPayment] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
   const [flagCalender, setFlagCalender] = useState(false);
   const [flagEditGuestsDialog, setFlagEditGuestsDialog] = useState(false);
-
-  // @todo add payment logic
-  const connected = false;
 
   // Scroll to the payment method
   const paymentRef = useRef<HTMLElement>(null);
@@ -70,10 +63,17 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   const guestValue = methods.watch("guest");
   const dateRangeValue = methods.watch("dateRange");
+  useWatchDateRange(methods.control, "dateRange");
+  useWatchGuest(methods.control, "guest");
+
+  const totalPrice = useMemo(
+    () => listing && (parseFloat(listing.price_per_night) * nights).toFixed(2),
+    [listing, nights],
+  );
 
   const isClient = useIsClient();
 
-  if (!isClient) {
+  if (!isClient || !listing) {
     return null;
   }
 
@@ -301,40 +301,20 @@ export default function CheckoutPage({ id }: { id: string }) {
                 <Typography className="!text-sm font-black">Total</Typography>
 
                 <Typography className="text-right !text-sm font-bold">
-                  {(price * nights).toFixed(2)}$
+                  {totalPrice}$
                 </Typography>
               </div>
 
               {/* Reserve button */}
-              {connected ? (
-                <SButton
-                  variant="contained"
-                  onClick={() => {
-                    router.push("/booking-confirmation");
-                    window.scrollTo(0, 0);
-                  }}
-                >
-                  Request booking
-                </SButton>
-              ) : (
-                <SButton
-                  variant="contained"
-                  disabled={
-                    payment === "Credit or debit card" ? !isFormValid : false
-                  }
-                  onClick={() => {
-                    if (payment === "") {
-                      // trigger("payment");
-                      executeScroll();
-                    } else {
-                      router.push("/booking-confirmation");
-                      window.scrollTo(0, 0);
-                    }
-                  }}
-                >
-                  Request booking
-                </SButton>
-              )}
+              <SButton
+                variant="contained"
+                onClick={() => {
+                  router.push("/booking-confirmation");
+                  window.scrollTo(0, 0);
+                }}
+              >
+                Request booking
+              </SButton>
             </div>
           </div>
 
@@ -346,17 +326,19 @@ export default function CheckoutPage({ id }: { id: string }) {
                 className="!mb-4 p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"
                 variant="h6"
               >
-                Bali Pererenan Pantai Lima
+                {listing.meta.title}
               </Typography>
 
               {/* Villa Image */}
-              <div className="p-0 md:px-8 md:py-0">
-                <img
-                  className="h-64 w-full rounded"
-                  src={IMG_Back01.src}
-                  alt=""
-                />
-              </div>
+              {listing.images && (
+                <div className="p-0 md:px-8 md:py-0">
+                  <img
+                    className="h-64 w-full rounded"
+                    src={listing.images[0]}
+                    alt=""
+                  />
+                </div>
+              )}
 
               {/* Price detail part */}
               <div className="p-0 md:px-8 md:py-0">
@@ -378,7 +360,7 @@ export default function CheckoutPage({ id }: { id: string }) {
                   <Typography className="!text-sm font-black">Total</Typography>
 
                   <Typography className="text-right !text-sm font-bold">
-                    {(price * nights).toFixed(2)}$
+                    {totalPrice}$
                   </Typography>
                 </div>
               </div>
