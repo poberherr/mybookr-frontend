@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Divider } from "@mui/material";
 
 // import StyledAutocomplete from "@/app/components/Form/StyledAutocomplete";
-import StyledTextField from "@/app/components/Form/TextField";
+import StyledTextField from "@/app/components/form/TextField";
 
 import CardIcon from "@/assets/icons/card.svg";
 
