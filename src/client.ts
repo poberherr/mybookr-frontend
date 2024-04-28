@@ -40,10 +40,9 @@ export type ResponseConfig<TData = unknown> = {
 
 export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AXIOS_BASE,
-  headers:
-    typeof AXIOS_HEADERS !== "undefined"
-      ? (JSON.parse(AXIOS_HEADERS) as AxiosHeaders)
-      : undefined,
+  headers: {
+    "Authorization": process.env.NEXT_PUBLIC_AXIOS_AUTH_TOKEN
+  }
 });
 
 export const axiosClient = async <

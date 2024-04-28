@@ -42,7 +42,7 @@ export const SButton = ({
   ...props
 }: IProps) => {
   // Set up base styles
-  let baseStyles = `font-${secondaryFont ? "Inter" : "Montserrat"} font-semibold text-${uppercase ? "uppercase" : "capitalize"} rounded-full shadow-none transition-all duration-500 ease-in-out`;
+  let baseStyles = `font-${secondaryFont ? "Inter" : "Montserrat"} font-semibold text-${uppercase ? "uppercase" : "capitalize"} rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500`;
 
   // Responsive width classes
   const widthClass =

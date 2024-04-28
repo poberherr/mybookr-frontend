@@ -1,13 +1,24 @@
 "use client";
 
-import React, { useContext, useMemo, useRef, useState } from "react";
+import React, {
+  MouseEvent,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
+import { useUser } from "@clerk/clerk-react";
+import { formatISO } from "date-fns";
 import { useRouter } from "next/navigation";
 
-import { Divider, Typography } from "@mui/material";
+import { Divider, Input, Typography } from "@mui/material";
 
 import Calendar from "@/app/components/Calendar/Calendar";
+import StyledTextField from "@/app/components/form/TextField";
 import BackButton from "@/app/components/others/BackButton";
 import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import PriceDetail from "@/app/components/others/PriceDetail";
@@ -16,7 +27,11 @@ import StyledDialog from "@/app/components/ui/StyledDialog";
 
 import CalendarIcon from "@/assets/icons/calendar.svg";
 
-import { Listing, useCoreListingsRead } from "@/app/api-helpers";
+import {
+  Listing,
+  useCoreBookingsCreate,
+  useCoreListingsRead,
+} from "@/app/api-helpers";
 import {
   BookingContext,
   useWatchDateRange,
@@ -29,8 +44,65 @@ import { PaymentForm } from "./PaymentForm";
 
 export default function CheckoutPage({ id }: { id: string }) {
   const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
+
+  const {
+    data: booking,
+    mutate,
+    isIdle,
+    isPending,
+    isError,
+  } = useCoreBookingsCreate({ mutation: {} });
+
   const { selectedDate, selectedDate1, nights, guest } =
     useContext(BookingContext);
+
+  const user = useUser();
+
+  console.dir({ booking });
+
+  const totalPrice = useMemo(
+    () => listing && (parseFloat(listing.price_per_night) * nights).toFixed(2),
+    [listing, nights],
+  );
+
+  useEffect(() => {
+    // if (!isPending && isError) {
+    //   alert(
+    //     "Unable to initiate booking in the backend. Sorry about this! Please reload the page and try again. Remember to blame Sebastian!",
+    //   );
+    //   return;
+    // }
+    if (
+      !booking &&
+      isIdle &&
+      !isPending &&
+      listing &&
+      selectedDate &&
+      selectedDate1
+    ) {
+      // create booking if not exists
+      console.log("Mutating!");
+      mutate({
+        booking_status: "fresh",
+        check_in_date: formatISO(selectedDate),
+        check_out_date: formatISO(selectedDate1),
+        guest,
+        //@todo remove this when listing id is requried in generated interfaces,
+        listing: listing.id || 0,
+        special_requests: "",
+        //@todo remove this when listing id is requried in generated interfaces,
+        total_cost: totalPrice || "0.00",
+      });
+    }
+  }, [
+    booking,
+    listing,
+    selectedDate,
+    selectedDate1,
+    isIdle,
+    isPending,
+    isError,
+  ]);
 
   const router = useRouter();
 
@@ -40,7 +112,7 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   // Scroll to the payment method
   const paymentRef = useRef<HTMLElement>(null);
-  const executeScroll = () =>
+  const scrollToPayment = () =>
     paymentRef.current &&
     paymentRef.current.scrollIntoView({
       behavior: "smooth",
@@ -50,26 +122,44 @@ export default function CheckoutPage({ id }: { id: string }) {
   // React Hook Form for payment method
   // We can't put these inside the form component (PaymentMethodForm), because we need the trigger method for the Request booking button inside this (ShoppingCart) component
   const methods = useForm({
-    mode: "onChange",
     defaultValues: {
+      email: user.user?.primaryEmailAddress?.emailAddress || "",
       guest,
       dateRange: {
         startDate: selectedDate,
         endDate: selectedDate1,
         key: "selection",
       },
+      // @todo make proper!
+      payment: null,
     },
   });
 
+  const [paymentReady, setPaymentReady] = useState(false);
+
+  const onSubmit = methods.handleSubmit((data) => {
+    console.dir({ data });
+
+    if (!data.payment) {
+      setPaymentReady(true);
+      scrollToPayment();
+      return;
+    }
+    alert("@todo");
+  });
+
+  const values = methods.watch();
+  const emailValue = methods.watch("email");
+  useEffect(() => {
+    if (emailValue !== user.user?.primaryEmailAddress?.emailAddress) {
+      methods.resetField("email");
+    }
+  }, [user.user, methods.resetField]);
+
   const guestValue = methods.watch("guest");
   const dateRangeValue = methods.watch("dateRange");
-  useWatchDateRange(methods.control, "dateRange");
-  useWatchGuest(methods.control, "guest");
-
-  const totalPrice = useMemo(
-    () => listing && (parseFloat(listing.price_per_night) * nights).toFixed(2),
-    [listing, nights],
-  );
+  // useWatchDateRange(methods.control, "dateRange");
+  // useWatchGuest(methods.control, "guest");
 
   const isClient = useIsClient();
 
@@ -79,7 +169,7 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   return (
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={onSubmit}>
         <BackButton pageName="details" />
 
         <Typography
@@ -177,14 +267,50 @@ export default function CheckoutPage({ id }: { id: string }) {
                     </SButton>
                   </div>
                 </StyledDialog>
+
+                {/* Email */}
+                <div className="mt-6">
+                  <StyledTextField
+                    control={methods.control}
+                    type="email"
+                    name="email"
+                    id="email"
+                    label="Email"
+                    errors={methods.formState.errors.email}
+                    rules={{
+                      required: "Email is required",
+                      pattern: {
+                        value: /^.+@.+$/,
+                        message: "Please enter a valid email",
+                      },
+                    }}
+                  />
+                </div>
+
+                {/* Reserve button */}
+                <div className="mt-6">
+                  {!values.payment && (
+                    <SButton
+                      disabled={!methods.formState.isDirty}
+                      variant="contained"
+                    >
+                      Continue to payment
+                    </SButton>
+                  )}
+                </div>
               </div>
             </div>
 
-            <Divider />
-
-            {/* Pay with */}
-            <div className="px-4 py-0 md:pl-40 md:pr-16">
-              <PaymentForm />
+            <div ref={paymentRef as React.RefObject<HTMLDivElement>}>
+              {paymentReady && (
+                <>
+                  <Divider />
+                  {/* Pay with */}
+                  <div className="px-4 py-0 md:pl-40 md:pr-16 mt-16">
+                    <PaymentForm />
+                  </div>
+                </>
+              )}{" "}
             </div>
 
             <Divider />
@@ -306,15 +432,7 @@ export default function CheckoutPage({ id }: { id: string }) {
               </div>
 
               {/* Reserve button */}
-              <SButton
-                variant="contained"
-                onClick={() => {
-                  router.push("/booking-confirmation");
-                  window.scrollTo(0, 0);
-                }}
-              >
-                Request booking
-              </SButton>
+              <SButton variant="contained">Request booking</SButton>
             </div>
           </div>
 
