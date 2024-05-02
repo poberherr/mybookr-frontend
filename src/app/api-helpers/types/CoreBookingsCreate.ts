@@ -4,7 +4,7 @@ export type CoreBookingsCreate201 = Booking;
 
 export type CoreBookingsCreateMutationRequest = Omit<
   NonNullable<Booking>,
-  "id"
+  "id" | "created_at" | "updated_at"
 >;
 
 export type CoreBookingsCreateMutationResponse = Booking;

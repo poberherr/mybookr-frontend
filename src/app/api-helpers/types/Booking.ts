@@ -1,34 +1,71 @@
+export const bookingBookingStatus = {
+  NotStarted: "NotStarted",
+  DataCollected: "DataCollected",
+  PendingReservation: "PendingReservation",
+  ConfirmedReservation: "ConfirmedReservation",
+  DeniedReservation: "DeniedReservation",
+  SuccessfulPayment: "SuccessfulPayment",
+  FailedPayment: "FailedPayment",
+  CompletedBooking: "CompletedBooking",
+} as const;
+export type BookingBookingStatus =
+  (typeof bookingBookingStatus)[keyof typeof bookingBookingStatus];
 export type Booking = {
   /**
-   * @type integer | undefined
+   * @type string | undefined, uuid
    */
-  readonly id?: number;
+  readonly id?: string;
   /**
-   * @type integer
-   */
-  guest: number;
-  /**
-   * @type integer
-   */
-  listing: number;
-  /**
-   * @type string date
+   * @description Date the guest will check in.
+   * @type string, date
    */
   check_in_date: string;
   /**
-   * @type string date
+   * @description Date the guest will check out.
+   * @type string, date
    */
   check_out_date: string;
   /**
-   * @type string decimal
+   * @description Total cost of the booking.
+   * @type string | undefined, decimal
    */
-  total_cost: string;
+  total_cost?: string;
   /**
-   * @type string
+   * @description Currency for the total cost.
+   * @type string | undefined
    */
-  booking_status: string;
+  total_cost_currency?: string;
   /**
-   * @type string
+   * @description Current status of the booking.
+   * @type string | undefined
    */
-  special_requests: string;
+  booking_status?: BookingBookingStatus;
+  /**
+   * @description Any special requests made by the guest.
+   * @type string | undefined
+   */
+  special_requests?: string;
+  /**
+   * @description Number of guests included in the booking.
+   * @type integer | undefined
+   */
+  number_of_guests?: number;
+  /**
+   * @type string | undefined, date-time
+   */
+  readonly created_at?: string;
+  /**
+   * @type string | undefined, date-time
+   */
+  readonly updated_at?: string;
+  /**
+   * @description The guest who made the booking.
+   * @type integer
+   */
+  guest_id: number;
+  /**
+   * @description The property that is booked.
+   * @type integer
+   */
+  listing_id: number;
 };

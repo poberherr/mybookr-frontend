@@ -1,9 +1,9 @@
 export type CoreBookingsDeletePathParams = {
   /**
-   * @description A unique integer value identifying this booking.
-   * @type integer
+   * @description A UUID string identifying this Booking.
+   * @type string, uuid
    */
-  id: number;
+  id: string;
 };
 
 export type CoreBookingsDelete204 = any;

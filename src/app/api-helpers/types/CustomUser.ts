@@ -8,7 +8,7 @@ export type CustomUser = {
    */
   password: string;
   /**
-   * @type string date-time
+   * @type string, date-time
    */
   last_login: string | null;
   /**
@@ -30,7 +30,7 @@ export type CustomUser = {
    */
   last_name?: string;
   /**
-   * @type string | undefined email
+   * @type string | undefined, email
    */
   email?: string;
   /**
@@ -44,29 +44,64 @@ export type CustomUser = {
    */
   is_active?: boolean;
   /**
-   * @type string | undefined date-time
+   * @type string | undefined, date-time
    */
   date_joined?: string;
   /**
-   * @type string uri
+   * @description Unique identifier from Clerk for the user.
+   * @type string
+   */
+  clerk_id: string | null;
+  /**
+   * @description URL to the user\'s profile picture.
+   * @type string, uri
    */
   readonly profile_picture: string | null;
   /**
-   * @type string date
+   * @description User\'s date of birth.
+   * @type string, date
    */
   date_of_birth: string | null;
   /**
-   * @type array | undefined
+   * @description Street address of the user.
+   * @type string
    */
-  address?: string[];
+  street_address: string | null;
   /**
+   * @description City where the user lives.
+   * @type string
+   */
+  city: string | null;
+  /**
+   * @description State where the user lives.
+   * @type string
+   */
+  state: string | null;
+  /**
+   * @description Country where the user lives.
+   * @type string
+   */
+  country: string | null;
+  /**
+   * @description Postal code of the user\'s address.
+   * @type string
+   */
+  postal_code: string | null;
+  /**
+   * @description JSON containing social media profiles and other social data.
    * @type object
    */
   social_data: {} | null;
   /**
+   * @description JSON containing IDs from external systems for the user.
    * @type object
    */
   external_ids: {} | null;
+  /**
+   * @description User\'s phone number in international format.
+   * @type string
+   */
+  phone_number: string | null;
   /**
    * @description The groups this user belongs to. A user will get all permissions granted to each of their groups.
    * @type array | undefined

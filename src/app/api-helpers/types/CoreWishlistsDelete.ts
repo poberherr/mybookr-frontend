@@ -1,6 +1,6 @@
 export type CoreWishlistsDeletePathParams = {
   /**
-   * @description A unique integer value identifying this wishlist.
+   * @description A unique integer value identifying this Wishlist.
    * @type integer
    */
   id: number;

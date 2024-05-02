@@ -1,6 +1,6 @@
 export type CoreListingsDeletePathParams = {
   /**
-   * @description A unique integer value identifying this listing.
+   * @description A unique integer value identifying this Listing.
    * @type integer
    */
   id: number;

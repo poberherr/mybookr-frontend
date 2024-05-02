@@ -2,7 +2,7 @@ import type { Listing } from "./Listing";
 
 export type CoreListingsReadPathParams = {
   /**
-   * @description A unique integer value identifying this listing.
+   * @description A unique integer value identifying this Listing.
    * @type integer
    */
   id: number;

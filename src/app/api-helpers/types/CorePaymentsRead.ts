@@ -2,10 +2,10 @@ import type { Payment } from "./Payment";
 
 export type CorePaymentsReadPathParams = {
   /**
-   * @description A unique integer value identifying this payment.
-   * @type integer
+   * @description A UUID string identifying this Payment.
+   * @type string, uuid
    */
-  id: number;
+  id: string;
 };
 
 export type CorePaymentsRead200 = Payment;

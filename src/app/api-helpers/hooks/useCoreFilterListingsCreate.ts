@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions } from "@tanstack/react-query";
 
-import client from "../../../client";
+import client from "../../client";
 import type { CoreFilterListingsCreateMutationResponse } from "../types/CoreFilterListingsCreate";
 
 type CoreFilterListingsCreateClient = typeof client<
@@ -23,7 +23,6 @@ type CoreFilterListingsCreate = {
   };
 };
 /**
- * @description Post a JSON object with filtering criteria to get filtered listings.
  * @link /core/filter-listings/
  */
 export function useCoreFilterListingsCreate(

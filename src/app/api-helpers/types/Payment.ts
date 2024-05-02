@@ -1,26 +1,53 @@
+export const paymentPaymentStatus = {
+  Unconfirmed: "Unconfirmed",
+  Charged: "Charged",
+  Collected: "Collected",
+} as const;
+export type PaymentPaymentStatus =
+  (typeof paymentPaymentStatus)[keyof typeof paymentPaymentStatus];
 export type Payment = {
   /**
-   * @type integer | undefined
+   * @type string | undefined, uuid
    */
-  readonly id?: number;
+  readonly id?: string;
   /**
-   * @type integer
+   * @description Date and time when the payment was processed.
+   * @type string | undefined, date-time
    */
-  booking: number;
+  payment_date?: string;
   /**
-   * @type integer
+   * @description Amount that was paid.
+   * @type string | undefined, decimal
    */
-  user: number;
+  payment_amount?: string;
   /**
-   * @type string | undefined date-time
+   * @description Current status of the payment.
+   * @type string | undefined
    */
-  readonly payment_date?: string;
+  payment_status?: PaymentPaymentStatus;
   /**
-   * @type string decimal
-   */
-  payment_amount: string;
-  /**
+   * @description Stripe\'s unique identifier for the payment.
    * @type string
    */
-  payment_status: string;
+  stripe_payment_id: string | null;
+  /**
+   * @description Detailed items that sum up to the total payment.
+   * @type object
+   */
+  line_items: {} | null;
+  /**
+   * @description Currency in which the payment was made.
+   * @type string | undefined
+   */
+  currency?: string;
+  /**
+   * @description Identifier for the associated booking.
+   * @type string, uuid
+   */
+  booking_id: string;
+  /**
+   * @description Identifier for the user making the payment.
+   * @type integer
+   */
+  user_id: number;
 };

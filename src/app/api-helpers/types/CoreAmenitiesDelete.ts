@@ -1,6 +1,6 @@
 export type CoreAmenitiesDeletePathParams = {
   /**
-   * @description A unique integer value identifying this amenity.
+   * @description A unique integer value identifying this Amenity.
    * @type integer
    */
   id: number;

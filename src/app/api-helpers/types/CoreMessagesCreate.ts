@@ -4,7 +4,7 @@ export type CoreMessagesCreate201 = Message;
 
 export type CoreMessagesCreateMutationRequest = Omit<
   NonNullable<Message>,
-  "id" | "timestamp"
+  "id"
 >;
 
 export type CoreMessagesCreateMutationResponse = Message;

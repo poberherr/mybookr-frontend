@@ -2,7 +2,7 @@ import type { Message } from "./Message";
 
 export type CoreMessagesPartialUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this message.
+   * @description A unique integer value identifying this Message.
    * @type integer
    */
   id: number;
@@ -12,7 +12,7 @@ export type CoreMessagesPartialUpdate200 = Message;
 
 export type CoreMessagesPartialUpdateMutationRequest = Omit<
   NonNullable<Message>,
-  "id" | "timestamp"
+  "id"
 >;
 
 export type CoreMessagesPartialUpdateMutationResponse = Message;

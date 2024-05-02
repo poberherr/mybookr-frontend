@@ -2,7 +2,7 @@ import type { Wishlist } from "./Wishlist";
 
 export type CoreWishlistsUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this wishlist.
+   * @description A unique integer value identifying this Wishlist.
    * @type integer
    */
   id: number;

@@ -2,7 +2,7 @@ import type { Review } from "./Review";
 
 export type CoreReviewsReadPathParams = {
   /**
-   * @description A unique integer value identifying this review.
+   * @description A unique integer value identifying this Review.
    * @type integer
    */
   id: number;

@@ -2,10 +2,7 @@ import type { Review } from "./Review";
 
 export type CoreReviewsCreate201 = Review;
 
-export type CoreReviewsCreateMutationRequest = Omit<
-  NonNullable<Review>,
-  "id" | "date"
->;
+export type CoreReviewsCreateMutationRequest = Omit<NonNullable<Review>, "id">;
 
 export type CoreReviewsCreateMutationResponse = Review;
 

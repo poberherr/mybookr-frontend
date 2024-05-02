@@ -2,17 +2,17 @@ import type { Payment } from "./Payment";
 
 export type CorePaymentsPartialUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this payment.
-   * @type integer
+   * @description A UUID string identifying this Payment.
+   * @type string, uuid
    */
-  id: number;
+  id: string;
 };
 
 export type CorePaymentsPartialUpdate200 = Payment;
 
 export type CorePaymentsPartialUpdateMutationRequest = Omit<
   NonNullable<Payment>,
-  "id" | "payment_date"
+  "id"
 >;
 
 export type CorePaymentsPartialUpdateMutationResponse = Payment;

@@ -2,7 +2,7 @@ import type { Message } from "./Message";
 
 export type CoreMessagesReadPathParams = {
   /**
-   * @description A unique integer value identifying this message.
+   * @description A unique integer value identifying this Message.
    * @type integer
    */
   id: number;

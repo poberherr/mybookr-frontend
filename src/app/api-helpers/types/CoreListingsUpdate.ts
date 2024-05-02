@@ -2,7 +2,7 @@ import type { Listing } from "./Listing";
 
 export type CoreListingsUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this listing.
+   * @description A unique integer value identifying this Listing.
    * @type integer
    */
   id: number;
@@ -12,7 +12,7 @@ export type CoreListingsUpdate200 = Listing;
 
 export type CoreListingsUpdateMutationRequest = Omit<
   NonNullable<Listing>,
-  "id"
+  "id" | "images"
 >;
 
 export type CoreListingsUpdateMutationResponse = Listing;

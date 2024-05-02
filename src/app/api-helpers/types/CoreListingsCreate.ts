@@ -4,7 +4,7 @@ export type CoreListingsCreate201 = Listing;
 
 export type CoreListingsCreateMutationRequest = Omit<
   NonNullable<Listing>,
-  "id"
+  "id" | "images"
 >;
 
 export type CoreListingsCreateMutationResponse = Listing;

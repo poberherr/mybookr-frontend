@@ -2,7 +2,7 @@ import type { Amenity } from "./Amenity";
 
 export type CoreAmenitiesReadPathParams = {
   /**
-   * @description A unique integer value identifying this amenity.
+   * @description A unique integer value identifying this Amenity.
    * @type integer
    */
   id: number;

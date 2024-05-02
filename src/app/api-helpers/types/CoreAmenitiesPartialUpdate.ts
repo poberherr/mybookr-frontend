@@ -2,7 +2,7 @@ import type { Amenity } from "./Amenity";
 
 export type CoreAmenitiesPartialUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this amenity.
+   * @description A unique integer value identifying this Amenity.
    * @type integer
    */
   id: number;
@@ -10,7 +10,10 @@ export type CoreAmenitiesPartialUpdatePathParams = {
 
 export type CoreAmenitiesPartialUpdate200 = Amenity;
 
-export type CoreAmenitiesPartialUpdateMutationRequest = Amenity;
+export type CoreAmenitiesPartialUpdateMutationRequest = Omit<
+  NonNullable<Amenity>,
+  "id"
+>;
 
 export type CoreAmenitiesPartialUpdateMutationResponse = Amenity;
 

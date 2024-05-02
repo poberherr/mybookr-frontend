@@ -2,7 +2,7 @@ import type { Space } from "./Space";
 
 export type CoreSpacesUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this space.
+   * @description A unique integer value identifying this Space.
    * @type integer
    */
   id: number;
@@ -10,7 +10,7 @@ export type CoreSpacesUpdatePathParams = {
 
 export type CoreSpacesUpdate200 = Space;
 
-export type CoreSpacesUpdateMutationRequest = Space;
+export type CoreSpacesUpdateMutationRequest = Omit<NonNullable<Space>, "id">;
 
 export type CoreSpacesUpdateMutationResponse = Space;
 

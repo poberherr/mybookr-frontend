@@ -2,21 +2,30 @@ export type Space = {
   /**
    * @type integer | undefined
    */
-  guests_capacity?: number;
+  readonly id?: number;
   /**
-   * @type integer | undefined
+   * @description The maximum number of guests the space can accommodate.
+   * @type integer
    */
-  bathrooms?: number;
+  guests_capacity: number | null;
   /**
-   * @type integer | undefined
+   * @description Number of bathrooms available in the space.
+   * @type integer
    */
-  bedrooms?: number;
+  bathrooms: number | null;
   /**
-   * @type integer | undefined
+   * @description Number of bedrooms available in the space.
+   * @type integer
    */
-  double_beds?: number;
+  bedrooms: number | null;
   /**
-   * @type integer | undefined
+   * @description Number of double beds available in the space.
+   * @type integer
    */
-  single_beds?: number;
+  double_beds: number | null;
+  /**
+   * @description Number of single beds available in the space.
+   * @type integer
+   */
+  single_beds: number | null;
 };

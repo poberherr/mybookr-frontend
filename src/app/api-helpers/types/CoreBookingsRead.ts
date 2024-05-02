@@ -2,10 +2,10 @@ import type { Booking } from "./Booking";
 
 export type CoreBookingsReadPathParams = {
   /**
-   * @description A unique integer value identifying this booking.
-   * @type integer
+   * @description A UUID string identifying this Booking.
+   * @type string, uuid
    */
-  id: number;
+  id: string;
 };
 
 export type CoreBookingsRead200 = Booking;

@@ -4,7 +4,7 @@ export type CorePaymentsCreate201 = Payment;
 
 export type CorePaymentsCreateMutationRequest = Omit<
   NonNullable<Payment>,
-  "id" | "payment_date"
+  "id"
 >;
 
 export type CorePaymentsCreateMutationResponse = Payment;

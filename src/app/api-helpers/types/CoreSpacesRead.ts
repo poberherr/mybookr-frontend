@@ -2,7 +2,7 @@ import type { Space } from "./Space";
 
 export type CoreSpacesReadPathParams = {
   /**
-   * @description A unique integer value identifying this space.
+   * @description A unique integer value identifying this Space.
    * @type integer
    */
   id: number;

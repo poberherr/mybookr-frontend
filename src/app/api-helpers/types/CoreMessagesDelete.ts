@@ -1,6 +1,6 @@
 export type CoreMessagesDeletePathParams = {
   /**
-   * @description A unique integer value identifying this message.
+   * @description A unique integer value identifying this Message.
    * @type integer
    */
   id: number;

@@ -2,17 +2,17 @@ import type { Booking } from "./Booking";
 
 export type CoreBookingsPartialUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this booking.
-   * @type integer
+   * @description A UUID string identifying this Booking.
+   * @type string, uuid
    */
-  id: number;
+  id: string;
 };
 
 export type CoreBookingsPartialUpdate200 = Booking;
 
 export type CoreBookingsPartialUpdateMutationRequest = Omit<
   NonNullable<Booking>,
-  "id"
+  "id" | "created_at" | "updated_at"
 >;
 
 export type CoreBookingsPartialUpdateMutationResponse = Booking;

@@ -2,7 +2,7 @@ import type { Amenity } from "./Amenity";
 
 export type CoreAmenitiesUpdatePathParams = {
   /**
-   * @description A unique integer value identifying this amenity.
+   * @description A unique integer value identifying this Amenity.
    * @type integer
    */
   id: number;
@@ -10,7 +10,10 @@ export type CoreAmenitiesUpdatePathParams = {
 
 export type CoreAmenitiesUpdate200 = Amenity;
 
-export type CoreAmenitiesUpdateMutationRequest = Amenity;
+export type CoreAmenitiesUpdateMutationRequest = Omit<
+  NonNullable<Amenity>,
+  "id"
+>;
 
 export type CoreAmenitiesUpdateMutationResponse = Amenity;
 
