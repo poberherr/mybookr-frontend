@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type {
   CoreAvailabilitiesDeleteMutationResponse,
   CoreAvailabilitiesDeletePathParams,
@@ -26,10 +26,10 @@ type CoreAvailabilitiesDelete = {
   };
 };
 /**
- * @link /core/availabilities/:availability_id/
+ * @link /core/availabilities/:id/
  */
 export function useCoreAvailabilitiesDelete(
-  availabilityId: CoreAvailabilitiesDeletePathParams["availability_id"],
+  id: CoreAvailabilitiesDeletePathParams["id"],
   options: {
     mutation?: UseMutationOptions<
       CoreAvailabilitiesDelete["response"],
@@ -49,7 +49,7 @@ export function useCoreAvailabilitiesDelete(
         CoreAvailabilitiesDelete["request"]
       >({
         method: "delete",
-        url: `/core/availabilities/${availabilityId}/`,
+        url: `/core/availabilities/${id}/`,
         ...clientOptions,
       });
       return res.data;

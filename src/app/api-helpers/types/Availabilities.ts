@@ -1,9 +1,8 @@
 export type Availabilities = {
   /**
-   * @description Unique identifier for the availability record.
-   * @type string | undefined, uuid
+   * @type integer | undefined
    */
-  readonly availability_id?: string;
+  readonly id?: number;
   /**
    * @description Specific date for which the listing is available.
    * @type string, date
@@ -16,12 +15,12 @@ export type Availabilities = {
   number_available?: number;
   /**
    * @description Start time for the availability (useful for events and activities).
-   * @type string
+   * @type string, date-time
    */
   time_start: string | null;
   /**
    * @description End time for the availability (useful for events and activities).
-   * @type string
+   * @type string, date-time
    */
   time_end: string | null;
   /**
@@ -38,5 +37,5 @@ export type Availabilities = {
    * @description Identifier for the listing to which this availability pertains.
    * @type integer
    */
-  listing_id: number;
+  listing: number;
 };

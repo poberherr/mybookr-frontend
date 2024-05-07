@@ -9,6 +9,7 @@ import { default as starIcon } from "@/assets/icons/star.svg";
 import { Listing } from "@/app/api-helpers";
 
 import BoostedBadge from "../others/BoostedBadge";
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 interface IProps {
   property: Listing;
@@ -18,6 +19,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
   const router = useRouter();
   // const today = moment().format("YYYY-MM-DD");
   // const isBoosted = property.boost_dates.includes("2024-02-19");
+  const averagePricePerNight = useAveragePricePerNight(property);
 
   return (
     <div
@@ -28,8 +30,8 @@ export default function PropertyItemBoosted({ property }: IProps) {
       }}
     >
       <div className="relative w-full">
-        {property.images && (
-          <img className="w-full" src={property.images[0]} alt="" />
+        {property.images && property.images.length > 0 && (
+          <img className="w-full" src={property.images[0].image} alt="" />
         )}
 
         <Typography
@@ -43,7 +45,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
       <div className={`flex flex-col p-8`}>
         <div className="mb-6 flex flex-row justify-between">
           <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-            {property.meta.city}
+            {property.location.city}
           </Typography>
 
           <Typography className="flex flex-row items-center !text-xs !font-medium">
@@ -53,12 +55,12 @@ export default function PropertyItemBoosted({ property }: IProps) {
         </div>
 
         <Typography className="!mb-12" variant="caption">
-          {property.meta.description}
+          {property.description}
         </Typography>
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            ${property.price_per_night} / Night
+            ${averagePricePerNight} / Night
           </Typography>
 
           <div className="flex flex-row items-center">

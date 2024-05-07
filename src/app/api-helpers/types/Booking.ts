@@ -16,13 +16,13 @@ export type Booking = {
    */
   readonly id?: string;
   /**
-   * @description Date the guest will check in.
-   * @type string, date
+   * @description Date and time the guest will check in.
+   * @type string, date-time
    */
   check_in_date: string;
   /**
-   * @description Date the guest will check out.
-   * @type string, date
+   * @description Date and time the guest will check out.
+   * @type string, date-time
    */
   check_out_date: string;
   /**

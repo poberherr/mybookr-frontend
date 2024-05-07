@@ -39,7 +39,7 @@ export default function AmenitySection() {
         <Typography>Amenities</Typography>
 
         <FormGroup className="!grid sm:grid-cols-2 sm:gap-x-8">
-          {Object.entries(amenities).map(([key, value]) => (
+          {Object.entries(amenities).map(([key, value]) => typeof value === "boolean" && (
             <FormControlLabel
               control={
                 <Checkbox

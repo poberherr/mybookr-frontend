@@ -11,7 +11,7 @@ import type {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type {
   CoreAvailabilitiesReadPathParams,
   CoreAvailabilitiesReadQueryResponse,
@@ -36,22 +36,16 @@ type CoreAvailabilitiesRead = {
   };
 };
 export const coreAvailabilitiesReadQueryKey = (
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
-) =>
-  [
-    {
-      url: "/core/availabilities/:availability_id/",
-      params: { availabilityId: availabilityId },
-    },
-  ] as const;
+  id: CoreAvailabilitiesReadPathParams["id"],
+) => [{ url: "/core/availabilities/:id/", params: { id: id } }] as const;
 export type CoreAvailabilitiesReadQueryKey = ReturnType<
   typeof coreAvailabilitiesReadQueryKey
 >;
 export function coreAvailabilitiesReadQueryOptions(
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
+  id: CoreAvailabilitiesReadPathParams["id"],
   options: CoreAvailabilitiesRead["client"]["parameters"] = {},
 ) {
-  const queryKey = coreAvailabilitiesReadQueryKey(availabilityId);
+  const queryKey = coreAvailabilitiesReadQueryKey(id);
   return queryOptions({
     queryKey,
     queryFn: async () => {
@@ -60,7 +54,7 @@ export function coreAvailabilitiesReadQueryOptions(
         CoreAvailabilitiesRead["error"]
       >({
         method: "get",
-        url: `/core/availabilities/${availabilityId}/`,
+        url: `/core/availabilities/${id}/`,
         ...options,
       });
       return res.data;
@@ -68,14 +62,14 @@ export function coreAvailabilitiesReadQueryOptions(
   });
 }
 /**
- * @link /core/availabilities/:availability_id/
+ * @link /core/availabilities/:id/
  */
 export function useCoreAvailabilitiesRead<
   TData = CoreAvailabilitiesRead["response"],
   TQueryData = CoreAvailabilitiesRead["response"],
   TQueryKey extends QueryKey = CoreAvailabilitiesReadQueryKey,
 >(
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
+  id: CoreAvailabilitiesReadPathParams["id"],
   options: {
     query?: Partial<
       QueryObserverOptions<
@@ -92,11 +86,10 @@ export function useCoreAvailabilitiesRead<
   queryKey: TQueryKey;
 } {
   const { query: queryOptions, client: clientOptions = {} } = options ?? {};
-  const queryKey =
-    queryOptions?.queryKey ?? coreAvailabilitiesReadQueryKey(availabilityId);
+  const queryKey = queryOptions?.queryKey ?? coreAvailabilitiesReadQueryKey(id);
   const query = useQuery({
     ...(coreAvailabilitiesReadQueryOptions(
-      availabilityId,
+      id,
       clientOptions,
     ) as unknown as QueryObserverOptions),
     queryKey,
@@ -108,22 +101,16 @@ export function useCoreAvailabilitiesRead<
   return query;
 }
 export const coreAvailabilitiesReadSuspenseQueryKey = (
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
-) =>
-  [
-    {
-      url: "/core/availabilities/:availability_id/",
-      params: { availabilityId: availabilityId },
-    },
-  ] as const;
+  id: CoreAvailabilitiesReadPathParams["id"],
+) => [{ url: "/core/availabilities/:id/", params: { id: id } }] as const;
 export type CoreAvailabilitiesReadSuspenseQueryKey = ReturnType<
   typeof coreAvailabilitiesReadSuspenseQueryKey
 >;
 export function coreAvailabilitiesReadSuspenseQueryOptions(
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
+  id: CoreAvailabilitiesReadPathParams["id"],
   options: CoreAvailabilitiesRead["client"]["parameters"] = {},
 ) {
-  const queryKey = coreAvailabilitiesReadSuspenseQueryKey(availabilityId);
+  const queryKey = coreAvailabilitiesReadSuspenseQueryKey(id);
   return queryOptions({
     queryKey,
     queryFn: async () => {
@@ -132,7 +119,7 @@ export function coreAvailabilitiesReadSuspenseQueryOptions(
         CoreAvailabilitiesRead["error"]
       >({
         method: "get",
-        url: `/core/availabilities/${availabilityId}/`,
+        url: `/core/availabilities/${id}/`,
         ...options,
       });
       return res.data;
@@ -140,13 +127,13 @@ export function coreAvailabilitiesReadSuspenseQueryOptions(
   });
 }
 /**
- * @link /core/availabilities/:availability_id/
+ * @link /core/availabilities/:id/
  */
 export function useCoreAvailabilitiesReadSuspense<
   TData = CoreAvailabilitiesRead["response"],
   TQueryKey extends QueryKey = CoreAvailabilitiesReadSuspenseQueryKey,
 >(
-  availabilityId: CoreAvailabilitiesReadPathParams["availability_id"],
+  id: CoreAvailabilitiesReadPathParams["id"],
   options: {
     query?: Partial<
       UseSuspenseQueryOptions<
@@ -163,11 +150,10 @@ export function useCoreAvailabilitiesReadSuspense<
 } {
   const { query: queryOptions, client: clientOptions = {} } = options ?? {};
   const queryKey =
-    queryOptions?.queryKey ??
-    coreAvailabilitiesReadSuspenseQueryKey(availabilityId);
+    queryOptions?.queryKey ?? coreAvailabilitiesReadSuspenseQueryKey(id);
   const query = useSuspenseQuery({
     ...(coreAvailabilitiesReadSuspenseQueryOptions(
-      availabilityId,
+      id,
       clientOptions,
     ) as unknown as QueryObserverOptions),
     queryKey,

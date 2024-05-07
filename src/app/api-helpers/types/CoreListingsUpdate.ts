@@ -12,7 +12,7 @@ export type CoreListingsUpdate200 = Listing;
 
 export type CoreListingsUpdateMutationRequest = Omit<
   NonNullable<Listing>,
-  "id" | "images"
+  "id" | "availabilities" | "images"
 >;
 
 export type CoreListingsUpdateMutationResponse = Listing;

@@ -38,6 +38,7 @@ import {
   useWatchGuest,
 } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import { PaymentForm } from "./PaymentForm";
@@ -58,8 +59,10 @@ export default function CheckoutPage({ id }: { id: string }) {
 
   const user = useUser();
 
+  const averagePricePerNight = useAveragePricePerNight(listing);
+
   const totalPrice = useMemo(
-    () => listing && (parseFloat(listing.price_per_night) * nights).toFixed(2),
+    () => listing && (averagePricePerNight * nights).toFixed(2),
     [listing, nights],
   );
 
@@ -81,15 +84,14 @@ export default function CheckoutPage({ id }: { id: string }) {
       // create booking if not exists
       console.log("Mutating!");
       mutate({
-        booking_status: "fresh",
+        booking_status: "NotStarted",
         check_in_date: formatISO(selectedDate),
         check_out_date: formatISO(selectedDate1),
-        guest,
+        number_of_guests: guest,
         //@todo remove this when listing id is requried in generated interfaces,
-        listing: listing.id || 0,
-        special_requests: "",
-        //@todo remove this when listing id is requried in generated interfaces,
+        listing_id: listing.id || 0,
         total_cost: totalPrice || "0.00",
+        guest_id: 1,
       });
     }
   }, [
@@ -439,15 +441,15 @@ export default function CheckoutPage({ id }: { id: string }) {
                 className="!mb-4 p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"
                 variant="h6"
               >
-                {listing.meta.title}
+                {listing.title}
               </Typography>
 
               {/* Villa Image */}
-              {listing.images && (
+              {listing.images && listing.images.length > 0 && (
                 <div className="p-0 md:px-8 md:py-0">
                   <img
                     className="h-64 w-full rounded"
-                    src={listing.images[0]}
+                    src={listing.images[0].image}
                     alt=""
                   />
                 </div>

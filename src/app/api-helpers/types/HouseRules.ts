@@ -5,12 +5,12 @@ export type HouseRules = {
   readonly id?: number;
   /**
    * @description Check-in time.
-   * @type string
+   * @type string, date-time
    */
   check_in_time: string;
   /**
    * @description Check-out time.
-   * @type string
+   * @type string, date-time
    */
   check_out_time: string;
   /**

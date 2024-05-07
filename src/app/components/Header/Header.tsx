@@ -25,12 +25,14 @@ export default function Header() {
     <>
       {/* Header */}
       <div
-        className={`sticky z-10 grid h-[60px] grid-cols-[max-content_1fr] items-center border-b !border-gray-100 bg-white px-4 transition-all duration-500 lg:h-20 lg:px-[166px] ${headerTopClass}`}
+        className={`sticky z-10 flex h-[60px] justify-between items-center border-b !border-gray-100 bg-white px-4 transition-all duration-500 lg:h-20 lg:px-[166px] ${headerTopClass}`}
       >
         {/* mybookr logo: Left side */}
         <Link className="cursor-pointer" href={"/"}>
           <Logo className="h-12" alt="mybookr logo" />
         </Link>
+
+        <h1 className="font-bold">MyBookr Functional Prototype</h1>
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">

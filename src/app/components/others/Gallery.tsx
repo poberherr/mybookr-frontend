@@ -6,6 +6,7 @@ import {
 } from "react-icons/md";
 
 import { Dialog, IconButton } from "@mui/material";
+import { Image } from "@/app/api-helpers";
 
 export default function Gallery({
   flagGallery,
@@ -14,7 +15,7 @@ export default function Gallery({
 }: {
   flagGallery: boolean;
   setFlagGallery: (arg0: boolean) => void;
-  images: string[];
+  images: Image[];
 }) {
   const [indexImage, setIndexImage] = useState(0);
 
@@ -46,7 +47,7 @@ export default function Gallery({
         <div className="grid justify-items-center">
           <img
             className="h-[calc(80vh-32px)] w-auto object-contain"
-            src={images[indexImage]}
+            src={images[indexImage].image}
             alt="main"
           />
         </div>
@@ -60,7 +61,7 @@ export default function Gallery({
                 className={`h-[20vh] w-full cursor-pointer object-cover opacity-40 hover:opacity-70 ${
                   isShowed && "opacity-100"
                 }`}
-                src={each}
+                src={each.image}
                 onClick={() => {
                   setIndexImage(index);
                 }}

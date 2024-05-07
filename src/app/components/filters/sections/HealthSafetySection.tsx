@@ -34,7 +34,7 @@ export default function HealthSafetySection() {
         <Typography>Health and Safety</Typography>
 
         <FormGroup className="!grid sm:grid-cols-2 sm:gap-x-8">
-          {Object.entries(healthSafety).map(([key, value]) => (
+          {Object.entries(healthSafety).map(([key, value]) => typeof value === "boolean" && (
             <FormControlLabel
               control={
                 <Checkbox

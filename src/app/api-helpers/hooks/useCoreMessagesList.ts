@@ -11,7 +11,7 @@ import type {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type { CoreMessagesListQueryResponse } from "../types/CoreMessagesList";
 
 type CoreMessagesListClient = typeof client<

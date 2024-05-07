@@ -11,7 +11,7 @@ import type {
   UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type { CoreAvailabilitiesListQueryResponse } from "../types/CoreAvailabilitiesList";
 
 type CoreAvailabilitiesListClient = typeof client<

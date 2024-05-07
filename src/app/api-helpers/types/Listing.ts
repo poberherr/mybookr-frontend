@@ -18,7 +18,10 @@ export type Listing = {
   house_rules: HouseRules;
   health_safety: HealthSafety;
   accessibility: Accessibility;
-  availabilities?: Availabilities;
+  /**
+   * @type array | undefined
+   */
+  readonly availabilities?: Availabilities[];
   /**
    * @type array | undefined
    */

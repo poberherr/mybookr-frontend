@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type {
   CoreAvailabilitiesPartialUpdateMutationRequest,
   CoreAvailabilitiesPartialUpdateMutationResponse,
@@ -27,10 +27,10 @@ type CoreAvailabilitiesPartialUpdate = {
   };
 };
 /**
- * @link /core/availabilities/:availability_id/
+ * @link /core/availabilities/:id/
  */
 export function useCoreAvailabilitiesPartialUpdate(
-  availabilityId: CoreAvailabilitiesPartialUpdatePathParams["availability_id"],
+  id: CoreAvailabilitiesPartialUpdatePathParams["id"],
   options: {
     mutation?: UseMutationOptions<
       CoreAvailabilitiesPartialUpdate["response"],
@@ -50,7 +50,7 @@ export function useCoreAvailabilitiesPartialUpdate(
         CoreAvailabilitiesPartialUpdate["request"]
       >({
         method: "patch",
-        url: `/core/availabilities/${availabilityId}/`,
+        url: `/core/availabilities/${id}/`,
         data,
         ...clientOptions,
       });

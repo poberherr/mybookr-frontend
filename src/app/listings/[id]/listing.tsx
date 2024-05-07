@@ -80,7 +80,7 @@ export default function ListingComponent({ id }: { id: string }) {
         {/* Hero title */}
         <div className="px-4 py-0 md:px-40">
           <Typography className="!mt-8 flex w-full !text-xl !font-extrabold md:!text-3xl">
-            {listing.meta.title}
+            {listing.title}
           </Typography>
 
           {/* Rate, Number of reviews, Like and Share button */}
@@ -100,7 +100,7 @@ export default function ListingComponent({ id }: { id: string }) {
 
               <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>
-                  {listing.meta.city}, {listing.meta.country}
+                  {listing.location.city}, {listing.location.country}
                 </u>
               </span>
             </Typography>
@@ -119,7 +119,7 @@ export default function ListingComponent({ id }: { id: string }) {
 
         {/* Hero Image */}
         {/* Hero Image: Mobile */}
-        {listing.images && (
+        {listing.images && listing.images.length > 0 && (
           <div className="relative block md:hidden">
             {flagGallery ? (
               <Gallery
@@ -130,10 +130,10 @@ export default function ListingComponent({ id }: { id: string }) {
             ) : (
               <div>
                 {/* Image */}
-                {listing.images && (
+                {listing.images && listing.images?.length > 0 && (
                   <img
                     className="h-72 w-full object-cover"
-                    src={listing.images[0]}
+                    src={listing.images[0].image}
                     alt=""
                   />
                 )}
@@ -165,7 +165,7 @@ export default function ListingComponent({ id }: { id: string }) {
         )}
 
         {/* Hero Image: Desktop */}
-        {listing.images && (
+        {listing.images && listing.images.length > 0 && (
           <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
             {flagGallery ? (
               <Gallery
@@ -178,35 +178,35 @@ export default function ListingComponent({ id }: { id: string }) {
                 {listing.images[0] && (
                   <img
                     className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[0]}
+                    src={listing.images[0].image}
                     alt=""
                   />
                 )}
                 {listing.images[1] && (
                   <img
                     className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[1]}
+                    src={listing.images[1].image}
                     alt=""
                   />
                 )}
                 {listing.images[2] && (
                   <img
                     className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[2]}
+                    src={listing.images[2].image}
                     alt=""
                   />
                 )}
                 {listing.images[3] && (
                   <img
                     className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[3]}
+                    src={listing.images[3].image}
                     alt=""
                   />
                 )}
                 {listing.images[4] && (
                   <img
                     className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[4]}
+                    src={listing.images[4].image}
                     alt=""
                   />
                 )}
@@ -253,7 +253,7 @@ export default function ListingComponent({ id }: { id: string }) {
 
             {/* Description */}
             <Typography className="!mt-8 !leading-relaxed" variant="body1">
-              {listing.meta.description}
+              {listing.description}
             </Typography>
           </div>
 
@@ -333,14 +333,14 @@ export default function ListingComponent({ id }: { id: string }) {
             </Typography>
 
             <div className="grid gap-2">
-              <Typography>{listing.meta.street}</Typography>
+              <Typography>{listing.location.street}</Typography>
               <Typography>
-                {listing.meta.city}, {listing.meta.country}, {listing.meta.zip}
+                {listing.location.city}, {listing.location.country}, {listing.location.zip}
               </Typography>
               <Typography>
-                {listing.meta.latitude}, {listing.meta.longitude}
+                {listing.location.latitude}, {listing.location.longitude}
               </Typography>
-              <Typography>{listing.meta.country}</Typography>
+              <Typography>{listing.location.country}</Typography>
             </div>
           </div>
 
@@ -409,10 +409,7 @@ export default function ListingComponent({ id }: { id: string }) {
             </div>
 
             <Typography className="!mt-8">
-              <b>Cancellation policy:</b>{" "}
-              {listing.free_cancellation
-                ? "Free cancellation within 48 hours."
-                : "No refund!"}
+              <b>Cancellation policy:</b>{" "}Free cancellation within 48 hours.
             </Typography>
           </div>
         </div>

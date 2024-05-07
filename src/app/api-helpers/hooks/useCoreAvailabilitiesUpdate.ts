@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type {
   CoreAvailabilitiesUpdateMutationRequest,
   CoreAvailabilitiesUpdateMutationResponse,
@@ -27,10 +27,10 @@ type CoreAvailabilitiesUpdate = {
   };
 };
 /**
- * @link /core/availabilities/:availability_id/
+ * @link /core/availabilities/:id/
  */
 export function useCoreAvailabilitiesUpdate(
-  availabilityId: CoreAvailabilitiesUpdatePathParams["availability_id"],
+  id: CoreAvailabilitiesUpdatePathParams["id"],
   options: {
     mutation?: UseMutationOptions<
       CoreAvailabilitiesUpdate["response"],
@@ -50,7 +50,7 @@ export function useCoreAvailabilitiesUpdate(
         CoreAvailabilitiesUpdate["request"]
       >({
         method: "put",
-        url: `/core/availabilities/${availabilityId}/`,
+        url: `/core/availabilities/${id}/`,
         data,
         ...clientOptions,
       });

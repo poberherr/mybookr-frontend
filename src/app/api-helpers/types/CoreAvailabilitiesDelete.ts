@@ -1,9 +1,9 @@
 export type CoreAvailabilitiesDeletePathParams = {
   /**
-   * @description Unique identifier for the availability record.
-   * @type string, uuid
+   * @description A unique integer value identifying this Availability.
+   * @type integer
    */
-  availability_id: string;
+  id: number;
 };
 
 export type CoreAvailabilitiesDelete204 = any;

@@ -15,7 +15,7 @@ export default defineConfig({
     createSwaggerTS({}),
     createSwaggerTanstackQuery({
       client: {
-        importPath: "../../client",
+        importPath: "../../../client",
       },
       output: {
         path: "./hooks",

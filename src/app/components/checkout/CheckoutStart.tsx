@@ -1,38 +1,33 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import { FormProvider, useForm } from "react-hook-form";
 
-
-
-import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
 import { useRouter } from "next/navigation";
 
-
-
 import { Divider, Typography } from "@mui/material";
-
-
 
 import Calendar from "../../components/Calendar/Calendar";
 import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import PriceDetail from "@/app/components/others/PriceDetail";
 import { SButton } from "@/app/components/ui/SButton";
 
-
-
 import { Listing } from "@/app/api-helpers";
-import { BookingContext, useWatchDateRange, useWatchGuest } from "@/app/contexts/booking";
+import {
+  BookingContext,
+  useWatchDateRange,
+  useWatchGuest,
+} from "@/app/contexts/booking";
 import { useIsClient } from "@/app/helpers/useIsClient";
-
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 interface IProps {
   listing: Listing;
 }
 
 interface CheckoutFormProps {
-  dateRange: Range
-  guest: number
+  dateRange: Range;
+  guest: number;
 }
 
 export default function CheckoutStart({ listing }: IProps) {
@@ -55,7 +50,7 @@ export default function CheckoutStart({ listing }: IProps) {
   });
 
   // Watch all form values
-  const dateRangeValue = methods.watch("dateRange")
+  const dateRangeValue = methods.watch("dateRange");
   useWatchDateRange<CheckoutFormProps>(methods.control, "dateRange");
   useWatchGuest<CheckoutFormProps>(methods.control, "guest");
 
@@ -69,6 +64,9 @@ export default function CheckoutStart({ listing }: IProps) {
     }
   });
 
+  // @todo what is when we have multiple?
+  const averagePricePerNight = useAveragePricePerNight(listing)
+
   if (!isClient) {
     return null;
   }
@@ -80,7 +78,7 @@ export default function CheckoutStart({ listing }: IProps) {
           {/* Price Per Night - Dates - Guests */}
           <div className="grid gap-8 md:px-8 md:py-0">
             <Typography component="p" variant="h6">
-              <b>{listing.price_per_night} $</b> / Night
+              <b>{averagePricePerNight} $</b> / Night
             </Typography>
 
             <div className="flex flex-col gap-4">
@@ -145,7 +143,7 @@ export default function CheckoutStart({ listing }: IProps) {
               </Typography>
 
               <Typography className="text-right !font-bold uppercase !text-slate-800">
-                {(parseFloat(listing.price_per_night) * nights).toFixed(2)} $
+                {(averagePricePerNight * nights).toFixed(2)} $
               </Typography>
             </div>
 

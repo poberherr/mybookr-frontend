@@ -9,13 +9,18 @@ import { default as StarIcon } from "@/assets/icons/star.svg";
 import { Listing } from "@/app/api-helpers";
 
 import BoostedBadge from "../others/BoostedBadge";
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 interface IProps {
   property: Listing;
 }
 
-export default function PropertyItem({ property }: IProps) {
-  const isBoosted = property.boost_dates?.includes("2024-02-19");
+export default function PropertyItem({ property: listing }: IProps) {
+  // @todo
+  const isBoosted = false //listing.boost_dates?.includes("2024-02-19");
+  const averagePricePerNight = useAveragePricePerNight(listing)
+
+  console.dir(listing)
 
   return (
     <Link
@@ -26,13 +31,13 @@ export default function PropertyItem({ property }: IProps) {
           : "col-end-[span_2] sm:col-end-[span_1]"
       }
       `}
-      href={`/listings/${property.id}`}
+      href={`/listings/${listing.id}`}
     >
       <div className="relative">
-        {property.images && property.images.length && (
+        {listing.images && listing.images?.length > 0 && (
           <img
             className="h-auto w-full rounded-t-lg"
-            src={property.images[0]}
+            src={listing.images[0].image}
             alt=""
           />
         )}
@@ -51,10 +56,10 @@ export default function PropertyItem({ property }: IProps) {
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              {property.meta.city}
+              {listing.location.city}
             </Typography>
           ) : (
-            <Typography variant="body2">{property.meta.city}</Typography>
+            <Typography variant="body2">{listing.location.city}</Typography>
           )}
 
           <Typography className="flex flex-row items-center !text-xs !font-medium">
@@ -64,13 +69,13 @@ export default function PropertyItem({ property }: IProps) {
 
         {isBoosted && (
           <Typography className="!mb-12" variant="caption">
-            {property.meta.description}
+            {listing.description}
           </Typography>
         )}
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            ${property.price_per_night} / Night
+            ${averagePricePerNight} / Night
           </Typography>
 
           <div className="flex flex-row items-center">

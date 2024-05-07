@@ -35,7 +35,7 @@ export default function AccessibilitySection() {
         <Typography>Accessibility</Typography>
 
         <FormGroup className="!grid sm:grid-cols-2 sm:gap-x-8">
-          {Object.entries(accessibilityOptions).map(([key, value]) => (
+          {Object.entries(accessibilityOptions).map(([key, value]) => typeof value === "boolean" && (
             <FormControlLabel
               control={
                 <Checkbox

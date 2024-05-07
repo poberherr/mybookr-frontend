@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import type { UseMutationOptions } from "@tanstack/react-query";
 
-import client from "../../client";
+import client from "../../../client";
 import type {
   CoreBookingsUpdateMutationRequest,
   CoreBookingsUpdateMutationResponse,
