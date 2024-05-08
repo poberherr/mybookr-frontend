@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
+import { SignedIn } from "@clerk/clerk-react";
 import Link from "next/link";
 
 import { useMediaQuery, useTheme } from "@mui/material";
 
-import Logo from "@/assets/mybookr.svg";
 import useScrollDirection from "@/app/helpers/useScrollDirection";
+import Logo from "@/assets/mybookr.svg";
 
 import { ClerkAuth } from "./ClerkAuth";
 
@@ -33,6 +34,12 @@ export default function Header() {
         </Link>
 
         <h1 className="font-bold">MyBookr Functional Prototype</h1>
+
+        <SignedIn>
+          <Link className="cursor-pointer" href={"/investors"}>
+            Secret Investors Page
+          </Link>
+        </SignedIn>
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">

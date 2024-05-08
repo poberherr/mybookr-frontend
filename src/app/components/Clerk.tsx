@@ -25,8 +25,12 @@ export const Clerk = () => {
         <li>UserId: {JSON.stringify(auth.userId)}</li>
 
         <li>
-          Token:
-          {session.session?.lastActiveToken?.jwt?.encoded.header}
+          Token:{" "}
+          <code>
+            {session.session?.lastActiveToken?.jwt?.encoded.header}.
+            {session.session?.lastActiveToken?.jwt?.encoded.payload}.
+            {session.session?.lastActiveToken?.jwt?.encoded.signature}
+          </code>
         </li>
         <li>
           Token Lifetime:{" "}

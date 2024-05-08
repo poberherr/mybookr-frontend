@@ -5,8 +5,15 @@ export NEXT_PUBLIC_AXIOS_AUTH_TOKEN="Basic XXXXXXXX"
 # Clerk secrets
 export NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_XXXXX
 export CLERK_SECRET_KEY=sk_XXXXX
+export CLERK_JWKS_URL=XXXXX
 
 # Stripe
 ## https://dashboard.stripe.com/apikeys
 export NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_XXXXX
 export STRIPE_SECRET_KEY=sk_XXXXX
+
+# Transak
+export NEXT_PUBLIC_TRANSAK_API_KEY=XXXXX
+export TRANSAK_API_SECRET=XXXXX
+export TRANSAK_API_URL=https://api-stg.transak.com
+export NEXT_PUBLIC_SOLANA_WALLET_ADDRESS=XXXXX

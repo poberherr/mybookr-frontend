@@ -1,10 +1,12 @@
 import { authMiddleware } from "@clerk/nextjs";
 
+
 // See https://clerk.com/docs/references/nextjs/auth-middleware
 // for more information about configuring your Middleware
 export default authMiddleware({
   // Only make bookings routes auth required for now
-  publicRoutes: (req) => !req.url.includes("/bookings"),
+  publicRoutes: (req) =>
+    !req.url.includes("/bookings") && !req.url.includes("/api/transak"),
 });
 
 export const config = {
