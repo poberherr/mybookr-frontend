@@ -15,17 +15,17 @@ export type Listing = {
   amenities: Amenity;
   space: Space;
   location: Location;
-  house_rules: HouseRules;
-  health_safety: HealthSafety;
-  accessibility: Accessibility;
+  house_rules?: HouseRules;
+  health_safety?: HealthSafety;
+  accessibility?: Accessibility;
   /**
    * @type array | undefined
    */
-  readonly availabilities?: Availabilities[];
+  availabilities?: Availabilities[];
   /**
    * @type array | undefined
    */
-  readonly images?: Image[];
+  images?: Image[];
   /**
    * @description Title of the listing
    * @type string

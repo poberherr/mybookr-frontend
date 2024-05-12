@@ -2,7 +2,7 @@ export type TokenObtainPair = {
   /**
    * @type string
    */
-  username: string;
+  email: string;
   /**
    * @type string
    */

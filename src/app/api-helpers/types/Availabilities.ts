@@ -4,6 +4,10 @@ export type Availabilities = {
    */
   readonly id?: number;
   /**
+   * @type number, decimal
+   */
+  price_per_unit: number;
+  /**
    * @description Specific date for which the listing is available.
    * @type string, date
    */
@@ -14,12 +18,12 @@ export type Availabilities = {
    */
   number_available?: number;
   /**
-   * @description Start time for the availability (useful for events and activities).
+   * @description Start time for the availability (optional).
    * @type string, date-time
    */
   time_start: string | null;
   /**
-   * @description End time for the availability (useful for events and activities).
+   * @description End time for the availability (optional).
    * @type string, date-time
    */
   time_end: string | null;
@@ -29,13 +33,8 @@ export type Availabilities = {
    */
   minimum_stay: number | null;
   /**
-   * @description Price per unit for the duration of the stay or event.
-   * @type string, decimal
-   */
-  price_per_unit: string;
-  /**
    * @description Identifier for the listing to which this availability pertains.
    * @type integer
    */
-  listing: number;
+  listing_id: number;
 };

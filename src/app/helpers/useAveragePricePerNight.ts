@@ -19,7 +19,7 @@ export const useAveragePricePerNight = (listing?: Listing): number => {
         }),
       );
       const sum = availabilities.reduce(
-        (sum, cur) => sum + parseFloat(cur.price_per_unit),
+        (sum, cur) => sum + cur.price_per_unit,
         0,
       );
       return Math.round((sum / availabilities.length) * 100) / 100;
