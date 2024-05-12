@@ -42,6 +42,7 @@ import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import { PaymentForm } from "./PaymentForm";
+import Image from "next/image";
 
 export default function CheckoutPage({ id }: { id: string }) {
   const { data: listing } = useListingsRead<Listing>(parseInt(id));
@@ -445,9 +446,9 @@ export default function CheckoutPage({ id }: { id: string }) {
               </Typography>
 
               {/* Villa Image */}
-              {listing.images && listing.images.length > 0 && (
+              {listing.images && listing.images.length > 0 && listing.images[0].image && (
                 <div className="p-0 md:px-8 md:py-0">
-                  <img
+                  <Image
                     className="h-64 w-full rounded"
                     src={listing.images[0].image}
                     alt=""

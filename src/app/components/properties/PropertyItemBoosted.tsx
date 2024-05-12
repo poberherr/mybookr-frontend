@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Typography } from "@mui/material";
@@ -7,9 +8,9 @@ import { default as shareIcon } from "@/assets/icons/share.svg";
 import { default as starIcon } from "@/assets/icons/star.svg";
 
 import { Listing } from "@/app/api-helpers";
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 interface IProps {
   property: Listing;
@@ -30,9 +31,15 @@ export default function PropertyItemBoosted({ property }: IProps) {
       }}
     >
       <div className="relative w-full">
-        {property.images && property.images.length > 0 && (
-          <img className="w-full aspect-video object-cover" src={property.images[0].image} alt="" />
-        )}
+        {property.images &&
+          property.images.length > 0 &&
+          property.images[0].image && (
+            <Image
+              className="w-full aspect-video object-cover"
+              src={property.images[0].image}
+              alt=""
+            />
+          )}
 
         <Typography
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center !text-3xl !tracking-wider !text-white md:!text-4xl"

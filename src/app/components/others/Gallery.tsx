@@ -5,8 +5,11 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 
+import Image from "next/image";
+
 import { Dialog, IconButton } from "@mui/material";
-import { Image } from "@/app/api-helpers";
+
+import { Image as IImage } from "@/app/api-helpers";
 
 export default function Gallery({
   flagGallery,
@@ -15,7 +18,7 @@ export default function Gallery({
 }: {
   flagGallery: boolean;
   setFlagGallery: (arg0: boolean) => void;
-  images: Image[];
+  images: IImage[];
 }) {
   const [indexImage, setIndexImage] = useState(0);
 
@@ -39,25 +42,34 @@ export default function Gallery({
     setIndexImage(temp);
   };
 
+  const mainImage = images[indexImage].image
+
+  if (!mainImage){
+    return null
+  }
+
   return (
     <Dialog fullScreen open={flagGallery} onClose={() => setFlagGallery(false)}>
       {/* The Hole Section */}
       <div className="grid h-full grid-cols-1 grid-rows-[calc(80vh-32px)_20vh] gap-8 bg-black">
         {/* Main Image */}
         <div className="grid justify-items-center">
-          <img
+          {<Image
             className="h-[calc(80vh-32px)] w-auto object-contain"
-            src={images[indexImage].image}
+            src={mainImage}
             alt="main"
-          />
+          />}
         </div>
 
         {/* List of Images */}
         <div className="grid grid-cols-5">
           {images.map((each, index) => {
             let isShowed = indexImage === index;
+            if (!each.image) {
+              return null
+            }
             return (
-              <img
+              <Image
                 className={`h-[20vh] w-full cursor-pointer object-cover opacity-40 hover:opacity-70 ${
                   isShowed && "opacity-100"
                 }`}

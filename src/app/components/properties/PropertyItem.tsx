@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Typography } from "@mui/material";
@@ -7,9 +8,9 @@ import { default as ShareIcon } from "@/assets/icons/share.svg";
 import { default as StarIcon } from "@/assets/icons/star.svg";
 
 import { Listing } from "@/app/api-helpers";
+import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 interface IProps {
   property: Listing;
@@ -17,11 +18,13 @@ interface IProps {
 
 export default function PropertyItem({ property: listing }: IProps) {
   // @todo
-  const isBoosted = false //listing.boost_dates?.includes("2024-02-19");
-  const averagePricePerNight = useAveragePricePerNight(listing)
+  const isBoosted = false; //listing.boost_dates?.includes("2024-02-19");
+  const averagePricePerNight = useAveragePricePerNight(listing);
 
   // @todo quick and dirty filter
-  if (averagePricePerNight === 0) { return null}
+  if (averagePricePerNight === 0) {
+    return null;
+  }
 
   return (
     <Link
@@ -35,8 +38,8 @@ export default function PropertyItem({ property: listing }: IProps) {
       href={`/listings/${listing.id}`}
     >
       <div className="relative">
-        {listing.images && listing.images?.length > 0 && (
-          <img
+        {listing.images && listing.images?.length > 0 && listing.images[0].image && (
+          <Image
             className="h-auto w-full rounded-t-lg aspect-video object-cover"
             src={listing.images[0].image}
             alt=""

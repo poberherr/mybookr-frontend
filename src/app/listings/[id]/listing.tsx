@@ -25,6 +25,7 @@ import {
   Listing,
   useListingsRead,
 } from "@/app/api-helpers";
+import Image from "next/image";
 
 // import CheckoutAndPay from "./checkout";
 
@@ -127,8 +128,8 @@ export default function ListingComponent({ id }: { id: string }) {
             ) : (
               <div>
                 {/* Image */}
-                {listing.images && listing.images?.length > 0 && (
-                  <img
+                {listing.images && listing.images?.length > 0 && listing.images[0].image && (
+                  <Image
                     className="h-72 w-full object-cover"
                     src={listing.images[0].image}
                     alt=""
@@ -172,36 +173,36 @@ export default function ListingComponent({ id }: { id: string }) {
               />
             ) : (
               <>
-                {listing.images[0] && (
-                  <img
+                {listing.images[0] && listing.images[0].image && (
+                  <Image
                     className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[0].image}
                     alt=""
                   />
                 )}
-                {listing.images[1] && (
-                  <img
+                {listing.images[1] && listing.images[1].image && (
+                  <Image
                     className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
                     src={listing.images[1].image}
                     alt=""
                   />
                 )}
-                {listing.images[2] && (
-                  <img
+                {listing.images[2] && listing.images[2].image && (
+                  <Image
                     className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
                     src={listing.images[2].image}
                     alt=""
                   />
                 )}
-                {listing.images[3] && (
-                  <img
+                {listing.images[3] && listing.images[3].image && (
+                  <Image
                     className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[3].image}
                     alt=""
                   />
                 )}
-                {listing.images[4] && (
-                  <img
+                {listing.images[4] && listing.images[4].image && (
+                  <Image
                     className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[4].image}
                     alt=""
