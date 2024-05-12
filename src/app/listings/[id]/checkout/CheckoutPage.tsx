@@ -29,8 +29,8 @@ import CalendarIcon from "@/assets/icons/calendar.svg";
 
 import {
   Listing,
-  useCoreBookingsCreate,
-  useCoreListingsRead,
+  useBookingsCreate,
+  useListingsRead,
 } from "@/app/api-helpers";
 import {
   BookingContext,
@@ -44,7 +44,7 @@ import { useIsClient } from "@/app/helpers/useIsClient";
 import { PaymentForm } from "./PaymentForm";
 
 export default function CheckoutPage({ id }: { id: string }) {
-  const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
+  const { data: listing } = useListingsRead<Listing>(parseInt(id));
 
   const {
     data: booking,
@@ -52,7 +52,7 @@ export default function CheckoutPage({ id }: { id: string }) {
     isIdle,
     isPending,
     isError,
-  } = useCoreBookingsCreate({ mutation: {} });
+  } = useBookingsCreate({ mutation: {} });
 
   const { selectedDate, selectedDate1, nights, guest } =
     useContext(BookingContext);
