@@ -18,6 +18,9 @@ export const useAveragePricePerNight = (listing?: Listing): number => {
           end: selectedDate1,
         }),
       );
+      if (availabilities.length === 0) {
+        return 0
+      }
       const sum = availabilities.reduce(
         (sum, cur) => sum + cur.price_per_unit,
         0,

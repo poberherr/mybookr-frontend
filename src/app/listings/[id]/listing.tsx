@@ -23,21 +23,18 @@ import {
   HealthSafety,
   HouseRules,
   Listing,
-  Review,
-  useCoreListingsRead,
-  useCoreReviewsList,
+  useListingsRead,
 } from "@/app/api-helpers";
 
 // import CheckoutAndPay from "./checkout";
 
 export default function ListingComponent({ id }: { id: string }) {
   const router = useRouter();
-  const { data: listing } = useCoreListingsRead<Listing>(parseInt(id));
+  const { data: listing } = useListingsRead<Listing>(parseInt(id));
   // const { data: reviews } = useCoreReviewsList<Review[]>();
 
   // eslint-disable-next-line no-unused-vars
   // const [price, setPrice] = useState(0.01);
-  const reviews: Review[] = [];
   const [rating, setRating] = useState(5);
   const [ShowAllReview, setShowAllReviews] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -94,9 +91,9 @@ export default function ListingComponent({ id }: { id: string }) {
                 &#8194;{rating}
               </span>
 
-              <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+              {/* <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>{reviews?.length} Reviews</u>
-              </span>
+              </span> */}
 
               <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>
@@ -274,7 +271,7 @@ export default function ListingComponent({ id }: { id: string }) {
           <Divider className="!mt-16" />
 
           {/* Reviews */}
-          {reviews && reviews.length && (
+          {/* {reviews && reviews.length && (
             <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
               <Typography
                 className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
@@ -319,7 +316,7 @@ export default function ListingComponent({ id }: { id: string }) {
                   : `Show all ${reviews?.length} reviews`}
               </SButton>
             </div>
-          )}
+          )} */}
 
           <Divider className="!mt-16" />
 
@@ -335,7 +332,8 @@ export default function ListingComponent({ id }: { id: string }) {
             <div className="grid gap-2">
               <Typography>{listing.location.street}</Typography>
               <Typography>
-                {listing.location.city}, {listing.location.country}, {listing.location.zip}
+                {listing.location.city}, {listing.location.country},{" "}
+                {listing.location.zip}
               </Typography>
               <Typography>
                 {listing.location.latitude}, {listing.location.longitude}
@@ -409,7 +407,7 @@ export default function ListingComponent({ id }: { id: string }) {
             </div>
 
             <Typography className="!mt-8">
-              <b>Cancellation policy:</b>{" "}Free cancellation within 48 hours.
+              <b>Cancellation policy:</b> Free cancellation within 48 hours.
             </Typography>
           </div>
         </div>

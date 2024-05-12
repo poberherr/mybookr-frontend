@@ -9,12 +9,12 @@ import {
 import SearchBar from "./components/search-bar/SearchBar";
 import { ListingsComponent } from "@/app/components/Listings";
 
-import { coreListingsListQueryOptions } from "./api-helpers/hooks/useCoreListingsList";
+import { listingsListQueryOptions } from "./api-helpers/hooks/useListingsList";
 
 export default async function ListingsPage() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery(coreListingsListQueryOptions());
+  await queryClient.prefetchQuery(listingsListQueryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

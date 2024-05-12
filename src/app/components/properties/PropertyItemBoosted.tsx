@@ -31,7 +31,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
     >
       <div className="relative w-full">
         {property.images && property.images.length > 0 && (
-          <img className="w-full" src={property.images[0].image} alt="" />
+          <img className="w-full aspect-video object-cover" src={property.images[0].image} alt="" />
         )}
 
         <Typography

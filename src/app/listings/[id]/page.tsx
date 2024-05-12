@@ -5,9 +5,8 @@ import {
 } from "@tanstack/react-query";
 
 import {
-  coreListingsListQueryOptions,
-  coreListingsReadQueryOptions,
-  coreReviewsListQueryOptions,
+  listingsListQueryOptions,
+  listingsReadQueryOptions,
 } from "@/app/api-helpers";
 
 import ListingComponent from "./listing";
@@ -21,10 +20,9 @@ export default async function ListingPage({
   const queryClient = new QueryClient();
 
   const id = parseInt(params.id, 10);
-  await queryClient.prefetchQuery(coreListingsReadQueryOptions(id));
-  await queryClient.prefetchQuery(coreReviewsListQueryOptions());
+  await queryClient.prefetchQuery(listingsReadQueryOptions(id));
 
-  await queryClient.prefetchQuery(coreListingsListQueryOptions());
+  await queryClient.prefetchQuery(listingsListQueryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

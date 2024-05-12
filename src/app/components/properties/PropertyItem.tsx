@@ -20,7 +20,8 @@ export default function PropertyItem({ property: listing }: IProps) {
   const isBoosted = false //listing.boost_dates?.includes("2024-02-19");
   const averagePricePerNight = useAveragePricePerNight(listing)
 
-  console.dir(listing)
+  // @todo quick and dirty filter
+  if (averagePricePerNight === 0) { return null}
 
   return (
     <Link
@@ -36,7 +37,7 @@ export default function PropertyItem({ property: listing }: IProps) {
       <div className="relative">
         {listing.images && listing.images?.length > 0 && (
           <img
-            className="h-auto w-full rounded-t-lg"
+            className="h-auto w-full rounded-t-lg aspect-video object-cover"
             src={listing.images[0].image}
             alt=""
           />
