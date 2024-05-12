@@ -35,20 +35,25 @@ export default function AccessibilitySection() {
         <Typography>Accessibility</Typography>
 
         <FormGroup className="!grid sm:grid-cols-2 sm:gap-x-8">
-          {Object.entries(accessibilityOptions).map(([key, value]) => typeof value === "boolean" && (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name={key}
-                  checked={value}
-                  onChange={() => handleAmenities(key as keyof Accessibility)}
+          {Object.entries(accessibilityOptions).map(
+            ([key, value]) =>
+              typeof value === "boolean" && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name={key}
+                      checked={value}
+                      onChange={() =>
+                        handleAmenities(key as keyof Accessibility)
+                      }
+                    />
+                  }
+                  key={key}
+                  label={key}
+                  className="!mr-0"
                 />
-              }
-              key={key}
-              label={key}
-              className="!mr-0"
-            />
-          ))}
+              ),
+          )}
         </FormGroup>
       </div>
     </div>

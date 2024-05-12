@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-
 
 if (!process.env.STRIPE_SECRET_KEY) {
   throw new Error("You have to set STRIPE_SECRET_KEY env var");

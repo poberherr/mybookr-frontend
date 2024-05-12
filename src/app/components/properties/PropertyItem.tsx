@@ -37,14 +37,17 @@ export default function PropertyItem({ property: listing }: IProps) {
       `}
       href={`/listings/${listing.id}`}
     >
-      <div className="relative">
-        {listing.images && listing.images?.length > 0 && listing.images[0].image && (
-          <Image
-            className="h-auto w-full rounded-t-lg aspect-video object-cover"
-            src={listing.images[0].image}
-            alt=""
-          />
-        )}
+      <div className="relative aspect-video">
+        {listing.images &&
+          listing.images?.length > 0 &&
+          listing.images[0].image && (
+            <Image
+              className="rounded-t-lg object-cover"
+              src={listing.images[0].image}
+              alt=""
+              fill={true}
+            />
+          )}
 
         {isBoosted && (
           <Typography
@@ -57,13 +60,21 @@ export default function PropertyItem({ property: listing }: IProps) {
       </div>
 
       <div className={`flex flex-col ${isBoosted ? "p-8" : "p-4"}`}>
+        <Typography
+          className="!text-sm !font-bold !mb-1 whitespace-nowrap overflow-hidden text-ellipsis"
+          variant="body1"
+        >
+          {listing.title}
+        </Typography>
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              {listing.location.city}
+              {listing.location.city}, {listing.location.country}
             </Typography>
           ) : (
-            <Typography variant="body2">{listing.location.city}</Typography>
+            <Typography variant="body2">
+              {listing.location.city}, {listing.location.country}
+            </Typography>
           )}
 
           <Typography className="flex flex-row items-center !text-xs !font-medium">

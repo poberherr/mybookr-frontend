@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 
@@ -11,9 +11,7 @@ export default function RootLayout({
 }) {
   return (
     <>
-      <SignedIn>
-        {children}
-      </SignedIn>
+      <SignedIn>{children}</SignedIn>
       <SignedOut>
         <RedirectToSignIn />
       </SignedOut>

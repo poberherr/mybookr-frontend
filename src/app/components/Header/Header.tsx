@@ -30,14 +30,14 @@ export default function Header() {
       >
         {/* mybookr logo: Left side */}
         <Link className="cursor-pointer" href={"/"}>
-          <Logo className="h-12" alt="mybookr logo" />
+          <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" fill={true} />
         </Link>
 
-        <h1 className="font-bold">MyBookr Functional Prototype</h1>
+        <h1 className="font-bold">Prototype</h1>
 
         <SignedIn>
           <Link className="cursor-pointer" href={"/investors"}>
-            Secret Investors Page
+            Invest
           </Link>
         </SignedIn>
 

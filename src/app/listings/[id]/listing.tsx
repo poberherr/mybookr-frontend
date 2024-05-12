@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Divider, Typography } from "@mui/material";
@@ -25,7 +26,6 @@ import {
   Listing,
   useListingsRead,
 } from "@/app/api-helpers";
-import Image from "next/image";
 
 // import CheckoutAndPay from "./checkout";
 
@@ -126,15 +126,18 @@ export default function ListingComponent({ id }: { id: string }) {
                 images={listing.images}
               />
             ) : (
-              <div>
+              <div className="h-72 w-full">
                 {/* Image */}
-                {listing.images && listing.images?.length > 0 && listing.images[0].image && (
-                  <Image
-                    className="h-72 w-full object-cover"
-                    src={listing.images[0].image}
-                    alt=""
-                  />
-                )}
+                {listing.images &&
+                  listing.images?.length > 0 &&
+                  listing.images[0].image && (
+                    <Image
+                      className="object-cover"
+                      src={listing.images[0].image}
+                      alt=""
+                      fill={true}
+                    />
+                  )}
 
                 {/* Share and Heart icons */}
                 <div
@@ -178,6 +181,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[0].image}
                     alt=""
+                    fill={true}
                   />
                 )}
                 {listing.images[1] && listing.images[1].image && (
@@ -185,6 +189,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
                     src={listing.images[1].image}
                     alt=""
+                    fill={true}
                   />
                 )}
                 {listing.images[2] && listing.images[2].image && (
@@ -192,6 +197,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
                     src={listing.images[2].image}
                     alt=""
+                    fill={true}
                   />
                 )}
                 {listing.images[3] && listing.images[3].image && (
@@ -199,6 +205,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[3].image}
                     alt=""
+                    fill={true}
                   />
                 )}
                 {listing.images[4] && listing.images[4].image && (
@@ -206,6 +213,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
                     src={listing.images[4].image}
                     alt=""
+                    fill={true}
                   />
                 )}
 
@@ -269,7 +277,7 @@ export default function ListingComponent({ id }: { id: string }) {
             <AmenityItems amenities={listing.amenities} />
           </div>
 
-          <Divider className="!mt-16" />
+          {/* <Divider className="!mt-16" /> */}
 
           {/* Reviews */}
           {/* {reviews && reviews.length && (
@@ -367,7 +375,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     variant="caption"
                     key={item}
                   >
-                    <ListBulletIcon /> {item}
+                    <ListBulletIcon className="mr-2" /> {item}
                   </Typography>
                 ))}
               </div>
@@ -384,7 +392,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     component="div"
                     variant="caption"
                   >
-                    <ListBulletIcon /> {item}
+                    <ListBulletIcon className="mr-2" /> {item}
                   </Typography>
                 ))}
               </div>
@@ -401,7 +409,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     component="div"
                     variant="caption"
                   >
-                    <ListBulletIcon /> {item}
+                    <ListBulletIcon className="mr-2" /> {item}
                   </Typography>
                 ))}
               </div>

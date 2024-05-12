@@ -4,33 +4,26 @@ import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import { FormProvider, useForm } from "react-hook-form";
 
-
-
 import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
 
-
-
 import { Divider } from "@mui/material";
-
-
 
 import CalendarIcon from "@/assets/icons/calendar.svg";
 import CloseIcon from "@/assets/icons/close.svg";
 import FilterIcon from "@/assets/icons/filter.svg";
 
-
-
-import { BookingContext, useWatchDateRange, useWatchGuest } from "@/app/contexts/booking";
+import {
+  BookingContext,
+  useWatchDateRange,
+  useWatchGuest,
+} from "@/app/contexts/booking";
 import { useIsClient } from "@/app/helpers/useIsClient";
-
-
 
 import Calendar from "../Calendar/Calendar";
 import { SButton } from "../ui/SButton";
 import FilterBox from "./FilterBox";
 import LocationMenu from "./LocationMenu";
-
 
 export interface Features {
   wifi: boolean;
@@ -128,11 +121,7 @@ const SelectedDate = ({
 };
 
 export default function SearchBar() {
-  const {
-    selectedDate,
-    selectedDate1,
-    setDates
-  } = useContext(BookingContext);
+  const { selectedDate, selectedDate1, setDates } = useContext(BookingContext);
 
   const showFiltered = true;
 
@@ -220,11 +209,11 @@ export default function SearchBar() {
     });
 
     if (data.dateRange.startDate && data.dateRange.endDate) {
-      setDates(data.dateRange.startDate,data.dateRange.endDate);
+      setDates(data.dateRange.startDate, data.dateRange.endDate);
 
       // router.push(`/?${searchParams.toString()}`);
       console.dir({ data });
-      alert("@todo");
+      // alert("@todo");
       return;
     }
 
@@ -237,37 +226,43 @@ export default function SearchBar() {
     <FormProvider {...formMethods}>
       <form onSubmit={onSubmit}>
         {/* Search bar */}
-        <div className="mb-12">
-          {/* Search bar and Filter button */}
-          <div className="flex flex-col items-center justify-center gap-4 py-12 lg:flex-row lg:gap-8 xl:relative">
-            {/* Search bar */}
-            <div className="flex h-[50px] gap-8 rounded-[32px] border border-solid border-gray-100">
-              {/* Location menu */}
-              <LocationMenu />
+        {/* Search bar and Filter button */}
+        <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-8 xl:relative">
+          {/* Search bar */}
+          <div className="w-full md:w-auto flex flex-col md:flex-row md:h-[50px] gap-4 md:gap-8 md:rounded-[32px] md:border md:border-solid border-gray-100">
+            {/* Location menu */}
+            <LocationMenu />
+
+            <Divider
+              flexItem
+              orientation="vertical"
+              variant="middle"
+              className="hidden md:visible"
+            />
+
+            {/* Selected Dates */}
+            <div className="flex items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 md:border-none h-[50px] px-6">
+              <SelectedDate
+                date={values.dateRange.startDate}
+                handleRangeSelectionDialog={handleRangeSelectionDialog}
+              />
               <Divider flexItem orientation="vertical" variant="middle" />
-
-              {/* Selected Dates */}
-              <div className="flex items-center justify-between gap-8">
-                <SelectedDate
-                  date={values.dateRange.startDate}
-                  handleRangeSelectionDialog={handleRangeSelectionDialog}
-                />
-                <Divider flexItem orientation="vertical" variant="middle" />
-                <SelectedDate
-                  date={values.dateRange.endDate}
-                  handleRangeSelectionDialog={handleRangeSelectionDialog}
-                />
-              </div>
-
-              {/* Search button */}
-              <SButton fullWidth variant="contained">
-                Search
-              </SButton>
+              <SelectedDate
+                date={values.dateRange.endDate}
+                handleRangeSelectionDialog={handleRangeSelectionDialog}
+              />
             </div>
+          </div>
+
+          <div className="flex w-full md:w-auto gap-8">
+            {/* Search button */}
+            <SButton fullWidth variant="contained" className="md:max-w-48">
+              Search
+            </SButton>
 
             {/* Filter button */}
             <SButton
-              className="xl:!absolute xl:right-0 flex items-center"
+              className="xl:!absolute xl:right-0 flex items-center order-first md:order-last"
               variant="outlined"
               endIcon={<FilterIcon className="h-4" alt="Filter" />}
               onClick={() => toggleDrawer(true)}
@@ -275,58 +270,57 @@ export default function SearchBar() {
               Filter
             </SButton>
           </div>
-
-          <Divider />
-
-          {/* Selected items from filters */}
-          {/* Shows up at below the search bar */}
-          {showFiltered &&
-            (values.rooms.bedrooms !== "Any" ||
-              values.rooms.beds !== "Any" ||
-              values.rooms.bathrooms !== "Any" ||
-              values.features.length > 0) && (
-              <>
-                <div className="mx-auto flex max-w-6xl flex-wrap gap-4 py-12">
-                  {values.rooms.bedrooms && values.rooms.bedrooms !== "Any" && (
-                    <FilteredItem
-                      deleteFilteredItem={deleteFilteredItem}
-                      title={`${values.rooms.bedrooms || 3} bedroom(s)`}
-                      name="bedrooms"
-                      type="roomsAndBeds"
-                    />
-                  )}
-                  {values.rooms.beds && values.rooms.beds !== "Any" && (
-                    <FilteredItem
-                      deleteFilteredItem={deleteFilteredItem}
-                      title={`${values.rooms.beds || 3} bed(s)`}
-                      name="beds"
-                      type="roomsAndBeds"
-                    />
-                  )}
-                  {values.rooms.bathrooms &&
-                    values.rooms.bathrooms !== "Any" && (
-                      <FilteredItem
-                        deleteFilteredItem={deleteFilteredItem}
-                        title={`${values.rooms.bathrooms || 3} bathroom(s)`}
-                        name="bathrooms"
-                        type="roomsAndBeds"
-                      />
-                    )}
-                  {values.features.map((item, key) => (
-                    <FilteredItem
-                      key={key}
-                      deleteFilteredItem={deleteFilteredItem}
-                      title={featureLabels[item]}
-                      name={item}
-                      type="features"
-                    />
-                  ))}
-                </div>
-
-                <Divider />
-              </>
-            )}
         </div>
+
+        <Divider className="hidden md:visible" />
+
+        {/* Selected items from filters */}
+        {/* Shows up at below the search bar */}
+        {showFiltered &&
+          (values.rooms.bedrooms !== "Any" ||
+            values.rooms.beds !== "Any" ||
+            values.rooms.bathrooms !== "Any" ||
+            values.features.length > 0) && (
+            <>
+              <div className="mx-auto flex max-w-6xl flex-wrap gap-4 py-12">
+                {values.rooms.bedrooms && values.rooms.bedrooms !== "Any" && (
+                  <FilteredItem
+                    deleteFilteredItem={deleteFilteredItem}
+                    title={`${values.rooms.bedrooms || 3} bedroom(s)`}
+                    name="bedrooms"
+                    type="roomsAndBeds"
+                  />
+                )}
+                {values.rooms.beds && values.rooms.beds !== "Any" && (
+                  <FilteredItem
+                    deleteFilteredItem={deleteFilteredItem}
+                    title={`${values.rooms.beds || 3} bed(s)`}
+                    name="beds"
+                    type="roomsAndBeds"
+                  />
+                )}
+                {values.rooms.bathrooms && values.rooms.bathrooms !== "Any" && (
+                  <FilteredItem
+                    deleteFilteredItem={deleteFilteredItem}
+                    title={`${values.rooms.bathrooms || 3} bathroom(s)`}
+                    name="bathrooms"
+                    type="roomsAndBeds"
+                  />
+                )}
+                {values.features.map((item, key) => (
+                  <FilteredItem
+                    key={key}
+                    deleteFilteredItem={deleteFilteredItem}
+                    title={featureLabels[item]}
+                    name={item}
+                    type="features"
+                  />
+                ))}
+              </div>
+
+              <Divider />
+            </>
+          )}
         {/* Filter drawer */}
         <FilterBox
           control={formMethods.control}

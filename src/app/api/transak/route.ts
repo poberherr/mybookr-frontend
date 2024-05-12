@@ -2,7 +2,6 @@ import { currentUser } from "@clerk/nextjs";
 import { format, startOfToday, subMonths } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
 
-
 export async function GET(req: NextRequest, res: NextResponse) {
   const user = await currentUser();
 
@@ -21,16 +20,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
   );
 
   const transakTokenResJSON = await transakTokenRes.json();
-  const transakAccessToken = transakTokenResJSON.data.accessToken
+  const transakAccessToken = transakTokenResJSON.data.accessToken;
 
-  const params = new URLSearchParams()
+  const params = new URLSearchParams();
   // params.append("limit", "100")
-  params.append("startDate", format(subMonths(startOfToday(), 1), "yyyy-MM-dd"))
-  params.append("endDate", format(startOfToday(), "yyyy-MM-dd"))
-  params.append("filter[productsAvailed]", "[\"BUY\"]")
-  params.append("filter[status]", "COMPLETED")
-  params.append("filter[sortOrder]", "asc")
-  params.append("limit", "100")
+  params.append(
+    "startDate",
+    format(subMonths(startOfToday(), 1), "yyyy-MM-dd"),
+  );
+  params.append("endDate", format(startOfToday(), "yyyy-MM-dd"));
+  params.append("filter[productsAvailed]", '["BUY"]');
+  params.append("filter[status]", "COMPLETED");
+  params.append("filter[sortOrder]", "asc");
+  params.append("limit", "100");
 
   const transakTransactionsRes = await fetch(
     `${process.env.TRANSAK_API_URL}/partners/api/v2/orders?${params.toString()}`,
@@ -42,12 +44,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
     },
   );
 
-  const transakTransactionsJson = await transakTransactionsRes.json()
-
+  const transakTransactionsJson = await transakTransactionsRes.json();
 
   const filteredTransactions = transakTransactionsJson.data.filter(
-    (transaction: any) => transaction.partnerCustomerId === user?.id
-   );
+    (transaction: any) => transaction.partnerCustomerId === user?.id,
+  );
 
   return NextResponse.json({ transactions: filteredTransactions });
 }

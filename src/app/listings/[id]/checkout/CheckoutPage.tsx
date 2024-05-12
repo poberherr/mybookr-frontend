@@ -13,6 +13,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { useUser } from "@clerk/clerk-react";
 import { formatISO } from "date-fns";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Divider, Input, Typography } from "@mui/material";
@@ -27,11 +28,7 @@ import StyledDialog from "@/app/components/ui/StyledDialog";
 
 import CalendarIcon from "@/assets/icons/calendar.svg";
 
-import {
-  Listing,
-  useBookingsCreate,
-  useListingsRead,
-} from "@/app/api-helpers";
+import { Listing, useBookingsCreate, useListingsRead } from "@/app/api-helpers";
 import {
   BookingContext,
   useWatchDateRange,
@@ -42,7 +39,6 @@ import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import { PaymentForm } from "./PaymentForm";
-import Image from "next/image";
 
 export default function CheckoutPage({ id }: { id: string }) {
   const { data: listing } = useListingsRead<Listing>(parseInt(id));
@@ -446,15 +442,18 @@ export default function CheckoutPage({ id }: { id: string }) {
               </Typography>
 
               {/* Villa Image */}
-              {listing.images && listing.images.length > 0 && listing.images[0].image && (
-                <div className="p-0 md:px-8 md:py-0">
-                  <Image
-                    className="h-64 w-full rounded"
-                    src={listing.images[0].image}
-                    alt=""
-                  />
-                </div>
-              )}
+              {listing.images &&
+                listing.images.length > 0 &&
+                listing.images[0].image && (
+                  <div className="p-0 md:px-8 md:py-0">
+                    <Image
+                      className="h-64 w-full rounded"
+                      src={listing.images[0].image}
+                      alt=""
+                      fill={true}
+                    />
+                  </div>
+                )}
 
               {/* Price detail part */}
               <div className="p-0 md:px-8 md:py-0">

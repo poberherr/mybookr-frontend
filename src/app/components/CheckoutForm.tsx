@@ -5,9 +5,9 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 import { SButton } from "./ui/SButton";
-import { StripePaymentElementOptions } from "@stripe/stripe-js";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -96,10 +96,17 @@ export default function CheckoutForm() {
         className="mt-8"
       >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Prepare payment to reserve"}
+          {isLoading ? (
+            <div className="spinner" id="spinner"></div>
+          ) : (
+            "Prepare payment to reserve"
+          )}
         </span>
       </SButton>
-      <p className="mt-4 text-sm"><strong>No worries!</strong> Your bank account will only be charged when the host accepts your reservation.</p>
+      <p className="mt-4 text-sm">
+        <strong>No worries!</strong> Your bank account will only be charged when
+        the host accepts your reservation.
+      </p>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}
     </>

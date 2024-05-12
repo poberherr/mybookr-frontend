@@ -18,8 +18,8 @@ import {
   useWatchDateRange,
   useWatchGuest,
 } from "@/app/contexts/booking";
-import { useIsClient } from "@/app/helpers/useIsClient";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
+import { useIsClient } from "@/app/helpers/useIsClient";
 
 interface IProps {
   listing: Listing;
@@ -65,7 +65,7 @@ export default function CheckoutStart({ listing }: IProps) {
   });
 
   // @todo what is when we have multiple?
-  const averagePricePerNight = useAveragePricePerNight(listing)
+  const averagePricePerNight = useAveragePricePerNight(listing);
 
   if (!isClient) {
     return null;

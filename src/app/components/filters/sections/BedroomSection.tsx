@@ -20,9 +20,7 @@ export default function BedroomSection() {
 
       <div className="grid">
         <Typography>Number of Bedrooms</Typography>
-        <Typography className="!text-gray-500">
-          {bedrooms} Bedrooms
-        </Typography>
+        <Typography className="!text-gray-500">{bedrooms} Bedrooms</Typography>
       </div>
 
       <Counter count={bedrooms} handleCount={handleBedrooms} />

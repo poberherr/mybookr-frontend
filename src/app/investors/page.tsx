@@ -47,9 +47,10 @@ export default function InvestorPage() {
       </a>
       <SButton onClick={openTransak}>Invest into mybookr</SButton>
       {transakActive && <TransakWrapper setTransakActive={setTransakActive} />}
-      {transactions.length > 0 && (
-        <section>
-          <h2 className="font-bold text-xl">Your Investments:</h2>
+
+      <section>
+        <h2 className="font-bold text-xl">Your Investments:</h2>
+        {transactions.length > 0 ? (
           <table className="min-w-full divide-y divide-gray-300">
             <thead>
               <tr>
@@ -87,8 +88,10 @@ export default function InvestorPage() {
               </tr>
             ))}
           </table>
-        </section>
-      )}
+        ) : (
+          "You did not invest yet."
+        )}
+      </section>
     </div>
   );
 }

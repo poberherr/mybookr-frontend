@@ -42,10 +42,10 @@ export default function Gallery({
     setIndexImage(temp);
   };
 
-  const mainImage = images[indexImage].image
+  const mainImage = images[indexImage].image;
 
-  if (!mainImage){
-    return null
+  if (!mainImage) {
+    return null;
   }
 
   return (
@@ -53,12 +53,15 @@ export default function Gallery({
       {/* The Hole Section */}
       <div className="grid h-full grid-cols-1 grid-rows-[calc(80vh-32px)_20vh] gap-8 bg-black">
         {/* Main Image */}
-        <div className="grid justify-items-center">
-          {<Image
-            className="h-[calc(80vh-32px)] w-auto object-contain"
-            src={mainImage}
-            alt="main"
-          />}
+        <div className="grid justify-items-center h-[calc(80vh-32px)] w-auto relative">
+          {
+            <Image
+              className="object-contain"
+              src={mainImage}
+              alt="main"
+              fill={true}
+            />
+          }
         </div>
 
         {/* List of Images */}
@@ -66,19 +69,22 @@ export default function Gallery({
           {images.map((each, index) => {
             let isShowed = indexImage === index;
             if (!each.image) {
-              return null
+              return null;
             }
             return (
-              <Image
-                className={`h-[20vh] w-full cursor-pointer object-cover opacity-40 hover:opacity-70 ${
-                  isShowed && "opacity-100"
-                }`}
-                src={each.image}
-                onClick={() => {
-                  setIndexImage(index);
-                }}
-                alt={`slide ${index}`}
-              />
+              <div className="h-[20vh] relative overflow-hidden">
+                <Image
+                  className={`cursor-pointer object-cover opacity-40 hover:opacity-70 ${
+                    isShowed && "opacity-100"
+                  }`}
+                  src={each.image}
+                  onClick={() => {
+                    setIndexImage(index);
+                  }}
+                  alt={`slide ${index}`}
+                  fill={true}
+                />
+              </div>
             );
           })}
         </div>

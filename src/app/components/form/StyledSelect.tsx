@@ -1,14 +1,15 @@
 import React from "react";
 import { Control, Controller, FieldError, FieldValues } from "react-hook-form";
 
-
-
-import { FormHelperText, InputLabel, MenuItem, Select, styled } from "@mui/material";
-
-
+import {
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  styled,
+} from "@mui/material";
 
 import DownArrowIcon from "@/assets/icons/downArrow.svg";
-
 
 interface StyledSelectProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;

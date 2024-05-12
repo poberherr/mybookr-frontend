@@ -42,7 +42,7 @@ export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AXIOS_BASE,
   headers: {
     // "Authorization": process.env.NEXT_PUBLIC_AXIOS_AUTH_TOKEN
-  }
+  },
 });
 
 export const axiosClient = async <

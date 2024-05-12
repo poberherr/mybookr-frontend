@@ -4,8 +4,9 @@ import { Typography } from "@mui/material";
 
 import { MaximizeCircle } from "iconsax-react";
 
-import Counter from "../common/Counter";
 import { Space } from "@/app/api-helpers";
+
+import Counter from "../common/Counter";
 
 type ExcludedSpace = Omit<Space, "guests_capacity" | "bedrooms">;
 
@@ -38,9 +39,7 @@ export default function SpaceSection() {
               key={key}
               className="grid grid-cols-[1fr_auto] items-center gap-2"
             >
-              <Typography>
-                {key}
-              </Typography>
+              <Typography>{key}</Typography>
               <Counter
                 count={count}
                 handleCount={(value) =>

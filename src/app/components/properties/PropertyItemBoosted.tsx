@@ -38,6 +38,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
               className="w-full aspect-video object-cover"
               src={property.images[0].image}
               alt=""
+              fill={true}
             />
           )}
 

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 import { Flashy } from "iconsax-react";
+
 import { Amenity } from "@/app/api-helpers";
 
 export default function AmenitySection() {
@@ -39,20 +40,23 @@ export default function AmenitySection() {
         <Typography>Amenities</Typography>
 
         <FormGroup className="!grid sm:grid-cols-2 sm:gap-x-8">
-          {Object.entries(amenities).map(([key, value]) => typeof value === "boolean" && (
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name={key}
-                  checked={value}
-                  onChange={() => handleAmenities(key as keyof Amenity)}
+          {Object.entries(amenities).map(
+            ([key, value]) =>
+              typeof value === "boolean" && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      name={key}
+                      checked={value}
+                      onChange={() => handleAmenities(key as keyof Amenity)}
+                    />
+                  }
+                  key={key}
+                  label={key}
+                  className="!mr-0"
                 />
-              }
-              key={key}
-              label={key}
-              className="!mr-0"
-            />
-          ))}
+              ),
+          )}
         </FormGroup>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, { ButtonHTMLAttributes, MouseEventHandler } from "react";
 
-
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   customWidth?: string;

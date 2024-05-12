@@ -20,9 +20,7 @@ export default function GuestSection() {
 
       <div className="grid">
         <Typography>Number of Guests</Typography>
-        <Typography className="!text-gray-500">
-          {guests} Guests
-        </Typography>
+        <Typography className="!text-gray-500">{guests} Guests</Typography>
       </div>
 
       <Counter count={guests} handleCount={handleGuests} />

@@ -54,7 +54,7 @@ export default function Calendar({
       title={"Select reservation dates"}
     >
       <CalendarWrapper>
-        <Typography variant="h5" className="heading">
+        <Typography variant="h5" className="!text-sm md:!text-xl heading">
           <span>{nights} nights</span> {"\u00a0"}in Pantai Lima
         </Typography>
 

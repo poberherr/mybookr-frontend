@@ -74,7 +74,7 @@ export default function StyledDatePicker({
   );
 }
 
-const Wrapper = styled('div')`
+const Wrapper = styled("div")`
   width: 100%;
   height: min-content;
 `;

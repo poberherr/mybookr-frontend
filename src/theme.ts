@@ -3,7 +3,7 @@
 import { grey } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 
-import { montserrat, inter } from "@/styles/fonts";
+import { inter, montserrat } from "@/styles/fonts";
 
 const primary = "#303030";
 

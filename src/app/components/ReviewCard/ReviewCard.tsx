@@ -29,7 +29,7 @@ export default function ReviewCard({ id, name, date, message }: IProps) {
 
           {/* Publish date */}
           <Typography variant="caption">
-            {new Date(date).toLocaleDateString(undefined ,{
+            {new Date(date).toLocaleDateString(undefined, {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
