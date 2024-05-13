@@ -20,7 +20,7 @@ export default function Footer() {
         <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
       </div>
       {/* Copyright */}
-      <h6 className="!text-xs">© 2024, MyBookR</h6>
+      <h6 className="!text-xs">© 2024, mybookr.io</h6>
     </div>
   );
 }
