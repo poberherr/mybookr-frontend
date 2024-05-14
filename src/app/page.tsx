@@ -45,7 +45,7 @@ export default async function ListingsPage() {
       <div className="flex flex-col gap-6 items-center text-center border-t border-solid border-gray-100 py-6 md:py-12">
         <h2 className="text-xl md:text-3xl">Join The Movement!</h2>
         <p>
-          Be part of a revolutionary way to book your holidays. Sign up to stay informed and get involved:
+          Be part of a revolutionary way to book your holidays.<br/>Sign up to stay informed and get involved:
         </p>
         <JoinForm />
       </div>

@@ -33,7 +33,7 @@ export default function Header() {
           <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
         </Link>
 
-        <h1 className="font-bold">Prototype</h1>
+        <Link className="font-bold" href={"/listings"}>Prototype</Link>
 
         <SignedIn>
           <Link className="cursor-pointer" href={"/investors"}>

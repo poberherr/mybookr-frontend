@@ -254,7 +254,7 @@ export default function ListingComponent({ id }: { id: string }) {
               variant="body2"
             >
               {listing.space.guests_capacity} guests • {listing.space.bedrooms}{" "}
-              bedrooms • {listing.space.double_beds} double •
+              bedrooms • {listing.space.double_beds} double •{" "}
               {listing.space.single_beds} single bed • {listing.space.bathrooms}{" "}
               baths
             </Typography>
