@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import format from "date-fns/format";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -370,12 +371,12 @@ export default function ListingComponent({ id }: { id: string }) {
 
                 {houseRulesItems.map((item) => (
                   <Typography
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                    className="flex items-center px-0 py-1.5 capitalize"
                     component="div"
                     variant="caption"
                     key={item}
                   >
-                    <ListBulletIcon className="mr-2" /> {item}
+                    <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
               </div>
@@ -388,11 +389,11 @@ export default function ListingComponent({ id }: { id: string }) {
                 {healthSafetyItems.map((item) => (
                   <Typography
                     key={item}
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                    className="flex items-center px-0 py-1.5 capitalize"
                     component="div"
                     variant="caption"
                   >
-                    <ListBulletIcon className="mr-2" /> {item}
+                    <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
               </div>
@@ -405,11 +406,11 @@ export default function ListingComponent({ id }: { id: string }) {
                 {accessibilityItems.map((item) => (
                   <Typography
                     key={item}
-                    className="flex items-center px-0 py-1.5 capitalize before:mr-3 before:inline-block before:h-3.5 before:w-3.5 before:bg-cover before:bg-center before:bg-no-repeat before:content-['']"
+                    className="flex items-center px-0 py-1.5 capitalize"
                     component="div"
                     variant="caption"
                   >
-                    <ListBulletIcon className="mr-2" /> {item}
+                    <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
               </div>
@@ -472,9 +473,9 @@ const getHouseRulesItems = ({ houseRules }: { houseRules?: HouseRules }) => {
   if (!houseRules) return [];
 
   const items = [
-    `Check in: ${houseRules.check_in_time}`,
-    `Check out: ${houseRules.check_out_time}`,
-    `Quiet time: ${houseRules.quiet_time}`,
+    `Check in: ${format(new Date(houseRules.check_in_time), "HH:mm")}`,
+    `Check out: ${format(new Date(houseRules.check_out_time), "HH:mm")}`,
+    `Quiet time: ${houseRules.quiet_time.split(":").slice(0,2).join(':')}`,
     `Max guests: ${houseRules.max_guests}`,
     `${houseRules.self_check_in ? "Self check in" : "No self check in"}`,
   ];
@@ -497,6 +498,10 @@ const getItemsByAvailability = <T extends SafetyOrAccessibility>({
     const isAvailable = items[key as keyof T];
     const itemName = key.replace(/_/g, " ");
     const displayText = isAvailable ? itemName : `No ${itemName.toLowerCase()}`;
+
+    if (key === "id") {
+      return
+    }
 
     isAvailable
       ? availableItems.push(displayText)
