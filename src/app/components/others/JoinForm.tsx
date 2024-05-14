@@ -9,7 +9,7 @@ import { SButton } from "../ui/SButton";
 const styles = {
   input:
     "cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm appearance-none",
-  label: "MuiTypography-caption text-right",
+  label: "MuiTypography-caption text-left md:text-right mt-4 md:mt-0",
 };
 
 const categories = {
@@ -42,12 +42,11 @@ const JoinForm = () => {
       data-netlify="true"
       netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="grid grid-cols-[200px_1fr] gap-6 w-full max-w-screen-sm mt-8 items-center"
+      className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 w-full max-w-screen-sm mt-8 items-center"
     >
-      <input type="hidden" name="form-name" value="join-request" />
       <div className="hidden">
         <label>
-          Don’t fill this out if you’re human: <input name="bot-field" />
+          Don't fill this out if you're human: <input name="bot-field" />
         </label>
       </div>
 
@@ -93,13 +92,13 @@ const JoinForm = () => {
       <label className={styles.label}>Email*</label>
       <input type="email" name="email" required className={styles.input} />
 
-      <div className="col-span-2">
+      <div className="md:col-span-2 mt-4 md:mt0">
         <Checkbox name="seriousToggle" className={`!inline-block !mr-2`} />
         <label className={styles.label}>
           Yes, I am serious about it and want a MOU.
         </label>
       </div>
-      <div className="col-span-2 flex justify-center">
+      <div className="md:col-span-2 flex justify-center">
         <SButton type="submit" value="Submit">
           Apply
         </SButton>
