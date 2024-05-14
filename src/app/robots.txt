@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /private/
+
+# Sitemap: https://myboork.io/sitemap.xml
