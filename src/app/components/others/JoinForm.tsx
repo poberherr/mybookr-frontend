@@ -38,6 +38,7 @@ const JoinForm = () => {
   return (
     <form
       name="join-request"
+      method="POST"
       data-netlify="true"
       netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
@@ -83,9 +84,6 @@ const JoinForm = () => {
           />
         </>
       ))}
-
-      <label className={styles.label}>Bookings per year</label>
-      <input type="number" name="bookingsPerYear" className={styles.input} />
 
       <label className={styles.label}>
         Your Name, if you like to be addressed correctly
