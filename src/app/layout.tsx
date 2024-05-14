@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   title: "mybookr.io",
   description:
     "The whitelabel booking solution for a better booking experience for owners and visitors",
+  metadataBase: new URL(process.env.URL || "https://mybookr.io"),
 };
 
 export default function RootLayout({
