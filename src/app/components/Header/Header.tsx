@@ -30,7 +30,7 @@ export default function Header() {
       >
         {/* mybookr logo: Left side */}
         <Link className="cursor-pointer" href={"/"}>
-          <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" fill={true} />
+          <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
         </Link>
 
         <h1 className="font-bold">Prototype</h1>

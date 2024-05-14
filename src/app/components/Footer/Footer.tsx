@@ -17,7 +17,7 @@ export default function Footer() {
           window.scrollTo(0, 0);
         }}
       >
-        <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
+        <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo"/>
       </div>
       {/* Copyright */}
       <h6 className="!text-xs">© 2024, mybookr.io</h6>

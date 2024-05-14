@@ -270,7 +270,7 @@ export default function ListingComponent({ id }: { id: string }) {
           {/* Amenities */}
           <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
             <Typography
-              className="w-full !text-xl !font-extrabold md:!text-3xl"
+              className="w-full !text-xl !font-extrabold md:!text-3xl pb-6"
               variant="h3"
             >
               What this place offers
@@ -479,7 +479,7 @@ const getHouseRulesItems = ({ houseRules }: { houseRules?: HouseRules }) => {
   const items = [
     `Check in: ${format(new Date(houseRules.check_in_time), "HH:mm")}`,
     `Check out: ${format(new Date(houseRules.check_out_time), "HH:mm")}`,
-    `Quiet time: ${houseRules.quiet_time.split(":").slice(0,2).join(':')}`,
+    `Quiet time: ${houseRules.quiet_time.split(":").slice(0, 2).join(":")}`,
     `Max guests: ${houseRules.max_guests}`,
     `${houseRules.self_check_in ? "Self check in" : "No self check in"}`,
   ];
@@ -504,7 +504,7 @@ const getItemsByAvailability = <T extends SafetyOrAccessibility>({
     const displayText = isAvailable ? itemName : `No ${itemName.toLowerCase()}`;
 
     if (key === "id") {
-      return
+      return;
     }
 
     isAvailable
