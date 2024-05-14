@@ -12,6 +12,7 @@ import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import Gallery from "../../components/others/Gallery";
 import { SButton } from "../../components/ui/SButton";
 import CheckoutStart from "@/app/components/checkout/CheckoutStart";
+import MybookrMap from "@/app/components/others/MybookrMap";
 
 import HeartIcon from "@/assets/icons/heart.svg";
 import ListBulletIcon from "@/assets/icons/listBullet.svg";
@@ -345,10 +346,13 @@ export default function ListingComponent({ id }: { id: string }) {
                 {listing.location.city}, {listing.location.country},{" "}
                 {listing.location.zip}
               </Typography>
-              <Typography>
-                {listing.location.latitude}, {listing.location.longitude}
-              </Typography>
               <Typography>{listing.location.country}</Typography>
+              {listing.location.longitude && listing.location.latitude && (
+                <MybookrMap
+                  latitude={listing.location.latitude}
+                  longitude={listing.location.longitude}
+                />
+              )}
             </div>
           </div>
 
