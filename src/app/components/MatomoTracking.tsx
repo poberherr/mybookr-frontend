@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
-
-
+import { useEffect, useState } from "react";
 
 import { init, push } from "@socialgouv/matomo-next";
 import { usePathname, useSearchParams } from "next/navigation";
 
-
 const MatomoTracking = () => {
+  const [enabled, setEnabled] = useState(false);
   useEffect(() => {
     if (
       !process.env.NEXT_PUBLIC_MATOMO_URL ||
@@ -19,6 +17,9 @@ const MatomoTracking = () => {
     init({
       url: process.env.NEXT_PUBLIC_MATOMO_URL,
       siteId: process.env.NEXT_PUBLIC_MATOMO_SITE_ID,
+      onInitialization: () => {
+        setEnabled(true);
+      },
     });
   }, []);
 
@@ -28,7 +29,7 @@ const MatomoTracking = () => {
   const searchParamsString = searchParams && searchParams.toString();
 
   useEffect(() => {
-    if (!pathname) return;
+    if (!pathname || !enabled) return;
     const url = pathname + (searchParamsString ? "?" + searchParamsString : "");
     push(["setCustomUrl", url]);
     push(["trackPageView"]);
