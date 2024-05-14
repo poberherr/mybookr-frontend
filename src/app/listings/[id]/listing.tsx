@@ -477,8 +477,8 @@ const getHouseRulesItems = ({ houseRules }: { houseRules?: HouseRules }) => {
   if (!houseRules) return [];
 
   const items = [
-    `Check in: ${format(new Date(houseRules.check_in_time), "HH:mm")}`,
-    `Check out: ${format(new Date(houseRules.check_out_time), "HH:mm")}`,
+    `Check in time: ${format(new Date(houseRules.check_in_time), "HH:mm")}`,
+    `Check out time: ${format(new Date(houseRules.check_out_time), "HH:mm")}`,
     `Quiet time: ${houseRules.quiet_time.split(":").slice(0, 2).join(":")}`,
     `Max guests: ${houseRules.max_guests}`,
     `${houseRules.self_check_in ? "Self check in" : "No self check in"}`,
