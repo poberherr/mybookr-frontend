@@ -4,6 +4,6 @@
 
 @import url("./styles/Calendar.css");
 
-body {
+body, input, label {
   @apply font-sans;
 }
