@@ -72,6 +72,7 @@ const JoinForm = () => {
           <label
             className={styles.label}
             style={{ display: category === key ? "block" : "none" }}
+            key={`label-${key}`}
           >
             {label}
           </label>
@@ -80,6 +81,7 @@ const JoinForm = () => {
             name={label}
             className={styles.input}
             style={{ display: category === key ? "block" : "none" }}
+            key={`input-${key}`}
           />
         </>
       ))}

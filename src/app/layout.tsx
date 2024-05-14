@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
+import MatomoTracking from "./components/MatomoTracking";
 import QueryClientProviderWrapper from "./components/QueryClientProvider";
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
@@ -36,6 +37,7 @@ export default function RootLayout({
         <ClerkProvider>
           <BookingContextProvider>
             <QueryClientProviderWrapper>
+              <MatomoTracking />
               <html lang="en">
                 <body className={`${montserrat.className} ${inter.className}`}>
                   <main>
