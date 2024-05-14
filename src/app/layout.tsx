@@ -2,6 +2,7 @@ import React from "react";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import type { Metadata } from "next";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
@@ -15,6 +16,12 @@ import { inter, montserrat } from "@/styles/fonts";
 import "../global.css";
 import { theme } from "../theme";
 import { BookingContextProvider } from "./contexts/booking";
+
+export const metadata: Metadata = {
+  title: "mybookr.io",
+  description:
+    "The whitelabel booking solution for a better booking experience for owners and visitors",
+};
 
 export default function RootLayout({
   children,
@@ -30,7 +37,6 @@ export default function RootLayout({
             <QueryClientProviderWrapper>
               <html lang="en">
                 <body className={`${montserrat.className} ${inter.className}`}>
-                  {/* Layout UI */}
                   <main>
                     <Header />
                     {children}
