@@ -2,14 +2,9 @@
 
 import React, { useState } from "react";
 
-
-
 import { Checkbox } from "@mui/material";
 
-
-
 import { SButton } from "../ui/SButton";
-
 
 const styles = {
   input:
@@ -49,6 +44,11 @@ const JoinForm = () => {
       className="grid grid-cols-[200px_1fr] gap-6 w-full max-w-screen-sm mt-8 items-center"
     >
       <input type="hidden" name="form-name" value="join-request" />
+      <div className="hidden">
+        <label>
+          Don’t fill this out if you’re human: <input name="bot-field" />
+        </label>
+      </div>
 
       <label className={styles.label}>Project or Company Name*</label>
       <input name="projectName" required className={styles.input} />
