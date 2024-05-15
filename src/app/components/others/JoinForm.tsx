@@ -11,7 +11,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
 } from "@mui/material";
 
 import { SButton } from "../ui/SButton";
@@ -45,7 +44,7 @@ const categories: {
     label: "Total number of rooms",
     id: "number_of_rooms",
   },
-  "Villa/ B&B": {
+  "Villa or B&B": {
     label: "Number of villas",
     id: "number_of_villas",
   },

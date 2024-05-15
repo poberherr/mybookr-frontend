@@ -20,7 +20,7 @@ export const EMAIL = '"mybookr.io team" <info@mybookr.io>';
 export const supabase = supabaseCreateClient(supabaseUrl, supabaseKey);
 
 export const transporter = nodemailer.createTransport(
-  typeof process.env.NETLIFY !== "undefined"
+  process.env.BUILD_ID
     ? {
         host: "live.smtp.mailtrap.io",
         port: 587,
