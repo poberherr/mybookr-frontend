@@ -3,13 +3,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Typography } from "@mui/material";
-
 import JoinForm from "./components/others/JoinForm";
 
 import Logo from "@/assets/mybookr.svg";
 
-export default async function ListingsPage() {
+export default async function LandingPage() {
   return (
     <div>
       <div className="flex flex-col gap-12 items-center text-center p-6 md:py-24">
@@ -83,8 +81,7 @@ export default async function ListingsPage() {
           <br />
           Sign up to stay informed and get involved:
         </p>
-        <p><strong>Sorry, the join form will be available soon!</strong></p>
-        {/* <JoinForm /> */}
+        <JoinForm />
       </div>
     </div>
   );
