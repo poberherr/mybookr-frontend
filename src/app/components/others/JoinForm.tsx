@@ -24,9 +24,9 @@ const categories = {
 const JoinForm = () => {
   const [category, setCategory] = useState<string>(Object.keys(categories)[0]);
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   alert("Thank you. We will contact you soon!");
-  // };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    alert("Thank you. We will contact you soon!");
+  };
 
   const handleCategoryChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -37,15 +37,12 @@ const JoinForm = () => {
 
   return (
     <form
-      name="join"
       method="POST"
       action="/"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      // onSubmit={handleSubmit}
+      onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 w-full max-w-screen-sm mt-8 items-center"
     >
-      <input type="hidden" name="form-name" value="join" />
+      <input type="hidden" name="form-name" value="join-request" />
       <div className="hidden">
         <label>
           Don't fill this out if you're human: <input name="bot-field" />
