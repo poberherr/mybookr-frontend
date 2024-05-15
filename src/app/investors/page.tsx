@@ -38,13 +38,6 @@ export default function InvestorPage() {
 
   return (
     <div className="my-12 grid gap-12 px-4 py-0 md:px-40">
-      <a
-        className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-blue-500 hover:bg-blue-600 text-white w-[fit-content] content-center"
-        href="/202405005_Pitch_Deck_mybookr.io.pdf"
-        target="_blank"
-      >
-        Get Pitch Deck
-      </a>
       <SButton onClick={openTransak}>Invest into mybookr</SButton>
       {transakActive && <TransakWrapper setTransakActive={setTransakActive} />}
 
