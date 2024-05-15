@@ -1,39 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { init, push } from "@socialgouv/matomo-next";
 import { usePathname, useSearchParams } from "next/navigation";
 
+declare global {
+  interface Window {
+    _paq: any[];
+  }
+}
+
 const MatomoTracking = () => {
-  const [enabled, setEnabled] = useState(false);
+  const [isInitialized, setInitialized] = useState(false);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const searchParamsString = useMemo(
+    () => searchParams && searchParams.toString(),
+    [searchParams],
+  );
+
   useEffect(() => {
     if (
+      isInitialized ||
+      window._paq ||
       !process.env.NEXT_PUBLIC_MATOMO_URL ||
       !process.env.NEXT_PUBLIC_MATOMO_SITE_ID
     ) {
-      throw new Error("Matomo tracking not configured.");
+      return;
     }
+
     init({
       url: process.env.NEXT_PUBLIC_MATOMO_URL,
       siteId: process.env.NEXT_PUBLIC_MATOMO_SITE_ID,
-      onInitialization: () => {
-        setEnabled(true);
-      },
+      onInitialization: () => setInitialized(true),
     });
-  }, []);
-
-  const searchParams = useSearchParams(),
-    pathname = usePathname();
-
-  const searchParamsString = searchParams && searchParams.toString();
+  }, [isInitialized, setInitialized]);
 
   useEffect(() => {
-    if (!pathname || !enabled) return;
-    const url = pathname + (searchParamsString ? "?" + searchParamsString : "");
+    if (!pathname || !isInitialized) return;
+
+    const url = pathname + (searchParamsString ? `?${searchParamsString}` : "");
+    console.log("pushing");
     push(["setCustomUrl", url]);
     push(["trackPageView"]);
-  }, [pathname, searchParamsString]);
+  }, [pathname, searchParamsString, isInitialized]);
 
   return null;
 };
