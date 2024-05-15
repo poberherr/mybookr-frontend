@@ -1,17 +1,17 @@
-export const joinUsClientSubject = `Thank you for your interest into mybookr.io`;
+export const joinUsClientSubject = `Thank You for Your Interest in mybookr.io`;
 export const joinUsClientTemplate = `
-# Thank you for your interest into mybookr.io
+# Dear XXXNAMEXXX,
 
-XXXNAMEXXX,
+Thank you for your interest in MyBookr.io. We are thrilled to have you on board and look forward to connecting with you soon!
 
-You submitted the following data to us:
+Here is a summary of the information you submitted:
 
 XXXDATAXXX
 
-*We will soon reach out to you!*
+We appreciate your enthusiasm and are excited to explore the possibilities together.
 
-With kind regards,<br/>
-mybookr.io Team
+Warm regards,<br/>
+The mybookr.io Team
 
 XXXFOOTERXXX
 `;
