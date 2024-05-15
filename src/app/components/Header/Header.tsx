@@ -1,6 +1,5 @@
 "use client";
 
-import { SignedIn } from "@clerk/clerk-react";
 import Link from "next/link";
 
 import { useMediaQuery, useTheme } from "@mui/material";
@@ -34,12 +33,6 @@ export default function Header() {
         </Link>
 
         <Link className="font-bold" href={"/listings"}>Prototype</Link>
-
-        <SignedIn>
-          <Link className="cursor-pointer" href={"/investors"}>
-            Invest
-          </Link>
-        </SignedIn>
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">
