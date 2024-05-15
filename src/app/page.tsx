@@ -29,7 +29,7 @@ export default async function LandingPage() {
               better:
             </p>
             <a
-              className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-blue-500 hover:bg-blue-600 text-white w-[fit-content] content-center"
+              className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-gray-900 hover:bg-gray-700 text-white w-[fit-content] content-center"
               href="/202405005_Pitch_Deck_mybookr.io.pdf"
               target="_blank"
             >
@@ -42,6 +42,7 @@ export default async function LandingPage() {
             src="/mood/beach-sundown.jpg"
             alt="mybookr.io - Check out our pitch deck!"
             fill
+            sizes="(max-width: 900px) 0vw, 20vw"
             className="object-cover"
           />
         </div>
@@ -52,6 +53,7 @@ export default async function LandingPage() {
             src="/mood/pool-with-phone.jpg"
             alt="mybookr.io - Check out our pitch deck!"
             fill
+            sizes="(max-width: 900px) 0vw, 20vw"
             className="object-cover object-bottom"
           />
         </div>
@@ -66,7 +68,7 @@ export default async function LandingPage() {
               version of our prototype:
             </p>
             <Link
-              className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-blue-500 hover:bg-blue-600 text-white w-[fit-content] content-center"
+              className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-gray-900 hover:bg-gray-700 text-white w-[fit-content] content-center"
               href="/listings"
             >
               Access the Prototype

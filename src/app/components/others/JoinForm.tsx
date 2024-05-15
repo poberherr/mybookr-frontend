@@ -1,20 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-
-
-import { Checkbox } from "@mui/material";
-
-
+import {
+  Button,
+  Checkbox,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 
 import { SButton } from "../ui/SButton";
 
-
 const styles = {
   input:
-    "cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm appearance-none",
+    "cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm appearance-none outline-none focus:outline-black",
   label: "text-left md:text-right mt-4 md:mt-0 inline-block",
 };
 
@@ -60,6 +64,10 @@ const categories: {
 };
 
 const JoinForm = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogContent, setDialogContent] = useState("");
+
   const { control, register, handleSubmit, watch, reset } =
     useForm<JoinUsFormData>({
       defaultValues: {
@@ -70,41 +78,54 @@ const JoinForm = () => {
 
   const category = watch("category");
 
-  const onSubmit = async (data: JoinUsFormData) => {
-    try {
-      if (data.bot_field) {
-        throw new Error("Thank you. Bye.");
+  const onSubmit = useCallback(
+    async (data: JoinUsFormData) => {
+      setIsSubmitting(true);
+
+      try {
+        if (data.bot_field) {
+          throw new Error("Thank you. Bye.");
+        }
+        const formData = new FormData();
+
+        formData.append("project_name", data.project_name);
+        formData.append("name", data.name);
+        formData.append("category", data.category);
+        data.number_of_rooms &&
+          formData.append("number_of_rooms", String(data.number_of_rooms));
+        data.number_of_villas &&
+          formData.append("number_of_villas", String(data.number_of_villas));
+        data.bookings_per_year &&
+          formData.append("bookings_per_year", String(data.bookings_per_year));
+        formData.append("email", data.email);
+        formData.append("is_serious", data.is_serious ? "true" : "false");
+
+        const response = await fetch("/api/join-us", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          setDialogContent("Thank you. We will contact you soon!");
+          reset();
+        } else {
+          setDialogContent("Submission failed. Please try again.");
+        }
+        setDialogOpen(true);
+      } catch (error) {
+        console.error("Failed to submit form", error);
+        setDialogContent("An error occurred. Please try again later.");
+        setDialogOpen(true);
+      } finally {
+        setIsSubmitting(false);
       }
-      const formData = new FormData();
+    },
+    [reset, setDialogOpen, setDialogContent, setIsSubmitting],
+  );
 
-      formData.append("project_name", data.project_name);
-      formData.append("name", data.name);
-      formData.append("category", data.category);
-      data.number_of_rooms &&
-        formData.append("number_of_rooms", String(data.number_of_rooms));
-      data.number_of_villas &&
-        formData.append("number_of_villas", String(data.number_of_villas));
-      data.bookings_per_year &&
-        formData.append("bookings_per_year", String(data.bookings_per_year));
-      formData.append("email", data.email);
-      formData.append("is_serious", data.is_serious ? "true" : "false");
-
-      const response = await fetch("/api/join-us", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        alert("Thank you. We will contact you soon!");
-        reset()
-      } else {
-        alert("Submission failed. Please try again later.");
-      }
-    } catch (error) {
-      console.error("Failed to submit form", error);
-      alert("An error occurred. Please try again later.");
-    }
-  };
+  const closeDialog = useCallback(() => {
+    setDialogOpen(false);
+  }, []);
 
   return (
     <form
@@ -194,8 +215,25 @@ const JoinForm = () => {
         </label>
       </div>
       <div className="md:col-span-2 flex justify-center">
-        <SButton type="submit">Apply</SButton>
+        <SButton
+          type="submit"
+          disabled={isSubmitting}
+          startIcon={
+            isSubmitting ? <CircularProgress size={24} color="warning" /> : null
+          }
+        >
+          Apply
+        </SButton>
       </div>
+
+      <Dialog open={dialogOpen} onClose={closeDialog}>
+        <DialogContent>
+          <DialogContentText>{dialogContent}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </form>
   );
 };

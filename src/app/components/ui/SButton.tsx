@@ -22,7 +22,7 @@ const sizeStyles = {
 
 // Set up variant-related styles
 const variantStyles = {
-  contained: "bg-blue-500 hover:bg-blue-600 text-white",
+  contained: "bg-gray-900 hover:bg-gray-700 text-white",
   outlined: "border border-gray-200 text-gray-700 hover:bg-gray-100",
 };
 
@@ -48,7 +48,7 @@ export const SButton = ({
     fullWidth || customWidth === "100%" ? "w-full" : `w-[${customWidth}]`;
 
   // Combine all relevant styles
-  const buttonClasses = `inline-block ${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthClass} ${className}`;
+  const buttonClasses = `inline-block flex items-center ${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${widthClass} ${className}`;
 
   return (
     <button className={buttonClasses} {...props}>
