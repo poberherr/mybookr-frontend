@@ -30,10 +30,10 @@ export default async function LandingPage() {
             </p>
             <a
               className="inline-block font-Montserrat font-semibold text-capitalize rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500 h-12 text-base leading-4 tracking-wider px-8 bg-gray-900 hover:bg-gray-700 text-white w-[fit-content] content-center"
-              href="/202405005_Pitch_Deck_mybookr.io.pdf"
+              href={`https://wa.me/6282147456742?text=${encodeURI("Please send me the pitch deck for mybookr.io")}`}
               target="_blank"
             >
-              View Pitch Deck
+              Request Pitch Deck
             </a>
           </div>
         </div>
