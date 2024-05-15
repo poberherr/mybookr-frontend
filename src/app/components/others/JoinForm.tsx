@@ -39,10 +39,11 @@ const JoinForm = () => {
     <form
       method="POST"
       action="/"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
       className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 w-full max-w-screen-sm mt-8 items-center"
     >
       <input type="hidden" name="form-name" value="join-request" />
+      <input type="hidden" name="subject" data-remove-prefix value="You signed up for mybookr.io" />
       <div className="hidden">
         <label>
           Don't fill this out if you're human: <input name="bot-field" />
