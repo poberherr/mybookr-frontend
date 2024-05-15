@@ -37,8 +37,9 @@ const JoinForm = () => {
 
   return (
     <form
-      name="joinRequest"
+      name="join"
       method="POST"
+      action="/"
       data-netlify="true"
       netlify-honeypot="bot-field"
       // onSubmit={handleSubmit}
