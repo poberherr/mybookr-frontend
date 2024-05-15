@@ -83,7 +83,8 @@ export default async function ListingsPage() {
           <br />
           Sign up to stay informed and get involved:
         </p>
-        <JoinForm />
+        <p><strong>Sorry, the join form will be available soon!</strong></p>
+        {/* <JoinForm /> */}
       </div>
     </div>
   );
