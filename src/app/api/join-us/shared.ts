@@ -1,5 +1,4 @@
 import { createClient as supabaseCreateClient } from "@supabase/supabase-js";
-import { symlink } from "fs";
 import { NextRequest } from "next/server";
 import nodemailer from "nodemailer";
 import { remark } from "remark";
@@ -7,7 +6,6 @@ import remarkHtml from "remark-html";
 import remarkPlainText from "remark-plain-text";
 import remarkPresetLintMarkdownStyleGuide from "remark-preset-lint-markdown-style-guide";
 import xss from "xss";
-
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
