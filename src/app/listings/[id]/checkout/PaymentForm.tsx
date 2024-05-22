@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FormEvent, useCallback } from "react";
 
 import {
@@ -6,21 +8,21 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { CircularProgress } from "@mui/material";
 
-import { SButton } from "./ui/SButton";
+import { SButton } from "../../../components/ui/SButton";
 
-export default function CheckoutForm() {
+export default function PaymentForm() {
   const stripe = useStripe();
   const elements = useElements();
   const path = usePathname();
+  const router = useRouter();
 
   const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  /* THIS IS CONFIRM PAGE THINGS? */
   React.useEffect(() => {
     if (!stripe) {
       return;
@@ -40,7 +42,8 @@ export default function CheckoutForm() {
       }
       switch (paymentIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          // setMessage("Payment succeeded!");
+          router.push(`${window.location.origin}/${path}/confirmation`);
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -56,23 +59,29 @@ export default function CheckoutForm() {
   }, [stripe]);
 
   const onSubmit = useCallback(async (e: FormEvent) => {
+    console.log("submitting");
     e.preventDefault();
 
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
+      console.log("stripe not loaded, aborting");
       return;
     }
 
     setIsLoading(true);
 
+    console.log("confirming payment");
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/${path}/confirmation`,
+        return_url: `${window.location.origin}/${path}`,
       },
     });
+
+    console.log("SOMETHING WENT WRONG!", error);
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -95,6 +104,10 @@ export default function CheckoutForm() {
     layout: "tabs",
   };
 
+  if (!stripe || !elements) {
+    return null;
+  }
+
   return (
     <form onSubmit={onSubmit}>
       <PaymentElement id="payment-element" options={paymentElementOptions} />
@@ -114,7 +127,11 @@ export default function CheckoutForm() {
         the host accepts your reservation.
       </p>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div id="payment-message" className="text-red-500 mt-8 font-bold">
+          {message}
+        </div>
+      )}
     </form>
   );
 }

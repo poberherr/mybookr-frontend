@@ -22,7 +22,7 @@ import {
 } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
 
-export default function BookingDataForm({ listing }: { listing: Listing }) {
+export default function BookingDataForm() {
   // const {
   //   data: booking,
   //   mutate,

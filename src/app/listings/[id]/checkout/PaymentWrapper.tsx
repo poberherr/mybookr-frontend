@@ -11,7 +11,7 @@ import {
 
 import { Divider, Typography } from "@mui/material";
 
-import CheckoutForm from "@/app/components/CheckoutForm";
+import PaymentForm from "./PaymentForm";
 
 import { BookingContext } from "@/app/contexts/booking";
 
@@ -73,7 +73,7 @@ export const PaymentWrapper = () => {
           >
             Payment
           </Typography>
-          <CheckoutForm />
+          <PaymentForm />
         </div>
       </Elements>
     )

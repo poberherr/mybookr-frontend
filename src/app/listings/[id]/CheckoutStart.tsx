@@ -25,7 +25,7 @@ interface IProps {
   listing: Listing;
 }
 
-interface CheckoutFormProps {
+interface CheckoutStartForm {
   dateRange: Range;
   guest: number;
 }
@@ -38,7 +38,7 @@ export default function CheckoutStart({ listing }: IProps) {
   const isClient = useIsClient();
 
   // Initialize the form with react-hook-form
-  const methods = useForm<CheckoutFormProps>({
+  const methods = useForm<CheckoutStartForm>({
     defaultValues: {
       guest,
       dateRange: {
@@ -51,8 +51,8 @@ export default function CheckoutStart({ listing }: IProps) {
 
   // Watch all form values
   const dateRangeValue = methods.watch("dateRange");
-  useWatchDateRange<CheckoutFormProps>(methods.control, "dateRange");
-  useWatchGuest<CheckoutFormProps>(methods.control, "guest");
+  useWatchDateRange<CheckoutStartForm>(methods.control, "dateRange");
+  useWatchGuest<CheckoutStartForm>(methods.control, "guest");
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {

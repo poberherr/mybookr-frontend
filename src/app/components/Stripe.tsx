@@ -9,7 +9,7 @@ import {
   loadStripe,
 } from "@stripe/stripe-js";
 
-import CheckoutForm from "./CheckoutForm";
+import PaymentForm from "../listings/[id]/checkout/PaymentForm";
 
 export const Stripe = () => {
   const [clientSecret, setClientSecret] = React.useState("");
@@ -53,7 +53,7 @@ export const Stripe = () => {
       </ul>
       {clientSecret && (
         <Elements options={options} stripe={stripe}>
-          <CheckoutForm />
+          <PaymentForm />
         </Elements>
       )}
     </div>

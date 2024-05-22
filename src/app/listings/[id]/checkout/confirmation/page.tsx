@@ -8,7 +8,7 @@ import {
   listingsReadQueryOptions,
 } from "@/app/api-helpers";
 
-import CheckoutPageComponent from "./CheckoutPage";
+import ConfirmationPageComponent from "./ConfirmationPage";
 
 export default async function CheckoutPage({
   params,
@@ -23,7 +23,7 @@ export default async function CheckoutPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <CheckoutPageComponent id={params.id} />
+      <ConfirmationPageComponent id={params.id} />
     </HydrationBoundary>
   );
 }
