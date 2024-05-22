@@ -49,7 +49,7 @@ export default function CheckoutPage({ id }: { id: string }) {
 
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
-          <BookingDataForm listing={listing} />
+          <BookingDataForm />
           <PaymentWrapper />
           <BlaBla />
         </div>
