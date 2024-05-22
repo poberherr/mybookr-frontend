@@ -6,9 +6,6 @@ export type CoreCheckPaymentReadPathParams = {
   payment_intent_id: string;
 };
 
-/**
- * @description Payment Intent Status
- */
 export type CoreCheckPaymentRead200 = any;
 
 export type CoreCheckPaymentReadQueryResponse = any;

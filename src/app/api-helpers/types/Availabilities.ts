@@ -8,6 +8,10 @@ export type Availabilities = {
    */
   price_per_unit: number;
   /**
+   * @type integer
+   */
+  listing_id: number;
+  /**
    * @description Specific date for which the listing is available.
    * @type string, date
    */
@@ -32,9 +36,4 @@ export type Availabilities = {
    * @type integer
    */
   minimum_stay: number | null;
-  /**
-   * @description Identifier for the listing to which this availability pertains.
-   * @type integer
-   */
-  listing_id: number;
 };

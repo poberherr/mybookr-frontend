@@ -1,4 +1,4 @@
-import type { Listing } from "./Listing";
+import type { ListingCreateUpdate } from "./ListingCreateUpdate";
 
 export type ListingsUpdatePathParams = {
   /**
@@ -8,11 +8,11 @@ export type ListingsUpdatePathParams = {
   id: number;
 };
 
-export type ListingsUpdate200 = Listing;
+export type ListingsUpdate200 = ListingCreateUpdate;
 
-export type ListingsUpdateMutationRequest = Omit<NonNullable<Listing>, "id">;
+export type ListingsUpdateMutationRequest = ListingCreateUpdate;
 
-export type ListingsUpdateMutationResponse = Listing;
+export type ListingsUpdateMutationResponse = ListingCreateUpdate;
 
 export type ListingsUpdateMutation = {
   Response: ListingsUpdateMutationResponse;

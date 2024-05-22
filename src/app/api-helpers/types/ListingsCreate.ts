@@ -1,10 +1,10 @@
-import type { Listing } from "./Listing";
+import type { ListingCreateUpdate } from "./ListingCreateUpdate";
 
-export type ListingsCreate201 = Listing;
+export type ListingsCreate201 = ListingCreateUpdate;
 
-export type ListingsCreateMutationRequest = Omit<NonNullable<Listing>, "id">;
+export type ListingsCreateMutationRequest = ListingCreateUpdate;
 
-export type ListingsCreateMutationResponse = Listing;
+export type ListingsCreateMutationResponse = ListingCreateUpdate;
 
 export type ListingsCreateMutation = {
   Response: ListingsCreateMutationResponse;
