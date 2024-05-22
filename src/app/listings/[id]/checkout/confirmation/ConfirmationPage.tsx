@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 
-import { Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { CircularProgress, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import BackButton from "@/app/components/others/BackButton";
 
@@ -13,7 +13,7 @@ import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
-export default function CheckoutPage({ id }: { id: string }) {
+export default function ConfirmationPage({ id }: { id: string }) {
   const isClient = useIsClient();
   const { data: listing } = useListingsRead<Listing>(parseInt(id));
 
@@ -22,7 +22,7 @@ export default function CheckoutPage({ id }: { id: string }) {
   const mTheme = useTheme();
   const isMobile = useMediaQuery(mTheme.breakpoints.down("md"));
 
-  const [message, setMessage] = useState("Sending confirmation emails... This should only take a few seconds!");
+  const [message, setMessage] = useState<string>();
   const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
@@ -93,10 +93,10 @@ export default function CheckoutPage({ id }: { id: string }) {
           style={{ gridArea: "heading" }}
         >
           <Typography className="!mb-6 !text-2xl !font-extrabold" variant="h2">
-            Start preparing for your journey, your reservation is ready!
+            Start preparing for your journey, your reservation is ready! 🏝️
           </Typography>
 
-          <Typography variant="body1">{message}</Typography>
+          <Typography variant="body1">{message ? message : <><CircularProgress size={16}/> Sending confirmation emails... This should only take a few seconds!</>}</Typography>
         </div>
 
         {/* Detail section */}
@@ -128,8 +128,8 @@ export default function CheckoutPage({ id }: { id: string }) {
               `${guest} guests`,
             ]
               .filter(Boolean)
-              .map((item) => (
-                <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+              .map((item, i) => (
+                <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']" key={i}>
                   {item}
                 </span>
               ))}

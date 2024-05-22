@@ -118,10 +118,7 @@ ${Object.keys(EMAIL_DATA_LABELS)
       }
       const parsedDate = new Date(data.toString());
       return `<tr><td><strong>${title}</strong></td><td>${format(parsedDate, "dd.MM.yyyy")}</td></tr>`;
-    } catch (e) {
-      console.log("date parsing failed...");
-      console.log(e);
-    }
+    } catch {}
     return `<tr><td><strong>${title}</strong></td><td>${data}</td></tr>`;
   })
   .filter(Boolean)
