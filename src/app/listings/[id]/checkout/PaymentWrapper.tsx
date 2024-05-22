@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 import {
@@ -9,9 +9,15 @@ import {
   loadStripe,
 } from "@stripe/stripe-js";
 
+import { Divider, Typography } from "@mui/material";
+
 import CheckoutForm from "@/app/components/CheckoutForm";
 
-export const PaymentForm = () => {
+import { BookingContext } from "@/app/contexts/booking";
+
+export const PaymentWrapper = () => {
+  const { nights, guest, email } = useContext(BookingContext);
+
   const [clientSecret, setClientSecret] = React.useState("");
   const [paymentIntentId, setPaymentIntentId] = React.useState("");
 
@@ -44,10 +50,23 @@ export const PaymentForm = () => {
     appearance,
   };
 
+  if (!nights || !guest || !email) {
+    return null;
+  }
+
   return (
     clientSecret && (
       <Elements options={options} stripe={stripe}>
-        <CheckoutForm />
+        <Divider />
+        <div className="px-4 py-0 md:pl-40 md:pr-16">
+          <Typography
+            className="!mb-4 p-0 !font-extrabold md:!text-2xl"
+            variant="h6"
+          >
+            Payment
+          </Typography>
+          <CheckoutForm />
+        </div>
       </Elements>
     )
   );

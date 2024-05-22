@@ -1,39 +1,26 @@
 "use client";
 
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useCallback,
-  useContext,
-} from "react";
+import { createContext, useCallback, useContext } from "react";
 import React, { useEffect } from "react";
 import { Range } from "react-date-range";
-import {
-  Control,
-  DeepPartialSkipArrayKey,
-  FieldValues,
-  Path,
-  useWatch,
-} from "react-hook-form";
+import { Control, FieldValues, Path, useWatch } from "react-hook-form";
 
-import {
-  differenceInDays,
-  formatISO,
-  isBefore,
-  parseISO,
-  startOfToday,
-  startOfTomorrow,
-} from "date-fns";
+
+
+import { differenceInDays, formatISO, isBefore, parseISO, startOfToday, startOfTomorrow } from "date-fns";
 import createPersistedState from "use-persisted-state";
 
+
+
 import "@/global.css";
+
 
 interface BookingStateStore {
   selectedDate: string;
   selectedDate1: string;
   nights: number;
   guest: number;
+  email: string;
 }
 
 const useBookingStateStore =
@@ -46,6 +33,8 @@ export const BookingContext = createContext<{
   setDates: (startDate: Date, endDate: Date) => void;
   guest: number;
   setGuest: (guest: number) => void;
+  email?: string;
+  setEmail: (email: string) => void;
 }>({
   selectedDate: undefined,
   selectedDate1: undefined,
@@ -53,6 +42,8 @@ export const BookingContext = createContext<{
   setDates: () => {},
   guest: 1,
   setGuest: () => {},
+  email: undefined,
+  setEmail: () => {},
 });
 
 export const BookingContextProvider = ({
@@ -65,6 +56,7 @@ export const BookingContextProvider = ({
     selectedDate1: formatISO(startOfTomorrow()),
     guest: 0,
     nights: 1,
+    email: "",
   });
 
   const setDates = useCallback(
@@ -105,6 +97,22 @@ export const BookingContextProvider = ({
     [bookingState, setBookingState],
   );
 
+  const setEmail = useCallback(
+    (email: string) => {
+      if (bookingState.email !== email) {
+        console.log("Updating email", {
+          email,
+          bookingState,
+        });
+        setBookingState((prevState) => ({
+          ...prevState,
+          email,
+        }));
+      }
+    },
+    [bookingState, setBookingState],
+  );
+
   useEffect(() => {
     if (
       !bookingState.selectedDate ||
@@ -127,6 +135,8 @@ export const BookingContextProvider = ({
         setDates,
         guest: bookingState.guest,
         setGuest,
+        email: bookingState.email,
+        setEmail,
       }}
     >
       {children}
@@ -163,6 +173,27 @@ export function useWatchGuest<T extends FieldValues>(
     if (value > 0 && value !== guest) {
       console.log("setting guest", guest);
       setGuest(value);
+    }
+  }, [value]);
+}
+
+export function useWatchEmail<T extends FieldValues>(
+  control: Control<T>,
+  name: Path<T>,
+) {
+  const value: string = useWatch({ name, control });
+  const { email, setEmail } = useContext(BookingContext);
+  useEffect(() => {
+    if (
+      value.trim().length > 0 &&
+      value?.match(/[^\s]+@[^\s]+/) &&
+      value !== email
+    ) {
+      console.log("setting email", value);
+      setEmail(value);
+    } else {
+      console.log("resetting email because invalid", value);
+      setEmail("")
     }
   }, [value]);
 }

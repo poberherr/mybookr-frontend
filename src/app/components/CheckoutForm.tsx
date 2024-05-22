@@ -16,6 +16,7 @@ export default function CheckoutForm() {
   const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  /* THIS IS CONFIRM PAGE THINGS? */
   React.useEffect(() => {
     if (!stripe) {
       return;
