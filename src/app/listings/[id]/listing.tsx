@@ -11,7 +11,7 @@ import { Divider, Typography } from "@mui/material";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import Gallery from "../../components/others/Gallery";
 import { SButton } from "../../components/ui/SButton";
-import CheckoutStart from "@/app/components/checkout/CheckoutStart";
+import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 import MybookrMap from "@/app/components/others/MybookrMap";
 
 import HeartIcon from "@/assets/icons/heart.svg";
