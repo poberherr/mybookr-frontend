@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 import {
@@ -28,8 +28,16 @@ export const PaymentWrapper = () => {
     return loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   }, []);
 
+  const isReady = useMemo(
+    () => !!nights && !!guest && !!email,
+    [nights, guest, email],
+  );
+
   React.useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
+    if (!isReady) {
+      return;
+    }
+    // Create PaymentIntent as soon the payment is ready
     fetch("/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -40,7 +48,7 @@ export const PaymentWrapper = () => {
         setClientSecret(data.clientSecret);
         setPaymentIntentId(data.paymentIntentId);
       });
-  }, []);
+  }, [isReady]);
 
   const appearance: Appearance = {
     theme: "stripe",
@@ -50,7 +58,7 @@ export const PaymentWrapper = () => {
     appearance,
   };
 
-  if (!nights || !guest || !email) {
+  if (!isReady) {
     return null;
   }
 
