@@ -31,8 +31,7 @@ export default function BookingDataForm({ listing }: { listing: Listing }) {
   //   isError,
   // } = useBookingsCreate({ mutation: {} });
 
-  const { selectedDate, selectedDate1, guest } =
-    useContext(BookingContext);
+  const { selectedDate, selectedDate1, guest } = useContext(BookingContext);
 
   const user = useUser();
 
@@ -108,10 +107,11 @@ export default function BookingDataForm({ listing }: { listing: Listing }) {
   const emailValue = methods.watch("email");
   useEffect(() => {
     if (
+      user.user?.primaryEmailAddress?.emailAddress &&
       (emailValue === undefined || emailValue.trim() === "") &&
       emailValue !== user.user?.primaryEmailAddress?.emailAddress
     ) {
-      methods.resetField("email");
+      methods.setValue("email", user.user?.primaryEmailAddress?.emailAddress);
     }
   }, [user.user, methods.resetField]);
   useWatchEmail(methods.control, "email");
