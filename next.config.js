@@ -32,7 +32,8 @@ export default {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+            value:
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com",
           },
         ],
       },
