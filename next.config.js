@@ -20,4 +20,22 @@ export default {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  /* NOTE: @todo THIS IS INSECURE! WE HAVE TO PROPERLY DO IT AT SOME POINT. 
+    See: https://docs.stripe.com/js/issuing/create_ephemeral_key_nonce
+    See: https://nextjs.org/docs/app/building-your-application/configuring/content-security-policy
+  */
+  async headers() {
+    return [
+      {
+        // Apply these headers to all routes
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+          },
+        ],
+      },
+    ];
+  },
 };
