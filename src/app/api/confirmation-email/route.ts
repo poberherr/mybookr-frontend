@@ -1,42 +1,33 @@
+import { QueryClient } from "@tanstack/react-query";
+import format from "date-fns/format";
 import { NextRequest, NextResponse } from "next/server";
 
-import {
-  EMAIL,
-  checkSpam,
-  handleError,
-  replacePlaceholdersAndApplyLayout,
-  supabase,
-  transformEmailHtml,
-  transformEmailText,
-  transporter,
-} from "../shared";
-import {
-  footerTemplate,
-  joinUsClientSubject,
-  joinUsClientTemplate,
-  joinUsOwnerSubject,
-  joinUsOwnerTemplate,
-} from "./templates";
+
+
+import { Listing, listingsReadQueryOptions } from "@/app/api-helpers";
+
+
+
+import { EMAIL, checkSpam, handleError, replacePlaceholdersAndApplyLayout, supabase, transformEmailHtml, transformEmailText, transporter } from "../shared";
+import { bookingConfirmationClientSubject, bookingConfirmationClientTemplate, bookingConfirmationOwnerSubject, bookingConfirmationOwnerTemplate, footerTemplate } from "./templates";
+
 
 const EMAIL_DATA_LABELS = {
-  project_name: "Project Name",
-  name: "Name",
-  category: "Category",
-  number_of_rooms: "Number Of Rooms",
-  number_of_villas: "Number Of Villas",
-  bookings_per_year: "Bookings Per Year",
+  selectedDate: "Start Date",
+  selectedDate1: "End Date",
+  guest: "Guests",
+  nights: "Nights",
   email: "Email",
-  is_serious: "Are you serious about it?",
 };
 
-async function sendClientEmail(
+async function sendBookerEmail(
   formData: FormData,
   replaceMap: { [key: string]: string },
 ) {
   console.time("email-client");
   console.log(`Sending email to client ${formData.get("email")}`);
   const clientMailContent = replacePlaceholdersAndApplyLayout(
-    joinUsClientTemplate,
+    bookingConfirmationClientTemplate,
     replaceMap,
   );
   const clientMailText = await transformEmailText(clientMailContent);
@@ -50,7 +41,7 @@ async function sendClientEmail(
   const infoClient = await transporter.sendMail({
     from: EMAIL,
     to: toEmail as string,
-    subject: joinUsClientSubject,
+    subject: bookingConfirmationClientSubject,
     text: clientMailText,
     html: clientMailHtml,
   });
@@ -60,8 +51,9 @@ async function sendClientEmail(
   console.timeEnd("email-client");
 }
 
-async function sendOwnerEmail(
+async function sendHostEmail(
   formData: FormData,
+  listing: Listing,
   replaceMap: { [key: string]: string },
 ) {
   console.time("email-owner");
@@ -69,7 +61,7 @@ async function sendOwnerEmail(
 
   // Send confirmation email to owner
   const ownerMailContent = replacePlaceholdersAndApplyLayout(
-    joinUsOwnerTemplate,
+    bookingConfirmationOwnerTemplate,
     replaceMap,
   );
   const ownerMailText = await transformEmailText(ownerMailContent);
@@ -78,7 +70,7 @@ async function sendOwnerEmail(
   const infoOwner = await transporter.sendMail({
     from: EMAIL,
     to: EMAIL,
-    subject: `${joinUsOwnerSubject} by ${[formData.get("project_name"), formData.get("name")].join(" - ")}`,
+    subject: `${bookingConfirmationOwnerSubject} for ${listing.title} by ${formData.get("email")}`,
     text: ownerMailText,
     html: ownerMailHtml,
   });
@@ -91,46 +83,22 @@ async function sendOwnerEmail(
 export async function POST(req: NextRequest, res: NextResponse) {
   const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown";
   try {
-    // Spam check
-    console.time("spam-check");
-    const isSpamming = await checkSpam("join-us-requests", ip);
-    if (isSpamming) {
-      console.log(`Denied spammy request from ${ip}`);
-      console.timeEnd("spam-check");
-      return new Response(
-        `Something went wrong. Please try again or contact us via email.`,
-        {
-          status: 500,
-        },
-      );
-    }
-    console.timeEnd("spam-check");
     const formData = await req.formData();
 
-    // Store data to db
-    console.time("store-to-database");
-    const { error } = await supabase.from("join-us-requests").insert([
-      {
-        ip,
-        project_name: formData.get("project_name"),
-        name: formData.get("name"),
-        category: formData.get("category"),
-        number_of_rooms: formData.get("number_of_rooms"),
-        number_of_villas: formData.get("number_of_villas"),
-        bookings_per_year: formData.get("bookings_per_year"),
-        email: formData.get("email"),
-        is_serious: formData.get("is_serious"),
-      },
-    ]);
+    // Get listing from API
+    const queryClient = new QueryClient();
 
-    console.timeEnd("store-to-database");
+    const listingId = formData.get("listingId");
 
-    if (error) {
-      throw error;
+    if (!listingId) {
+      throw new Error("No listing id passed. Failing!");
     }
 
-    // Prepare emails from templates
+    const listing = await queryClient.fetchQuery(
+      listingsReadQueryOptions(parseInt(listingId.toString(), 10)),
+    );
 
+    // Prepare emails from templates
     const dataTable = `
 <table>
 <tbody>
@@ -144,6 +112,16 @@ ${Object.keys(EMAIL_DATA_LABELS)
     if (!data || data === "") {
       return false;
     }
+    try {
+      if (!data.toString().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}/)) {
+        throw new Error("Not a date! Yes, this is ugly, but it works.");
+      }
+      const parsedDate = new Date(data.toString());
+      return `<tr><td><strong>${title}</strong></td><td>${format(parsedDate, "dd.MM.yyyy")}</td></tr>`;
+    } catch (e) {
+      console.log("date parsing failed...");
+      console.log(e);
+    }
     return `<tr><td><strong>${title}</strong></td><td>${data}</td></tr>`;
   })
   .filter(Boolean)
@@ -155,12 +133,18 @@ ${Object.keys(EMAIL_DATA_LABELS)
     const replaceMap: { [key: string]: any } = {
       XXXFOOTERXXX: footerTemplate.toString(),
       XXXDATAXXX: dataTable,
-      XXXNAMEXXX: formData.get("name") || formData.get("project_name"),
+      XXXLISTINGXXX: listing.title,
+      XXXLISTINGADDRESSXXX: [
+        listing.location.street,
+        `${listing.location.zip} ${listing.location.city}`,
+        listing.location.country,
+      ].join(", "),
+      XXXNAMEXXX: formData.get("email"),
     };
 
     await Promise.all([
-      sendClientEmail(formData, replaceMap),
-      sendOwnerEmail(formData, replaceMap),
+      sendBookerEmail(formData, replaceMap),
+      sendHostEmail(formData, listing, replaceMap),
     ]);
 
     console.log("Done");

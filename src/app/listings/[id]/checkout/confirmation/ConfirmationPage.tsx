@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 
@@ -11,8 +11,10 @@ import BackButton from "@/app/components/others/BackButton";
 import { Listing, useListingsRead } from "@/app/api-helpers";
 import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
+import { useIsClient } from "@/app/helpers/useIsClient";
 
 export default function CheckoutPage({ id }: { id: string }) {
+  const isClient = useIsClient();
   const { data: listing } = useListingsRead<Listing>(parseInt(id));
 
   const { selectedDate, selectedDate1, guest, nights, email } =
@@ -20,7 +22,54 @@ export default function CheckoutPage({ id }: { id: string }) {
   const mTheme = useTheme();
   const isMobile = useMediaQuery(mTheme.breakpoints.down("md"));
 
-  if (!listing) {
+  const [message, setMessage] = useState("Sending confirmation emails... This should only take a few seconds!");
+  const [emailSent, setEmailSent] = useState(false);
+
+  useEffect(() => {
+    async function sendEmail() {
+      if (!listing || !selectedDate || !selectedDate1 || !email || emailSent || !isClient) {
+        return;
+      }
+
+      setEmailSent(true);
+
+
+      try {
+        const formData = new FormData();
+
+        formData.append("selectedDate", selectedDate.toISOString());
+        formData.append("selectedDate1", selectedDate1.toISOString());
+        formData.append("guest", String(guest));
+        formData.append("nights", String(nights));
+        formData.append("email", email);
+        formData.append("listingId", id);
+
+        const response = await fetch("/api/confirmation-email", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          setMessage(
+            `We have emailed details to ${email}. You will get another email as soon the host confirms your reservation.`,
+          );
+        } else {
+          setMessage(
+            "Emailing failed. Sorry. Try reloading the page to send them again. If this message appears again, contact our support and complain! info@mybookr.com",
+          );
+        }
+      } catch (error) {
+        console.error("Failed to submit form", error);
+        setMessage(
+          "Emailing failed. Sorry. Try reloading the page to send them again. If this message appears again, contact our support and complain! info@mybookr.com",
+        );
+      }
+    }
+
+    sendEmail();
+  }, [isClient]);
+
+  if (!listing || !isClient) {
     return null;
   }
 
@@ -47,9 +96,7 @@ export default function CheckoutPage({ id }: { id: string }) {
             Start preparing for your journey, your reservation is ready!
           </Typography>
 
-          <Typography variant="body1">
-            We have emailed details to {email}. You will get another email as soon the host confirms your reservation.
-          </Typography>
+          <Typography variant="body1">{message}</Typography>
         </div>
 
         {/* Detail section */}
@@ -90,8 +137,11 @@ export default function CheckoutPage({ id }: { id: string }) {
 
           <Typography className="!mb-10" variant="body2">
             <u>
-              {listing.location.street}, {listing.location.zip}{" "}
-              {listing.location.city}, {listing.location.country}
+              {listing.location.street}
+              <br />
+              {listing.location.zip}, {listing.location.city}
+              <br />
+              {listing.location.country}
             </u>
           </Typography>
 

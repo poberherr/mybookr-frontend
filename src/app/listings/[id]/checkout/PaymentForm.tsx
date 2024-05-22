@@ -58,47 +58,50 @@ export default function PaymentForm() {
     });
   }, [stripe]);
 
-  const onSubmit = useCallback(async (e: FormEvent) => {
-    console.log("submitting");
-    e.preventDefault();
+  const onSubmit = useCallback(
+    async (e: FormEvent) => {
+      console.log("submitting");
+      e.preventDefault();
 
-    if (!stripe || !elements) {
-      // Stripe.js hasn't yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
-      console.log("stripe not loaded, aborting");
-      return;
-    }
+      if (!stripe || !elements) {
+        // Stripe.js hasn't yet loaded.
+        // Make sure to disable form submission until Stripe.js has loaded.
+        console.log("stripe not loaded, aborting");
+        return;
+      }
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    console.log("confirming payment");
+      console.log("confirming payment");
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/${path}`,
-      },
-    });
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: `${window.location.origin}/${path}`,
+        },
+      });
 
-    console.log("SOMETHING WENT WRONG!", error);
+      console.log("SOMETHING WENT WRONG!", error);
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (
-      (error.type === "card_error" || error.type === "validation_error") &&
-      error.message
-    ) {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
+      // This point will only be reached if there is an immediate error when
+      // confirming the payment. Otherwise, your customer will be redirected to
+      // your `return_url`. For some payment methods like iDEAL, your customer will
+      // be redirected to an intermediate site first to authorize the payment, then
+      // redirected to the `return_url`.
+      if (
+        (error.type === "card_error" || error.type === "validation_error") &&
+        error.message
+      ) {
+        setMessage(error.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
 
-    setIsLoading(false);
-  }, []);
+      setIsLoading(false);
+    },
+    [stripe, elements],
+  );
 
   const paymentElementOptions: StripePaymentElementOptions = {
     layout: "tabs",
