@@ -43,7 +43,7 @@ export default function PaymentForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           // setMessage("Payment succeeded!");
-          router.push(`${window.location.origin}/${path}/confirmation`);
+          router.push(`${window.location.origin}${path}/confirmation`);
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -78,7 +78,7 @@ export default function PaymentForm() {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: `${window.location.origin}/${path}`,
+          return_url: `${window.location.origin}${path}`,
         },
       });
 
