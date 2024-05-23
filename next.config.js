@@ -39,6 +39,7 @@ export default {
               img-src 'self' data:;
               connect-src 'self' https://api.stripe.com https://blessed-peacock-38.clerk.accounts.dev https://statistics.hashbite.net;
               frame-src https://js.stripe.com;
+              worker-src 'self' blob:;
               object-src 'none';
               base-uri 'self';
               form-action 'self';
