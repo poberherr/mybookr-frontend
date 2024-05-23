@@ -22,9 +22,9 @@ export default function PropertyItem({ property: listing }: IProps) {
   const averagePricePerNight = useAveragePricePerNight(listing);
 
   // @todo quick and dirty filter
-  if (averagePricePerNight === 0) {
-    return null;
-  }
+  // if (averagePricePerNight === 0) {
+  //   return null;
+  // }
 
   return (
     <Link
