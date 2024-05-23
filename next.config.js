@@ -32,8 +32,19 @@ export default {
         headers: [
           {
             key: "Content-Security-Policy",
-            value:
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://m.stripe.network",
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com https://m.stripe.network https://blessed-peacock-38.clerk.accounts.dev https://statistics.hashbite.net;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data:;
+              connect-src 'self' https://api.stripe.com https://blessed-peacock-38.clerk.accounts.dev https://statistics.hashbite.net;
+              frame-src https://js.stripe.com;
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
+            `
+              .replace(/\n/g, " ")
+              .trim(),
           },
         ],
       },
