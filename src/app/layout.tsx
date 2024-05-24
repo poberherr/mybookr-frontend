@@ -33,7 +33,6 @@ export default function RootLayout({
   return (
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
-        {/* <ClerkProvider {...pageProps}> */}
         <ClerkProvider>
           <BookingContextProvider>
             <QueryClientProviderWrapper>
