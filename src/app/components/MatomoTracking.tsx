@@ -41,7 +41,6 @@ const MatomoTracking = () => {
     if (!pathname || !isInitialized) return;
 
     const url = pathname + (searchParamsString ? `?${searchParamsString}` : "");
-    console.log("pushing");
     push(["setCustomUrl", url]);
     push(["trackPageView"]);
   }, [pathname, searchParamsString, isInitialized]);

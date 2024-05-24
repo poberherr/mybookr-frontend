@@ -4,7 +4,6 @@ import React, { useCallback, useContext, useMemo, useState } from "react";
 import { Range } from "react-date-range";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { differenceInDays } from "date-fns";
 import format from "date-fns/format";
 
 import { Divider } from "@mui/material";
@@ -208,14 +207,14 @@ export default function SearchBar() {
       }
     });
 
-    if (data.dateRange.startDate && data.dateRange.endDate) {
-      setDates(data.dateRange.startDate, data.dateRange.endDate);
+    // if (data.dateRange.startDate && data.dateRange.endDate) {
+    //   setDates(data.dateRange.startDate, data.dateRange.endDate);
 
-      // router.push(`/?${searchParams.toString()}`);
-      console.dir({ data });
-      // alert("@todo");
-      return;
-    }
+    //   // router.push(`/?${searchParams.toString()}`);
+    //   console.dir({ data });
+    //   // alert("@todo");
+    //   return;
+    // }
 
     throw new Error("Select start and end date");
   });

@@ -64,12 +64,6 @@ export const BookingContextProvider = ({
       const nights = differenceInDays(endDate, startDate);
 
       if (nights > 0) {
-        console.log("Updating dates", {
-          startDate,
-          endDate,
-          nights,
-          bookingState,
-        });
         setBookingState((prevState) => ({
           ...prevState,
           selectedDate: formatISO(startDate),
@@ -155,8 +149,8 @@ export function useWatchDateRange<T extends FieldValues>(
       return;
     }
     if (
-      value.startDate.getTime() !== selectedDate.getTime() ||
-      value.endDate.getTime() !== selectedDate1.getTime()
+      value.startDate.toISOString() !== selectedDate.toISOString() ||
+      value.endDate.toISOString() !== selectedDate1.toISOString()
     ) {
       setDates(value.startDate, value.endDate);
     }

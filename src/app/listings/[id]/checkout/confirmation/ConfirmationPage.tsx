@@ -2,18 +2,73 @@
 
 import React, { useContext, useEffect, useState } from "react";
 
+
+
+import { useStripe } from "@stripe/react-stripe-js";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+
 
 import { CircularProgress, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
 
+
+
 import BackButton from "@/app/components/others/BackButton";
+
+
 
 import { Listing, useListingsRead } from "@/app/api-helpers";
 import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
+
 export default function ConfirmationPage({ id }: { id: string }) {
+  const router = useRouter();
+  const stripe = useStripe();
+  const [paymentSuccess, setPaymentSuccess] = useState<Boolean>();
+
+  React.useEffect(() => {
+    if (!stripe) {
+      return;
+    }
+
+    const clientSecret = new URLSearchParams(window.location.search).get(
+      "payment_intent_client_secret",
+    );
+
+    if (!clientSecret) {
+      alert("Payment could not be identified. Please try to book again.");
+      router.push(`${window.location.origin}/listings/${listing?.id}/checkout`);
+      return;
+    }
+
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      if (!paymentIntent) {
+        alert("Payment could not be identified. Please try to book again.");
+        router.push(
+          `${window.location.origin}/listings/${listing?.id}/checkout`,
+        );
+        return;
+      }
+      switch (paymentIntent.status) {
+        case "succeeded":
+          setPaymentSuccess(true);
+          break;
+        case "processing":
+          setPaymentSuccess(true);
+          break;
+        case "requires_payment_method":
+          setPaymentSuccess(false);
+          break;
+        default:
+          setPaymentSuccess(false);
+          break;
+      }
+    });
+  }, [stripe]);
+
   const isClient = useIsClient();
   const { data: listing } = useListingsRead<Listing>(parseInt(id));
 
@@ -26,13 +81,28 @@ export default function ConfirmationPage({ id }: { id: string }) {
   const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
+    if (paymentSuccess === true || paymentSuccess === undefined) {
+      return;
+    }
+    alert("There was an issue with the payment. Please try to book again.");
+    router.push(`${window.location.origin}/listings/${listing?.id}/checkout`);
+  }, [paymentSuccess]);
+
+  useEffect(() => {
     async function sendEmail() {
-      if (!listing || !selectedDate || !selectedDate1 || !email || emailSent || !isClient) {
+      if (
+        !listing ||
+        !selectedDate ||
+        !selectedDate1 ||
+        !email ||
+        emailSent ||
+        !isClient ||
+        !paymentSuccess
+      ) {
         return;
       }
 
       setEmailSent(true);
-
 
       try {
         const formData = new FormData();
@@ -67,9 +137,9 @@ export default function ConfirmationPage({ id }: { id: string }) {
     }
 
     sendEmail();
-  }, [isClient]);
+  }, [isClient, paymentSuccess]);
 
-  if (!listing || !isClient) {
+  if (!listing || !isClient || !paymentSuccess) {
     return null;
   }
 
@@ -96,7 +166,16 @@ export default function ConfirmationPage({ id }: { id: string }) {
             Start preparing for your journey, your reservation is ready! 🏝️
           </Typography>
 
-          <Typography variant="body1">{message ? message : <><CircularProgress size={16}/> Sending confirmation emails... This should only take a few seconds!</>}</Typography>
+          <Typography variant="body1">
+            {message ? (
+              message
+            ) : (
+              <>
+                <CircularProgress size={16} /> Sending confirmation emails...
+                This should only take a few seconds!
+              </>
+            )}
+          </Typography>
         </div>
 
         {/* Detail section */}
@@ -129,7 +208,10 @@ export default function ConfirmationPage({ id }: { id: string }) {
             ]
               .filter(Boolean)
               .map((item, i) => (
-                <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']" key={i}>
+                <span
+                  className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']"
+                  key={i}
+                >
                   {item}
                 </span>
               ))}
