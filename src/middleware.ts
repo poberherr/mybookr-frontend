@@ -1,5 +1,4 @@
-import { createRouteMatcher, clerkMiddleware as mybookrMiddleware } from "@clerk/nextjs/server";
-import { NextRequest, NextResponse } from "next/server";
+import { createRouteMatcher, clerkMiddleware } from "@clerk/nextjs/server";
 
 
 // Route matchers
