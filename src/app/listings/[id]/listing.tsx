@@ -25,15 +25,14 @@ import {
   Amenity,
   HealthSafety,
   HouseRules,
-  Listing,
-  useListingsRead,
 } from "@/app/api-helpers";
+import { useGetListing } from "@/app/helpers/useGetListing";
 
 // import CheckoutAndPay from "./checkout";
 
 export default function ListingComponent({ id }: { id: string }) {
   const router = useRouter();
-  const { data: listing } = useListingsRead<Listing>(parseInt(id));
+  const listing = useGetListing(parseInt(id));
   // const { data: reviews } = useCoreReviewsList<Review[]>();
 
   // eslint-disable-next-line no-unused-vars

@@ -2,27 +2,25 @@
 
 import React, { useContext, useEffect, useState } from "react";
 
-
-
-import { useStripe } from "@stripe/react-stripe-js";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { useStripe } from "@stripe/react-stripe-js";
 
-
-import { CircularProgress, Divider, Typography, useMediaQuery, useTheme } from "@mui/material";
-
-
+import {
+  CircularProgress,
+  Divider,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 
 import BackButton from "@/app/components/others/BackButton";
 
-
-
-import { Listing, useListingsRead } from "@/app/api-helpers";
 import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
+import { useGetListing } from "@/app/helpers/useGetListing";
 import { useIsClient } from "@/app/helpers/useIsClient";
-
 
 export default function ConfirmationPage({ id }: { id: string }) {
   const router = useRouter();
@@ -70,7 +68,7 @@ export default function ConfirmationPage({ id }: { id: string }) {
   }, [stripe]);
 
   const isClient = useIsClient();
-  const { data: listing } = useListingsRead<Listing>(parseInt(id));
+  const listing = useGetListing(parseInt(id));
 
   const { selectedDate, selectedDate1, guest, nights, email } =
     useContext(BookingContext);

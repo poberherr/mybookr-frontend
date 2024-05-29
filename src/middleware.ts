@@ -1,5 +1,8 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { createRouteMatcher, clerkMiddleware as mybookrMiddleware } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse } from "next/server";
 
+
+// Route matchers
 const isBookingRoute = createRouteMatcher(["/bookings(.*)"]);
 const isInvestorRoute = createRouteMatcher([
   "/api/transak(.*)",

@@ -1,0 +1,866 @@
+[
+  {
+    "id": 1,
+    "amenities": {
+      "id": 1,
+      "wifi": true,
+      "fast_wifi": true,
+      "parking": true,
+      "pool": true,
+      "fitness_center": true,
+      "pet_friendly": true,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": true
+    },
+    "space": {
+      "id": 1,
+      "guests_capacity": 4,
+      "bathrooms": 2,
+      "bedrooms": 2,
+      "double_beds": 2,
+      "single_beds": 0
+    },
+    "location": {
+      "id": 1,
+      "latitude": -8.3405,
+      "longitude": 115.092,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Ubud Road",
+      "zip": "80571"
+    },
+    "house_rules": {
+      "id": 1,
+      "check_in_time": "2024-05-12T15:00:00Z",
+      "check_out_time": "2024-05-12T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 4,
+      "quiet_time": "22:00:00",
+      "cancellation_policy": "Moderate - full refund 5 days prior to arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "Pets allowed with deposit"
+    },
+    "health_safety": {
+      "id": 1,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 1,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 1,
+        "price_per_unit": 1250,
+        "date_available": "2024-05-12",
+        "number_available": 2147483647,
+        "time_start": "2024-05-12T14:36:13.653000Z",
+        "time_end": "2024-06-12T14:36:13.653000Z",
+        "minimum_stay": 2147483647
+      },
+      {
+        "id": 2,
+        "price_per_unit": 1250,
+        "date_available": "2024-05-12",
+        "number_available": 2147483647,
+        "time_start": "2024-05-12T14:36:13.653000Z",
+        "time_end": "2024-06-12T14:36:13.653000Z",
+        "minimum_stay": 2147483647
+      },
+      {
+        "id": 10,
+        "price_per_unit": 1350,
+        "date_available": "2024-05-20",
+        "number_available": 6,
+        "time_start": "2024-05-20T14:00:00Z",
+        "time_end": "2024-05-23T14:00:00Z",
+        "minimum_stay": 3
+      },
+      {
+        "id": 13,
+        "price_per_unit": 1200,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-06-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/kanva-ubud.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/428339322.jpg",
+        "uploaded_at": "2024-05-12T14:30:25.627096Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic1.jpg",
+        "uploaded_at": "2024-05-13T10:59:37.253106Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic2.jpg",
+        "uploaded_at": "2024-05-13T11:00:00.756346Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic3.jpg",
+        "uploaded_at": "2024-05-13T11:00:11.272205Z"
+      }
+    ],
+    "title": "Tranquil Ubud Retreat in Bali",
+    "description": "Discover serenity at our tranquil retreat in Ubud, Bali. Immerse yourself in nature and find peace amidst lush greenery.",
+    "property_type": "House",
+    "extra": "Near Ubud's Sacred Monkey Forest Sanctuary",
+    "host": 1
+  },
+  {
+    "id": 2,
+    "amenities": {
+      "id": 2,
+      "wifi": true,
+      "fast_wifi": true,
+      "parking": true,
+      "pool": true,
+      "fitness_center": true,
+      "pet_friendly": true,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": true
+    },
+    "space": {
+      "id": 2,
+      "guests_capacity": 4,
+      "bathrooms": 2,
+      "bedrooms": 2,
+      "double_beds": 2,
+      "single_beds": 0
+    },
+    "location": {
+      "id": 2,
+      "latitude": -8.5059,
+      "longitude": 115.2627,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Seminyak Street",
+      "zip": "80361"
+    },
+    "house_rules": {
+      "id": 2,
+      "check_in_time": "2024-05-12T15:00:00Z",
+      "check_out_time": "2024-05-12T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 4,
+      "quiet_time": "22:00:00",
+      "cancellation_policy": "Moderate - full refund 5 days prior to arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "Pets allowed with deposit"
+    },
+    "health_safety": {
+      "id": 2,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 2,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 3,
+        "price_per_unit": 900,
+        "date_available": "2024-05-13",
+        "number_available": 10,
+        "time_start": "2024-05-13T10:00:00Z",
+        "time_end": "2024-05-20T10:00:00Z",
+        "minimum_stay": 3
+      },
+      {
+        "id": 11,
+        "price_per_unit": 950,
+        "date_available": "2024-05-21",
+        "number_available": 18,
+        "time_start": "2024-05-21T10:00:00Z",
+        "time_end": "2024-05-24T10:00:00Z",
+        "minimum_stay": 2
+      },
+      {
+        "id": 12,
+        "price_per_unit": 1200,
+        "date_available": "2024-05-22",
+        "number_available": 4,
+        "time_start": "2024-05-22T12:00:00Z",
+        "time_end": "2024-05-25T12:00:00Z",
+        "minimum_stay": 3
+      },
+      {
+        "id": 14,
+        "price_per_unit": 1500,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-06-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/kayon-from-the-sky.jpg",
+        "uploaded_at": "2024-05-12T14:00:59.589185Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic4.jpg",
+        "uploaded_at": "2024-05-13T11:00:23.319777Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic5.jpg",
+        "uploaded_at": "2024-05-13T11:00:33.800693Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic6.jpg",
+        "uploaded_at": "2024-05-13T11:00:44.195963Z"
+      }
+    ],
+    "title": "Stylish Seminyak Villa with Pool",
+    "description": "Indulge in luxury at our stylish villa in Seminyak. With a private pool and modern amenities, it's the perfect retreat in Bali.",
+    "property_type": "Villa",
+    "extra": "Minutes away from Seminyak's trendy beach clubs",
+    "host": 1
+  },
+  {
+    "id": 3,
+    "amenities": {
+      "id": 3,
+      "wifi": true,
+      "fast_wifi": false,
+      "parking": true,
+      "pool": false,
+      "fitness_center": false,
+      "pet_friendly": false,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": false
+    },
+    "space": {
+      "id": 3,
+      "guests_capacity": 3,
+      "bathrooms": 1,
+      "bedrooms": 1,
+      "double_beds": 1,
+      "single_beds": 1
+    },
+    "location": {
+      "id": 3,
+      "latitude": -8.6509,
+      "longitude": 115.1372,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Ubud Street",
+      "zip": "80571"
+    },
+    "house_rules": {
+      "id": 3,
+      "check_in_time": "2024-05-12T14:00:00Z",
+      "check_out_time": "2024-05-12T10:00:00Z",
+      "self_check_in": true,
+      "max_guests": 3,
+      "quiet_time": "23:00:00",
+      "cancellation_policy": "Flexible - full refund up to 1 day before arrival",
+      "alcohol_policy": "Not allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "No pets allowed"
+    },
+    "health_safety": {
+      "id": 3,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": false,
+      "fire_extinguisher_provided": false,
+      "emergency_contact_provided": false,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": false
+    },
+    "accessibility": {
+      "id": 3,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 4,
+        "price_per_unit": 1500,
+        "date_available": "2024-05-14",
+        "number_available": 5,
+        "time_start": "2024-05-14T12:00:00Z",
+        "time_end": "2024-05-20T12:00:00Z",
+        "minimum_stay": 2
+      },
+      {
+        "id": 15,
+        "price_per_unit": 1000,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-06-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      },
+      {
+        "id": 19,
+        "price_per_unit": 2100,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-07-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/hai-tide-beach-resort.jpg",
+        "uploaded_at": "2024-05-12T14:01:29.368883Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic7.jpg",
+        "uploaded_at": "2024-05-13T11:00:57.204861Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic8.jpg",
+        "uploaded_at": "2024-05-13T11:01:06.758826Z"
+      }
+    ],
+    "title": "Tranquil Ubud Retreat",
+    "description": "Escape to the tranquility of Ubud with our cozy retreat. Surrounded by lush greenery, it's the perfect spot for a peaceful getaway in Bali.",
+    "property_type": "Apartment",
+    "extra": "Close to Ubud's art and culture scene",
+    "host": 1
+  },
+  {
+    "id": 4,
+    "amenities": {
+      "id": 4,
+      "wifi": true,
+      "fast_wifi": true,
+      "parking": false,
+      "pool": true,
+      "fitness_center": true,
+      "pet_friendly": true,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": true,
+      "party_allowed": true,
+      "security_cameras": false
+    },
+    "space": {
+      "id": 4,
+      "guests_capacity": 5,
+      "bathrooms": 2,
+      "bedrooms": 2,
+      "double_beds": 2,
+      "single_beds": 1
+    },
+    "location": {
+      "id": 4,
+      "latitude": -8.619,
+      "longitude": 115.1512,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Jimbaran Street",
+      "zip": "80361"
+    },
+    "house_rules": {
+      "id": 4,
+      "check_in_time": "2024-06-01T15:00:00Z",
+      "check_out_time": "2024-06-01T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 5,
+      "quiet_time": "22:00:00",
+      "cancellation_policy": "Moderate - full refund 5 days prior to arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "Pets allowed with restrictions"
+    },
+    "health_safety": {
+      "id": 4,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 4,
+      "accessible_entrance": true,
+      "elevator": true,
+      "accessible_parking": true,
+      "ramp": true,
+      "visual_aid": false,
+      "communication_accessibility": true
+    },
+    "availabilities": [
+      {
+        "id": 5,
+        "price_per_unit": 800,
+        "date_available": "2024-05-15",
+        "number_available": 20,
+        "time_start": "2024-05-15T08:00:00Z",
+        "time_end": "2024-05-18T08:00:00Z",
+        "minimum_stay": 1
+      },
+      {
+        "id": 16,
+        "price_per_unit": 800,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-06-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/the-udaya-resorts-spa.jpg",
+        "uploaded_at": "2024-05-12T14:05:08.236427Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic9.jpg",
+        "uploaded_at": "2024-05-13T11:01:21.556159Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic10.jpg",
+        "uploaded_at": "2024-05-13T11:01:28.584748Z"
+      }
+    ],
+    "title": "Luxurious Jimbaran Villa with Pool",
+    "description": "Indulge in luxury at our villa in Jimbaran. With stunning ocean views and top-notch amenities, it's the perfect retreat in Bali.",
+    "property_type": "Villa",
+    "extra": "Minutes away from Jimbaran's famous seafood restaurants",
+    "host": 1
+  },
+  {
+    "id": 5,
+    "amenities": {
+      "id": 5,
+      "wifi": true,
+      "fast_wifi": false,
+      "parking": true,
+      "pool": false,
+      "fitness_center": false,
+      "pet_friendly": false,
+      "tv": true,
+      "kitchen": false,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": true
+    },
+    "space": {
+      "id": 5,
+      "guests_capacity": 2,
+      "bathrooms": 1,
+      "bedrooms": 1,
+      "double_beds": 1,
+      "single_beds": 0
+    },
+    "location": {
+      "id": 5,
+      "latitude": -8.6509,
+      "longitude": 115.1372,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Kuta Street",
+      "zip": "80361"
+    },
+    "house_rules": {
+      "id": 5,
+      "check_in_time": "2024-07-15T14:00:00Z",
+      "check_out_time": "2024-07-15T10:00:00Z",
+      "self_check_in": true,
+      "max_guests": 2,
+      "quiet_time": "21:00:00",
+      "cancellation_policy": "Strict - 50% refund until 1 week prior to arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "No pets"
+    },
+    "health_safety": {
+      "id": 5,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": false,
+      "fire_extinguisher_provided": false,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": false,
+      "covid_19_precautions": false
+    },
+    "accessibility": {
+      "id": 5,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 6,
+        "price_per_unit": 2000,
+        "date_available": "2024-05-16",
+        "number_available": 3,
+        "time_start": "2024-05-16T15:00:00Z",
+        "time_end": "2024-05-19T15:00:00Z",
+        "minimum_stay": 2
+      },
+      {
+        "id": 17,
+        "price_per_unit": 1600,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-07-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/best-spot-to-enjoy-valley.jpg",
+        "uploaded_at": "2024-05-12T14:05:33.010441Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic11.jpg",
+        "uploaded_at": "2024-05-13T11:01:37.766155Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic12.jpg",
+        "uploaded_at": "2024-05-13T11:01:45.863391Z"
+      }
+    ],
+    "title": "Cozy Studio in Kuta",
+    "description": "Enjoy a cozy stay in Kuta with our studio apartment. Perfect for solo travelers or couples exploring Bali.",
+    "property_type": "Apartment",
+    "extra": "Minutes away from Kuta's nightlife and beaches",
+    "host": 1
+  },
+  {
+    "id": 6,
+    "amenities": {
+      "id": 6,
+      "wifi": true,
+      "fast_wifi": true,
+      "parking": true,
+      "pool": false,
+      "fitness_center": false,
+      "pet_friendly": false,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": true
+    },
+    "space": {
+      "id": 6,
+      "guests_capacity": 6,
+      "bathrooms": 3,
+      "bedrooms": 3,
+      "double_beds": 2,
+      "single_beds": 2
+    },
+    "location": {
+      "id": 6,
+      "latitude": -8.3405,
+      "longitude": 115.091,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Legian Street",
+      "zip": "80361"
+    },
+    "house_rules": {
+      "id": 6,
+      "check_in_time": "2024-08-20T15:00:00Z",
+      "check_out_time": "2024-08-20T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 6,
+      "quiet_time": "23:00:00",
+      "cancellation_policy": "Strict - 50% refund until 1 week prior to arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "No pets"
+    },
+    "health_safety": {
+      "id": 6,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 6,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 7,
+        "price_per_unit": 700,
+        "date_available": "2024-05-17",
+        "number_available": 15,
+        "time_start": "2024-05-17T18:00:00Z",
+        "time_end": "2024-05-20T18:00:00Z",
+        "minimum_stay": 3
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/sunken-bar-at-infinity.jpg",
+        "uploaded_at": "2024-05-12T14:05:56.010320Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic13.jpg",
+        "uploaded_at": "2024-05-13T11:01:56.191644Z"
+      }
+    ],
+    "title": "Spacious Legian Apartment",
+    "description": "Experience spacious living in Legian with our modern apartment. Perfect for families or groups visiting Bali.",
+    "property_type": "Apartment",
+    "extra": "Minutes away from Legian's shopping and dining",
+    "host": 1
+  },
+  {
+    "id": 7,
+    "amenities": {
+      "id": 7,
+      "wifi": true,
+      "fast_wifi": true,
+      "parking": false,
+      "pool": true,
+      "fitness_center": false,
+      "pet_friendly": false,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": true,
+      "security_cameras": false
+    },
+    "space": {
+      "id": 7,
+      "guests_capacity": 10,
+      "bathrooms": 5,
+      "bedrooms": 5,
+      "double_beds": 5,
+      "single_beds": 0
+    },
+    "location": {
+      "id": 7,
+      "latitude": -8.691,
+      "longitude": 115.1672,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Canggu Street",
+      "zip": "80361"
+    },
+    "house_rules": {
+      "id": 7,
+      "check_in_time": "2024-09-10T15:00:00Z",
+      "check_out_time": "2024-09-10T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 10,
+      "quiet_time": "22:00:00",
+      "cancellation_policy": "Strict - no refund",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "No pets"
+    },
+    "health_safety": {
+      "id": 7,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 7,
+      "accessible_entrance": true,
+      "elevator": false,
+      "accessible_parking": true,
+      "ramp": true,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 8,
+        "price_per_unit": 1800,
+        "date_available": "2024-05-18",
+        "number_available": 8,
+        "time_start": "2024-05-18T11:00:00Z",
+        "time_end": "2024-05-22T11:00:00Z",
+        "minimum_stay": 4
+      },
+      {
+        "id": 18,
+        "price_per_unit": 1900,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-07-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      },
+      {
+        "id": 20,
+        "price_per_unit": 2990,
+        "date_available": "2024-05-22",
+        "number_available": 2147483647,
+        "time_start": "2024-05-22T16:05:09.653000Z",
+        "time_end": "2024-07-22T16:05:09.653000Z",
+        "minimum_stay": 2147483647
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/caption.jpg",
+        "uploaded_at": "2024-05-12T14:06:33.598256Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic9_KaWLafK.jpg",
+        "uploaded_at": "2024-05-13T11:09:12.057177Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/resort_pic6_wgfhRfL.jpg",
+        "uploaded_at": "2024-05-13T11:09:20.306326Z"
+      }
+    ],
+    "title": "Luxury Canggu Villa with Pool",
+    "description": "Discover luxury living in Canggu at our stunning villa. With five bedrooms and a private pool, it's perfect for large groups or families.",
+    "property_type": "Villa",
+    "extra": "Close to Canggu's beaches and surf spots",
+    "host": 1
+  },
+  {
+    "id": 8,
+    "amenities": {
+      "id": 8,
+      "wifi": true,
+      "fast_wifi": false,
+      "parking": true,
+      "pool": true,
+      "fitness_center": false,
+      "pet_friendly": false,
+      "tv": true,
+      "kitchen": true,
+      "smoking_allowed": false,
+      "party_allowed": false,
+      "security_cameras": false
+    },
+    "space": {
+      "id": 8,
+      "guests_capacity": 8,
+      "bathrooms": 4,
+      "bedrooms": 4,
+      "double_beds": 4,
+      "single_beds": 0
+    },
+    "location": {
+      "id": 8,
+      "latitude": -8.2775,
+      "longitude": 115.1667,
+      "country": "Indonesia",
+      "city": "Bali",
+      "street": "Sanur Street",
+      "zip": "80228"
+    },
+    "house_rules": {
+      "id": 8,
+      "check_in_time": "2024-10-05T15:00:00Z",
+      "check_out_time": "2024-10-05T11:00:00Z",
+      "self_check_in": true,
+      "max_guests": 8,
+      "quiet_time": "23:00:00",
+      "cancellation_policy": "Flexible - full refund up to 1 day before arrival",
+      "alcohol_policy": "Allowed",
+      "drug_policy": "Not allowed",
+      "pet_policy": "No pets"
+    },
+    "health_safety": {
+      "id": 8,
+      "smoke_detectors_installed": true,
+      "first_aid_kit_available": true,
+      "fire_extinguisher_provided": true,
+      "emergency_contact_provided": true,
+      "regular_cleaning_protocols": true,
+      "covid_19_precautions": true
+    },
+    "accessibility": {
+      "id": 8,
+      "accessible_entrance": false,
+      "elevator": false,
+      "accessible_parking": false,
+      "ramp": false,
+      "visual_aid": false,
+      "communication_accessibility": false
+    },
+    "availabilities": [
+      {
+        "id": 9,
+        "price_per_unit": 1000,
+        "date_available": "2024-05-19",
+        "number_available": 12,
+        "time_start": "2024-05-19T09:00:00Z",
+        "time_end": "2024-05-22T09:00:00Z",
+        "minimum_stay": 2
+      }
+    ],
+    "images": [
+      {
+        "image": "http://78.141.207.217/media/listing_images/kajane-mua.jpg",
+        "uploaded_at": "2024-05-12T14:07:04.096801Z"
+      },
+      {
+        "image": "http://78.141.207.217/media/listing_images/kajane-mua_TgKWHBB.jpg",
+        "uploaded_at": "2024-05-12T14:22:32.941791Z"
+      }
+    ],
+    "title": "Sanur Beachfront Villa",
+    "description": "Experience beachfront living in Sanur at our spacious villa. With four bedrooms and a private pool, it's ideal for large families or groups.",
+    "property_type": "Villa",
+    "extra": "Direct access to Sanur Beach",
+    "host": 1
+  }
+]
