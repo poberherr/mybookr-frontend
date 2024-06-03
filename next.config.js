@@ -2,10 +2,10 @@ export default {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "78.141.207.217",
+        protocol: "https",
+        hostname: "mybookr-images.s3.eu-central-1.amazonaws.com",
         port: "",
-        pathname: "/media/listing_images/**",
+        pathname: "/**",
       },
     ],
   },

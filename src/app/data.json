@@ -102,24 +102,48 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/kanva-ubud.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/watu-kurung-f.webp",
         "uploaded_at": "2024-05-12T14:00:30.606319Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/428339322.jpg",
-        "uploaded_at": "2024-05-12T14:30:25.627096Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/016a7bf4d76592b592c8613d09ceee96.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic1.jpg",
-        "uploaded_at": "2024-05-13T10:59:37.253106Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/62ab39e5606f6b1fabeec901b5b0d194.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic2.jpg",
-        "uploaded_at": "2024-05-13T11:00:00.756346Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/69b173c8bdb4e84304f0d4c81df11012.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic3.jpg",
-        "uploaded_at": "2024-05-13T11:00:11.272205Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/a5c900ab99196fc93bd5a75c70b78c5e.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/bcf3b253a76018ec93a3be6d116a629a.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/c90daa9bc27d4d571415407414adcf3a.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/cab64930bf3ac070f899c1c6f35354c0.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/f5556533486f3b616e9d43e6176f50e1.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/fbb771a80a3a7c3dcc0577dc8d078f0e.jpg",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/1-watu-kurung/pool.webp",
+        "uploaded_at": "2024-05-12T14:00:30.606319Z"
       }
     ],
     "title": "Tranquil Ubud Retreat in Bali",
@@ -231,19 +255,27 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/kayon-from-the-sky.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/zahill-f.jpg",
+        "uploaded_at": "2024-05-13T11:00:44.195963Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/1399ebe2d5dda0fb02e827118235fd2c.jpg",
         "uploaded_at": "2024-05-12T14:00:59.589185Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic4.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/4b5e0d2ca772052bdbc6175b38eb58e1.jpg",
         "uploaded_at": "2024-05-13T11:00:23.319777Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic5.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/6ef0c4248e41694c9ef8d84ce5a8d01d.jpg",
         "uploaded_at": "2024-05-13T11:00:33.800693Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic6.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/a5818501ac1ec1a5dc47339610e11e32.jpg",
+        "uploaded_at": "2024-05-13T11:00:44.195963Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/2-zahill/outside.webp",
         "uploaded_at": "2024-05-13T11:00:44.195963Z"
       }
     ],
@@ -347,15 +379,31 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/hai-tide-beach-resort.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/swan-paradise.jpg",
         "uploaded_at": "2024-05-12T14:01:29.368883Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic7.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/2.webp",
+        "uploaded_at": "2024-05-12T14:01:29.368883Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/4.webp",
         "uploaded_at": "2024-05-13T11:00:57.204861Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic8.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/5b22c66b6f9bda7e50501f54b6aba028.jpg",
+        "uploaded_at": "2024-05-13T11:01:06.758826Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/75e10a2cb1832cb166f42b68b4e86674.jpg",
+        "uploaded_at": "2024-05-12T14:01:29.368883Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/f7c6c8326db45b1649c1a914769f1d1f.jpg",
+        "uploaded_at": "2024-05-13T11:00:57.204861Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/3-swan-paradise/f7f28b154ccf82d5856f9b6e4b4f85c5.jpg",
         "uploaded_at": "2024-05-13T11:01:06.758826Z"
       }
     ],
@@ -450,16 +498,24 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/the-udaya-resorts-spa.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/4-Kuwarasan/kuwarasan-1.jpg",
+        "uploaded_at": "2024-05-13T11:01:28.584748Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/4-Kuwarasan/3cea6349c001183f12bb59aae40f33ac.jpg",
         "uploaded_at": "2024-05-12T14:05:08.236427Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic9.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/4-Kuwarasan/59b52de8da26bbba86eff58212c7546c.jpg",
         "uploaded_at": "2024-05-13T11:01:21.556159Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic10.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/4-Kuwarasan/b6bbb714b13a0fda5e608f57e1d6a7e8.jpg",
         "uploaded_at": "2024-05-13T11:01:28.584748Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/4-Kuwarasan/ff9f9ef18e9ebcf3b7300a9bb862bda8.jpg",
+        "uploaded_at": "2024-05-13T11:01:21.556159Z"
       }
     ],
     "title": "Luxurious Jimbaran Villa with Pool",
@@ -553,16 +609,24 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/best-spot-to-enjoy-valley.jpg",
-        "uploaded_at": "2024-05-12T14:05:33.010441Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/5-tapa-tepi/tapa-tepi-f.jpg",
+        "uploaded_at": "2024-05-13T11:01:28.584748Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic11.jpg",
-        "uploaded_at": "2024-05-13T11:01:37.766155Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/5-tapa-tepi/25319dcfa23892d451901443e74e60e0.jpg",
+        "uploaded_at": "2024-05-12T14:05:08.236427Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic12.jpg",
-        "uploaded_at": "2024-05-13T11:01:45.863391Z"
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/5-tapa-tepi/53d83b5cb2270dd923d727a63eeeb49f.jpg",
+        "uploaded_at": "2024-05-13T11:01:21.556159Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/5-tapa-tepi/b6858010318cbc6b635d06a0d7d571b6.jpg",
+        "uploaded_at": "2024-05-13T11:01:28.584748Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/5-tapa-tepi/fba733100044c5f18649c5b38b046838.jpg",
+        "uploaded_at": "2024-05-13T11:01:21.556159Z"
       }
     ],
     "title": "Cozy Studio in Kuta",
@@ -647,11 +711,15 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/sunken-bar-at-infinity.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/6-alena/alena-1.jpg",
+        "uploaded_at": "2024-05-13T11:01:56.191644Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/6-alena/59533916522d425d7e7a8a05487f7469.jpg",
         "uploaded_at": "2024-05-12T14:05:56.010320Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic13.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/6-alena/6e13633a97d7a2a6a6d59c265843903a.jpg",
         "uploaded_at": "2024-05-13T11:01:56.191644Z"
       }
     ],
@@ -755,15 +823,19 @@
     ],
     "images": [
       {
-        "image": "http://78.141.207.217/media/listing_images/caption.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/7-kawi/kawi-1.jpg",
+        "uploaded_at": "2024-05-13T11:09:20.306326Z"
+      },
+      {
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/7-kawi/c14959d1f52509bbcab0cad0c92f1fb3.jpg",
         "uploaded_at": "2024-05-12T14:06:33.598256Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic9_KaWLafK.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/7-kawi/f360887e10036305f94a4f3f9a27f8f0.jpg",
         "uploaded_at": "2024-05-13T11:09:12.057177Z"
       },
       {
-        "image": "http://78.141.207.217/media/listing_images/resort_pic6_wgfhRfL.jpg",
+        "image": "https://mybookr-images.s3.eu-central-1.amazonaws.com/7-kawi/f7984c6fa1226aa8525ec7cef4b92d19.jpg",
         "uploaded_at": "2024-05-13T11:09:20.306326Z"
       }
     ],
@@ -771,96 +843,6 @@
     "description": "Discover luxury living in Canggu at our stunning villa. With five bedrooms and a private pool, it's perfect for large groups or families.",
     "property_type": "Villa",
     "extra": "Close to Canggu's beaches and surf spots",
-    "host": 1
-  },
-  {
-    "id": 8,
-    "amenities": {
-      "id": 8,
-      "wifi": true,
-      "fast_wifi": false,
-      "parking": true,
-      "pool": true,
-      "fitness_center": false,
-      "pet_friendly": false,
-      "tv": true,
-      "kitchen": true,
-      "smoking_allowed": false,
-      "party_allowed": false,
-      "security_cameras": false
-    },
-    "space": {
-      "id": 8,
-      "guests_capacity": 8,
-      "bathrooms": 4,
-      "bedrooms": 4,
-      "double_beds": 4,
-      "single_beds": 0
-    },
-    "location": {
-      "id": 8,
-      "latitude": -8.2775,
-      "longitude": 115.1667,
-      "country": "Indonesia",
-      "city": "Bali",
-      "street": "Sanur Street",
-      "zip": "80228"
-    },
-    "house_rules": {
-      "id": 8,
-      "check_in_time": "2024-10-05T15:00:00Z",
-      "check_out_time": "2024-10-05T11:00:00Z",
-      "self_check_in": true,
-      "max_guests": 8,
-      "quiet_time": "23:00:00",
-      "cancellation_policy": "Flexible - full refund up to 1 day before arrival",
-      "alcohol_policy": "Allowed",
-      "drug_policy": "Not allowed",
-      "pet_policy": "No pets"
-    },
-    "health_safety": {
-      "id": 8,
-      "smoke_detectors_installed": true,
-      "first_aid_kit_available": true,
-      "fire_extinguisher_provided": true,
-      "emergency_contact_provided": true,
-      "regular_cleaning_protocols": true,
-      "covid_19_precautions": true
-    },
-    "accessibility": {
-      "id": 8,
-      "accessible_entrance": false,
-      "elevator": false,
-      "accessible_parking": false,
-      "ramp": false,
-      "visual_aid": false,
-      "communication_accessibility": false
-    },
-    "availabilities": [
-      {
-        "id": 9,
-        "price_per_unit": 1000,
-        "date_available": "2024-05-19",
-        "number_available": 12,
-        "time_start": "2024-05-19T09:00:00Z",
-        "time_end": "2024-05-22T09:00:00Z",
-        "minimum_stay": 2
-      }
-    ],
-    "images": [
-      {
-        "image": "http://78.141.207.217/media/listing_images/kajane-mua.jpg",
-        "uploaded_at": "2024-05-12T14:07:04.096801Z"
-      },
-      {
-        "image": "http://78.141.207.217/media/listing_images/kajane-mua_TgKWHBB.jpg",
-        "uploaded_at": "2024-05-12T14:22:32.941791Z"
-      }
-    ],
-    "title": "Sanur Beachfront Villa",
-    "description": "Experience beachfront living in Sanur at our spacious villa. With four bedrooms and a private pool, it's ideal for large families or groups.",
-    "property_type": "Villa",
-    "extra": "Direct access to Sanur Beach",
     "host": 1
   }
 ]
