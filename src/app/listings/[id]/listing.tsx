@@ -11,7 +11,6 @@ import { Divider, Typography } from "@mui/material";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import Gallery from "../../components/others/Gallery";
 import { SButton } from "../../components/ui/SButton";
-import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 import MybookrMap from "@/app/components/others/MybookrMap";
 
 import HeartIcon from "@/assets/icons/heart.svg";
@@ -27,6 +26,7 @@ import {
   HouseRules,
 } from "@/app/api-helpers";
 import { useGetListing } from "@/app/helpers/useGetListing";
+import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 
 // import CheckoutAndPay from "./checkout";
 
@@ -137,6 +137,8 @@ export default function ListingComponent({ id }: { id: string }) {
                       src={listing.images[0].image}
                       alt=""
                       fill={true}
+                      sizes={"900px"}
+                      objectFit="center center"
                     />
                   )}
 
@@ -183,6 +185,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     src={listing.images[0].image}
                     alt=""
                     fill={true}
+                    sizes={"900px"}
                   />
                 )}
                 {listing.images[1] && listing.images[1].image && (
@@ -191,6 +194,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     src={listing.images[1].image}
                     alt=""
                     fill={true}
+                    sizes={"420px"}
                   />
                 )}
                 {listing.images[2] && listing.images[2].image && (
@@ -199,6 +203,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     src={listing.images[2].image}
                     alt=""
                     fill={true}
+                    sizes={"420px"}
                   />
                 )}
                 {listing.images[3] && listing.images[3].image && (
@@ -207,6 +212,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     src={listing.images[3].image}
                     alt=""
                     fill={true}
+                    sizes={"420px"}
                   />
                 )}
                 {listing.images[4] && listing.images[4].image && (
@@ -215,6 +221,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     src={listing.images[4].image}
                     alt=""
                     fill={true}
+                    sizes={"420px"}
                   />
                 )}
 

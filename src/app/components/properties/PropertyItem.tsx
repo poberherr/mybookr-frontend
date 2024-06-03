@@ -46,6 +46,7 @@ export default function PropertyItem({ property: listing }: IProps) {
               src={listing.images[0].image}
               alt=""
               fill={true}
+              sizes="420px"
             />
           )}
 

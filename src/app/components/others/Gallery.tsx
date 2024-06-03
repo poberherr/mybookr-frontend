@@ -83,6 +83,7 @@ export default function Gallery({
                   }}
                   alt={`slide ${index}`}
                   fill={true}
+                  sizes={"420px"}
                 />
               </div>
             );
