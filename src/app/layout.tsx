@@ -1,14 +1,12 @@
 import React from "react";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Metadata } from "next";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 
 import MatomoTracking from "./components/MatomoTracking";
-import QueryClientProviderWrapper from "./components/QueryClientProvider";
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 
@@ -35,19 +33,16 @@ export default function RootLayout({
       <ThemeProvider theme={theme}>
         <ClerkProvider>
           <BookingContextProvider>
-            <QueryClientProviderWrapper>
-              <MatomoTracking />
-              <html lang="en">
-                <body className={`${montserrat.className} ${inter.className}`}>
-                  <main>
-                    <Header />
-                    {children}
-                    <Footer />
-                    <ReactQueryDevtools />
-                  </main>
-                </body>
-              </html>
-            </QueryClientProviderWrapper>
+            <MatomoTracking />
+            <html lang="en">
+              <body className={`${montserrat.className} ${inter.className}`}>
+                <main>
+                  <Header />
+                  {children}
+                  <Footer />
+                </main>
+              </body>
+            </html>
           </BookingContextProvider>
         </ClerkProvider>
       </ThemeProvider>

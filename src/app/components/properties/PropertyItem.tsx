@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,19 +9,19 @@ import { default as HeartIcon } from "@/assets/icons/heart.svg";
 import { default as ShareIcon } from "@/assets/icons/share.svg";
 import { default as StarIcon } from "@/assets/icons/star.svg";
 
-import { Listing } from "@/app/api-helpers";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 interface IProps {
-  property: Listing;
+  property: ExperienceItemFragment;
 }
 
-export default function PropertyItem({ property: listing }: IProps) {
+export default function PropertyItem({ property: experience }: IProps) {
   // @todo
   const isBoosted = false; //listing.boost_dates?.includes("2024-02-19");
-  const averagePricePerNight = useAveragePricePerNight(listing);
+  const averagePricePerNight = useAveragePricePerNight(experience);
 
   // @todo quick and dirty filter
   // if (averagePricePerNight === 0) {
@@ -35,15 +37,15 @@ export default function PropertyItem({ property: listing }: IProps) {
           : "col-end-[span_2] sm:col-end-[span_1]"
       }
       `}
-      href={`/listings/${listing.id}`}
+      href={`/listings/${experience.id}`}
     >
       <div className="relative aspect-video">
-        {listing.images &&
-          listing.images?.length > 0 &&
-          listing.images[0].image && (
+        {experience.medias &&
+          experience.medias?.length > 0 &&
+          experience.medias[0].url && (
             <Image
               className="rounded-t-lg object-cover"
-              src={listing.images[0].image}
+              src={experience.medias[0].url}
               alt=""
               fill={true}
               sizes="420px"
@@ -65,16 +67,16 @@ export default function PropertyItem({ property: listing }: IProps) {
           className="!mb-1 overflow-hidden text-ellipsis whitespace-nowrap !text-sm !font-bold"
           variant="body1"
         >
-          {listing.title}
+          {experience.title}
         </Typography>
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              {listing.location.city}, {listing.location.country}
+              {experience.location?.city}, {experience.location?.country}
             </Typography>
           ) : (
             <Typography variant="body2">
-              {listing.location.city}, {listing.location.country}
+              {experience.location.city}, {experience.location.country}
             </Typography>
           )}
 
@@ -85,7 +87,7 @@ export default function PropertyItem({ property: listing }: IProps) {
 
         {isBoosted && (
           <Typography className="!mb-12" variant="caption">
-            {listing.description}
+            {experience.description}
           </Typography>
         )}
 

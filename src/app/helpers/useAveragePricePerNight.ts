@@ -1,44 +1,38 @@
 import { useContext, useMemo } from "react";
 
-import { isSameDay, isWithinInterval } from "date-fns";
+import { isWithinInterval } from "date-fns";
 
-import { Listing } from "../api-helpers";
 import { BookingContext } from "../contexts/booking";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
-export const useAveragePricePerNight = (listing?: Listing): number => {
+export const useAveragePricePerNight = (
+  experience: ExperienceItemFragment,
+): number => {
   const { selectedDate, selectedDate1 } = useContext(BookingContext);
   return useMemo(() => {
-    if (!selectedDate || !selectedDate1 || !listing) {
+    if (!selectedDate || !selectedDate1 || !experience.activities) {
       return 0;
     }
-    if (listing.availabilities?.length) {
-      const availabilities = listing.availabilities.filter((availability) => {
-        const dateFragments = availability.date_available.split("-");
-        const date = new Date(
-          parseInt(dateFragments[0]),
-          parseInt(dateFragments[1]) - 1,
-          parseInt(dateFragments[2]),
-        );
-
-        return (
-          isSameDay(date, selectedDate) ||
-          isSameDay(date, selectedDate1) ||
-          isWithinInterval(date, {
-            start: selectedDate,
-            end: selectedDate1,
-          })
-        );
+    const allAvailabilities = experience.activities
+      .map((activity) => activity.availabilities || [])
+      .flat();
+    if (allAvailabilities.length) {
+      const availabilities = allAvailabilities.filter((availability) => {
+        return isWithinInterval(availability?.dateAvailable, {
+          start: selectedDate,
+          end: selectedDate1,
+        });
       });
 
       if (availabilities.length === 0) {
         return 0;
       }
       const sum = availabilities.reduce(
-        (sum, cur) => sum + cur.price_per_unit,
+        (sum, cur) => sum + cur.pricePerUnit,
         0,
       );
       return Math.round((sum / availabilities.length) * 100) / 100;
     }
     return 0;
-  }, [listing, selectedDate, selectedDate1]);
+  }, [experience, selectedDate, selectedDate1]);
 };

@@ -1,9 +1,9 @@
-import { Listing } from "../../api-helpers/types/Listing";
+import { ExperienceItemFragment } from "@/gql/graphql";
 import PropertyItem from "./PropertyItem";
 import PropertyItemSkeleton from "./PropertyItemSkeleton";
 
 interface IProps {
-  listings?: Listing[];
+  listings: ExperienceItemFragment[];
   loading: boolean;
 }
 
@@ -20,7 +20,7 @@ export default function PropertiesList({ listings, loading }: IProps) {
         </>
       ) : (
         <>
-          {listings?.map((listing: Listing) => (
+          {listings?.map((listing) => (
             <PropertyItem key={listing.id} property={listing} />
           ))}
         </>
