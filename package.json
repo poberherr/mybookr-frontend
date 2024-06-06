@@ -67,7 +67,6 @@
     "@kubb/swagger-client": "^2.13.0",
     "@kubb/swagger-tanstack-query": "^2.13.0",
     "@kubb/swagger-ts": "^2.13.0",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.12.7",
     "@types/nodemailer": "^6.4.15",
     "@types/react": "^18.2.79",

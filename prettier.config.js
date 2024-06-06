@@ -1,24 +1,7 @@
 export default {
   trailingComma: "all",
-  importOrder: [
-    "^react(.*)",
-    "<THIRD_PARTY_MODULES>",
-    "@mui/(.*)",
-    "@material-ui/(.*)",
-    "components/",
-    "layouts/",
-    "pages/",
-    "img/",
-    "icons",
-    "data/",
-    "hooks/",
-    "services/",
-    "utils/",
-    "@/(.*)",
-    "^[./]",
+  plugins: [
+    "prettier-plugin-tailwindcss",
   ],
-  importOrderSeparation: true,
-  importOrderSortSpecifiers: true,
-  plugins: ["prettier-plugin-tailwindcss"],
   tailwindConfig: "./tailwind.config.cjs",
 };
