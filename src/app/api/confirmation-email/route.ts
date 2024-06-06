@@ -1,16 +1,24 @@
-import { QueryClient } from "@tanstack/react-query";
 import format from "date-fns/format";
 import { NextRequest, NextResponse } from "next/server";
 
+import { Listing } from "@/app/api-helpers";
 
-
-import { Listing, listingsReadQueryOptions } from "@/app/api-helpers";
-
-
-
-import { EMAIL, checkSpam, handleError, replacePlaceholdersAndApplyLayout, supabase, transformEmailHtml, transformEmailText, transporter } from "../shared";
-import { bookingConfirmationClientSubject, bookingConfirmationClientTemplate, bookingConfirmationOwnerSubject, bookingConfirmationOwnerTemplate, footerTemplate } from "./templates";
-
+import {
+  EMAIL,
+  handleError,
+  replacePlaceholdersAndApplyLayout,
+  transformEmailHtml,
+  transformEmailText,
+  transporter,
+} from "../shared";
+import {
+  bookingConfirmationClientSubject,
+  bookingConfirmationClientTemplate,
+  bookingConfirmationOwnerSubject,
+  bookingConfirmationOwnerTemplate,
+  footerTemplate,
+} from "./templates";
+import { getListing } from "@/app/helpers/useGetListing";
 
 const EMAIL_DATA_LABELS = {
   selectedDate: "Start Date",
@@ -85,18 +93,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const formData = await req.formData();
 
-    // Get listing from API
-    const queryClient = new QueryClient();
-
     const listingId = formData.get("listingId");
 
     if (!listingId) {
       throw new Error("No listing id passed. Failing!");
     }
 
-    const listing = await queryClient.fetchQuery(
-      listingsReadQueryOptions(parseInt(listingId.toString(), 10)),
-    );
+    const listing = getListing(parseInt(listingId.toString()));
+
+    if (!listing) {
+      throw new Error("Listing not existing for this id");
+    }
 
     // Prepare emails from templates
     const dataTable = `

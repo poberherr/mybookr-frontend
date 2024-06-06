@@ -1,6 +1,6 @@
 # API
-export NEXT_PUBLIC_AXIOS_BASE=http://localhost
-export NEXT_PUBLIC_AXIOS_AUTH_TOKEN="Basic XXXXX"
+# export NEXT_PUBLIC_AXIOS_BASE=http://localhost
+# export NEXT_PUBLIC_AXIOS_AUTH_TOKEN="Basic XXXXX"
 
 # Clerk secrets
 export NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_XXXXX
