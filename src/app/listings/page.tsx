@@ -4,40 +4,10 @@ import SearchBar from "../components/search-bar/SearchBar";
 import { getClient } from "../api-helpers/urql";
 import { graphql, useFragment } from "@/gql";
 import PropertiesList from "../components/properties/PropertiesList";
+import { ExperienceItem } from "../fragments/experience-fragments";
 
-export const ExperienceItemFragment = graphql(/* GraphQL */ `
-  fragment ExperienceItem on Experience {
-    id
-    title
-    description
-    medias {
-      url
-    }
-    location {
-      addressLineOne
-      addressLineTwo
-      city
-      country
-      federalState
-      postalCode
-    }
-    activities {
-      id
-      title
-      availabilities {
-        id
-        dateAvailable
-        pricePerUnit
-      }
-      medias {
-        url
-      }
-    }
-  }
-`);
-
-const ListingsQuery = graphql(`
-  query ListingsQuery {
+const ExperiencesQuery = graphql(`
+  query ExperiencesQuery {
     experiences {
       edges {
         node {
@@ -49,12 +19,12 @@ const ListingsQuery = graphql(`
 `);
 
 export default async function ListingsPage() {
-  const result = await getClient().query(ListingsQuery, {});
+  const result = await getClient().query(ExperiencesQuery, {});
   if (!result.data) {
     throw new Error("unable to load listing page results");
   }
   const listings = result.data.experiences.edges
-    .map((edge) => useFragment(ExperienceItemFragment, edge?.node))
+    .map((edge) => useFragment(ExperienceItem, edge?.node))
     .flatMap((f) => f ?? []);
 
   return (

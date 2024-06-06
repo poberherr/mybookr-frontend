@@ -11,16 +11,15 @@ import PriceDetail from "@/app/components/others/PriceDetail";
 
 import { BookingContext } from "@/app/contexts/booking";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
-import { useGetListing } from "@/app/helpers/useGetListing";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import BlaBla from "./BlaBla";
 import BookingDataForm from "./BookingDataForm";
 import { PaymentWrapper } from "./PaymentWrapper";
+import { ExperienceItem } from "@/gql/graphql";
 
-export default function CheckoutPage({ id }: { id: string }) {
+export default function CheckoutPage({ listing }: { listing: ExperienceItem }) {
   const isClient = useIsClient();
-  const listing = useGetListing(parseInt(id));
   const { nights } = useContext(BookingContext);
 
   const averagePricePerNight = useAveragePricePerNight(listing);
@@ -66,13 +65,13 @@ export default function CheckoutPage({ id }: { id: string }) {
             </Typography>
 
             {/* Villa Image */}
-            {listing.images &&
-              listing.images.length > 0 &&
-              listing.images[0].image && (
+            {listing.medias &&
+              listing.medias.length > 0 &&
+              listing.medias[0].url && (
                 <div className="relative aspect-video w-full p-0 md:px-8 md:py-0">
                   <Image
                     className="rounded object-cover"
-                    src={listing.images[0].image}
+                    src={listing.medias[0].url}
                     alt=""
                     fill={true}
                   />

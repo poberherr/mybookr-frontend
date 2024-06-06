@@ -9,7 +9,7 @@ import Image from "next/image";
 
 import { Dialog, IconButton } from "@mui/material";
 
-import { Image as IImage } from "@/app/api-helpers";
+import { Media } from "@/gql/graphql";
 
 export default function Gallery({
   flagGallery,
@@ -18,7 +18,7 @@ export default function Gallery({
 }: {
   flagGallery: boolean;
   setFlagGallery: (arg0: boolean) => void;
-  images: IImage[];
+  images: (Partial<Media> & { url: string })[];
 }) {
   const [indexImage, setIndexImage] = useState(0);
 
@@ -42,7 +42,7 @@ export default function Gallery({
     setIndexImage(temp);
   };
 
-  const mainImage = images[indexImage].image;
+  const mainImage = images[indexImage].url;
 
   if (!mainImage) {
     return null;
@@ -68,7 +68,7 @@ export default function Gallery({
         <div className="grid grid-cols-5">
           {images.map((each, index) => {
             let isShowed = indexImage === index;
-            if (!each.image) {
+            if (!each.url) {
               return null;
             }
             return (
@@ -77,7 +77,7 @@ export default function Gallery({
                   className={`cursor-pointer object-cover opacity-40 hover:opacity-70 ${
                     isShowed && "opacity-100"
                   }`}
-                  src={each.image}
+                  src={each.url}
                   onClick={() => {
                     setIndexImage(index);
                   }}

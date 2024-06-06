@@ -1,9 +1,9 @@
-import { ExperienceItemFragment } from "@/gql/graphql";
+import { ExperienceItem } from "@/gql/graphql";
 import PropertyItem from "./PropertyItem";
 import PropertyItemSkeleton from "./PropertyItemSkeleton";
 
 interface IProps {
-  listings: ExperienceItemFragment[];
+  listings: ExperienceItem[];
   loading: boolean;
 }
 

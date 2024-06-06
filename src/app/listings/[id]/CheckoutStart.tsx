@@ -12,7 +12,6 @@ import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import PriceDetail from "@/app/components/others/PriceDetail";
 import { SButton } from "@/app/components/ui/SButton";
 
-import { Listing } from "@/app/api-helpers";
 import {
   BookingContext,
   useWatchDateRange,
@@ -20,9 +19,10 @@ import {
 } from "@/app/contexts/booking";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
+import { ExperienceItem } from "@/gql/graphql";
 
 interface IProps {
-  listing: Listing;
+  listing: ExperienceItem;
 }
 
 interface CheckoutStartForm {

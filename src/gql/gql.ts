@@ -13,8 +13,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n": types.ExperienceItemFragmentDoc,
-    "\n  query ListingsQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n": types.ListingsQueryDocument,
+    "\n  query ConfirmationEmailQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.ConfirmationEmailQueryDocument,
+    "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n      longitude\n      latitude\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n": types.ExperienceItemDoc,
+    "\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.CheckoutQueryDocument,
+    "\n  query ExperienceQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.ExperienceQueryDocument,
+    "\n  query ExperiencesQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n": types.ExperiencesQueryDocument,
 };
 
 /**
@@ -34,11 +37,23 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query ConfirmationEmailQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"): (typeof documents)["\n  query ConfirmationEmailQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query ListingsQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ListingsQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n      longitude\n      latitude\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n"): (typeof documents)["\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n      longitude\n      latitude\n    }\n    activities {\n      id\n      title\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"): (typeof documents)["\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query ExperienceQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"): (typeof documents)["\n  query ExperienceQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query ExperiencesQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query ExperiencesQuery {\n    experiences {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

@@ -20,8 +20,13 @@ import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
 import { useGetListing } from "@/app/helpers/useGetListing";
 import { useIsClient } from "@/app/helpers/useIsClient";
+import { ExperienceItem } from "@/gql/graphql";
 
-export default function ConfirmationPage({ id }: { id: string }) {
+export default function ConfirmationPage({
+  listing,
+}: {
+  listing: ExperienceItem;
+}) {
   const router = useRouter();
   const stripe = useStripe();
   const [paymentSuccess, setPaymentSuccess] = useState<Boolean>();
@@ -67,7 +72,6 @@ export default function ConfirmationPage({ id }: { id: string }) {
   }, [stripe]);
 
   const isClient = useIsClient();
-  const listing = useGetListing(parseInt(id));
 
   const { selectedDate, selectedDate1, guest, nights, email } =
     useContext(BookingContext);
@@ -109,7 +113,7 @@ export default function ConfirmationPage({ id }: { id: string }) {
         formData.append("guest", String(guest));
         formData.append("nights", String(nights));
         formData.append("email", email);
-        formData.append("listingId", id);
+        formData.append("listingId", listing.id);
 
         const response = await fetch("/api/confirmation-email", {
           method: "POST",
@@ -180,12 +184,12 @@ export default function ConfirmationPage({ id }: { id: string }) {
           className="border-0 border-l border-solid border-gray-100 px-4 pb-0 pt-16 md:pb-16 md:pl-8 md:pr-40"
           style={{ gridArea: "detail" }}
         >
-          {listing.images && listing.images[0].image && (
+          {listing.medias && listing.medias[0].url && (
             <div className="relative aspect-video w-full p-0 md:px-8 md:py-0">
               <Image
                 fill={true}
                 className="rounded object-cover"
-                src={listing.images[0].image}
+                src={listing.medias[0].url}
                 alt="Home for digital remote workers"
               />
             </div>
@@ -216,9 +220,15 @@ export default function ConfirmationPage({ id }: { id: string }) {
 
           <Typography className="!mb-10" variant="body2">
             <u>
-              {listing.location.street}
+              {listing.location.addressLineOne}
+              {listing.location.addressLineTwo && (
+                <>
+                  <br />
+                  {listing.location.addressLineTwo}
+                </>
+              )}
               <br />
-              {listing.location.zip}, {listing.location.city}
+              {listing.location.postalCode}, {listing.location.city}
               <br />
               {listing.location.country}
             </u>

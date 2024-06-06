@@ -12,10 +12,10 @@ import { default as StarIcon } from "@/assets/icons/star.svg";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";
-import { ExperienceItemFragment } from "@/gql/graphql";
+import { ExperienceItem } from "@/gql/graphql";
 
 interface IProps {
-  property: ExperienceItemFragment;
+  property: ExperienceItem;
 }
 
 export default function PropertyItem({ property: experience }: IProps) {

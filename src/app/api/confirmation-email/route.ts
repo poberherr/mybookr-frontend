@@ -1,9 +1,6 @@
 import format from "date-fns/format";
 import { NextRequest, NextResponse } from "next/server";
 
-import { Listing } from "@/app/api-helpers";
-import { getListing } from "@/app/helpers/useGetListing";
-
 import {
   EMAIL,
   handleError,
@@ -19,6 +16,10 @@ import {
   bookingConfirmationOwnerTemplate,
   footerTemplate,
 } from "./templates";
+import { getClient } from "@/app/api-helpers/urql";
+import { graphql, useFragment } from "@/gql";
+import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItem as ExperienceItemFragment } from "@/app/fragments/experience-fragments";
 
 const EMAIL_DATA_LABELS = {
   selectedDate: "Start Date",
@@ -61,7 +62,7 @@ async function sendBookerEmail(
 
 async function sendHostEmail(
   formData: FormData,
-  listing: Listing,
+  listing: ExperienceItem,
   replaceMap: { [key: string]: string },
 ) {
   console.time("email-owner");
@@ -88,6 +89,14 @@ async function sendHostEmail(
   console.timeEnd("email-owner");
 }
 
+const ConfirmationEmailQuery = graphql(`
+  query ConfirmationEmailQuery($experienceId: ID!) {
+    experience(id: $experienceId) {
+      ...ExperienceItem
+    }
+  }
+`);
+
 export async function POST(req: NextRequest, res: NextResponse) {
   const ip = req.headers.get("x-forwarded-for") || req.ip || "unknown";
   try {
@@ -98,8 +107,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (!listingId) {
       throw new Error("No listing id passed. Failing!");
     }
-
-    const listing = getListing(parseInt(listingId.toString()));
+    const result = await getClient().query(ConfirmationEmailQuery, {
+      experienceId: listingId.toString(),
+    });
+    const experience = useFragment(ExperienceItemFragment, result.data?.experience);
+    if (!experience) {
+      throw new Error("unable to load listing page results");
+    }
+    const listing = experience;
 
     if (!listing) {
       throw new Error("Listing not existing for this id");
@@ -139,10 +154,13 @@ ${Object.keys(EMAIL_DATA_LABELS)
       XXXDATAXXX: dataTable,
       XXXLISTINGXXX: listing.title,
       XXXLISTINGADDRESSXXX: [
-        listing.location.street,
-        `${listing.location.zip} ${listing.location.city}`,
+        listing.location.addressLineOne,
+        listing.location.addressLineTwo,
+        `${listing.location.postalCode} ${listing.location.city}`,
         listing.location.country,
-      ].join(", "),
+      ]
+        .filter(Boolean)
+        .join(", "),
       XXXNAMEXXX: formData.get("email"),
     };
 

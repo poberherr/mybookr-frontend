@@ -27,12 +27,11 @@ import {
 } from "@/app/api-helpers";
 import { useGetListing } from "@/app/helpers/useGetListing";
 import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
+import { ExperienceItem } from "@/gql/graphql";
 
 // import CheckoutAndPay from "./checkout";
 
-export default function ListingComponent({ id }: { id: string }) {
-  const router = useRouter();
-  const listing = useGetListing(parseInt(id));
+export default function ListingComponent({ listing }: { listing: ExperienceItem }) {
   // const { data: reviews } = useCoreReviewsList<Review[]>();
 
   // eslint-disable-next-line no-unused-vars
@@ -57,16 +56,16 @@ export default function ListingComponent({ id }: { id: string }) {
   //   }
   // }, [reviews]);
 
-  const houseRulesItems = getHouseRulesItems({
-    houseRules: listing?.house_rules,
-  });
+  // const houseRulesItems = getHouseRulesItems({
+  //   houseRules: listing?.house_rules,
+  // });
 
-  const healthSafetyItems = getItemsByAvailability({
-    items: listing?.health_safety,
-  });
-  const accessibilityItems = getItemsByAvailability({
-    items: listing?.accessibility,
-  });
+  // const healthSafetyItems = getItemsByAvailability({
+  //   items: listing?.health_safety,
+  // });
+  // const accessibilityItems = getItemsByAvailability({
+  //   items: listing?.accessibility,
+  // });
 
   if (!listing) {
     return "Error - No listing found.";
@@ -118,23 +117,23 @@ export default function ListingComponent({ id }: { id: string }) {
 
         {/* Hero Image */}
         {/* Hero Image: Mobile */}
-        {listing.images && listing.images.length > 0 && (
+        {listing.medias && listing.medias.length > 0 && (
           <div className="relative block md:hidden">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
                 setFlagGallery={setFlagGallery}
-                images={listing.images}
+                images={listing.medias}
               />
             ) : (
               <div className="h-72 w-full">
                 {/* Image */}
-                {listing.images &&
-                  listing.images?.length > 0 &&
-                  listing.images[0].image && (
+                {listing.medias &&
+                  listing.medias?.length > 0 &&
+                  listing.medias[0].url && (
                     <Image
                       className="object-cover"
-                      src={listing.images[0].image}
+                      src={listing.medias[0].url}
                       alt=""
                       fill={true}
                       sizes={"900px"}
@@ -169,56 +168,56 @@ export default function ListingComponent({ id }: { id: string }) {
         )}
 
         {/* Hero Image: Desktop */}
-        {listing.images && listing.images.length > 0 && (
+        {listing.medias && listing.medias.length > 0 && (
           <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
                 setFlagGallery={setFlagGallery}
-                images={listing.images}
+                images={listing.medias}
               />
             ) : (
               <>
-                {listing.images[0] && listing.images[0].image && (
+                {listing.medias[0] && listing.medias[0].url && (
                   <Image
                     className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[0].image}
+                    src={listing.medias[0].url}
                     alt=""
                     fill={true}
                     sizes={"900px"}
                   />
                 )}
-                {listing.images[1] && listing.images[1].image && (
+                {listing.medias[1] && listing.medias[1].url && (
                   <Image
                     className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[1].image}
+                    src={listing.medias[1].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.images[2] && listing.images[2].image && (
+                {listing.medias[2] && listing.medias[2].url && (
                   <Image
                     className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.images[2].image}
+                    src={listing.medias[2].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.images[3] && listing.images[3].image && (
+                {listing.medias[3] && listing.medias[3].url && (
                   <Image
                     className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[3].image}
+                    src={listing.medias[3].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.images[4] && listing.images[4].image && (
+                {listing.medias[4] && listing.medias[4].url && (
                   <Image
                     className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.images[4].image}
+                    src={listing.medias[4].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
@@ -255,7 +254,7 @@ export default function ListingComponent({ id }: { id: string }) {
             </Typography>
 
             {/* Stats - Desktop */}
-            <Typography
+            {/* <Typography
               className="!mt-5 !font-medium !text-gray-500 md:!text-base"
               variant="body2"
             >
@@ -263,7 +262,7 @@ export default function ListingComponent({ id }: { id: string }) {
               bedrooms • {listing.space.double_beds} double •{" "}
               {listing.space.single_beds} single bed • {listing.space.bathrooms}{" "}
               baths
-            </Typography>
+            </Typography> */}
 
             {/* Description */}
             <Typography className="!mt-8 !leading-relaxed" variant="body1">
@@ -282,7 +281,7 @@ export default function ListingComponent({ id }: { id: string }) {
               What this place offers
             </Typography>
 
-            <AmenityItems amenities={listing.amenities} />
+            {/* <AmenityItems amenities={listing.amenities} /> */}
           </div>
 
           {/* <Divider className="!mt-16" /> */}
@@ -347,10 +346,13 @@ export default function ListingComponent({ id }: { id: string }) {
             </Typography>
 
             <div className="grid gap-2">
-              <Typography>{listing.location.street}</Typography>
+              <Typography>{listing.location.addressLineOne}</Typography>
+              {listing.location.addressLineTwo && (
+                <Typography>{listing.location.addressLineTwo}</Typography>
+              )}
               <Typography>
                 {listing.location.city}, {listing.location.country},{" "}
-                {listing.location.zip}
+                {listing.location.postalCode}
               </Typography>
               <Typography>{listing.location.country}</Typography>
               {listing.location.longitude && listing.location.latitude && (
@@ -374,6 +376,7 @@ export default function ListingComponent({ id }: { id: string }) {
             </Typography>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {/* 
               <div>
                 <Typography className="!mb-4" variant="body1">
                   House rules
@@ -389,9 +392,9 @@ export default function ListingComponent({ id }: { id: string }) {
                     <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Typography className="!mb-4" variant="body1">
                   Health / safety
                 </Typography>
@@ -406,9 +409,9 @@ export default function ListingComponent({ id }: { id: string }) {
                     <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
-              </div>
+              </div> */}
 
-              <div>
+              {/* <div>
                 <Typography className="!mb-4" variant="body1">
                   Accessibility
                 </Typography>
@@ -423,7 +426,7 @@ export default function ListingComponent({ id }: { id: string }) {
                     <ListBulletIcon className="mr-2 h-4 w-4" /> {item}
                   </Typography>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             <Typography className="!mt-8">

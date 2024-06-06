@@ -3,10 +3,10 @@ import { useContext, useMemo } from "react";
 import { isWithinInterval } from "date-fns";
 
 import { BookingContext } from "../contexts/booking";
-import { ExperienceItemFragment } from "@/gql/graphql";
+import { ExperienceItem } from "@/gql/graphql";
 
 export const useAveragePricePerNight = (
-  experience: ExperienceItemFragment,
+  experience: ExperienceItem,
 ): number => {
   const { selectedDate, selectedDate1 } = useContext(BookingContext);
   return useMemo(() => {
