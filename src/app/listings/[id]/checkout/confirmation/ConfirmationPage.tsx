@@ -2,10 +2,9 @@
 
 import React, { useContext, useEffect, useState } from "react";
 
+import { useStripe } from "@stripe/react-stripe-js";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-import { useStripe } from "@stripe/react-stripe-js";
 
 import {
   CircularProgress,

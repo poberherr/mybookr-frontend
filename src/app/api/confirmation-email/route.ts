@@ -2,6 +2,7 @@ import format from "date-fns/format";
 import { NextRequest, NextResponse } from "next/server";
 
 import { Listing } from "@/app/api-helpers";
+import { getListing } from "@/app/helpers/useGetListing";
 
 import {
   EMAIL,
@@ -18,7 +19,6 @@ import {
   bookingConfirmationOwnerTemplate,
   footerTemplate,
 } from "./templates";
-import { getListing } from "@/app/helpers/useGetListing";
 
 const EMAIL_DATA_LABELS = {
   selectedDate: "Start Date",

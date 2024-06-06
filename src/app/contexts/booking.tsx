@@ -5,15 +5,17 @@ import React, { useEffect } from "react";
 import { Range } from "react-date-range";
 import { Control, FieldValues, Path, useWatch } from "react-hook-form";
 
-
-
-import { differenceInDays, formatISO, isBefore, parseISO, startOfToday, startOfTomorrow } from "date-fns";
+import {
+  differenceInDays,
+  formatISO,
+  isBefore,
+  parseISO,
+  startOfToday,
+  startOfTomorrow,
+} from "date-fns";
 import createPersistedState from "use-persisted-state";
 
-
-
 import "@/global.css";
-
 
 interface BookingStateStore {
   selectedDate: string;
@@ -187,7 +189,7 @@ export function useWatchEmail<T extends FieldValues>(
       setEmail(value);
     } else {
       console.log("resetting email because invalid", value);
-      setEmail("")
+      setEmail("");
     }
   }, [value]);
 }

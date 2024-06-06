@@ -104,21 +104,21 @@ declare module "xss" {
           position?: number;
           isClosing?: boolean;
           isWhite?: boolean;
-        }
+        },
       ) => string | void;
 
       type OnTagAttrHandler = (
         tag: string,
         name: string,
         value: string,
-        isWhiteAttr: boolean
+        isWhiteAttr: boolean,
       ) => string | void;
 
       type SafeAttrValueHandler = (
         tag: string,
         name: string,
         value: string,
-        cssFilter: ICSSFilter
+        cssFilter: ICSSFilter,
       ) => string;
 
       type EscapeHandler = (str: string) => string;
@@ -144,7 +144,7 @@ declare module "xss" {
 
   export function StripTagBody(
     tags: string[],
-    next: () => void
+    next: () => void,
   ): {
     onIgnoreTag(
       tag: string,
@@ -152,7 +152,7 @@ declare module "xss" {
       options: {
         position: number;
         isClosing: boolean;
-      }
+      },
     ): string;
     remove(html: string): string;
   };
@@ -170,13 +170,13 @@ declare module "xss" {
       position: number,
       tag: string,
       html: string,
-      isClosing: boolean
+      isClosing: boolean,
     ) => string,
-    escapeHtml: EscapeHandler
+    escapeHtml: EscapeHandler,
   ): string;
   export function parseAttr(
     html: string,
-    onAttr: (name: string, value: string) => string
+    onAttr: (name: string, value: string) => string,
   ): string;
   export const whiteList: IWhiteList;
   export function getDefaultWhiteList(): IWhiteList;

@@ -32,7 +32,9 @@ export default function Header() {
           <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
         </Link>
 
-        <Link className="font-bold text-center" href={"/listings"}>Prototype</Link>
+        <Link className="font-bold text-center" href={"/listings"}>
+          Prototype
+        </Link>
 
         {/* Navigation: Right side */}
         <div className="flex justify-end">
