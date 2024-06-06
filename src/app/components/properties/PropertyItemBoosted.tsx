@@ -35,7 +35,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
           property.images.length > 0 &&
           property.images[0].image && (
             <Image
-              className="w-full aspect-video object-cover"
+              className="aspect-video w-full object-cover"
               src={property.images[0].image}
               alt=""
               fill={true}

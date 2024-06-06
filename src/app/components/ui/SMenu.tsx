@@ -78,7 +78,7 @@ const SMenu: React.FC<SMenuProps> = ({
         {menuEl}
         {fullScreenMobile && isMobile && (
           <div
-            className="fixed top-8 right-8 cursor-pointer p-2 md:hidden"
+            className="fixed right-8 top-8 cursor-pointer p-2 md:hidden"
             onClick={handleMenuClose}
           >
             <CloseIcon className="w-4" alt="Close" />

@@ -76,7 +76,7 @@ export default function FilterBox({
           className="relative h-screen w-screen max-w-[960px] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw]"
           role="presentation"
         >
-          <div className="sticky top-0 z-10 grid w-full place-items-center border-b border-solid !border-gray-100 bg-white py-4 px-12">
+          <div className="sticky top-0 z-10 grid w-full place-items-center border-b border-solid !border-gray-100 bg-white px-12 py-4">
             <div className="!text-base !font-semibold">Filter</div>
             <div
               className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer p-2"
@@ -85,7 +85,7 @@ export default function FilterBox({
               <CloseIcon className="w-3.5" alt="Close button" />
             </div>
           </div>
-          <div className="grid gap-16 py-12 px-6">
+          <div className="grid gap-16 px-6 py-12">
             <div>
               <div className="!mb-8 !text-base !font-semibold">
                 Rooms and beds
@@ -109,7 +109,7 @@ export default function FilterBox({
               </div>
             </div>
           </div>
-          <div className="sticky bottom-0 z-10 flex flex-col gap-4 border-t border-solid !border-gray-100 bg-white py-4 px-6 sm:flex-row sm:justify-between">
+          <div className="sticky bottom-0 z-10 flex flex-col gap-4 border-t border-solid !border-gray-100 bg-white px-6 py-4 sm:flex-row sm:justify-between">
             <SButton variant="outlined" onClick={clearAllFilters}>
               Clear all
             </SButton>

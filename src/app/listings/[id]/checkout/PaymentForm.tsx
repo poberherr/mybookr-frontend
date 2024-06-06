@@ -96,7 +96,7 @@ export default function PaymentForm() {
       </p>
       {/* Show any error or success messages */}
       {message && (
-        <div id="payment-message" className="text-red-500 mt-8 font-bold">
+        <div id="payment-message" className="mt-8 font-bold text-red-500">
           {message}
         </div>
       )}

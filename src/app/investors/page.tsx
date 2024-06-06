@@ -42,7 +42,7 @@ export default function InvestorPage() {
       {transakActive && <TransakWrapper setTransakActive={setTransakActive} />}
 
       <section>
-        <h2 className="font-bold text-xl">Your Investments:</h2>
+        <h2 className="text-xl font-bold">Your Investments:</h2>
         {transactions.length > 0 ? (
           <table className="min-w-full divide-y divide-gray-300">
             <thead>

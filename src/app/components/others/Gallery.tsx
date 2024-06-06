@@ -53,7 +53,7 @@ export default function Gallery({
       {/* The Hole Section */}
       <div className="grid h-full grid-cols-1 grid-rows-[calc(80vh-32px)_20vh] gap-8 bg-black">
         {/* Main Image */}
-        <div className="grid justify-items-center h-[calc(80vh-32px)] w-auto relative">
+        <div className="relative grid h-[calc(80vh-32px)] w-auto justify-items-center">
           {
             <Image
               className="object-contain"
@@ -72,7 +72,7 @@ export default function Gallery({
               return null;
             }
             return (
-              <div className="h-[20vh] relative overflow-hidden">
+              <div className="relative h-[20vh] overflow-hidden">
                 <Image
                   className={`cursor-pointer object-cover opacity-40 hover:opacity-70 ${
                     isShowed && "opacity-100"

@@ -31,7 +31,7 @@ const LocationMenu: React.FC<LocationMenuProps> = () => {
   const buttonEl = useCallback(
     () => (
       <div
-        className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 px-6 py-3 md:border-none md:ml-8"
+        className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 px-6 py-3 md:ml-8 md:border-none"
         onClick={handleClick}
       >
         <div className="font-medium">{locationValue || "Location"}</div>

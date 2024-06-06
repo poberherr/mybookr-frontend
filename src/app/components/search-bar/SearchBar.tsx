@@ -110,7 +110,7 @@ const SelectedDate = ({
 
   return (
     <div
-      className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 md:justify-center md:h-full"
+      className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 md:h-full md:justify-center"
       onClick={handleRangeSelectionDialog}
     >
       <div>{isClient && date && format(date, "MMM d")}</div>
@@ -228,7 +228,7 @@ export default function SearchBar() {
         {/* Search bar and Filter button */}
         <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-8 xl:relative">
           {/* Search bar */}
-          <div className="w-full md:w-auto flex flex-col md:flex-row md:h-[50px] gap-4 md:gap-8 md:rounded-[32px] md:border md:border-solid border-gray-100">
+          <div className="flex w-full flex-col gap-4 border-gray-100 md:h-[50px] md:w-auto md:flex-row md:gap-8 md:rounded-[32px] md:border md:border-solid">
             {/* Location menu */}
             <LocationMenu />
 
@@ -240,7 +240,7 @@ export default function SearchBar() {
             />
 
             {/* Selected Dates */}
-            <div className="flex items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 md:border-none h-[50px] px-6">
+            <div className="flex h-[50px] items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 px-6 md:border-none">
               <SelectedDate
                 date={values.dateRange.startDate}
                 handleRangeSelectionDialog={handleRangeSelectionDialog}
@@ -253,7 +253,7 @@ export default function SearchBar() {
             </div>
           </div>
 
-          <div className="flex w-full md:w-auto gap-8">
+          <div className="flex w-full gap-8 md:w-auto">
             {/* Search button */}
             <SButton fullWidth variant="contained" className="md:max-w-48">
               Search
@@ -261,7 +261,7 @@ export default function SearchBar() {
 
             {/* Filter button */}
             <SButton
-              className="xl:!absolute xl:right-0 flex items-center order-first md:order-last"
+              className="order-first flex items-center md:order-last xl:!absolute xl:right-0"
               variant="outlined"
               endIcon={<FilterIcon className="h-4" alt="Filter" />}
               onClick={() => toggleDrawer(true)}

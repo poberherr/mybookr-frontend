@@ -129,7 +129,7 @@ const JoinForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 w-full max-w-screen-sm mt-8 items-center"
+      className="mt-8 grid w-full max-w-screen-sm grid-cols-1 items-center gap-2 md:grid-cols-[200px_1fr] md:gap-6"
     >
       <div className="hidden">
         <label>
@@ -196,7 +196,7 @@ const JoinForm = () => {
       </label>
       <input {...register("name")} className={styles.input} id="name" />
 
-      <div className="md:col-span-2 mt-4 md:mt-0 flex items-center">
+      <div className="mt-4 flex items-center md:col-span-2 md:mt-0">
         <Controller
           name="is_serious"
           control={control}
@@ -205,7 +205,7 @@ const JoinForm = () => {
               {...field}
               id="is_serious"
               checked={field.value}
-              className="!inline-block !mr-2"
+              className="!mr-2 !inline-block"
             />
           )}
         />
@@ -213,7 +213,7 @@ const JoinForm = () => {
           Yes, I'm committed and request a Memorandum of Understanding (MOU).
         </label>
       </div>
-      <div className="md:col-span-2 flex justify-center">
+      <div className="flex justify-center md:col-span-2">
         <SButton
           type="submit"
           disabled={isSubmitting}

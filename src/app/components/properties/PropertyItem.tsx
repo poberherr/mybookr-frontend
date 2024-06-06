@@ -62,7 +62,7 @@ export default function PropertyItem({ property: listing }: IProps) {
 
       <div className={`flex flex-col ${isBoosted ? "p-8" : "p-4"}`}>
         <Typography
-          className="!text-sm !font-bold !mb-1 whitespace-nowrap overflow-hidden text-ellipsis"
+          className="!mb-1 overflow-hidden text-ellipsis whitespace-nowrap !text-sm !font-bold"
           variant="body1"
         >
           {listing.title}

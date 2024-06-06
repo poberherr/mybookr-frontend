@@ -156,7 +156,7 @@ export default function ConfirmationPage({ id }: { id: string }) {
       >
         {/* Heading section */}
         <div
-          className="h-min px-4 pt-16 pb-0 md:pr-0 md:pl-40"
+          className="h-min px-4 pb-0 pt-16 md:pl-40 md:pr-0"
           style={{ gridArea: "heading" }}
         >
           <Typography className="!mb-6 !text-2xl !font-extrabold" variant="h2">
@@ -177,11 +177,11 @@ export default function ConfirmationPage({ id }: { id: string }) {
 
         {/* Detail section */}
         <div
-          className="border-0 border-l border-solid border-gray-100 px-4 pt-16 pb-0 md:pb-16 md:pl-8 md:pr-40"
+          className="border-0 border-l border-solid border-gray-100 px-4 pb-0 pt-16 md:pb-16 md:pl-8 md:pr-40"
           style={{ gridArea: "detail" }}
         >
           {listing.images && listing.images[0].image && (
-            <div className="p-0 md:px-8 md:py-0 aspect-video w-full relative">
+            <div className="relative aspect-video w-full p-0 md:px-8 md:py-0">
               <Image
                 fill={true}
                 className="rounded object-cover"
@@ -191,7 +191,7 @@ export default function ConfirmationPage({ id }: { id: string }) {
             </div>
           )}
 
-          <Typography className="!mt-8 !mb-1 !text-2xl !font-bold" variant="h3">
+          <Typography className="!mb-1 !mt-8 !text-2xl !font-bold" variant="h3">
             {listing.title}
           </Typography>
 

@@ -5,7 +5,7 @@ import React from "react";
 
 // import { useListingsList } from "../api-helpers/hooks/";
 
-import data from '../data.json' assert { type: 'json' }
+import data from "../data.json" assert { type: "json" };
 
 // Adjust the import path
 import { Listing } from "../api-helpers/types/Listing";

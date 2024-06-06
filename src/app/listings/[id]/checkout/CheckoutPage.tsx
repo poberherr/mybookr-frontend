@@ -69,7 +69,7 @@ export default function CheckoutPage({ id }: { id: string }) {
             {listing.images &&
               listing.images.length > 0 &&
               listing.images[0].image && (
-                <div className="p-0 md:px-8 md:py-0 aspect-video w-full relative">
+                <div className="relative aspect-video w-full p-0 md:px-8 md:py-0">
                   <Image
                     className="rounded object-cover"
                     src={listing.images[0].image}

@@ -144,12 +144,12 @@ export default function ListingComponent({ id }: { id: string }) {
 
                 {/* Share and Heart icons */}
                 <div
-                  className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white right-4`}
+                  className={`absolute right-4 top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white`}
                 >
                   <ShareIcon className="h-auto w-3.5" alt="Share" />
                 </div>
                 <div
-                  className={`absolute top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white right-16`}
+                  className={`absolute right-16 top-4 grid h-6 w-6 cursor-pointer place-items-center rounded-full bg-white`}
                 >
                   <HeartIcon className="h-auto w-3.5" alt="Like" />
                 </div>
@@ -276,7 +276,7 @@ export default function ListingComponent({ id }: { id: string }) {
           {/* Amenities */}
           <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
             <Typography
-              className="w-full !text-xl !font-extrabold md:!text-3xl pb-6"
+              className="w-full pb-6 !text-xl !font-extrabold md:!text-3xl"
               variant="h3"
             >
               What this place offers
@@ -433,7 +433,7 @@ export default function ListingComponent({ id }: { id: string }) {
         </div>
 
         {/* Right content - Desktop */}
-        <div className="px-4 md:px-0 mt-10 py-4 md:py-0 md:mt-0 md:mr-40 border-0 border-t border-l border-r border-solid border-gray-100">
+        <div className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 md:mr-40 md:mt-0 md:px-0 md:py-0">
           <CheckoutStart listing={listing} />
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function Footer() {
           window.scrollTo(0, 0);
         }}
       >
-        <Logo className="h-4 sm:h-6 w-auto" alt="mybookr logo" />
+        <Logo className="h-4 w-auto sm:h-6" alt="mybookr logo" />
       </div>
       <SignedIn>
         <Link className="cursor-pointer" href={"/investors"}>
