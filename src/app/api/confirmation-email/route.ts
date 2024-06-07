@@ -16,7 +16,7 @@ import {
   bookingConfirmationOwnerTemplate,
   footerTemplate,
 } from "./templates";
-import { getClient } from "@/app/api-helpers/urql";
+import { getSSRClient } from "@/app/api-helpers/urql";
 import { graphql, useFragment } from "@/gql";
 import { ExperienceItem } from "@/gql/graphql";
 import { ExperienceItem as ExperienceItemFragment } from "@/app/fragments/experience-fragments";
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (!listingId) {
       throw new Error("No listing id passed. Failing!");
     }
-    const result = await getClient().query(ConfirmationEmailQuery, {
+    const result = await getSSRClient().query(ConfirmationEmailQuery, {
       experienceId: listingId.toString(),
     });
     const experience = useFragment(ExperienceItemFragment, result.data?.experience);

@@ -1,4 +1,9 @@
-import { cacheExchange, createClient, fetchExchange, gql } from "@urql/core";
+import {
+  cacheExchange,
+  createClient,
+  fetchExchange,
+  ssrExchange,
+} from "@urql/core";
 import { registerUrql } from "@urql/next/rsc";
 import { useMemo } from "react";
 
@@ -7,15 +12,28 @@ if (!url) {
   throw new Error("GraphQL endpoint env var not provided");
 }
 
-const makeClient = () => {
+const makeSSRClient = () => {
   return createClient({
     url,
     exchanges: [cacheExchange, fetchExchange],
   });
 };
 
-export const { getClient } = registerUrql(makeClient);
+export const { getClient: getSSRClient } = registerUrql(makeSSRClient);
 
 export const useGetClient = () => {
-  return useMemo(getClient, []);
+  const [client, ssr] = useMemo(() => {
+    const ssr = ssrExchange({
+      isClient: typeof window !== "undefined",
+    });
+    const client = createClient({
+      url,
+      exchanges: [cacheExchange, ssr, fetchExchange],
+      suspense: true,
+    });
+
+    return [client, ssr];
+  }, []);
+
+  return { client, ssr };
 };

@@ -242,13 +242,12 @@ export default function SearchBar() {
               />
             </div>
           </div>
-
-          <div className="flex w-full gap-8 md:w-auto">
-            {/* Search button */}
+          {/* Search button */}
+          {/* <div className="flex w-full gap-8 md:w-auto">
             <SButton fullWidth variant="contained" className="md:max-w-48">
               Search
             </SButton>
-          </div>
+          </div> */}
         </div>
 
         <Divider className="hidden md:visible" />

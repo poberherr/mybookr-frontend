@@ -51,11 +51,11 @@ export default function Calendar({
     <StyledDialog
       showDialog={flagCalender}
       setShowDialog={setFlagCalender}
-      title={"Select reservation dates"}
+      title={"Select dates on which you want to book one tour"}
     >
       <CalendarWrapper>
         <Typography variant="h5" className="heading !text-sm md:!text-xl">
-          <span>{nights} nights</span> {"\u00a0"}in Pantai Lima
+          <span>{nights + 1} days</span>
         </Typography>
 
         <Box className="body">

@@ -1,6 +1,6 @@
 import ConfirmationPageComponent from "./ConfirmationPage";
 import { graphql, useFragment } from "@/gql";
-import { getClient } from "@/app/api-helpers/urql";
+import { getSSRClient } from "@/app/api-helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 
 const CheckoutQuery = graphql(`
@@ -16,7 +16,7 @@ export default async function CheckoutPage({
 }: {
   params: { id: string };
 }) {
-  const result = await getClient().query(CheckoutQuery, {
+  const result = await getSSRClient().query(CheckoutQuery, {
     experienceId: params.id,
   });
   const experience = useFragment(

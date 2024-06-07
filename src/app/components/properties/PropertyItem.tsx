@@ -18,14 +18,8 @@ interface IProps {
 }
 
 export default function PropertyItem({ property: experience }: IProps) {
-  // @todo
-  const isBoosted = false; //listing.boost_dates?.includes("2024-02-19");
+  const isBoosted = false;
   const averagePricePerNight = useMinimumPrice(experience);
-
-  // @todo quick and dirty filter
-  // if (averagePricePerNight === 0) {
-  //   return null;
-  // }
 
   return (
     <Link
@@ -94,7 +88,8 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from ${averagePricePerNight} • {experience.activities.length} yacht choices
+            from ${averagePricePerNight} • {experience.activities.length} yacht
+            {experience.activities.length > 1 && "s"} available
           </Typography>
 
           {/* <div className="flex flex-row items-center">
