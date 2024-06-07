@@ -25,13 +25,16 @@ import {
   HealthSafety,
   HouseRules,
 } from "@/app/api-helpers";
-import { useGetListing } from "@/app/helpers/useGetListing";
 import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
-import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 // import CheckoutAndPay from "./checkout";
 
-export default function ListingComponent({ listing }: { listing: ExperienceItem }) {
+export default function ListingComponent({
+  listing,
+}: {
+  listing: ExperienceItemFragment;
+}) {
   // const { data: reviews } = useCoreReviewsList<Review[]>();
 
   // eslint-disable-next-line no-unused-vars
@@ -87,10 +90,10 @@ export default function ListingComponent({ listing }: { listing: ExperienceItem 
               className="flex flex-wrap items-center !text-gray-500 md:!text-base"
               variant="body2"
             >
-              <span className="flex items-center [&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+              {/* <span className="flex items-center [&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <StarGrayIcon className="w-3" alt={"Star"} />
                 &#8194;{rating}
-              </span>
+              </span> */}
 
               {/* <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>{reviews?.length} Reviews</u>
@@ -98,7 +101,8 @@ export default function ListingComponent({ listing }: { listing: ExperienceItem 
 
               <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>
-                  {listing.location.city}, {listing.location.country}
+                  {listing.location.city}, {listing.location.federalState},{" "}
+                  {listing.location.country}
                 </u>
               </span>
             </Typography>
@@ -250,7 +254,7 @@ export default function ListingComponent({ listing }: { listing: ExperienceItem 
               className="w-full !text-xl !font-extrabold md:!text-3xl"
               variant="h3"
             >
-              Quick Introduction
+              About the experience
             </Typography>
 
             {/* Stats - Desktop */}
@@ -265,9 +269,13 @@ export default function ListingComponent({ listing }: { listing: ExperienceItem 
             </Typography> */}
 
             {/* Description */}
-            <Typography className="!mt-8 !leading-relaxed" variant="body1">
-              {listing.description}
-            </Typography>
+            {listing.descriptionHTML && (
+              <Typography className="!mt-8 !leading-relaxed prose" variant="body1">
+                <div
+                  dangerouslySetInnerHTML={{ __html: listing.descriptionHTML }}
+                />
+              </Typography>
+            )}
           </div>
 
           <Divider className="!mt-16" />

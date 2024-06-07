@@ -16,9 +16,9 @@ import { useIsClient } from "@/app/helpers/useIsClient";
 import BlaBla from "./BlaBla";
 import BookingDataForm from "./BookingDataForm";
 import { PaymentWrapper } from "./PaymentWrapper";
-import { ExperienceItem } from "@/gql/graphql";
+import { Experience } from "@/gql/graphql";
 
-export default function CheckoutPage({ listing }: { listing: ExperienceItem }) {
+export default function CheckoutPage({ listing }: { listing: Experience }) {
   const isClient = useIsClient();
   const { nights } = useContext(BookingContext);
 
