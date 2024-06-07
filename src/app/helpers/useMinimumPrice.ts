@@ -5,7 +5,7 @@ import { addDays, isWithinInterval } from "date-fns";
 import { BookingContext } from "../contexts/booking";
 import { ExperienceItem } from "@/gql/graphql";
 
-export const useAveragePricePerNight = (
+export const useMinimumPrice = (
   experience: ExperienceItem,
 ): number => {
   const { selectedDate, selectedDate1 } = useContext(BookingContext);
@@ -27,11 +27,11 @@ export const useAveragePricePerNight = (
       if (availabilities.length === 0) {
         return 0;
       }
-      const sum = availabilities.reduce(
-        (sum, cur) => sum + cur.pricePerUnit,
+      const cheapest = availabilities.reduce(
+        (res, cur) => ((res === 0 || cur.pricePerUnit < res) ? cur.pricePerUnit : res),
         0,
       );
-      return Math.round((sum / availabilities.length) * 100) / 100;
+      return cheapest;
     }
     return 0;
   }, [experience, selectedDate, selectedDate1]);

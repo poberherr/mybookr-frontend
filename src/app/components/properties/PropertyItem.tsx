@@ -9,10 +9,9 @@ import { default as HeartIcon } from "@/assets/icons/heart.svg";
 import { default as ShareIcon } from "@/assets/icons/share.svg";
 import { default as StarIcon } from "@/assets/icons/star.svg";
 
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
-
 import BoostedBadge from "../others/BoostedBadge";
 import { ExperienceItem } from "@/gql/graphql";
+import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
 interface IProps {
   property: ExperienceItem;
@@ -21,7 +20,7 @@ interface IProps {
 export default function PropertyItem({ property: experience }: IProps) {
   // @todo
   const isBoosted = false; //listing.boost_dates?.includes("2024-02-19");
-  const averagePricePerNight = useAveragePricePerNight(experience);
+  const averagePricePerNight = useMinimumPrice(experience);
 
   // @todo quick and dirty filter
   // if (averagePricePerNight === 0) {
@@ -72,17 +71,17 @@ export default function PropertyItem({ property: experience }: IProps) {
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              {experience.location?.city}, {experience.location?.country}
+              in {experience.location.city}, {experience.location.federalState}, {experience.location.country}
             </Typography>
           ) : (
             <Typography variant="body2">
-              {experience.location.city}, {experience.location.country}
+              in {experience.location.city}, {experience.location.federalState}, {experience.location.country}
             </Typography>
           )}
 
-          <Typography className="flex flex-row items-center !text-xs !font-medium">
+          {/* <Typography className="flex flex-row items-center !text-xs !font-medium">
             <StarIcon className="mr-1 h-2.5 w-2.5 min-w-fit" alt="rating" /> {5}
-          </Typography>
+          </Typography> */}
         </div>
 
         {isBoosted && (
@@ -93,13 +92,13 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            ${averagePricePerNight} / Night
+            from ${averagePricePerNight}
           </Typography>
 
-          <div className="flex flex-row items-center">
+          {/* <div className="flex flex-row items-center">
             <HeartIcon className="h-4 w-4 first:mr-4" alt="Add to wishlist" />
             <ShareIcon className="h-4 w-4 first:mr-4" alt="Share" />
-          </div>
+          </div> */}
         </div>
       </div>
 
