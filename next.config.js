@@ -3,7 +3,7 @@ export default {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "mybookr-images.s3.eu-central-1.amazonaws.com",
+        hostname: "mybookr-assets.s3.eu-central-1.amazonaws.com",
         port: "",
         pathname: "/**",
       },

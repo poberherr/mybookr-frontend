@@ -21,6 +21,7 @@ export const ExperienceItem = graphql(/* GraphQL */ `
     activities {
       id
       title
+      descriptionHTML
       availabilities {
         id
         dateAvailable
@@ -28,6 +29,8 @@ export const ExperienceItem = graphql(/* GraphQL */ `
       }
       medias {
         url
+        width
+        height
       }
     }
   }

@@ -270,7 +270,10 @@ export default function ListingComponent({
 
             {/* Description */}
             {listing.descriptionHTML && (
-              <Typography className="!mt-8 !leading-relaxed prose" variant="body1">
+              <Typography
+                className="prose !mt-8 !leading-relaxed"
+                variant="body1"
+              >
                 <div
                   dangerouslySetInnerHTML={{ __html: listing.descriptionHTML }}
                 />
@@ -278,10 +281,10 @@ export default function ListingComponent({
             )}
           </div>
 
-          <Divider className="!mt-16" />
+          {/* <Divider className="!mt-16" /> */}
 
           {/* Amenities */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+          {/* <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
             <Typography
               className="w-full pb-6 !text-xl !font-extrabold md:!text-3xl"
               variant="h3"
@@ -289,8 +292,8 @@ export default function ListingComponent({
               What this place offers
             </Typography>
 
-            {/* <AmenityItems amenities={listing.amenities} /> */}
-          </div>
+            <AmenityItems amenities={listing.amenities} />
+          </div> */}
 
           {/* <Divider className="!mt-16" /> */}
 
@@ -344,6 +347,51 @@ export default function ListingComponent({
 
           <Divider className="!mt-16" />
 
+          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+            <Typography
+              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+              variant="h3"
+            >
+              Choose your yacht
+            </Typography>
+            <div className="grid gap-2">
+              {listing.activities.map((activity) => (
+                <div className="flex justify-between border border-gray-100 p-4">
+                  <div>
+                    <Typography
+                      className="!mb-6 w-full !text-lg !font-extrabold"
+                      variant="h2"
+                    >
+                      {activity.title}
+                    </Typography>
+                    {activity.descriptionHTML && (
+                      <div
+                        className="prose"
+                        dangerouslySetInnerHTML={{
+                          __html: activity.descriptionHTML,
+                        }}
+                      />
+                    )}
+                  </div>
+                  {activity.medias && (
+                    <div className="ml-4 flex-shrink-0">
+                      <Image
+                        className="w-48 rounded-lg"
+                        src={activity.medias[0].url}
+                        alt=""
+                        width={activity.medias[0].width}
+                        height={activity.medias[0].height}
+                        sizes={"420px"}
+                      />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Divider className="!mt-16" />
+
           {/* Location */}
           <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
             <Typography
@@ -359,10 +407,12 @@ export default function ListingComponent({
                 <Typography>{listing.location.addressLineTwo}</Typography>
               )}
               <Typography>
-                {listing.location.city}, {listing.location.country},{" "}
-                {listing.location.postalCode}
+                {listing.location.postalCode}, {listing.location.city}
               </Typography>
-              <Typography>{listing.location.country}</Typography>
+              <Typography>
+                {listing.location.federalState}, {listing.location.country}
+              </Typography>
+
               {listing.location.longitude && listing.location.latitude && (
                 <MybookrMap
                   latitude={listing.location.latitude}
@@ -372,10 +422,8 @@ export default function ListingComponent({
             </div>
           </div>
 
-          <Divider className="!mt-16" />
-
           {/* Things to know */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+          <div className="mt-16 hidden px-4 py-0 md:pl-40 md:pr-16">
             <Typography
               className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
               variant="h3"
