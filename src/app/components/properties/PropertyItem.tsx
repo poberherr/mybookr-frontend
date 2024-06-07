@@ -71,11 +71,13 @@ export default function PropertyItem({ property: experience }: IProps) {
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              in {experience.location.city}, {experience.location.federalState}, {experience.location.country}
+              in {experience.location.city}, {experience.location.federalState},{" "}
+              {experience.location.country}
             </Typography>
           ) : (
             <Typography variant="body2">
-              in {experience.location.city}, {experience.location.federalState}, {experience.location.country}
+              in {experience.location.city}, {experience.location.federalState},{" "}
+              {experience.location.country}
             </Typography>
           )}
 
@@ -92,7 +94,7 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from ${averagePricePerNight}
+            from ${averagePricePerNight} • {experience.activities.length} yacht choices
           </Typography>
 
           {/* <div className="flex flex-row items-center">
