@@ -110,7 +110,7 @@ const SelectedDate = ({
 
   return (
     <div
-      className="flex min-w-[120px] cursor-pointer items-center justify-between gap-8 md:h-full md:justify-center"
+      className="flex min-w-[120px] cursor-pointer items-center gap-4 h-full md:justify-center md:min-w-[160px]"
       onClick={handleRangeSelectionDialog}
     >
       <div>{isClient && date && format(date, "MMM d")}</div>
@@ -226,19 +226,9 @@ export default function SearchBar() {
       <form onSubmit={onSubmit}>
         {/* Search bar */}
         {/* Search bar and Filter button */}
-        <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:gap-8 xl:relative">
+        <div className="flex flex-col items-center justify-center gap-4 md:flex-row lg:gap-8 xl:relative">
           {/* Search bar */}
           <div className="flex w-full flex-col gap-4 border-gray-100 md:h-[50px] md:w-auto md:flex-row md:gap-8 md:rounded-[32px] md:border md:border-solid">
-            {/* Location menu */}
-            <LocationMenu />
-
-            <Divider
-              flexItem
-              orientation="vertical"
-              variant="middle"
-              className="hidden md:visible"
-            />
-
             {/* Selected Dates */}
             <div className="flex h-[50px] items-center justify-between gap-8 rounded-[32px] border border-solid border-gray-100 px-6 md:border-none">
               <SelectedDate
@@ -257,16 +247,6 @@ export default function SearchBar() {
             {/* Search button */}
             <SButton fullWidth variant="contained" className="md:max-w-48">
               Search
-            </SButton>
-
-            {/* Filter button */}
-            <SButton
-              className="order-first flex items-center md:order-last xl:!absolute xl:right-0"
-              variant="outlined"
-              endIcon={<FilterIcon className="h-4" alt="Filter" />}
-              onClick={() => toggleDrawer(true)}
-            >
-              Filter
             </SButton>
           </div>
         </div>
