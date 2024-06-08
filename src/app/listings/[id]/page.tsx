@@ -24,7 +24,7 @@ export default async function ListingPage({
     result.data?.experience,
   );
   if (!experience) {
-    throw new Error("unable to load listing page results");
+    throw new Error("unable to experience detail page results");
   }
   return <ListingComponent listing={experience} />;
 }

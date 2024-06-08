@@ -24,7 +24,7 @@ export default async function CheckoutPage({
     result.data?.experience,
   );
   if (!experience) {
-    throw new Error("unable to load listing page results");
+    throw new Error("unable to load checkout page results");
   }
   return <CheckoutPageComponent listing={experience} />;
 }

@@ -112,7 +112,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     });
     const experience = useFragment(ExperienceItemFragment, result.data?.experience);
     if (!experience) {
-      throw new Error("unable to load listing page results");
+      throw new Error("unable to load experience");
     }
     const listing = experience;
 

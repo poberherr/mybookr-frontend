@@ -269,13 +269,13 @@ export default function ListingComponent({
             </Typography> */}
 
             {/* Description */}
-            {listing.descriptionHTML && (
+            {listing.description && (
               <Typography
                 className="prose !mt-8 !leading-relaxed"
                 variant="body1"
               >
                 <div
-                  dangerouslySetInnerHTML={{ __html: listing.descriptionHTML }}
+                  dangerouslySetInner={{ __html: listing.description }}
                 />
               </Typography>
             )}
@@ -364,11 +364,11 @@ export default function ListingComponent({
                     >
                       {activity.title}
                     </Typography>
-                    {activity.descriptionHTML && (
+                    {activity.description && (
                       <div
                         className="prose"
-                        dangerouslySetInnerHTML={{
-                          __html: activity.descriptionHTML,
+                        dangerouslySetInner={{
+                          __html: activity.description,
                         }}
                       />
                     )}

@@ -4,7 +4,7 @@ export const ExperienceItem = graphql(/* GraphQL */ `
   fragment ExperienceItem on Experience {
     id
     title
-    descriptionHTML
+    description
     medias {
       url
     }
@@ -21,7 +21,7 @@ export const ExperienceItem = graphql(/* GraphQL */ `
     activities {
       id
       title
-      descriptionHTML
+      description
       availabilities {
         id
         dateAvailable
