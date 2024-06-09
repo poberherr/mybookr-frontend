@@ -7,7 +7,6 @@ import { default as heartIcon } from "@/assets/icons/heart.svg";
 import { default as shareIcon } from "@/assets/icons/share.svg";
 import { default as starIcon } from "@/assets/icons/star.svg";
 
-import { Listing } from "@/app/api-helpers";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";

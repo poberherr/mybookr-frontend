@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { useUser } from "@clerk/clerk-react";
 
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import Calendar from "@/app/components/Calendar/Calendar";
 import StyledTextField from "@/app/components/form/TextField";
@@ -13,7 +13,6 @@ import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import { SButton } from "@/app/components/ui/SButton";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 
-import { Listing } from "@/app/api-helpers";
 import {
   BookingContext,
   useWatchDateRange,
