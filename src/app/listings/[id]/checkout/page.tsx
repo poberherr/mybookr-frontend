@@ -23,7 +23,7 @@ export default async function CheckoutPage({
   if (!experience) {
     throw new Error("unable to load checkout page results");
   }
-  return <CheckoutPageComponent listing={experience} />;
+  return <CheckoutPageComponent experience={experience} />;
 }
 
 export const revalidate = false;

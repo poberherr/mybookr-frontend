@@ -17,14 +17,14 @@ import { PaymentWrapper } from "./PaymentWrapper";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
-export default function CheckoutPage({ listing }: { listing: ExperienceItemFragment }) {
+export default function CheckoutPage({ experience }: { experience: ExperienceItemFragment }) {
   const isClient = useIsClient();
 
-  const minimumPrice = useMinimumPrice(listing);
+  const minimumPrice = useMinimumPrice(experience);
 
   const totalPrice = minimumPrice
 
-  if (!isClient || !listing) {
+  if (!isClient || !experience) {
     return null;
   }
 
@@ -43,8 +43,8 @@ export default function CheckoutPage({ listing }: { listing: ExperienceItemFragm
 
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
-          <BookingDataForm />
-          <PaymentWrapper />
+          <BookingDataForm experience={experience} />
+          <PaymentWrapper experience={experience} />
           <BlaBla />
         </div>
 
@@ -56,17 +56,17 @@ export default function CheckoutPage({ listing }: { listing: ExperienceItemFragm
               className="!mb-4 p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"
               variant="h6"
             >
-              {listing.title}
+              {experience.title}
             </Typography>
 
             {/* Villa Image */}
-            {listing.medias &&
-              listing.medias.length > 0 &&
-              listing.medias[0].url && (
+            {experience.medias &&
+              experience.medias.length > 0 &&
+              experience.medias[0].url && (
                 <div className="relative aspect-video w-full p-0 md:px-8 md:py-0">
                   <Image
                     className="rounded object-cover"
-                    src={listing.medias[0].url}
+                    src={experience.medias[0].url}
                     alt=""
                     fill={true}
                   />
@@ -82,7 +82,7 @@ export default function CheckoutPage({ listing }: { listing: ExperienceItemFragm
                 Price details
               </Typography>
 
-              {listing && <PriceDetail experience={listing} />}
+              {experience && <PriceDetail experience={experience} />}
             </div>
 
             <Divider />
@@ -90,10 +90,10 @@ export default function CheckoutPage({ listing }: { listing: ExperienceItemFragm
             {/* Total part */}
             <div className="grid gap-4 p-0 md:px-8 md:py-0">
               <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
-                <Typography className="!text-sm font-black">Total</Typography>
+                <Typography variant="body2" className="!text-sm !font-black">Total</Typography>
 
-                <Typography className="text-right !text-sm font-bold">
-                  {totalPrice}$
+                <Typography variant="body2" className="text-right !text-sm !font-black">
+                  $ {totalPrice},00
                 </Typography>
               </div>{" "}
             </div>

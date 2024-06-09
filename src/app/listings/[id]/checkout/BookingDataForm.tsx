@@ -15,13 +15,20 @@ import StyledDialog from "@/app/components/ui/StyledDialog";
 
 import {
   BookingContext,
-  useWatchDateRange,
+  useWatchActivityId,
+  useWatchBookingDate,
   useWatchEmail,
-  useWatchGuest,
 } from "@/app/contexts/booking";
-import { formatDateSpan } from "@/app/helpers/date-format";
+import { formatDate, formatDateSpan } from "@/app/helpers/date-format";
+import { ExperienceItemFragment } from "@/gql/graphql";
+import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
+import ActivityForm from "@/app/components/others/ActivityForm";
 
-export default function BookingDataForm() {
+export default function BookingDataForm({
+  experience,
+}: {
+  experience: ExperienceItemFragment;
+}) {
   // const {
   //   data: booking,
   //   mutate,
@@ -30,7 +37,11 @@ export default function BookingDataForm() {
   //   isError,
   // } = useBookingsCreate({ mutation: {} });
 
-  const { dateFrom, dateTo, guests } = useContext(BookingContext);
+  const { bookingDate, activities } = useContext(BookingContext);
+  const activityId = activities[experience.id];
+  const activity = activityId
+    ? experience.activities.find((activity) => activity.id === activityId)
+    : undefined;
 
   const user = useUser();
 
@@ -73,19 +84,15 @@ export default function BookingDataForm() {
   // ]);
 
   const [flagCalender, setFlagCalender] = useState(false);
-  const [flagEditGuestsDialog, setFlagEditGuestsDialog] = useState(false);
+  const [flagEditActivityDialog, setFlagEditActivityDialog] = useState(false);
 
   // React Hook Form for payment method
   // We can't put these inside the form component (PaymentMethodForm), because we need the trigger method for the Request booking button inside this (ShoppingCart) component
   const methods = useForm({
     defaultValues: {
+      bookingDate,
+      activityId,
       email: user.user?.primaryEmailAddress?.emailAddress || "",
-      guests,
-      dateRange: {
-        startDate: dateFrom,
-        endDate: dateTo,
-        key: "selection",
-      },
     },
   });
 
@@ -99,10 +106,11 @@ export default function BookingDataForm() {
     //   scrollToPayment();
     //   return;
     // }
-    // alert("@todo");
   });
 
   const values = methods.watch();
+
+  // handle email
   const emailValue = methods.watch("email");
   useEffect(() => {
     if (
@@ -115,10 +123,8 @@ export default function BookingDataForm() {
   }, [user.user, methods.resetField]);
   useWatchEmail(methods.control, "email");
 
-  const guestsValue = methods.watch("guests");
-  const dateRangeValue = methods.watch("dateRange");
-  useWatchDateRange(methods.control, "dateRange");
-  useWatchGuest(methods.control, "guests");
+  useWatchBookingDate(methods.control, "bookingDate");
+  useWatchActivityId(methods.control, "activityId", experience.id);
 
   return (
     <FormProvider {...methods}>
@@ -129,24 +135,19 @@ export default function BookingDataForm() {
             className="!mb-4 p-0 !font-extrabold md:!text-2xl"
             variant="h6"
           >
-            Your journey
+            Your cruise
           </Typography>
 
-          {/* Travel dates */}
+          {/* Booking Date */}
           <div>
             <div>
               <Typography className="uppercase tracking-wide" variant="caption">
-                Travel dates
+                Cruise Date
               </Typography>
 
               <div className="flex justify-between">
                 <Typography className="mt-2" variant="body1">
-                  {dateRangeValue.startDate &&
-                    dateRangeValue.endDate &&
-                    formatDateSpan(
-                      dateRangeValue.startDate,
-                      dateRangeValue.endDate,
-                    )}
+                  {bookingDate ? formatDate(bookingDate) : "No date selected"}
                 </Typography>
 
                 <Typography
@@ -159,25 +160,25 @@ export default function BookingDataForm() {
             </div>
 
             {/* Calendar */}
-            <Calendar
+            <CalendarSingleDay
               flagCalender={flagCalender}
               setFlagCalender={setFlagCalender}
             />
 
-            {/* Guests */}
+            {/* Activity */}
             <div className="mt-6">
               <Typography className="uppercase tracking-wide" variant="caption">
-                Guests
+                Yacht
               </Typography>
 
               <div className="flex justify-between">
                 <Typography className="mt-2" variant="body1">
-                  {guestsValue} Guest
+                  {activity ? activity.title : "No yacht selected"}
                 </Typography>
 
                 <Typography
                   className="cursor-pointer !font-bold"
-                  onClick={() => setFlagEditGuestsDialog(true)}
+                  onClick={() => setFlagEditActivityDialog(true)}
                 >
                   Edit
                 </Typography>
@@ -185,17 +186,17 @@ export default function BookingDataForm() {
             </div>
 
             <StyledDialog
-              showDialog={flagEditGuestsDialog}
-              setShowDialog={setFlagEditGuestsDialog}
+              showDialog={flagEditActivityDialog}
+              setShowDialog={setFlagEditActivityDialog}
               title={"Select guests number"}
             >
               <div className="grid min-w-[300px] gap-8">
-                <GuestNumberForm />
+                <ActivityForm experience={experience} />
 
                 <SButton
                   fullWidth
                   variant="contained"
-                  onClick={() => setFlagEditGuestsDialog(false)}
+                  onClick={() => setFlagEditActivityDialog(false)}
                 >
                   OK
                 </SButton>

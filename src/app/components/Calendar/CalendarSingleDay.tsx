@@ -21,6 +21,7 @@ import { SButton } from "../ui/SButton";
 import StyledDialog from "../ui/StyledDialog";
 import { CheckoutStartForm } from "@/app/listings/[id]/CheckoutStart";
 import { BookingContext } from "@/app/contexts/booking";
+import { startOfToday } from "date-fns";
 
 interface CalendarProps {
   flagCalender: boolean;
@@ -46,15 +47,6 @@ export default function CalendarSingleDay({
     startDate: bookingDate,
     endDate: bookingDate,
   };
-
-  const [tempDateLimit, setTempDateLimit] = useState<
-    | {
-        minDate: Date;
-        maxDate: Date;
-      }
-    | undefined
-  >();
-
   const handleOnChange = (
     keyDict: RangeKeyDict,
     field: ControllerRenderProps<CheckoutStartForm, "bookingDate">,
@@ -62,7 +54,6 @@ export default function CalendarSingleDay({
     const selected = keyDict.range1;
 
     if (selected.startDate && selected.startDate.getTime() !== field.value?.getTime()) {
-      setTempDateLimit(undefined);
       field.onChange(selected.startDate);
       return
     }
@@ -71,35 +62,9 @@ export default function CalendarSingleDay({
       selected.endDate &&
       selected.endDate.getTime() !== selected.startDate?.getTime()
     ) {
-      // setTempDateLimit({
-      //   minDate: selected.endDate,
-      //   maxDate: selected.endDate,
-      // });
-      setTempDateLimit(undefined);
       field.onChange(selected.endDate);
       return;
     }
-
-
-    // const isSameDate =
-    //   selected.startDate?.getTime() === selected.endDate?.getTime();
-
-    // if (
-    //   bookingDate &&
-    //   (selected.startDate &&
-    //     selected.startDate.getTime() !== bookingDate.getTime())
-    // ) {
-    //   setTempDateLimit({
-    //     minDate: selected.startDate,
-    //     maxDate: selected.startDate,
-    //   });
-    // }
-
-    // if (isSameDate && selected.startDate && selected.endDate) {
-    //   const tempMinDate = selected.startDate;
-    // } else {
-    //   setTempDateLimit(undefined);
-    // }
   };
 
   return (
@@ -109,7 +74,6 @@ export default function CalendarSingleDay({
       title={"What day do you want to book the tour?"}
     >
       <CalendarWrapper>
-        <code>{JSON.stringify(tempDateLimit, null, 2)}</code>
         <Box className="body">
           <Controller
             control={control}
@@ -124,8 +88,7 @@ export default function CalendarSingleDay({
                 preventSnapRefocus={true}
                 calendarFocus="forwards"
                 onChange={(keyDict) => handleOnChange(keyDict, field)}
-                minDate={tempDateLimit?.minDate}
-                maxDate={tempDateLimit?.maxDate}
+                minDate={startOfToday()}
               />
             )}
           />

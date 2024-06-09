@@ -7,13 +7,15 @@ import { Divider, Typography } from "@mui/material";
 import { BookingContext } from "@/app/contexts/booking";
 
 import PaymentForm from "./PaymentForm";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
-export const PaymentWrapper = () => {
-  const { guests, email } = useContext(BookingContext);
+export const PaymentWrapper = ({experience}: {experience: ExperienceItemFragment}) => {
+  const { bookingDate, activities, email } = useContext(BookingContext);
+  const activityId = activities[experience.id];
 
   const isReady = useMemo(
-    () => !!guests && !!email,
-    [guests, email],
+    () => !!bookingDate && !!activityId && !!email,
+    [bookingDate, activityId, email],
   );
 
   if (!isReady) {
