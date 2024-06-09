@@ -9,7 +9,13 @@ import { BookingContext } from "@/app/contexts/booking";
 import PaymentForm from "./PaymentForm";
 import { ExperienceItemFragment } from "@/gql/graphql";
 
-export const PaymentWrapper = ({experience}: {experience: ExperienceItemFragment}) => {
+export const PaymentWrapper = ({
+  experience,
+  setPopupMessage,
+}: {
+  experience: ExperienceItemFragment;
+  setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+}) => {
   const { bookingDate, activities, email } = useContext(BookingContext);
   const activityId = activities[experience.id];
 
@@ -32,7 +38,7 @@ export const PaymentWrapper = ({experience}: {experience: ExperienceItemFragment
         >
           Payment
         </Typography>
-        <PaymentForm />
+        <PaymentForm setPopupMessage={setPopupMessage} />
       </div>
     </>
   );

@@ -17,6 +17,7 @@ const documents = {
     "\n  query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {\n    experiences(dateStart: $dateStart, dateEnd: $dateEnd) {\n      edges {\n        node {\n          ...ExperienceItem\n        }\n      }\n    }\n  }\n": types.ExperiencesQueryDocument,
     "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n      longitude\n      latitude\n    }\n    activities {\n      id\n      title\n      description\n      availabilities {\n        id\n        dateAvailable\n        pricePerUnit\n      }\n      medias {\n        url\n        width\n        height\n      }\n    }\n  }\n": types.ExperienceItemFragmentDoc,
     "\n  mutation CreateBookingMutation(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $availabilityId: ID!\n    $numberOfSlots: Int!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        availabilityId: $availabilityId\n        numberOfSlots: $numberOfSlots\n      }\n    ) {\n      bookingFlowToken\n      paymentIntentId # we probably dont need this\n      paymentClientSecret\n    }\n  }\n": types.CreateBookingMutationDocument,
+    "\n  mutation CheckBookingMutation($bookingFlowToken: String!) {\n    checkBookingStatus(bookingFlowToken: $bookingFlowToken)\n  }\n": types.CheckBookingMutationDocument,
     "\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.CheckoutQueryDocument,
     "\n  query ExperienceQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.ExperienceQueryDocument,
 };
@@ -51,6 +52,10 @@ export function graphql(source: "\n  fragment ExperienceItem on Experience {\n  
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation CreateBookingMutation(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $availabilityId: ID!\n    $numberOfSlots: Int!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        availabilityId: $availabilityId\n        numberOfSlots: $numberOfSlots\n      }\n    ) {\n      bookingFlowToken\n      paymentIntentId # we probably dont need this\n      paymentClientSecret\n    }\n  }\n"): (typeof documents)["\n  mutation CreateBookingMutation(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $availabilityId: ID!\n    $numberOfSlots: Int!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        availabilityId: $availabilityId\n        numberOfSlots: $numberOfSlots\n      }\n    ) {\n      bookingFlowToken\n      paymentIntentId # we probably dont need this\n      paymentClientSecret\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CheckBookingMutation($bookingFlowToken: String!) {\n    checkBookingStatus(bookingFlowToken: $bookingFlowToken)\n  }\n"): (typeof documents)["\n  mutation CheckBookingMutation($bookingFlowToken: String!) {\n    checkBookingStatus(bookingFlowToken: $bookingFlowToken)\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

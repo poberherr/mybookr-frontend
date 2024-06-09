@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import { Typography } from "@mui/material";
 
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { BookingContext } from "@/app/contexts/booking";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
@@ -17,19 +16,20 @@ export default function PriceDetail({
   const activity = useGetActivityFromExperience(activityId, experience)
   const price =
     activity?.availabilities && activity.availabilities[0].pricePerUnit;
+  const displayPrice = price && `$${(price / 100).toFixed(2)}`;
 
   return (
     <div className="grid gap-4">
       {/* Base Price */}
       {price && (
         <div className="flex justify-between">
-          <Typography variant="body2">1 x $ {price}</Typography>
+          <Typography variant="body2">1 x {displayPrice}</Typography>
           <Typography
             className="!text-sm !font-bold"
             variant="h6"
             component="p"
           >
-            $ {price},00
+            {displayPrice}
           </Typography>
         </div>
       )}
@@ -42,7 +42,7 @@ export default function PriceDetail({
           variant="h6"
           component="p"
         >
-          $ 0,00
+          $0.00
         </Typography>
       </div>
     </div>

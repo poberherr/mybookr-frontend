@@ -127,7 +127,7 @@ export default function CheckoutStart({ experience }: IProps) {
                 </Typography>
 
                 <Typography className="text-right !font-bold uppercase !text-slate-800">
-                  $ {price},00
+                  {`$${(price / 100).toFixed(2)}`}
                 </Typography>
               </div>
             )}

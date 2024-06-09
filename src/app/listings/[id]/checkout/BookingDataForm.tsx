@@ -23,67 +23,24 @@ import { formatDate, formatDateSpan } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
-import { BookingFormData } from "./CheckoutPage";
+import { BookingFormData, BookingUIStates } from "./CheckoutPage";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
 export default function BookingDataForm({
   experience,
   setBookingFormData,
+  bookingUIState,
 }: {
   experience: ExperienceItemFragment;
-  setBookingFormData: React.Dispatch<React.SetStateAction<BookingFormData | undefined>>;
+  setBookingFormData: React.Dispatch<
+    React.SetStateAction<BookingFormData | undefined>
+  >;
+  bookingUIState: BookingUIStates
 }) {
-  // const {
-  //   data: booking,
-  //   mutate,
-  //   isIdle,
-  //   isPending,
-  //   isError,
-  // } = useBookingsCreate({ mutation: {} });
-
-  const { bookingDate, activities } = useContext(BookingContext);
+  const { bookingDate, activities, email } = useContext(BookingContext);
   const activityId = activities[experience.id];
-  const activity = useGetActivityFromExperience(activityId, experience)
-
+  const activity = useGetActivityFromExperience(activityId, experience);
   const user = useUser();
-
-  // useEffect(() => {
-  //   // if (!isPending && isError) {
-  //   //   alert(
-  //   //     "Unable to initiate booking in the backend. Sorry about this! Please reload the page and try again. Remember to blame Sebastian!",
-  //   //   );
-  //   //   return;
-  //   // }
-  //   if (
-  //     !booking &&
-  //     isIdle &&
-  //     !isPending &&
-  //     listing &&
-  //     dateFrom &&
-  //     dateTo
-  //   ) {
-  //     // create booking if not exists
-  //     console.log("Mutating!");
-  //     mutate({
-  //       booking_status: "NotStarted",
-  //       check_in_date: formatISO(dateFrom),
-  //       check_out_date: formatISO(dateTo),
-  //       number_of_guests: guest,
-  //       //@todo remove this when listing id is requried in generated interfaces,
-  //       listing_id: listing.id || 0,
-  //       total_cost: totalPrice || "0.00",
-  //       guest_id: 1,
-  //     });
-  //   }
-  // }, [
-  //   booking,
-  //   listing,
-  //   dateFrom,
-  //   dateTo,
-  //   isIdle,
-  //   isPending,
-  //   isError,
-  // ]);
 
   const [flagCalender, setFlagCalender] = useState(false);
   const [flagEditActivityDialog, setFlagEditActivityDialog] = useState(false);
@@ -94,23 +51,25 @@ export default function BookingDataForm({
     defaultValues: {
       bookingDate,
       activityId,
-      email: user.user?.primaryEmailAddress?.emailAddress || "",
+      email: email || user.user?.primaryEmailAddress?.emailAddress || "",
     },
   });
 
   const onSubmit = methods.handleSubmit((data) => {
-    setBookingFormData(data)
+    setBookingFormData(data);
   });
 
   // handle email
   const emailValue = methods.watch("email");
   useEffect(() => {
+    const userEmail = user.user?.primaryEmailAddress?.emailAddress
     if (
-      user.user?.primaryEmailAddress?.emailAddress &&
+      userEmail &&
       (emailValue === undefined || emailValue.trim() === "") &&
-      emailValue !== user.user?.primaryEmailAddress?.emailAddress
+      emailValue !== userEmail
     ) {
-      methods.setValue("email", user.user?.primaryEmailAddress?.emailAddress);
+      console.log('Setting email from user')
+      methods.setValue("email", userEmail);
     }
   }, [user.user, methods.resetField]);
   useWatchEmail(methods.control, "email");
@@ -214,7 +173,9 @@ export default function BookingDataForm({
               />
             </div>
           </div>
-          <SButton className="mt-8" disabled={!methods.formState.isValid}>Continue to payment</SButton>
+          <SButton className="mt-8" disabled={!methods.formState.isValid}>
+            {bookingUIState == "bookingDetails" ? "Continue to payment" : "Edit booking details"}
+          </SButton>
         </div>
       </form>
     </FormProvider>

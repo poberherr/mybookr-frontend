@@ -14,13 +14,14 @@ import { CircularProgress } from "@mui/material";
 
 import { SButton } from "../../../components/ui/SButton";
 
-export default function PaymentForm() {
+export default function PaymentForm({
+  setPopupMessage,
+}: {
+  setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const path = usePathname();
-  const router = useRouter();
-
-  const [message, setMessage] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const onSubmit = useCallback(
@@ -43,11 +44,12 @@ export default function PaymentForm() {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: `${window.location.origin}${path}/confirmation`,
+          return_url: `${window.location.origin}${path}`,
         },
       });
 
       console.log("SOMETHING WENT WRONG!", error);
+      console.error(error)
 
       // This point will only be reached if there is an immediate error when
       // confirming the payment. Otherwise, your customer will be redirected to
@@ -58,9 +60,9 @@ export default function PaymentForm() {
         (error.type === "card_error" || error.type === "validation_error") &&
         error.message
       ) {
-        setMessage(error.message);
+        setPopupMessage(error.message);
       } else {
-        setMessage("An unexpected error occurred.");
+        setPopupMessage("An unexpected error occurred.");
       }
 
       setIsLoading(false);
@@ -91,15 +93,9 @@ export default function PaymentForm() {
         </span>
       </SButton>
       <p className="mt-4 text-sm">
-        <strong>No worries!</strong> Your bank account will only be charged when
-        the host accepts your reservation.
+        <strong>No worries!</strong> In case of early cancellation, you will
+        receive the full amount back.
       </p>
-      {/* Show any error or success messages */}
-      {message && (
-        <div id="payment-message" className="mt-8 font-bold text-red-500">
-          {message}
-        </div>
-      )}
     </form>
   );
 }

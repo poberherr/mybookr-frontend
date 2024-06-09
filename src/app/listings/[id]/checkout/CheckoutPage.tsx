@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 
-import { Divider, Typography } from "@mui/material";
+import { CircularProgress, Divider, Typography } from "@mui/material";
 
 import { Elements } from "@stripe/react-stripe-js";
 import {
@@ -12,6 +12,8 @@ import {
   StripeElementsOptions,
   loadStripe,
 } from "@stripe/stripe-js";
+import createPersistedState from "use-persisted-state";
+import { useMutation } from "urql";
 
 import BackButton from "@/app/components/others/BackButton";
 import PriceDetail from "@/app/components/others/PriceDetail";
@@ -21,12 +23,18 @@ import { useIsClient } from "@/app/helpers/useIsClient";
 import BlaBla from "./BlaBla";
 import BookingDataForm from "./BookingDataForm";
 import { PaymentWrapper } from "./PaymentWrapper";
-import { ExperienceItemFragment } from "@/gql/graphql";
-import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
-import { useMutation } from "urql";
+import { BookingStatus, ExperienceItemFragment } from "@/gql/graphql";
 import { graphql } from "@/gql";
 import { BookingContext } from "@/app/contexts/booking";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
+
+interface BookingStateStore {
+  [key: string]: string;
+}
+
+const useBookingStateStore = createPersistedState<BookingStateStore>(
+  "mybookr-experience-to-booking-flow-token",
+);
 
 const CreateBookingMutation = graphql(`
   mutation CreateBookingMutation(
@@ -52,33 +60,67 @@ const CreateBookingMutation = graphql(`
   }
 `);
 
+const CheckBookingMutation = graphql(`
+  mutation CheckBookingMutation($bookingFlowToken: String!) {
+    checkBookingStatus(bookingFlowToken: $bookingFlowToken)
+  }
+`);
+
 export interface BookingFormData {
   bookingDate: Date;
   activityId: string;
   email: string;
 }
 
+export type BookingUIStates =
+  | "bookingDetails"
+  | "providePaymentCredentials"
+  | "checkBookingStatus"
+  | "confirmation";
+
 export default function CheckoutPage({
   experience,
 }: {
   experience: ExperienceItemFragment;
 }) {
-  const { activities } = useContext(BookingContext);
+  const { activities, email } = useContext(BookingContext);
   const activityId = activities[experience.id];
   const activity = useGetActivityFromExperience(activityId, experience);
+
+  const [popupMessage, setPopupMessage] = useState<string | undefined>();
+
+  const [bookingsPerExperience, setBookingsPerExperience] =
+    useBookingStateStore();
+
+  const bookingFlowToken =
+    bookingsPerExperience && bookingsPerExperience[experience.id];
+
+  const setBookingFlowToken = useCallback((newToken: string) => {
+    setBookingsPerExperience((curr) => ({
+      ...(curr || {}),
+      [experience.id]: newToken,
+    }));
+  }, []);
 
   const [bookingFormData, setBookingFormData] = useState<
     BookingFormData | undefined
   >();
 
-  const [bookingFlowToken, setBookingFlowToken] = useState<
-    string | undefined
-  >();
+  const urlClientSecret = new URLSearchParams(window.location.search).get(
+    "payment_intent_client_secret",
+  );
+
+  const [bookingUIState, setBookingUIState] = useState<BookingUIStates>(
+    urlClientSecret ? "checkBookingStatus" : "bookingDetails",
+  );
+
   const [createBookingResult, createBooking] = useMutation(
     CreateBookingMutation,
   );
-  const [clientSecret, setClientSecret] = React.useState("");
+  const [checkBookingStatusResult, checkBookingStatus] =
+    useMutation(CheckBookingMutation);
 
+  const [clientSecret, setClientSecret] = React.useState<string | undefined>();
   const stripe = React.useMemo(() => {
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
       throw new Error("Unable to init stripe without credentials");
@@ -86,14 +128,14 @@ export default function CheckoutPage({
     return loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
   }, []);
 
+  // Create new booking as soon we have availability and a booking flow token
   useEffect(() => {
-    if (!activity || !activity.availabilities) {
+    if (!activity || !activity.availabilities || bookingFlowToken) {
       return;
     }
     if (bookingFormData) {
       if (!bookingFlowToken) {
-        console.log("init booking and get flow token");
-
+        console.log("init booking and get first flow token");
         // mutationCreateBooking
         createBooking({
           ...bookingFormData,
@@ -103,21 +145,18 @@ export default function CheckoutPage({
         });
         return;
       }
-      console.log("update booking and get new flow token");
-      // mutationUpdateBooking
-      // setBookingFlowToken
-      // setClientSecret
     }
   }, [activity, bookingFormData, bookingFlowToken]);
 
+  // react on createBookingResult
   useEffect(() => {
-    console.dir(createBookingResult, { depth: null });
     if (createBookingResult.error) {
       console.error(createBookingResult.error);
     }
     if (!createBookingResult.data) {
       return;
     }
+    setBookingUIState("providePaymentCredentials");
     setBookingFlowToken(
       createBookingResult.data?.createBooking.bookingFlowToken,
     );
@@ -129,11 +168,42 @@ export default function CheckoutPage({
     );
   }, [createBookingResult]);
 
+  // execute booking status check as soon booking status check is shown
+  useEffect(() => {
+    if (bookingUIState === "checkBookingStatus" && bookingFlowToken) {
+      // @todo check multiple times when status is still processing
+      checkBookingStatus({ bookingFlowToken });
+      return;
+    }
+  }, [bookingUIState, bookingFlowToken]);
+
+  // react on checkBookingStatus
+  useEffect(() => {
+    console.dir({ checkBookingStatusResult }, { depth: null });
+    if (checkBookingStatusResult.error) {
+      console.error(checkBookingStatusResult.error);
+    }
+    if (!checkBookingStatusResult.data) {
+      return;
+    }
+
+    const bookingStatus = checkBookingStatusResult.data.checkBookingStatus;
+    if (bookingStatus === BookingStatus.PaymentFailed) {
+      setBookingUIState("providePaymentCredentials");
+      alert("@todo trigger new payment intent (via updateBooking?)");
+      return;
+    }
+    if (bookingStatus === BookingStatus.PaymentFinished) {
+      setBookingUIState("confirmation");
+      return;
+    }
+  }, [checkBookingStatusResult, setBookingUIState]);
+
   const isClient = useIsClient();
 
-  const minimumPrice = useMinimumPrice(experience);
-
-  const totalPrice = minimumPrice;
+  const totalPrice = activity?.availabilities
+    ? activity.availabilities[0].pricePerUnit
+    : undefined;
 
   const appearance: Appearance = {
     theme: "stripe",
@@ -162,13 +232,33 @@ export default function CheckoutPage({
 
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
-          <BookingDataForm
-            experience={experience}
-            setBookingFormData={setBookingFormData}
-          />
-          {clientSecret && (
+          {popupMessage && <strong>popupMessage: {popupMessage}</strong>}
+          {bookingUIState === "confirmation" && (
+            <div className="prose mx-auto text-center">
+              <h1>Booking Confirmed</h1>
+              <p>We have emailed details to {email}</p>
+            </div>
+          )}
+          {bookingUIState === "checkBookingStatus" && (
+            <div className="prose mx-auto text-center">
+              <CircularProgress size={48} /> <p>Double checking payment...</p>
+              <p>This should only take a few seconds!</p>
+            </div>
+          )}
+          {(bookingUIState === "bookingDetails" ||
+            bookingUIState === "providePaymentCredentials") && (
+            <BookingDataForm
+              experience={experience}
+              setBookingFormData={setBookingFormData}
+              bookingUIState={bookingUIState}
+            />
+          )}
+          {bookingUIState === "providePaymentCredentials" && clientSecret && (
             <Elements options={options} stripe={stripe}>
-              <PaymentWrapper experience={experience} />
+              <PaymentWrapper
+                experience={experience}
+                setPopupMessage={setPopupMessage}
+              />
             </Elements>
           )}
           <BlaBla />
@@ -214,20 +304,22 @@ export default function CheckoutPage({
             <Divider />
 
             {/* Total part */}
-            <div className="grid gap-4 p-0 md:px-8 md:py-0">
-              <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
-                <Typography variant="body2" className="!text-sm !font-black">
-                  Total
-                </Typography>
+            {totalPrice && (
+              <div className="grid gap-4 p-0 md:px-8 md:py-0">
+                <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
+                  <Typography variant="body2" className="!text-sm !font-black">
+                    Total
+                  </Typography>
 
-                <Typography
-                  variant="body2"
-                  className="text-right !text-sm !font-black"
-                >
-                  $ {totalPrice},00
-                </Typography>
-              </div>{" "}
-            </div>
+                  <Typography
+                    variant="body2"
+                    className="text-right !text-sm !font-black"
+                  >
+                    {`$${(totalPrice / 100).toFixed(2)}`}
+                  </Typography>
+                </div>{" "}
+              </div>
+            )}
           </div>
         </div>
       </div>

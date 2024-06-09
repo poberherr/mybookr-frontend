@@ -26,7 +26,7 @@ interface BookingStateStore {
   bookingDate?: string; // actual desired date user wants to book
   activities: ExperienceActivity; // selected activities for each experience
   guests: number;
-  email: string; // remove
+  email: string;
 }
 
 const useBookingStateStore =
