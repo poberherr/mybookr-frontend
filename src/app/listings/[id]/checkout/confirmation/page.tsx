@@ -19,10 +19,7 @@ export default async function CheckoutPage({
   const result = await getSSRClient().query(CheckoutQuery, {
     experienceId: params.id,
   });
-  const experience = useFragment(
-    ExperienceItem,
-    result.data?.experience,
-  );
+  const experience = useFragment(ExperienceItem, result.data?.experience);
   if (!experience) {
     throw new Error("unable to load confirmation page results");
   }

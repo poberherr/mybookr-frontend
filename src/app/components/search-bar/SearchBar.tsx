@@ -110,7 +110,7 @@ const SelectedDate = ({
 
   return (
     <div
-      className="flex min-w-[120px] cursor-pointer items-center gap-4 h-full md:justify-center md:min-w-[160px]"
+      className="flex h-full min-w-[120px] cursor-pointer items-center gap-4 md:min-w-[160px] md:justify-center"
       onClick={handleRangeSelectionDialog}
     >
       <div>{isClient && date && format(date, "MMM d")}</div>

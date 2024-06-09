@@ -19,10 +19,7 @@ export default async function ListingPage({
   const result = await getSSRClient().query(ExperienceQuery, {
     experienceId: params.id,
   });
-  const experience = useFragment(
-    ExperienceItem,
-    result.data?.experience,
-  );
+  const experience = useFragment(ExperienceItem, result.data?.experience);
   if (!experience) {
     throw new Error("unable to experience detail page results");
   }

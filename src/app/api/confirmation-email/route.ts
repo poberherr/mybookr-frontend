@@ -110,7 +110,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const result = await getSSRClient().query(ConfirmationEmailQuery, {
       experienceId: listingId.toString(),
     });
-    const experience = useFragment(ExperienceItemFragment, result.data?.experience);
+    const experience = useFragment(
+      ExperienceItemFragment,
+      result.data?.experience,
+    );
     if (!experience) {
       throw new Error("unable to load experience");
     }

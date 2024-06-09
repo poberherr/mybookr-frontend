@@ -5,9 +5,7 @@ import { addDays, isWithinInterval } from "date-fns";
 import { BookingContext } from "../contexts/booking";
 import { ExperienceItem } from "@/gql/graphql";
 
-export const useMinimumPrice = (
-  experience: ExperienceItem,
-): number => {
+export const useMinimumPrice = (experience: ExperienceItem): number => {
   const { selectedDate, selectedDate1 } = useContext(BookingContext);
   return useMemo(() => {
     if (!selectedDate || !selectedDate1 || !experience.activities) {
@@ -28,7 +26,8 @@ export const useMinimumPrice = (
         return 0;
       }
       const cheapest = availabilities.reduce(
-        (res, cur) => ((res === 0 || cur.pricePerUnit < res) ? cur.pricePerUnit : res),
+        (res, cur) =>
+          res === 0 || cur.pricePerUnit < res ? cur.pricePerUnit : res,
         0,
       );
       return cheapest;

@@ -5,9 +5,7 @@ import { addDays, isWithinInterval } from "date-fns";
 import { BookingContext } from "../contexts/booking";
 import { ExperienceItem } from "@/gql/graphql";
 
-export const useAveragePricePerNight = (
-  experience: ExperienceItem,
-): number => {
+export const useAveragePricePerNight = (experience: ExperienceItem): number => {
   const { selectedDate, selectedDate1 } = useContext(BookingContext);
   return useMemo(() => {
     if (!selectedDate || !selectedDate1 || !experience.activities) {

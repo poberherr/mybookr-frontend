@@ -1,8 +1,6 @@
 "use client";
 
-import {
-  UrqlProvider,
-} from "@urql/next";
+import { UrqlProvider } from "@urql/next";
 import { useGetClient } from "../api-helpers/urql";
 
 export default function Layout({ children }: React.PropsWithChildren) {

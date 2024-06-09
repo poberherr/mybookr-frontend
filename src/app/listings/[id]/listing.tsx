@@ -274,9 +274,7 @@ export default function ListingComponent({
                 className="prose !mt-8 !leading-relaxed"
                 variant="body1"
               >
-                <div
-                  dangerouslySetInner={{ __html: listing.description }}
-                />
+                <div dangerouslySetInner={{ __html: listing.description }} />
               </Typography>
             )}
           </div>
