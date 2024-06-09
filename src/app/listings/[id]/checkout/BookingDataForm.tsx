@@ -30,7 +30,7 @@ export default function BookingDataForm() {
   //   isError,
   // } = useBookingsCreate({ mutation: {} });
 
-  const { dateFrom, dateTo, guest } = useContext(BookingContext);
+  const { dateFrom, dateTo, guests } = useContext(BookingContext);
 
   const user = useUser();
 
@@ -80,7 +80,7 @@ export default function BookingDataForm() {
   const methods = useForm({
     defaultValues: {
       email: user.user?.primaryEmailAddress?.emailAddress || "",
-      guest,
+      guests,
       dateRange: {
         startDate: dateFrom,
         endDate: dateTo,
@@ -115,10 +115,10 @@ export default function BookingDataForm() {
   }, [user.user, methods.resetField]);
   useWatchEmail(methods.control, "email");
 
-  const guestValue = methods.watch("guest");
+  const guestsValue = methods.watch("guests");
   const dateRangeValue = methods.watch("dateRange");
   useWatchDateRange(methods.control, "dateRange");
-  useWatchGuest(methods.control, "guest");
+  useWatchGuest(methods.control, "guests");
 
   return (
     <FormProvider {...methods}>
@@ -172,7 +172,7 @@ export default function BookingDataForm() {
 
               <div className="flex justify-between">
                 <Typography className="mt-2" variant="body1">
-                  {guestValue} Guest
+                  {guestsValue} Guest
                 </Typography>
 
                 <Typography

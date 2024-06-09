@@ -20,7 +20,7 @@ import "@/global.css";
 interface BookingStateStore {
   dateFrom: string;
   dateTo: string;
-  guest: number;
+  guests: number;
   email: string;
 }
 
@@ -31,16 +31,16 @@ export const BookingContext = createContext<{
   dateFrom?: Date;
   dateTo?: Date;
   setDates: (startDate: Date, endDate: Date) => void;
-  guest: number;
-  setGuest: (guest: number) => void;
+  guests: number;
+  setGuests: (guests: number) => void;
   email?: string;
   setEmail: (email: string) => void;
 }>({
   dateFrom: undefined,
   dateTo: undefined,
   setDates: () => {},
-  guest: 1,
-  setGuest: () => {},
+  guests: 1,
+  setGuests: () => {},
   email: undefined,
   setEmail: () => {},
 });
@@ -53,7 +53,7 @@ export const BookingContextProvider = ({
   const [bookingState, setBookingState] = useBookingStateStore({
     dateFrom: formatISO(startOfToday()),
     dateTo: formatISO(startOfTomorrow()),
-    guest: 0,
+    guests: 0,
     email: "",
   });
 
@@ -70,16 +70,16 @@ export const BookingContextProvider = ({
     [bookingState, setBookingState],
   );
 
-  const setGuest = useCallback(
-    (guest: number) => {
-      if (bookingState.guest !== guest) {
+  const setGuests = useCallback(
+    (guests: number) => {
+      if (bookingState.guests !== guests) {
         console.log("Updating guest", {
-          guest,
+          guests,
           bookingState,
         });
         setBookingState((prevState) => ({
           ...prevState,
-          guest,
+          guests,
         }));
       }
     },
@@ -121,8 +121,8 @@ export const BookingContextProvider = ({
           ? parseISO(bookingState.dateTo)
           : undefined,
         setDates,
-        guest: bookingState.guest,
-        setGuest,
+        guests: bookingState.guests,
+        setGuests,
         email: bookingState.email,
         setEmail,
       }}
@@ -156,11 +156,11 @@ export function useWatchGuest<T extends FieldValues>(
   name: Path<T>,
 ) {
   const value: number = useWatch({ name, control });
-  const { guest, setGuest } = useContext(BookingContext);
+  const { guests, setGuests } = useContext(BookingContext);
   useEffect(() => {
-    if (value > 0 && value !== guest) {
-      console.log("setting guest", guest);
-      setGuest(value);
+    if (value > 0 && value !== guests) {
+      console.log("setting guest", guests);
+      setGuests(value);
     }
   }, [value]);
 }

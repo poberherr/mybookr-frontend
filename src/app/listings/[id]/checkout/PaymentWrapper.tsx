@@ -9,11 +9,11 @@ import { BookingContext } from "@/app/contexts/booking";
 import PaymentForm from "./PaymentForm";
 
 export const PaymentWrapper = () => {
-  const { guest, email } = useContext(BookingContext);
+  const { guests, email } = useContext(BookingContext);
 
   const isReady = useMemo(
-    () => !!guest && !!email,
-    [guest, email],
+    () => !!guests && !!email,
+    [guests, email],
   );
 
   if (!isReady) {

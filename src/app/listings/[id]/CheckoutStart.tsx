@@ -28,12 +28,12 @@ interface IProps {
 
 interface CheckoutStartForm {
   dateRange: Range;
-  guest: number;
+  guests: number;
 }
 
 export default function CheckoutStart({ listing }: IProps) {
   const router = useRouter();
-  const { dateFrom, dateTo, guest } =
+  const { dateFrom, dateTo, guests } =
     useContext(BookingContext);
   const [flagCalender, setFlagCalender] = useState(false);
   const isClient = useIsClient();
@@ -41,7 +41,7 @@ export default function CheckoutStart({ listing }: IProps) {
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
     defaultValues: {
-      guest,
+      guests,
       dateRange: {
         startDate: dateFrom,
         endDate: dateTo,
@@ -53,14 +53,14 @@ export default function CheckoutStart({ listing }: IProps) {
   // Watch all form values
   const dateRangeValue = methods.watch("dateRange");
   useWatchDateRange<CheckoutStartForm>(methods.control, "dateRange");
-  useWatchGuest<CheckoutStartForm>(methods.control, "guest");
+  useWatchGuest<CheckoutStartForm>(methods.control, "guests");
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {
-    if (data.guest !== 0) {
+    if (data.guests !== 0) {
       router.push(`/listings/${listing.id}/checkout`);
     } else {
-      methods.trigger("guest");
+      methods.trigger("guests");
     }
   });
 
