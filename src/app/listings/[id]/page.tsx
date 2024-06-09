@@ -1,6 +1,6 @@
 import { graphql, useFragment } from "@/gql";
 import ListingComponent from "./listing";
-import { getSSRClient } from "@/app/api-helpers/urql";
+import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 
 const ExperienceQuery = graphql(`

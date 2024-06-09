@@ -16,7 +16,7 @@ import {
   bookingConfirmationOwnerTemplate,
   footerTemplate,
 } from "./templates";
-import { getSSRClient } from "@/app/api-helpers/urql";
+import { getSSRClient } from "@/app/helpers/urql";
 import { graphql, useFragment } from "@/gql";
 import { ExperienceItem as ExperienceItemFragment } from "@/app/fragments/experience-fragments";
 import { ExperienceItemFragment as Experience } from "@/gql/graphql";

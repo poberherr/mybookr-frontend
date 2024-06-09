@@ -1,6 +1,6 @@
 import CheckoutPageComponent from "./CheckoutPage";
 import { graphql, useFragment } from "@/gql";
-import { getSSRClient } from "@/app/api-helpers/urql";
+import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 
 const CheckoutQuery = graphql(`
