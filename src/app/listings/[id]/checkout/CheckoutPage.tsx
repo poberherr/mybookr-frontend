@@ -82,7 +82,7 @@ export default function CheckoutPage({ listing }: { listing: ExperienceItemFragm
                 Price details
               </Typography>
 
-              {listing && <PriceDetail listing={listing} />}
+              {listing && <PriceDetail experience={listing} />}
             </div>
 
             <Divider />

@@ -19,7 +19,7 @@ import {
   useWatchEmail,
   useWatchGuest,
 } from "@/app/contexts/booking";
-import formatDateSpan from "@/app/helpers/date-format";
+import { formatDateSpan } from "@/app/helpers/date-format";
 
 export default function BookingDataForm() {
   // const {

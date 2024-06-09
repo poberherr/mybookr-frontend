@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import Image from "next/image";
 
@@ -14,15 +14,19 @@ import ShareIcon from "@/assets/icons/share.svg";
 
 import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { SButton } from "@/app/components/ui/SButton";
+import { BookingContext } from "@/app/contexts/booking";
 
 export default function ListingComponent({
-  listing,
+  experience,
 }: {
-  listing: ExperienceItemFragment;
+  experience: ExperienceItemFragment;
 }) {
+  const { setActivityForExperience } = useContext(BookingContext);
   const [flagGallery, setFlagGallery] = useState(false);
+  const checkoutStartRef = useRef<HTMLDivElement>(null);
 
-  if (!listing) {
+  if (!experience) {
     return "Error - No listing found.";
   }
 
@@ -33,7 +37,7 @@ export default function ListingComponent({
         {/* Hero title */}
         <div className="px-4 py-0 md:px-40">
           <Typography className="!mt-8 flex w-full !text-xl !font-extrabold md:!text-3xl">
-            {listing.title}
+            {experience.title}
           </Typography>
 
           {/* Rate, Number of reviews, Like and Share button */}
@@ -44,8 +48,8 @@ export default function ListingComponent({
             >
               <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                 <u>
-                  {listing.location.city}, {listing.location.federalState},{" "}
-                  {listing.location.country}
+                  {experience.location.city}, {experience.location.federalState}
+                  , {experience.location.country}
                 </u>
               </span>
             </Typography>
@@ -64,23 +68,23 @@ export default function ListingComponent({
 
         {/* Hero Image */}
         {/* Hero Image: Mobile */}
-        {listing.medias && listing.medias.length > 0 && (
+        {experience.medias && experience.medias.length > 0 && (
           <div className="relative block md:hidden">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
                 setFlagGallery={setFlagGallery}
-                images={listing.medias}
+                images={experience.medias}
               />
             ) : (
               <div className="h-72 w-full">
                 {/* Image */}
-                {listing.medias &&
-                  listing.medias?.length > 0 &&
-                  listing.medias[0].url && (
+                {experience.medias &&
+                  experience.medias?.length > 0 &&
+                  experience.medias[0].url && (
                     <Image
                       className="object-cover"
-                      src={listing.medias[0].url}
+                      src={experience.medias[0].url}
                       alt=""
                       fill={true}
                       sizes={"900px"}
@@ -115,56 +119,56 @@ export default function ListingComponent({
         )}
 
         {/* Hero Image: Desktop */}
-        {listing.medias && listing.medias.length > 0 && (
+        {experience.medias && experience.medias.length > 0 && (
           <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
                 setFlagGallery={setFlagGallery}
-                images={listing.medias}
+                images={experience.medias}
               />
             ) : (
               <>
-                {listing.medias[0] && listing.medias[0].url && (
+                {experience.medias[0] && experience.medias[0].url && (
                   <Image
                     className="col-start-1 col-end-3 row-start-1 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.medias[0].url}
+                    src={experience.medias[0].url}
                     alt=""
                     fill={true}
                     sizes={"900px"}
                   />
                 )}
-                {listing.medias[1] && listing.medias[1].url && (
+                {experience.medias[1] && experience.medias[1].url && (
                   <Image
                     className="col-start-3 col-end-4 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.medias[1].url}
+                    src={experience.medias[1].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.medias[2] && listing.medias[2].url && (
+                {experience.medias[2] && experience.medias[2].url && (
                   <Image
                     className="col-start-4 col-end-5 row-start-1 row-end-2 h-full w-full rounded-lg object-cover"
-                    src={listing.medias[2].url}
+                    src={experience.medias[2].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.medias[3] && listing.medias[3].url && (
+                {experience.medias[3] && experience.medias[3].url && (
                   <Image
                     className="col-start-3 col-end-4 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.medias[3].url}
+                    src={experience.medias[3].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
                   />
                 )}
-                {listing.medias[4] && listing.medias[4].url && (
+                {experience.medias[4] && experience.medias[4].url && (
                   <Image
                     className="col-start-4 col-end-5 row-start-2 row-end-3 h-full w-full rounded-lg object-cover"
-                    src={listing.medias[4].url}
+                    src={experience.medias[4].url}
                     alt=""
                     fill={true}
                     sizes={"420px"}
@@ -201,13 +205,13 @@ export default function ListingComponent({
             </Typography>
 
             {/* Description */}
-            {listing.description && (
+            {experience.description && (
               <Typography
                 className="prose !mt-8 !leading-relaxed"
                 variant="body1"
               >
-                <div
-                  dangerouslySetInnerHTML={{ __html: listing.description }}
+                <span
+                  dangerouslySetInnerHTML={{ __html: experience.description }}
                 />
               </Typography>
             )}
@@ -223,8 +227,11 @@ export default function ListingComponent({
               Choose your yacht
             </Typography>
             <div className="grid gap-2">
-              {listing.activities.map((activity) => (
-                <div className="flex justify-between border border-gray-100 p-4">
+              {experience.activities.map((activity) => (
+                <div
+                  className="flex justify-between border border-gray-100 p-4"
+                  key={activity.id}
+                >
                   <div>
                     <Typography
                       className="!mb-6 w-full !text-lg !font-extrabold"
@@ -240,6 +247,24 @@ export default function ListingComponent({
                         }}
                       />
                     )}
+
+                    <SButton
+                      className="mt-4"
+                      size="small"
+                      variant="outlined"
+                      onClick={() => {
+                        setActivityForExperience(experience.id, activity.id);
+                        checkoutStartRef.current &&
+                          checkoutStartRef.current.scrollIntoView({
+                            behavior: "smooth",
+                          });
+                      }}
+                    >
+                      Select cruise for $
+                      {activity.availabilities
+                        ? activity.availabilities[0].pricePerUnit
+                        : "unavailable"}
+                    </SButton>
                   </div>
                   {activity.medias && (
                     <div className="ml-4 flex-shrink-0">
@@ -270,23 +295,25 @@ export default function ListingComponent({
             </Typography>
 
             <div className="grid gap-2">
-              <Typography>{listing.location.addressLineOne}</Typography>
-              {listing.location.addressLineTwo && (
-                <Typography>{listing.location.addressLineTwo}</Typography>
+              <Typography>{experience.location.addressLineOne}</Typography>
+              {experience.location.addressLineTwo && (
+                <Typography>{experience.location.addressLineTwo}</Typography>
               )}
               <Typography>
-                {listing.location.postalCode}, {listing.location.city}
+                {experience.location.postalCode}, {experience.location.city}
               </Typography>
               <Typography>
-                {listing.location.federalState}, {listing.location.country}
+                {experience.location.federalState},{" "}
+                {experience.location.country}
               </Typography>
 
-              {listing.location.longitude && listing.location.latitude && (
-                <MybookrMap
-                  latitude={listing.location.latitude}
-                  longitude={listing.location.longitude}
-                />
-              )}
+              {experience.location.longitude &&
+                experience.location.latitude && (
+                  <MybookrMap
+                    latitude={experience.location.latitude}
+                    longitude={experience.location.longitude}
+                  />
+                )}
             </div>
           </div>
 
@@ -309,8 +336,11 @@ export default function ListingComponent({
         </div>
 
         {/* Right content - Desktop */}
-        <div className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 md:mr-40 md:mt-0 md:px-0 md:py-0">
-          <CheckoutStart listing={listing} />
+        <div
+          className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 md:mr-40 md:mt-0 md:px-0 md:py-0"
+          ref={checkoutStartRef}
+        >
+          <CheckoutStart experience={experience} />
         </div>
       </div>
     </div>

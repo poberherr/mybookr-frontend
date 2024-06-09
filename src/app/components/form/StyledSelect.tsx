@@ -20,7 +20,7 @@ interface StyledSelectProps<TFieldValues extends FieldValues> {
   label: string;
   name: string;
   placeholder: string;
-  menuItems: (string | number)[];
+  menuItems: { title?: string; value: string | number }[];
 }
 
 function StyledSelect<TFieldValues extends FieldValues>({
@@ -80,7 +80,8 @@ function StyledSelect<TFieldValues extends FieldValues>({
               if (!selected) {
                 return <div style={{ color: "#a1a1a1" }}>{placeholder}</div>;
               }
-              return selected;
+              const item = menuItems.find((item) => item.value === selected);
+              return item?.title || item?.value;
             }}
             IconComponent={DownArrowIcon}
             MenuProps={{
@@ -102,8 +103,8 @@ function StyledSelect<TFieldValues extends FieldValues>({
             }}
           >
             {menuItems.map((item, index) => (
-              <MenuItem key={index} value={item} sx={{ fontFamily: "Inter" }}>
-                {item}
+              <MenuItem key={index} value={item.value} sx={{ fontFamily: "Inter" }}>
+                {item.title || item.value}
               </MenuItem>
             ))}
           </Select>

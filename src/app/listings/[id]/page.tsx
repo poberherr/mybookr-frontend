@@ -23,7 +23,7 @@ export default async function ListingPage({
   if (!experience) {
     throw new Error("unable to experience detail page results");
   }
-  return <ListingComponent listing={experience} />;
+  return <ListingComponent experience={experience} />;
 }
 
 export const revalidate = false;

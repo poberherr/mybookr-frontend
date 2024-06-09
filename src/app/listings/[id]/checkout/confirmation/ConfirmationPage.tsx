@@ -17,7 +17,7 @@ import {
 import BackButton from "@/app/components/others/BackButton";
 
 import { BookingContext } from "@/app/contexts/booking";
-import formatDateSpan from "@/app/helpers/date-format";
+import {formatDateSpan} from "@/app/helpers/date-format";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { ExperienceItemFragment } from "@/gql/graphql";
 

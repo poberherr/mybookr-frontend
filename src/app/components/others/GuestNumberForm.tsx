@@ -32,7 +32,7 @@ export default function GuestNumberForm() {
       id="guest"
       control={control}
       label="Guests"
-      menuItems={[1, 2, 3, 4]} // Updated to include 3 guests as an option.
+      menuItems={[{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }]} // Updated to include 3 guests as an option.
       rules={formValidator.guest}
       errors={errors.guest}
       placeholder="Select number of guests"

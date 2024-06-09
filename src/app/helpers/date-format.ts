@@ -1,14 +1,14 @@
-export default function formatDateSpan(dt: Date, dt1: Date): string {
-  const formatterSameMonthYear = new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-  });
-  const formatterDifferentMonth = new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+const formatterSameMonthYear = new Intl.DateTimeFormat("en", {
+  month: "short",
+  day: "numeric",
+});
+const formatterDifferentMonth = new Intl.DateTimeFormat("en", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+});
 
+export function formatDateSpan(dt: Date, dt1: Date): string {
   // Check if both dates are in the same year and month
   if (
     dt.getFullYear() === dt1.getFullYear() &&
@@ -32,4 +32,8 @@ export default function formatDateSpan(dt: Date, dt1: Date): string {
     // Format: Sep 28, 2022 - Oct 5, 2023
     return `${formatterDifferentMonth.format(dt)} - ${formatterDifferentMonth.format(dt1)}`;
   }
+}
+
+export function formatDate(dt: Date): string {
+  return formatterDifferentMonth.format(dt);
 }
