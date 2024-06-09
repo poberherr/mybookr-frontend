@@ -27,48 +27,48 @@ export default function ConfirmationPage({
   listing: ExperienceItemFragment;
 }) {
   const router = useRouter();
-  const stripe = useStripe();
+  // const stripe = useStripe();
   const [paymentSuccess, setPaymentSuccess] = useState<Boolean>();
 
-  React.useEffect(() => {
-    if (!stripe) {
-      return;
-    }
+  // React.useEffect(() => {
+  //   if (!stripe) {
+  //     return;
+  //   }
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret",
-    );
+  //   const clientSecret = new URLSearchParams(window.location.search).get(
+  //     "payment_intent_client_secret",
+  //   );
 
-    if (!clientSecret) {
-      alert("Payment could not be identified. Please try to book again.");
-      router.push(`${window.location.origin}/listings/${listing?.id}/checkout`);
-      return;
-    }
+  //   if (!clientSecret) {
+  //     alert("Payment could not be identified. Please try to book again.");
+  //     router.push(`${window.location.origin}/listings/${listing?.id}/checkout`);
+  //     return;
+  //   }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      if (!paymentIntent) {
-        alert("Payment could not be identified. Please try to book again.");
-        router.push(
-          `${window.location.origin}/listings/${listing?.id}/checkout`,
-        );
-        return;
-      }
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setPaymentSuccess(true);
-          break;
-        case "processing":
-          setPaymentSuccess(true);
-          break;
-        case "requires_payment_method":
-          setPaymentSuccess(false);
-          break;
-        default:
-          setPaymentSuccess(false);
-          break;
-      }
-    });
-  }, [stripe]);
+  //   stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+  //     if (!paymentIntent) {
+  //       alert("Payment could not be identified. Please try to book again.");
+  //       router.push(
+  //         `${window.location.origin}/listings/${listing?.id}/checkout`,
+  //       );
+  //       return;
+  //     }
+  //     switch (paymentIntent.status) {
+  //       case "succeeded":
+  //         setPaymentSuccess(true);
+  //         break;
+  //       case "processing":
+  //         setPaymentSuccess(true);
+  //         break;
+  //       case "requires_payment_method":
+  //         setPaymentSuccess(false);
+  //         break;
+  //       default:
+  //         setPaymentSuccess(false);
+  //         break;
+  //     }
+  //   });
+  // }, [stripe]);
 
   const isClient = useIsClient();
 
@@ -138,9 +138,9 @@ export default function ConfirmationPage({
     sendEmail();
   }, [isClient, paymentSuccess]);
 
-  if (!listing || !isClient || !paymentSuccess) {
-    return null;
-  }
+  // if (!listing || !isClient || !paymentSuccess) {
+  //   return null;
+  // }
 
   return (
     <>

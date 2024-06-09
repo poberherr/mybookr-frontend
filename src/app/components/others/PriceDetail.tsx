@@ -5,6 +5,7 @@ import { Typography } from "@mui/material";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { BookingContext } from "@/app/contexts/booking";
+import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
 export default function PriceDetail({
   experience,
@@ -13,9 +14,7 @@ export default function PriceDetail({
 }) {
   const { activities } = useContext(BookingContext);
   const activityId = activities[experience.id];
-  const activity = experience.activities.find(
-    (activity) => activity.id === activityId,
-  );
+  const activity = useGetActivityFromExperience(activityId, experience)
   const price =
     activity?.availabilities && activity.availabilities[0].pricePerUnit;
 

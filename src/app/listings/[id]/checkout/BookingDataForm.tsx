@@ -23,11 +23,15 @@ import { formatDate, formatDateSpan } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
+import { BookingFormData } from "./CheckoutPage";
+import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
 export default function BookingDataForm({
   experience,
+  setBookingFormData,
 }: {
   experience: ExperienceItemFragment;
+  setBookingFormData: React.Dispatch<React.SetStateAction<BookingFormData | undefined>>;
 }) {
   // const {
   //   data: booking,
@@ -39,9 +43,7 @@ export default function BookingDataForm({
 
   const { bookingDate, activities } = useContext(BookingContext);
   const activityId = activities[experience.id];
-  const activity = activityId
-    ? experience.activities.find((activity) => activity.id === activityId)
-    : undefined;
+  const activity = useGetActivityFromExperience(activityId, experience)
 
   const user = useUser();
 
@@ -88,7 +90,7 @@ export default function BookingDataForm({
 
   // React Hook Form for payment method
   // We can't put these inside the form component (PaymentMethodForm), because we need the trigger method for the Request booking button inside this (ShoppingCart) component
-  const methods = useForm({
+  const methods = useForm<BookingFormData>({
     defaultValues: {
       bookingDate,
       activityId,
@@ -97,18 +99,8 @@ export default function BookingDataForm({
   });
 
   const onSubmit = methods.handleSubmit((data) => {
-    console.dir({ data });
-
-    alert("now set data in state machine so next form can show up");
-
-    // if (!data.payment) {
-    //   setPaymentReady(true);
-    //   scrollToPayment();
-    //   return;
-    // }
+    setBookingFormData(data)
   });
-
-  const values = methods.watch();
 
   // handle email
   const emailValue = methods.watch("email");
@@ -222,6 +214,7 @@ export default function BookingDataForm({
               />
             </div>
           </div>
+          <SButton className="mt-8" disabled={!methods.formState.isValid}>Continue to payment</SButton>
         </div>
       </form>
     </FormProvider>

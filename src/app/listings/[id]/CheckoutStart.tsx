@@ -21,6 +21,7 @@ import { ExperienceItemFragment } from "@/gql/graphql";
 import { formatDate } from "@/app/helpers/date-format";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useIsClient } from "@/app/helpers/useIsClient";
+import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -36,9 +37,7 @@ export default function CheckoutStart({ experience }: IProps) {
 
   const [flagCalender, setFlagCalender] = useState(false);
   const activityId = activities[experience.id];
-  const activity = activityId
-    ? experience.activities.find((activity) => activity.id === activityId)
-    : undefined;
+  const activity = useGetActivityFromExperience(activityId, experience)
 
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
