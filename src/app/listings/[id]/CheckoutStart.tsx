@@ -17,9 +17,10 @@ import {
   useWatchDateRange,
   useWatchGuest,
 } from "@/app/contexts/booking";
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
+
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
 interface IProps {
   listing: ExperienceItemFragment;
@@ -32,7 +33,7 @@ interface CheckoutStartForm {
 
 export default function CheckoutStart({ listing }: IProps) {
   const router = useRouter();
-  const { dateFrom, dateTo, guest, nights } =
+  const { dateFrom, dateTo, guest } =
     useContext(BookingContext);
   const [flagCalender, setFlagCalender] = useState(false);
   const isClient = useIsClient();
@@ -56,7 +57,6 @@ export default function CheckoutStart({ listing }: IProps) {
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {
-    console.dir({ data });
     if (data.guest !== 0) {
       router.push(`/listings/${listing.id}/checkout`);
     } else {
@@ -65,7 +65,7 @@ export default function CheckoutStart({ listing }: IProps) {
   });
 
   // @todo what is when we have multiple?
-  const averagePricePerNight = useAveragePricePerNight(listing);
+  const minimumPrice = useMinimumPrice(listing);
 
   if (!isClient) {
     return null;
@@ -75,10 +75,10 @@ export default function CheckoutStart({ listing }: IProps) {
     <FormProvider {...methods}>
       <form onSubmit={onSubmit}>
         <div className="sticky top-5 flex flex-col gap-8 bg-white px-0 pb-16 pt-0 md:py-16">
-          {/* Price Per Night - Dates - Guests */}
+          {/* Activity - Date -> Base Price */}
           <div className="grid gap-8 md:px-8 md:py-0">
             <Typography component="p" variant="h6">
-              <b>{averagePricePerNight} $</b> / Night
+              <b>{minimumPrice} $</b>
             </Typography>
 
             <div className="flex flex-col gap-4">
@@ -143,20 +143,21 @@ export default function CheckoutStart({ listing }: IProps) {
               </Typography>
 
               <Typography className="text-right !font-bold uppercase !text-slate-800">
-                {(averagePricePerNight * nights).toFixed(2)} $
+                {minimumPrice.toFixed(2)} $
               </Typography>
             </div>
 
             <SButton fullWidth variant="contained">
-              Reserve
+              Checkout
             </SButton>
 
             <Typography
               className="text-center !text-neutral-500"
               variant="caption"
             >
-              You won't be charged yet <br />
-              The price per night includes VAT and all fees.
+              Book the basic package online, and add extras later on.
+              <br />
+              The price includes VAT and all fees.
             </Typography>
           </div>
         </div>

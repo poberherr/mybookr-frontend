@@ -20,7 +20,6 @@ import "@/global.css";
 interface BookingStateStore {
   dateFrom: string;
   dateTo: string;
-  nights: number;
   guest: number;
   email: string;
 }
@@ -31,7 +30,6 @@ const useBookingStateStore =
 export const BookingContext = createContext<{
   dateFrom?: Date;
   dateTo?: Date;
-  nights: number;
   setDates: (startDate: Date, endDate: Date) => void;
   guest: number;
   setGuest: (guest: number) => void;
@@ -40,7 +38,6 @@ export const BookingContext = createContext<{
 }>({
   dateFrom: undefined,
   dateTo: undefined,
-  nights: 1,
   setDates: () => {},
   guest: 1,
   setGuest: () => {},
@@ -57,20 +54,16 @@ export const BookingContextProvider = ({
     dateFrom: formatISO(startOfToday()),
     dateTo: formatISO(startOfTomorrow()),
     guest: 0,
-    nights: 1,
     email: "",
   });
 
   const setDates = useCallback(
     (startDate: Date, endDate: Date) => {
-      const nights = differenceInDays(endDate, startDate);
-
-      if (nights > 0) {
+      if (endDate >= startDate ) {
         setBookingState((prevState) => ({
           ...prevState,
           dateFrom: formatISO(startDate),
           dateTo: formatISO(endDate),
-          nights,
         }));
       }
     },
@@ -127,7 +120,6 @@ export const BookingContextProvider = ({
         dateTo: bookingState.dateTo
           ? parseISO(bookingState.dateTo)
           : undefined,
-        nights: bookingState.nights,
         setDates,
         guest: bookingState.guest,
         setGuest,

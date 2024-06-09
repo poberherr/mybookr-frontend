@@ -7,10 +7,9 @@ import { default as heartIcon } from "@/assets/icons/heart.svg";
 import { default as shareIcon } from "@/assets/icons/share.svg";
 import { default as starIcon } from "@/assets/icons/star.svg";
 
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
-
 import BoostedBadge from "../others/BoostedBadge";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
 interface IProps {
   property: ExperienceItemFragment;
@@ -20,7 +19,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
   const router = useRouter();
   // const today = moment().format("YYYY-MM-DD");
   // const isBoosted = property.boost_dates.includes("2024-02-19");
-  const averagePricePerNight = useAveragePricePerNight(property);
+  const minimumPrice = useMinimumPrice(property);
 
   return (
     <div
@@ -68,7 +67,7 @@ export default function PropertyItemBoosted({ property }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            ${averagePricePerNight} / Night
+            ${minimumPrice}
           </Typography>
 
           <div className="flex flex-row items-center">

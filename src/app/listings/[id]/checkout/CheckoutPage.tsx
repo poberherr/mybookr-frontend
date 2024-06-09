@@ -9,25 +9,20 @@ import { Divider, Typography } from "@mui/material";
 import BackButton from "@/app/components/others/BackButton";
 import PriceDetail from "@/app/components/others/PriceDetail";
 
-import { BookingContext } from "@/app/contexts/booking";
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import BlaBla from "./BlaBla";
 import BookingDataForm from "./BookingDataForm";
 import { PaymentWrapper } from "./PaymentWrapper";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
 export default function CheckoutPage({ listing }: { listing: ExperienceItemFragment }) {
   const isClient = useIsClient();
-  const { nights } = useContext(BookingContext);
 
-  const averagePricePerNight = useAveragePricePerNight(listing);
+  const minimumPrice = useMinimumPrice(listing);
 
-  const totalPrice = useMemo(
-    () => listing && (averagePricePerNight * nights).toFixed(2),
-    [listing, nights],
-  );
+  const totalPrice = minimumPrice
 
   if (!isClient || !listing) {
     return null;

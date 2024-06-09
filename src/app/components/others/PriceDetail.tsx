@@ -2,23 +2,22 @@ import React from "react";
 
 import { Typography } from "@mui/material";
 
-import { BookingContext } from "@/app/contexts/booking";
-import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 
 export default function PriceDetail({ listing }: { listing: ExperienceItemFragment }) {
-  const { nights } = React.useContext(BookingContext);
-  const averagePricePerNight = useAveragePricePerNight(listing);
+  // @todo get price from selected availability - if no selected, show as "from" price - disable reserve button (rename to checkout)
+  const minimumPrice = useMinimumPrice(listing);
 
   return (
     <div className="grid gap-4">
-      {/* Night */}
+      {/* Base Price */}
       <div className="flex justify-between">
         <Typography variant="body2">
-          {averagePricePerNight}$ x {nights} Nights
+          1 x {minimumPrice}$
         </Typography>
         <Typography className="!text-sm !font-bold" variant="h6" component="p">
-          {(averagePricePerNight * nights).toFixed(2)} $
+          {minimumPrice}$
         </Typography>
       </div>
 

@@ -5,10 +5,6 @@ import Link from "next/link";
 
 import { Typography } from "@mui/material";
 
-import { default as HeartIcon } from "@/assets/icons/heart.svg";
-import { default as ShareIcon } from "@/assets/icons/share.svg";
-import { default as StarIcon } from "@/assets/icons/star.svg";
-
 import BoostedBadge from "../others/BoostedBadge";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
@@ -19,7 +15,7 @@ interface IProps {
 
 export default function PropertyItem({ property: experience }: IProps) {
   const isBoosted = false;
-  const averagePricePerNight = useMinimumPrice(experience);
+  const minimumPrice = useMinimumPrice(experience);
 
   return (
     <Link
@@ -74,10 +70,6 @@ export default function PropertyItem({ property: experience }: IProps) {
               {experience.location.country}
             </Typography>
           )}
-
-          {/* <Typography className="flex flex-row items-center !text-xs !font-medium">
-            <StarIcon className="mr-1 h-2.5 w-2.5 min-w-fit" alt="rating" /> {5}
-          </Typography> */}
         </div>
 
         {isBoosted && (
@@ -88,14 +80,9 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from ${averagePricePerNight} • {experience.activities.length} yacht
+            from ${minimumPrice} • {experience.activities.length} yacht
             {experience.activities.length > 1 && "s"} available
           </Typography>
-
-          {/* <div className="flex flex-row items-center">
-            <HeartIcon className="h-4 w-4 first:mr-4" alt="Add to wishlist" />
-            <ShareIcon className="h-4 w-4 first:mr-4" alt="Share" />
-          </div> */}
         </div>
       </div>
 

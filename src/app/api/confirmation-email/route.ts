@@ -25,7 +25,6 @@ const EMAIL_DATA_LABELS = {
   dateFrom: "Start Date",
   dateTo: "End Date",
   guest: "Guests",
-  nights: "Nights",
   email: "Email",
 };
 

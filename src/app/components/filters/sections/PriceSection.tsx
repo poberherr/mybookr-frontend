@@ -37,7 +37,7 @@ export default function PriceSection() {
       <Wallet1 />
 
       <div className="grid gap-4">
-        <Typography>Price per Night</Typography>
+        <Typography>Price per cruise</Typography>
 
         <div className="grid justify-items-center gap-2">
           <div className="flex gap-4">

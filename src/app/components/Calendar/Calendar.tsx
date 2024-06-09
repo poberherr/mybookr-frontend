@@ -39,12 +39,12 @@ export default function Calendar({
 
   const dateRange = getValues("dateRange");
 
-  const nights = useMemo(() => {
+  const days = useMemo(() => {
     const { startDate, endDate } = dateRange;
     if (!startDate || !endDate) {
-      return 0;
+      return 1;
     }
-    return differenceInDays(endDate, startDate);
+    return differenceInDays(endDate, startDate) + 1;
   }, [dateRange]);
 
   return (
@@ -55,7 +55,7 @@ export default function Calendar({
     >
       <CalendarWrapper>
         <Typography variant="h5" className="heading !text-sm md:!text-xl">
-          <span>{nights + 1} days</span>
+          <span>searching for cruises within {days} days</span>
         </Typography>
 
         <Box className="body">

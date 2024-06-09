@@ -72,7 +72,7 @@ export default function ConfirmationPage({
 
   const isClient = useIsClient();
 
-  const { dateFrom, dateTo, guest, nights, email } =
+  const { dateFrom, dateTo, guest, email } =
     useContext(BookingContext);
   const mTheme = useTheme();
   const isMobile = useMediaQuery(mTheme.breakpoints.down("md"));
@@ -110,7 +110,6 @@ export default function ConfirmationPage({
         formData.append("dateFrom", dateFrom.toISOString());
         formData.append("dateTo", dateTo.toISOString());
         formData.append("guest", String(guest));
-        formData.append("nights", String(nights));
         formData.append("email", email);
         formData.append("listingId", listing.id);
 
@@ -203,7 +202,6 @@ export default function ConfirmationPage({
               dateFrom &&
                 dateTo &&
                 `${formatDateSpan(dateFrom, dateTo)}`,
-              `${nights} nights`,
               `${guest} guests`,
             ]
               .filter(Boolean)
