@@ -274,7 +274,7 @@ export default function ListingComponent({
                 className="prose !mt-8 !leading-relaxed"
                 variant="body1"
               >
-                <div dangerouslySetInner={{ __html: listing.description }} />
+                <div dangerouslySetInnerHTML={{ __html: listing.description }} />
               </Typography>
             )}
           </div>
@@ -365,7 +365,7 @@ export default function ListingComponent({
                     {activity.description && (
                       <div
                         className="prose"
-                        dangerouslySetInner={{
+                        dangerouslySetInnerHTML={{
                           __html: activity.description,
                         }}
                       />

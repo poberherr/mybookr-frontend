@@ -2,12 +2,11 @@ import React from "react";
 
 import { Typography } from "@mui/material";
 
-import { Listing } from "@/app/api-helpers";
 import { BookingContext } from "@/app/contexts/booking";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
-import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
-export default function PriceDetail({ listing }: { listing: ExperienceItem }) {
+export default function PriceDetail({ listing }: { listing: ExperienceItemFragment }) {
   const { nights } = React.useContext(BookingContext);
   const averagePricePerNight = useAveragePricePerNight(listing);
 

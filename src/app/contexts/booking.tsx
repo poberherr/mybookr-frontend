@@ -18,8 +18,8 @@ import createPersistedState from "use-persisted-state";
 import "@/global.css";
 
 interface BookingStateStore {
-  selectedDate: string;
-  selectedDate1: string;
+  dateFrom: string;
+  dateTo: string;
   nights: number;
   guest: number;
   email: string;
@@ -29,8 +29,8 @@ const useBookingStateStore =
   createPersistedState<BookingStateStore>("mybookr-booking");
 
 export const BookingContext = createContext<{
-  selectedDate?: Date;
-  selectedDate1?: Date;
+  dateFrom?: Date;
+  dateTo?: Date;
   nights: number;
   setDates: (startDate: Date, endDate: Date) => void;
   guest: number;
@@ -38,8 +38,8 @@ export const BookingContext = createContext<{
   email?: string;
   setEmail: (email: string) => void;
 }>({
-  selectedDate: undefined,
-  selectedDate1: undefined,
+  dateFrom: undefined,
+  dateTo: undefined,
   nights: 1,
   setDates: () => {},
   guest: 1,
@@ -54,8 +54,8 @@ export const BookingContextProvider = ({
   children: React.ReactNode;
 }) => {
   const [bookingState, setBookingState] = useBookingStateStore({
-    selectedDate: formatISO(startOfToday()),
-    selectedDate1: formatISO(startOfTomorrow()),
+    dateFrom: formatISO(startOfToday()),
+    dateTo: formatISO(startOfTomorrow()),
     guest: 0,
     nights: 1,
     email: "",
@@ -68,8 +68,8 @@ export const BookingContextProvider = ({
       if (nights > 0) {
         setBookingState((prevState) => ({
           ...prevState,
-          selectedDate: formatISO(startDate),
-          selectedDate1: formatISO(endDate),
+          dateFrom: formatISO(startDate),
+          dateTo: formatISO(endDate),
           nights,
         }));
       }
@@ -111,8 +111,8 @@ export const BookingContextProvider = ({
 
   useEffect(() => {
     if (
-      !bookingState.selectedDate ||
-      isBefore(parseISO(bookingState.selectedDate), startOfToday())
+      !bookingState.dateFrom ||
+      isBefore(parseISO(bookingState.dateFrom), startOfToday())
     ) {
       setDates(startOfToday(), startOfTomorrow());
     }
@@ -121,11 +121,11 @@ export const BookingContextProvider = ({
   return (
     <BookingContext.Provider
       value={{
-        selectedDate: bookingState.selectedDate
-          ? parseISO(bookingState.selectedDate)
+        dateFrom: bookingState.dateFrom
+          ? parseISO(bookingState.dateFrom)
           : undefined,
-        selectedDate1: bookingState.selectedDate1
-          ? parseISO(bookingState.selectedDate1)
+        dateTo: bookingState.dateTo
+          ? parseISO(bookingState.dateTo)
           : undefined,
         nights: bookingState.nights,
         setDates,
@@ -145,14 +145,14 @@ export function useWatchDateRange<T extends FieldValues>(
   name: Path<T>,
 ) {
   const value: Range = useWatch({ name, control });
-  const { selectedDate, selectedDate1, setDates } = useContext(BookingContext);
+  const { dateFrom, dateTo, setDates } = useContext(BookingContext);
   useEffect(() => {
-    if (!selectedDate || !selectedDate1 || !value.startDate || !value.endDate) {
+    if (!dateFrom || !dateTo || !value.startDate || !value.endDate) {
       return;
     }
     if (
-      value.startDate.toISOString() !== selectedDate.toISOString() ||
-      value.endDate.toISOString() !== selectedDate1.toISOString()
+      value.startDate.toISOString() !== dateFrom.toISOString() ||
+      value.endDate.toISOString() !== dateTo.toISOString()
     ) {
       setDates(value.startDate, value.endDate);
     }

@@ -120,7 +120,7 @@ const SelectedDate = ({
 };
 
 export default function SearchBar() {
-  const { selectedDate, selectedDate1, setDates } = useContext(BookingContext);
+  const { dateFrom, dateTo, setDates } = useContext(BookingContext);
 
   const showFiltered = true;
 
@@ -163,8 +163,8 @@ export default function SearchBar() {
   const defaultValues: FormData = useMemo(
     () => ({
       dateRange: {
-        startDate: selectedDate,
-        endDate: selectedDate1,
+        startDate: dateFrom,
+        endDate: dateTo,
         key: "selection",
       },
       rooms: {

@@ -11,9 +11,10 @@ import { Listing } from "@/app/api-helpers";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 
 import BoostedBadge from "../others/BoostedBadge";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 interface IProps {
-  property: Listing;
+  property: ExperienceItemFragment;
 }
 
 export default function PropertyItemBoosted({ property }: IProps) {
@@ -31,12 +32,12 @@ export default function PropertyItemBoosted({ property }: IProps) {
       }}
     >
       <div className="relative w-full">
-        {property.images &&
-          property.images.length > 0 &&
-          property.images[0].image && (
+        {property.medias &&
+          property.medias.length > 0 &&
+          property.medias[0].url && (
             <Image
               className="aspect-video w-full object-cover"
-              src={property.images[0].image}
+              src={property.medias[0].url}
               alt=""
               fill={true}
             />

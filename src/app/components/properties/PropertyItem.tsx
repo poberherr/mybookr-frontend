@@ -10,11 +10,11 @@ import { default as ShareIcon } from "@/assets/icons/share.svg";
 import { default as StarIcon } from "@/assets/icons/star.svg";
 
 import BoostedBadge from "../others/BoostedBadge";
-import { ExperienceItem } from "@/gql/graphql";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 interface IProps {
-  property: ExperienceItem;
+  property: ExperienceItemFragment;
 }
 
 export default function PropertyItem({ property: experience }: IProps) {

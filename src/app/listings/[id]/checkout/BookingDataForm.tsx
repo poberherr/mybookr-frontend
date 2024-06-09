@@ -31,7 +31,7 @@ export default function BookingDataForm() {
   //   isError,
   // } = useBookingsCreate({ mutation: {} });
 
-  const { selectedDate, selectedDate1, guest } = useContext(BookingContext);
+  const { dateFrom, dateTo, guest } = useContext(BookingContext);
 
   const user = useUser();
 
@@ -47,15 +47,15 @@ export default function BookingDataForm() {
   //     isIdle &&
   //     !isPending &&
   //     listing &&
-  //     selectedDate &&
-  //     selectedDate1
+  //     dateFrom &&
+  //     dateTo
   //   ) {
   //     // create booking if not exists
   //     console.log("Mutating!");
   //     mutate({
   //       booking_status: "NotStarted",
-  //       check_in_date: formatISO(selectedDate),
-  //       check_out_date: formatISO(selectedDate1),
+  //       check_in_date: formatISO(dateFrom),
+  //       check_out_date: formatISO(dateTo),
   //       number_of_guests: guest,
   //       //@todo remove this when listing id is requried in generated interfaces,
   //       listing_id: listing.id || 0,
@@ -66,8 +66,8 @@ export default function BookingDataForm() {
   // }, [
   //   booking,
   //   listing,
-  //   selectedDate,
-  //   selectedDate1,
+  //   dateFrom,
+  //   dateTo,
   //   isIdle,
   //   isPending,
   //   isError,
@@ -83,8 +83,8 @@ export default function BookingDataForm() {
       email: user.user?.primaryEmailAddress?.emailAddress || "",
       guest,
       dateRange: {
-        startDate: selectedDate,
-        endDate: selectedDate1,
+        startDate: dateFrom,
+        endDate: dateTo,
         key: "selection",
       },
     },

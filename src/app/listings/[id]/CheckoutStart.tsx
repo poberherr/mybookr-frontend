@@ -19,10 +19,10 @@ import {
 } from "@/app/contexts/booking";
 import { useAveragePricePerNight } from "@/app/helpers/useAveragePricePerNight";
 import { useIsClient } from "@/app/helpers/useIsClient";
-import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 interface IProps {
-  listing: ExperienceItem;
+  listing: ExperienceItemFragment;
 }
 
 interface CheckoutStartForm {
@@ -32,7 +32,7 @@ interface CheckoutStartForm {
 
 export default function CheckoutStart({ listing }: IProps) {
   const router = useRouter();
-  const { selectedDate, selectedDate1, guest, nights } =
+  const { dateFrom, dateTo, guest, nights } =
     useContext(BookingContext);
   const [flagCalender, setFlagCalender] = useState(false);
   const isClient = useIsClient();
@@ -42,8 +42,8 @@ export default function CheckoutStart({ listing }: IProps) {
     defaultValues: {
       guest,
       dateRange: {
-        startDate: selectedDate,
-        endDate: selectedDate1,
+        startDate: dateFrom,
+        endDate: dateTo,
         key: "selection",
       },
     },

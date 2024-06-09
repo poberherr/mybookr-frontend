@@ -18,12 +18,12 @@ import {
 } from "./templates";
 import { getSSRClient } from "@/app/api-helpers/urql";
 import { graphql, useFragment } from "@/gql";
-import { ExperienceItem } from "@/gql/graphql";
 import { ExperienceItem as ExperienceItemFragment } from "@/app/fragments/experience-fragments";
+import { ExperienceItemFragment as Experience } from "@/gql/graphql";
 
 const EMAIL_DATA_LABELS = {
-  selectedDate: "Start Date",
-  selectedDate1: "End Date",
+  dateFrom: "Start Date",
+  dateTo: "End Date",
   guest: "Guests",
   nights: "Nights",
   email: "Email",
@@ -62,7 +62,7 @@ async function sendBookerEmail(
 
 async function sendHostEmail(
   formData: FormData,
-  listing: ExperienceItem,
+  listing: Experience,
   replaceMap: { [key: string]: string },
 ) {
   console.time("email-owner");

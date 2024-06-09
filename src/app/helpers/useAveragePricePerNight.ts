@@ -3,12 +3,12 @@ import { useContext, useMemo } from "react";
 import { addDays, isWithinInterval } from "date-fns";
 
 import { BookingContext } from "../contexts/booking";
-import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
-export const useAveragePricePerNight = (experience: ExperienceItem): number => {
-  const { selectedDate, selectedDate1 } = useContext(BookingContext);
+export const useAveragePricePerNight = (experience: ExperienceItemFragment): number => {
+  const { dateFrom, dateTo } = useContext(BookingContext);
   return useMemo(() => {
-    if (!selectedDate || !selectedDate1 || !experience.activities) {
+    if (!dateFrom || !dateTo || !experience.activities) {
       return 0;
     }
     const allAvailabilities = experience.activities
@@ -17,8 +17,8 @@ export const useAveragePricePerNight = (experience: ExperienceItem): number => {
     if (allAvailabilities.length) {
       const availabilities = allAvailabilities.filter((availability) => {
         return isWithinInterval(availability?.dateAvailable, {
-          start: addDays(selectedDate, -1),
-          end: addDays(selectedDate1, 1),
+          start: addDays(dateFrom, -1),
+          end: addDays(dateTo, 1),
         });
       });
 
@@ -32,5 +32,5 @@ export const useAveragePricePerNight = (experience: ExperienceItem): number => {
       return Math.round((sum / availabilities.length) * 100) / 100;
     }
     return 0;
-  }, [experience, selectedDate, selectedDate1]);
+  }, [experience, dateFrom, dateTo]);
 };

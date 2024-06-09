@@ -18,14 +18,13 @@ import BackButton from "@/app/components/others/BackButton";
 
 import { BookingContext } from "@/app/contexts/booking";
 import formatDateSpan from "@/app/helpers/date-format";
-import { useGetListing } from "@/app/helpers/useGetListing";
 import { useIsClient } from "@/app/helpers/useIsClient";
-import { ExperienceItem } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 
 export default function ConfirmationPage({
   listing,
 }: {
-  listing: ExperienceItem;
+  listing: ExperienceItemFragment;
 }) {
   const router = useRouter();
   const stripe = useStripe();
@@ -73,7 +72,7 @@ export default function ConfirmationPage({
 
   const isClient = useIsClient();
 
-  const { selectedDate, selectedDate1, guest, nights, email } =
+  const { dateFrom, dateTo, guest, nights, email } =
     useContext(BookingContext);
   const mTheme = useTheme();
   const isMobile = useMediaQuery(mTheme.breakpoints.down("md"));
@@ -93,8 +92,8 @@ export default function ConfirmationPage({
     async function sendEmail() {
       if (
         !listing ||
-        !selectedDate ||
-        !selectedDate1 ||
+        !dateFrom ||
+        !dateTo ||
         !email ||
         emailSent ||
         !isClient ||
@@ -108,8 +107,8 @@ export default function ConfirmationPage({
       try {
         const formData = new FormData();
 
-        formData.append("selectedDate", selectedDate.toISOString());
-        formData.append("selectedDate1", selectedDate1.toISOString());
+        formData.append("dateFrom", dateFrom.toISOString());
+        formData.append("dateTo", dateTo.toISOString());
         formData.append("guest", String(guest));
         formData.append("nights", String(nights));
         formData.append("email", email);
@@ -201,9 +200,9 @@ export default function ConfirmationPage({
 
           <Typography className="!mb-5 !text-gray-500" variant="body2">
             {[
-              selectedDate &&
-                selectedDate1 &&
-                `${formatDateSpan(selectedDate, selectedDate1)}`,
+              dateFrom &&
+                dateTo &&
+                `${formatDateSpan(dateFrom, dateTo)}`,
               `${nights} nights`,
               `${guest} guests`,
             ]

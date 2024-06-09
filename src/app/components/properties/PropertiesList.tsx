@@ -22,12 +22,12 @@ const ExperiencesQuery = graphql(`
 
 export default function PropertiesList() {
   const isClient = useIsClient();
-  const { selectedDate, selectedDate1 } = useContext(BookingContext);
+  const { dateFrom, dateTo } = useContext(BookingContext);
   const [result] = useQuery({
     query: ExperiencesQuery,
     variables: {
-      dateStart: selectedDate ? format(selectedDate, "yyyy-MM-dd") : null,
-      dateEnd: selectedDate1 ? format(selectedDate1, "yyyy-MM-dd") : null,
+      dateStart: dateFrom ? format(dateFrom, "yyyy-MM-dd") : null,
+      dateEnd: dateTo ? format(dateTo, "yyyy-MM-dd") : null,
     },
   });
 
