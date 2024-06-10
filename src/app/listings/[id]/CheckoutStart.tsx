@@ -34,7 +34,7 @@ export interface CheckoutStartForm {
 
 export default function CheckoutStart({ experience }: IProps) {
   const router = useRouter();
-  const { activities, bookingDate } = useContext(BookingContext);
+  const { activities, bookingDate, dateFrom } = useContext(BookingContext);
 
   const [flagCalender, setFlagCalender] = useState(false);
   const activityId = activities[experience.id];
@@ -44,7 +44,7 @@ export default function CheckoutStart({ experience }: IProps) {
   const methods = useForm<CheckoutStartForm>({
     defaultValues: {
       activityId,
-      bookingDate,
+      bookingDate: bookingDate || dateFrom || new Date(),
     },
   });
 

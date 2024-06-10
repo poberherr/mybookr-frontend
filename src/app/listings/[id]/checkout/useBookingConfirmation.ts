@@ -9,6 +9,7 @@ interface IProps {
   booking: BookingStore;
   setBookingUIState: React.Dispatch<React.SetStateAction<BookingUIStates>>;
   setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setBooking: React.Dispatch<React.SetStateAction<BookingStore>>;
 }
 
 const CheckBookingMutation = graphql(`
@@ -22,13 +23,19 @@ const useBookingConfirmation = ({
   booking,
   setBookingUIState,
   setPopupMessage,
+  setBooking,
 }: IProps) => {
   const [checkBookingStatusResult, checkBookingStatus] =
     useMutation(CheckBookingMutation);
 
   // execute booking status check as soon booking status check is shown
   useEffect(() => {
-    if (bookingUIState === "checkBookingStatus" && booking.bookingFlowToken) {
+    if (booking.bookingFlowToken === undefined) {
+      setBookingUIState("bookingDetails");
+      return;
+    }
+
+    if (bookingUIState === "checkBookingStatus") {
       // @todo check multiple times when status is still processing
       checkBookingStatus({ bookingFlowToken: booking.bookingFlowToken });
       return;
@@ -55,6 +62,11 @@ const useBookingConfirmation = ({
     }
     if (bookingStatus === BookingStatus.PaymentFinished) {
       setBookingUIState("confirmation");
+      // Reset booking to ensure we create a fresh one, forget the booking flow token and so on
+      setBooking({
+        experienceId: booking.experienceId,
+      });
+
       return;
     }
   }, [checkBookingStatusResult, bookingUIState, setBookingUIState]);

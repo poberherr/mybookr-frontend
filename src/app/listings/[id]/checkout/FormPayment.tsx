@@ -99,17 +99,14 @@ export default function FormPayment({
           <SButton
             type="submit"
             disabled={isLoading}
+            startIcon={
+              isLoading ? <CircularProgress size={24} color="warning" /> : <></>
+            }
             id="submit"
             className="mt-8"
           >
             <span id="button-text">
-              {isLoading ? (
-                <>
-                  <CircularProgress size={24} color="warning" /> Loading...
-                </>
-              ) : (
-                "Prepare payment to reserve"
-              )}
+              {isLoading ? "Loading..." : "Book now and execute payment"}
             </span>
           </SButton>
           <p className="mt-4 text-sm">

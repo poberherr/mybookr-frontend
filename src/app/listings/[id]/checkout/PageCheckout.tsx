@@ -50,7 +50,7 @@ export default function PageCheckout({
   experience: ExperienceItemFragment;
 }) {
   // (Booking) Context
-  const { activities, dateFrom } = useContext(BookingContext);
+  const { activities } = useContext(BookingContext);
   const activityId = activities[experience.id];
   const activity = useGetActivityFromExperience(activityId, experience);
 
@@ -107,7 +107,8 @@ export default function PageCheckout({
     booking,
     bookingUIState,
     setBookingUIState,
-    setPopupMessage
+    setPopupMessage,
+    setBooking
   })
 
   const isClient = useIsClient();
@@ -135,11 +136,17 @@ export default function PageCheckout({
 
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
-          {popupMessage && <div><strong>popupMessage: {popupMessage}</strong> @todo turn this into real popup</div>}
+          {popupMessage && (
+            <div>
+              <strong>popupMessage: {popupMessage}</strong> @todo turn this into
+              real popup
+            </div>
+          )}
           <ViewConfirmation bookingUIState={bookingUIState} />
           <ViewBookingForms
             bookingUIState={bookingUIState}
             experience={experience}
+            setBooking={setBooking}
             setBookingFormData={setBookingFormData}
             setPopupMessage={setPopupMessage}
             clientSecret={clientSecret}

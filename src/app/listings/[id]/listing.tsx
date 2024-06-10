@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
+import { RefObject, useContext, useRef, useState } from "react";
 
 import Image from "next/image";
 
@@ -16,6 +16,80 @@ import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { SButton } from "@/app/components/ui/SButton";
 import { BookingContext } from "@/app/contexts/booking";
+import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+
+interface IProps {
+  experience: ExperienceItemFragment;
+  activity: ExperienceItemFragment["activities"][0];
+  setActivityForExperience: (experienceId: string, activityId: string) => void;
+  checkoutStartRef: RefObject<HTMLDivElement>;
+}
+
+const ActivityCard = ({
+  experience,
+  activity,
+  setActivityForExperience,
+  checkoutStartRef,
+}: IProps) => {
+  const formattedPrice = useFormatPrice(
+    (activity?.availabilities && activity?.availabilities[0].pricePerUnit) ||
+      undefined,
+  );
+
+  return (
+    <div
+      className="flex justify-between border border-gray-100 p-4"
+      key={activity.id}
+    >
+      <div>
+        <Typography
+          className="!mb-6 w-full !text-lg !font-extrabold"
+          variant="h2"
+        >
+          {activity.title}
+        </Typography>
+        {activity.description && (
+          <div
+            className="prose"
+            dangerouslySetInnerHTML={{
+              __html: activity.description,
+            }}
+          />
+        )}
+
+        <SButton
+          className="mt-4"
+          size="small"
+          variant="outlined"
+          disabled={!formattedPrice}
+          onClick={() => {
+            setActivityForExperience(experience.id, activity.id);
+            checkoutStartRef.current &&
+              checkoutStartRef.current.scrollIntoView({
+                behavior: "smooth",
+              });
+          }}
+        >
+          {formattedPrice
+            ? `Select cruise for ${formattedPrice}`
+            : `unavailable`}
+        </SButton>
+      </div>
+      {activity.medias && (
+        <div className="ml-4 flex-shrink-0">
+          <Image
+            className="w-48 rounded-lg"
+            src={activity.medias[0].url}
+            alt=""
+            width={activity.medias[0].width}
+            height={activity.medias[0].height}
+            sizes={"420px"}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default function ListingComponent({
   experience,
@@ -228,57 +302,13 @@ export default function ListingComponent({
             </Typography>
             <div className="grid gap-2">
               {experience.activities.map((activity) => (
-                <div
-                  className="flex justify-between border border-gray-100 p-4"
+                <ActivityCard
                   key={activity.id}
-                >
-                  <div>
-                    <Typography
-                      className="!mb-6 w-full !text-lg !font-extrabold"
-                      variant="h2"
-                    >
-                      {activity.title}
-                    </Typography>
-                    {activity.description && (
-                      <div
-                        className="prose"
-                        dangerouslySetInnerHTML={{
-                          __html: activity.description,
-                        }}
-                      />
-                    )}
-
-                    <SButton
-                      className="mt-4"
-                      size="small"
-                      variant="outlined"
-                      onClick={() => {
-                        setActivityForExperience(experience.id, activity.id);
-                        checkoutStartRef.current &&
-                          checkoutStartRef.current.scrollIntoView({
-                            behavior: "smooth",
-                          });
-                      }}
-                    >
-                      Select cruise for $
-                      {activity.availabilities
-                        ? activity.availabilities[0].pricePerUnit
-                        : "unavailable"}
-                    </SButton>
-                  </div>
-                  {activity.medias && (
-                    <div className="ml-4 flex-shrink-0">
-                      <Image
-                        className="w-48 rounded-lg"
-                        src={activity.medias[0].url}
-                        alt=""
-                        width={activity.medias[0].width}
-                        height={activity.medias[0].height}
-                        sizes={"420px"}
-                      />
-                    </div>
-                  )}
-                </div>
+                  activity={activity}
+                  experience={experience}
+                  checkoutStartRef={checkoutStartRef}
+                  setActivityForExperience={setActivityForExperience}
+                />
               ))}
             </div>
           </div>
