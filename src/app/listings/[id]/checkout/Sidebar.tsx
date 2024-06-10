@@ -1,33 +1,13 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React from "react";
 
 import Image from "next/image";
 
-import { CircularProgress, Divider, Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 
-import { Elements } from "@stripe/react-stripe-js";
-import {
-  Appearance,
-  StripeElementsOptions,
-  loadStripe,
-} from "@stripe/stripe-js";
-import createPersistedState from "use-persisted-state";
-import { useMutation } from "urql";
-
-import BackButton from "@/app/components/others/BackButton";
 import PriceDetail from "@/app/components/others/PriceDetail";
 
-import { useIsClient } from "@/app/helpers/useIsClient";
-
-import BlaBla from "./BlaBla";
-import FormBookingDetails from "./FormBookingDetails";
-import { PaymentWrapper } from "./PaymentWrapper";
-import { BookingStatus, ExperienceItemFragment } from "@/gql/graphql";
-import { graphql } from "@/gql";
-import { BookingContext } from "@/app/contexts/booking";
-import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
+import { ExperienceItemFragment } from "@/gql/graphql";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
-import ViewConfirmation from "./ViewConfirmation";
-import ViewBookingForms from "./ViewBookingForms";
 
 interface IProps {
   experience: ExperienceItemFragment;
