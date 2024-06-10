@@ -54,6 +54,7 @@ export default function FormBookingDetails({
   });
 
   const onSubmit = methods.handleSubmit((data) => {
+    console.log('Setting booking form data')
     setBookingFormData(data);
   });
 

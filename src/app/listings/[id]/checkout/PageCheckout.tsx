@@ -120,7 +120,8 @@ export default function PageCheckout({
   // # UI Business Logic
   // Create new booking as soon we have availability and a booking flow token
   useEffect(() => {
-    if (!activity || !activity.availabilities || bookingFlowToken) {
+    if (!activity || !activity.availabilities) {
+      console.log('Cant continue, no activity selected')
       return;
     }
     if (bookingFormData) {
@@ -135,6 +136,8 @@ export default function PageCheckout({
         });
         return;
       }
+      console.log("changing to provide payment credentials (cus we have token already)");
+      setBookingUIState("providePaymentCredentials")
     }
   }, [activity, bookingFormData, bookingFlowToken]);
 
@@ -144,7 +147,6 @@ export default function PageCheckout({
       console.error(createBookingResult.error);
     }
     if (!createBookingResult.data) {
-      console.log("no data in create booking results")
       return;
     }
     setBookingUIState("providePaymentCredentials");
@@ -216,9 +218,10 @@ export default function PageCheckout({
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
           {popupMessage && <strong>popupMessage: {popupMessage}</strong>}
+          bookingUIState: {bookingUIState}
           <ViewConfirmation bookingUIState={bookingUIState} />
           <ViewBookingForms
-            bookingUIState={"bookingDetails"}
+            bookingUIState={bookingUIState}
             experience={experience}
             setBookingFormData={setBookingFormData}
             setPopupMessage={setPopupMessage}
