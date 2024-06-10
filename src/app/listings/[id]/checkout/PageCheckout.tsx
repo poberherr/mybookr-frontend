@@ -2,7 +2,6 @@
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
 
-
 import { Divider, Typography } from "@mui/material";
 
 import createPersistedState from "use-persisted-state";
@@ -20,12 +19,17 @@ import ViewConfirmation from "./ViewConfirmation";
 import ViewBookingForms from "./ViewBookingForms";
 import Sidebar from "./Sidebar";
 
-interface BookingStateStore {
-  [key: string]: string;
+// Allows one booking per experience with dedicated date and information
+interface BookingStore {
+  experienceId: string;
+  bookingFlowToken?: string;
+  date?: Date;
+  email?: string;
+  activityId?: string;
 }
 
-const useBookingStateStore = createPersistedState<BookingStateStore>(
-  "mybookr-experience-to-booking-flow-token",
+const useBookingStore = createPersistedState<BookingStore>(
+  "mybookr-experience-booking-v0",
 );
 
 const CreateBookingMutation = graphql(`
@@ -46,7 +50,30 @@ const CreateBookingMutation = graphql(`
       }
     ) {
       bookingFlowToken
-      paymentIntentId # we probably dont need this
+      paymentClientSecret
+    }
+  }
+`);
+
+const UpdateBookingMutation = graphql(`
+  mutation updateBookingMutation(
+    $bookingFlowToken: String!
+    $name: String!
+    $email: String!
+    $activityId: ID!
+    $availabilityId: ID!
+    $numberOfSlots: Int!
+  ) {
+    updateBooking(
+      data: {
+        bookingFlowToken: $bookingFlowToken
+        name: $name
+        email: $email
+        activityId: $activityId
+        availabilityId: $availabilityId
+        numberOfSlots: $numberOfSlots
+      }
+    ) {
       paymentClientSecret
     }
   }
@@ -75,9 +102,8 @@ export default function PageCheckout({
 }: {
   experience: ExperienceItemFragment;
 }) {
-
   // (Booking) Context
-  const { activities } = useContext(BookingContext);
+  const { activities, dateFrom } = useContext(BookingContext);
   const activityId = activities[experience.id];
   const activity = useGetActivityFromExperience(activityId, experience);
 
@@ -85,27 +111,36 @@ export default function PageCheckout({
   const [createBookingResult, createBooking] = useMutation(
     CreateBookingMutation,
   );
+  const [updateBookingResult, updateBooking] = useMutation(
+    UpdateBookingMutation,
+  );
   const [checkBookingStatusResult, checkBookingStatus] =
     useMutation(CheckBookingMutation);
 
-  // Booking flow token handling
-  const [bookingsPerExperience, setBookingsPerExperience] =
-    useBookingStateStore();
-  const bookingFlowToken =
-    bookingsPerExperience && bookingsPerExperience[experience.id];
+  // Permanent Storage (Booking)
+  const [booking, setBooking] = useBookingStore({
+    experienceId: experience.id,
+  });
 
-  const setBookingFlowToken = useCallback((newToken: string) => {
-    setBookingsPerExperience((curr) => ({
-      ...(curr || {}),
-      [experience.id]: newToken,
-    }));
-  }, []);
+  // Reset booking if user switches experience (multi booking support later!)
+  useEffect(() => {
+    if (booking.experienceId !== experience.id) {
+      setBooking({ experienceId: experience.id });
+    }
+  }, [experience, booking]);
+
+  const setBookingFlowToken = useCallback(
+    (newToken: string) => {
+      setBooking((curr) => ({ ...curr, bookingFlowToken: newToken }));
+    },
+    [booking],
+  );
 
   const [bookingFormData, setBookingFormData] = useState<
     BookingFormData | undefined
   >();
 
-  // Set initial booking state based on URL parameters (coming from stripe)
+  // Set initial booking UI state based on URL parameters (coming from stripe)
   const urlClientSecret = new URLSearchParams(window.location.search).get(
     "payment_intent_client_secret",
   );
@@ -118,61 +153,99 @@ export default function PageCheckout({
   const [popupMessage, setPopupMessage] = useState<string | undefined>();
 
   // # UI Business Logic
+
+  // ==== Create / Update Booking ====
   // Create new booking as soon we have availability and a booking flow token
   useEffect(() => {
     if (!activity || !activity.availabilities) {
-      console.log('Cant continue, no activity selected')
+      console.log("Cant continue, no activity selected");
       return;
     }
     if (bookingFormData) {
-      if (!bookingFlowToken) {
+      if (!booking.bookingFlowToken) {
         console.log("init booking and get first flow token");
-        // mutationCreateBooking
         createBooking({
           ...bookingFormData,
           name: "Customer Name (mocked)", // @todo add name field to frontend
-          availabilityId: activity.availabilities[0].id,
+          availabilityId: activity.availabilities[0].id, // @todo replace this with the absence logic from PR
           numberOfSlots: 1, // @todo no more needed
         });
         return;
       }
-      console.log("changing to provide payment credentials (cus we have token already)");
-      setBookingUIState("providePaymentCredentials")
+      console.log("update booking as we already have booking data");
+      updateBooking({
+        bookingFlowToken: booking.bookingFlowToken,
+        ...bookingFormData,
+        name: "Customer Name (mocked)", // @todo add name field to frontend
+        availabilityId: activity.availabilities[0].id, // @todo replace this with the absence logic from PR
+        numberOfSlots: 1, // @todo no more needed
+      });
     }
-  }, [activity, bookingFormData, bookingFlowToken]);
+  }, [activity, bookingFormData, booking]);
 
   // react on createBookingResult
   useEffect(() => {
     if (createBookingResult.error) {
       console.error(createBookingResult.error);
+      setPopupMessage("There was an error on our side. Please try again.")
+      setBookingUIState("bookingDetails");
+      throw new Error("Unable to create booking. Oops!")
+      // @todo actually handle error on user side
     }
     if (!createBookingResult.data) {
       return;
     }
     setBookingUIState("providePaymentCredentials");
     setBookingFlowToken(
-      createBookingResult.data?.createBooking.bookingFlowToken,
+      createBookingResult.data.createBooking.bookingFlowToken,
     );
-    if (!createBookingResult.data?.createBooking.paymentClientSecret) {
-      throw new Error("Booking should return a payment client secret");
-    }
-    setClientSecret(
-      createBookingResult.data?.createBooking.paymentClientSecret,
-    );
+    setClientSecret(createBookingResult.data.createBooking.paymentClientSecret);
   }, [createBookingResult]);
 
-  // execute booking status check as soon booking status check is shown
+  // ==== Update Booking ====
+  // react on UpdateBookingResult
   useEffect(() => {
-    if (bookingUIState === "checkBookingStatus" && bookingFlowToken) {
-      // @todo check multiple times when status is still processing
-      checkBookingStatus({ bookingFlowToken });
+    if (updateBookingResult.error) {
+      console.error(updateBookingResult.error);
+
+      // create try to create booking then
+      if (bookingFormData && activity?.availabilities) {
+        createBooking({
+          ...bookingFormData,
+          name: "Customer Name (mocked)", // @todo add name field to frontend
+          availabilityId: activity.availabilities[0].id, // @todo replace this with the absence logic from PR
+          numberOfSlots: 1, // @todo no more needed
+        });
+        return
+      }
+
+      // @todo actually handle error on user side
+      // We should not end here. For savety, lets send user to the beginning
+      setBookingUIState("bookingDetails")
+      return
+    }
+    if (!updateBookingResult.data) {
       return;
     }
-  }, [bookingUIState, bookingFlowToken]);
+    setBookingUIState("providePaymentCredentials");
+    setClientSecret(updateBookingResult.data.updateBooking.paymentClientSecret);
+  }, [updateBookingResult]);
+
+  // ===== Confirm Booking =====
+  // execute booking status check as soon booking status check is shown
+  useEffect(() => {
+    if (bookingUIState === "checkBookingStatus" && booking.bookingFlowToken) {
+      // @todo check multiple times when status is still processing
+      checkBookingStatus({ bookingFlowToken: booking.bookingFlowToken });
+      return;
+    }
+  }, [bookingUIState, booking]);
 
   // react on checkBookingStatus
   useEffect(() => {
-    console.dir({ checkBookingStatusResult }, { depth: null });
+    if (bookingUIState !== "checkBookingStatus") {
+      return;
+    }
     if (checkBookingStatusResult.error) {
       console.error(checkBookingStatusResult.error);
     }
@@ -182,15 +255,15 @@ export default function PageCheckout({
 
     const bookingStatus = checkBookingStatusResult.data.checkBookingStatus;
     if (bookingStatus === BookingStatus.PaymentFailed) {
-      setBookingUIState("providePaymentCredentials");
-      alert("@todo trigger new payment intent (via updateBooking?)");
+      setBookingUIState("bookingDetails");
+      setPopupMessage("Payment failed. Please try again");
       return;
     }
     if (bookingStatus === BookingStatus.PaymentFinished) {
       setBookingUIState("confirmation");
       return;
     }
-  }, [checkBookingStatusResult, setBookingUIState]);
+  }, [checkBookingStatusResult, bookingUIState, setBookingUIState]);
 
   const isClient = useIsClient();
 

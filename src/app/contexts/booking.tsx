@@ -30,7 +30,7 @@ interface BookingStateStore {
 }
 
 const useBookingStateStore =
-  createPersistedState<BookingStateStore>("mybookr-booking");
+  createPersistedState<BookingStateStore>("mybookr-booking-v0");
 
 export const BookingContext = createContext<{
   dateFrom?: Date;
@@ -278,9 +278,8 @@ export function useWatchEmail<T extends FieldValues>(
     ) {
       console.log("setting email", value);
       setEmail(value);
-    } else {
-      console.log("resetting email because invalid", value);
-      setEmail("");
+      return
     }
+    console.log("ignoring email storage because invalid", value);
   }, [value]);
 }

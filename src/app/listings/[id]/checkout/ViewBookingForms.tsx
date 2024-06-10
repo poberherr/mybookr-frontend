@@ -1,6 +1,6 @@
 import { BookingFormData, BookingUIStates } from "./PageCheckout";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 
@@ -46,6 +46,18 @@ const ViewConfirmation = ({
     clientSecret,
     appearance,
   };
+  const paymentWrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (
+      bookingUIState === "providePaymentCredentials" &&
+      paymentWrapperRef.current
+    ) {
+      paymentWrapperRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [bookingUIState, paymentWrapperRef.current]);
 
   return (
     <>
@@ -57,13 +69,15 @@ const ViewConfirmation = ({
           bookingUIState={bookingUIState}
         />
       )}
-      {bookingUIState === "providePaymentCredentials" &&
-        stripe &&
-        clientSecret && (
-          <Elements options={options} stripe={stripe}>
-            <FormPayment setPopupMessage={setPopupMessage} />
-          </Elements>
-        )}
+      <div ref={paymentWrapperRef}>
+        {bookingUIState === "providePaymentCredentials" &&
+          stripe &&
+          clientSecret && (
+            <Elements options={options} stripe={stripe}>
+              <FormPayment setPopupMessage={setPopupMessage} />
+            </Elements>
+          )}
+      </div>
       <BlaBla />
     </>
   );
