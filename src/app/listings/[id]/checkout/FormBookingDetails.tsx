@@ -21,7 +21,7 @@ import { formatDate } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
-import { BookingFormData, BookingUIStates } from "./CheckoutPage";
+import { BookingFormData, BookingUIStates } from "./PageCheckout";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
 export default function FormBookingDetails({

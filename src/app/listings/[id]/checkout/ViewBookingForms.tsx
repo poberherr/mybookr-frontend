@@ -1,4 +1,4 @@
-import { BookingFormData, BookingUIStates } from "./CheckoutPage";
+import { BookingFormData, BookingUIStates } from "./PageCheckout";
 
 import React from "react";
 

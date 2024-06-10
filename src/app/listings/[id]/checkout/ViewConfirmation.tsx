@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { CircularProgress } from "@mui/material";
 
-import { BookingUIStates } from "./CheckoutPage";
+import { BookingUIStates } from "./PageCheckout";
 import { BookingContext } from "@/app/contexts/booking";
 
 interface IProps {
