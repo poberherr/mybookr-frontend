@@ -21,7 +21,7 @@ import PriceDetail from "@/app/components/others/PriceDetail";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import BlaBla from "./BlaBla";
-import BookingDataForm from "./BookingDataForm";
+import FormBookingDetails from "./FormBookingDetails";
 import { PaymentWrapper } from "./PaymentWrapper";
 import { BookingStatus, ExperienceItemFragment } from "@/gql/graphql";
 import { graphql } from "@/gql";
@@ -87,15 +87,22 @@ export default function CheckoutPage({
 }: {
   experience: ExperienceItemFragment;
 }) {
+
+  // (Booking) Context
   const { activities } = useContext(BookingContext);
   const activityId = activities[experience.id];
   const activity = useGetActivityFromExperience(activityId, experience);
 
-  const [popupMessage, setPopupMessage] = useState<string | undefined>();
+  // Init Mutations
+  const [createBookingResult, createBooking] = useMutation(
+    CreateBookingMutation,
+  );
+  const [checkBookingStatusResult, checkBookingStatus] =
+    useMutation(CheckBookingMutation);
 
+  // Booking flow token handling
   const [bookingsPerExperience, setBookingsPerExperience] =
     useBookingStateStore();
-
   const bookingFlowToken =
     bookingsPerExperience && bookingsPerExperience[experience.id];
 
@@ -110,22 +117,19 @@ export default function CheckoutPage({
     BookingFormData | undefined
   >();
 
+  // Set initial booking state based on URL parameters (coming from stripe)
   const urlClientSecret = new URLSearchParams(window.location.search).get(
     "payment_intent_client_secret",
   );
-
   const [bookingUIState, setBookingUIState] = useState<BookingUIStates>(
     urlClientSecret ? "checkBookingStatus" : "bookingDetails",
   );
 
-  const [createBookingResult, createBooking] = useMutation(
-    CreateBookingMutation,
-  );
-  const [checkBookingStatusResult, checkBookingStatus] =
-    useMutation(CheckBookingMutation);
-
+  // Frontend rendering and UI meta
   const [clientSecret, setClientSecret] = React.useState<string | undefined>();
+  const [popupMessage, setPopupMessage] = useState<string | undefined>();
 
+  // # UI Business Logic
   // Create new booking as soon we have availability and a booking flow token
   useEffect(() => {
     if (!activity || !activity.availabilities || bookingFlowToken) {
@@ -152,6 +156,7 @@ export default function CheckoutPage({
       console.error(createBookingResult.error);
     }
     if (!createBookingResult.data) {
+      console.log("no data in create booking results")
       return;
     }
     setBookingUIState("providePaymentCredentials");

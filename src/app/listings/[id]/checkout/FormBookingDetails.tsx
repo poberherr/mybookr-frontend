@@ -1,15 +1,13 @@
 "use client";
 
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useUser } from "@clerk/clerk-react";
 
 import { Typography } from "@mui/material";
 
-import Calendar from "@/app/components/Calendar/Calendar";
 import StyledTextField from "@/app/components/form/TextField";
-import GuestNumberForm from "@/app/components/others/GuestNumberForm";
 import { SButton } from "@/app/components/ui/SButton";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 
@@ -19,14 +17,14 @@ import {
   useWatchBookingDate,
   useWatchEmail,
 } from "@/app/contexts/booking";
-import { formatDate, formatDateSpan } from "@/app/helpers/date-format";
+import { formatDate } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { BookingFormData, BookingUIStates } from "./CheckoutPage";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 
-export default function BookingDataForm({
+export default function FormBookingDetails({
   experience,
   setBookingFormData,
   bookingUIState,

@@ -2,19 +2,21 @@
 
 import React, { FormEvent, useCallback } from "react";
 
+import { Divider, Typography } from "@mui/material";
+
 import {
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
 import { StripePaymentElementOptions } from "@stripe/stripe-js";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { CircularProgress } from "@mui/material";
 
 import { SButton } from "../../../components/ui/SButton";
 
-export default function PaymentForm({
+export default function FormPayment({
   setPopupMessage,
 }: {
   setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -49,7 +51,7 @@ export default function PaymentForm({
       });
 
       console.log("SOMETHING WENT WRONG!", error);
-      console.error(error)
+      console.error(error);
 
       // This point will only be reached if there is an immediate error when
       // confirming the payment. Otherwise, your customer will be redirected to
@@ -79,23 +81,43 @@ export default function PaymentForm({
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <SButton type="submit" disabled={isLoading} id="submit" className="mt-8">
-        <span id="button-text">
-          {isLoading ? (
-            <>
-              <CircularProgress size={24} color="warning" /> Loading...
-            </>
-          ) : (
-            "Prepare payment to reserve"
-          )}
-        </span>
-      </SButton>
-      <p className="mt-4 text-sm">
-        <strong>No worries!</strong> In case of early cancellation, you will
-        receive the full amount back.
-      </p>
-    </form>
+    <>
+      <Divider />
+      <div className="px-4 py-0 md:pl-40 md:pr-16">
+        <Typography
+          className="!mb-4 p-0 !font-extrabold md:!text-2xl"
+          variant="h6"
+        >
+          Payment
+        </Typography>
+
+        <form onSubmit={onSubmit}>
+          <PaymentElement
+            id="payment-element"
+            options={paymentElementOptions}
+          />
+          <SButton
+            type="submit"
+            disabled={isLoading}
+            id="submit"
+            className="mt-8"
+          >
+            <span id="button-text">
+              {isLoading ? (
+                <>
+                  <CircularProgress size={24} color="warning" /> Loading...
+                </>
+              ) : (
+                "Prepare payment to reserve"
+              )}
+            </span>
+          </SButton>
+          <p className="mt-4 text-sm">
+            <strong>No worries!</strong> In case of early cancellation, you will
+            receive the full amount back.
+          </p>
+        </form>
+      </div>
+    </>
   );
 }

@@ -57,7 +57,6 @@ export default function CheckoutStart({ experience }: IProps) {
   );
   useWatchBookingDate<CheckoutStartForm>(methods.control, "bookingDate");
 
-
   useEffect(() => {
     if (activityIdValue !== activityId) {
       methods.setValue("activityId", activityId)
