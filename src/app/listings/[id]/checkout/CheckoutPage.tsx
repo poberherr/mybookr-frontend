@@ -27,6 +27,7 @@ import { BookingStatus, ExperienceItemFragment } from "@/gql/graphql";
 import { graphql } from "@/gql";
 import { BookingContext } from "@/app/contexts/booking";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
+import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 
 interface BookingStateStore {
   [key: string]: string;
@@ -201,9 +202,12 @@ export default function CheckoutPage({
 
   const isClient = useIsClient();
 
-  const totalPrice = activity?.availabilities
-    ? activity.availabilities[0].pricePerUnit
-    : undefined;
+  const formattedPrice = useFormatPrice(
+    activity?.availabilities
+      ? activity.availabilities[0].pricePerUnit
+      : undefined,
+    true,
+  );
 
   const appearance: Appearance = {
     theme: "stripe",
@@ -304,7 +308,7 @@ export default function CheckoutPage({
             <Divider />
 
             {/* Total part */}
-            {totalPrice && (
+            {formattedPrice && (
               <div className="grid gap-4 p-0 md:px-8 md:py-0">
                 <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
                   <Typography variant="body2" className="!text-sm !font-black">
@@ -315,9 +319,9 @@ export default function CheckoutPage({
                     variant="body2"
                     className="text-right !text-sm !font-black"
                   >
-                    {`$${(totalPrice / 100).toFixed(2)}`}
+                    {formattedPrice}
                   </Typography>
-                </div>{" "}
+                </div>
               </div>
             )}
           </div>

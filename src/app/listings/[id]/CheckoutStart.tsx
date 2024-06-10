@@ -22,6 +22,7 @@ import { formatDate } from "@/app/helpers/date-format";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
+import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -78,6 +79,8 @@ export default function CheckoutStart({ experience }: IProps) {
     ? activity.availabilities[0].pricePerUnit
     : undefined;
 
+  const formattedPrice = useFormatPrice(price, true)
+
   const isClient = useIsClient();
 
   if (!isClient) {
@@ -127,7 +130,7 @@ export default function CheckoutStart({ experience }: IProps) {
                 </Typography>
 
                 <Typography className="text-right !font-bold uppercase !text-slate-800">
-                  {`$${(price / 100).toFixed(2)}`}
+                  {formattedPrice}
                 </Typography>
               </div>
             )}

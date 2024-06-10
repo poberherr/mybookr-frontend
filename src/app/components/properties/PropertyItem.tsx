@@ -8,6 +8,7 @@ import { Typography } from "@mui/material";
 import BoostedBadge from "../others/BoostedBadge";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 
 interface IProps {
   property: ExperienceItemFragment;
@@ -16,6 +17,7 @@ interface IProps {
 export default function PropertyItem({ property: experience }: IProps) {
   const isBoosted = false;
   const minimumPrice = useMinimumPrice(experience);
+  const formattedPrice = useFormatPrice(minimumPrice);
 
   return (
     <Link
@@ -80,7 +82,7 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from ${minimumPrice} • {experience.activities.length} yacht
+            from {formattedPrice} • {experience.activities.length} yacht
             {experience.activities.length > 1 && "s"} available
           </Typography>
         </div>
