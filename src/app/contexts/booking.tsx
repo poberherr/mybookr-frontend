@@ -272,14 +272,14 @@ export function useWatchEmail<T extends FieldValues>(
   const { email, setEmail } = useContext(BookingContext);
   useEffect(() => {
     if (
+      value !== email &&
       value.trim().length > 0 &&
-      value?.match(/[^\s]+@[^\s]+/) &&
-      value !== email
+      value.match(/^[^\s]+@[^\s]+$/)
     ) {
       console.log("setting email", value);
       setEmail(value);
       return
     }
-    console.log("ignoring email storage because invalid", value);
+    console.log("ignoring email storage because invalid or already set", value);
   }, [value]);
 }

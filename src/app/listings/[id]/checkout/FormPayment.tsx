@@ -40,7 +40,7 @@ export default function FormPayment({
 
       setIsLoading(true);
 
-      console.log("confirming payment");
+      console.log("executing payment via stripe");
 
       const { error } = await stripe.confirmPayment({
         elements,

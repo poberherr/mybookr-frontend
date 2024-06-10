@@ -30,13 +30,20 @@ const useBookingConfirmation = ({
 
   // execute booking status check as soon booking status check is shown
   useEffect(() => {
-    if (booking.bookingFlowToken === undefined) {
-      setBookingUIState("bookingDetails");
+    if (bookingUIState !== "checkBookingStatus") {
+      return;
+    }
+    if (!booking.bookingFlowToken) {
+      console.log('Confirmation is missing booking flow toking')
+      // setBookingUIState("bookingDetails");
       return;
     }
 
     if (bookingUIState === "checkBookingStatus") {
       // @todo check multiple times when status is still processing
+      console.log(
+        `Checking status of booking with token ${booking.bookingFlowToken}`,
+      );
       checkBookingStatus({ bookingFlowToken: booking.bookingFlowToken });
       return;
     }
@@ -55,6 +62,7 @@ const useBookingConfirmation = ({
     }
 
     const bookingStatus = checkBookingStatusResult.data.checkBookingStatus;
+    console.log(`Booking status for booking ${booking.bookingFlowToken}: ${bookingStatus}`);
     if (bookingStatus === BookingStatus.PaymentFailed) {
       setBookingUIState("bookingDetails");
       setPopupMessage("Payment failed. Please try again");

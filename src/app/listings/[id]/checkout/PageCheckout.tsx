@@ -33,9 +33,9 @@ const useBookingStore = createPersistedState<BookingStore>(
 );
 
 export interface BookingFormData {
-  bookingDate: Date;
-  activityId: string;
-  email: string;
+  bookingDate?: Date;
+  activityId?: string;
+  email?: string;
 }
 
 export type BookingUIStates =
@@ -75,7 +75,11 @@ export default function PageCheckout({
 
   const [bookingFormData, setBookingFormData] = useState<
     BookingFormData | undefined
-  >();
+  >({ 
+    activityId: booking.activityId,
+    bookingDate: booking.date,
+    email: booking.email
+   });
 
   // Set initial booking UI state based on URL parameters (coming from stripe)
   const urlClientSecret = new URLSearchParams(window.location.search).get(
@@ -93,14 +97,16 @@ export default function PageCheckout({
   // ==== Create / Update Booking ====
   // Create new booking as soon we have availability and a booking flow token
   useBookingMutations({
+    bookingUIState,
     activity,
     booking,
     bookingFormData,
     setBookingFlowToken,
     setBookingUIState,
     setClientSecret,
-    setPopupMessage
-  })
+    setPopupMessage,
+    setBooking
+  });
 
   // ===== Confirm Booking =====
   useBookingConfirmation({
@@ -108,8 +114,8 @@ export default function PageCheckout({
     bookingUIState,
     setBookingUIState,
     setPopupMessage,
-    setBooking
-  })
+    setBooking,
+  });
 
   const isClient = useIsClient();
 
@@ -136,6 +142,22 @@ export default function PageCheckout({
 
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
+          <div className="px-4 py-0 md:pl-40 md:pr-16">
+            <pre>
+              <code>
+                {JSON.stringify(
+                  {
+                    bookingUIState,
+                    popupMessage,
+                    booking,
+                    bookingFormData,
+                  },
+                  null,
+                  2,
+                )}
+              </code>
+            </pre>
+          </div>
           {popupMessage && (
             <div>
               <strong>popupMessage: {popupMessage}</strong> @todo turn this into
@@ -146,7 +168,6 @@ export default function PageCheckout({
           <ViewBookingForms
             bookingUIState={bookingUIState}
             experience={experience}
-            setBooking={setBooking}
             setBookingFormData={setBookingFormData}
             setPopupMessage={setPopupMessage}
             clientSecret={clientSecret}
