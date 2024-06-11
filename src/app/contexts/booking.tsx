@@ -122,13 +122,11 @@ export const BookingContextProvider = ({
     (experienceId: string, activityId: string | undefined) => {
       setBookingState((prevState) => {
         const { activities } = prevState;
-        console.log('before', activities)
         if (!activityId) {
           delete activities[experienceId];
         } else {
           activities[experienceId] = activityId;
         }
-        console.log("after", activities);
         return {
           ...prevState,
           activities,

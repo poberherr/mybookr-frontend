@@ -1,31 +1,38 @@
-import { useContext } from "react";
-
 import { CircularProgress } from "@mui/material";
 
-import { BookingUIStates } from "./PageCheckout";
-import { BookingContext } from "@/app/contexts/booking";
+import { StateValueFrom } from "xstate";
+import { IBookingContext, bookingMachine } from "./bookingMachine";
 
 interface IProps {
-  bookingUIState: BookingUIStates;
+  value: StateValueFrom<typeof bookingMachine>;
+  context: IBookingContext;
 }
 
-const ViewConfirmation = ({ bookingUIState }: IProps) => {
-  const { email } = useContext(BookingContext);
-
-  if (bookingUIState === "confirmation") {
+const ViewConfirmation = ({ value, context }: IProps) => {
+  if (value === "CheckBookingStatus" || value === "AwaitingPaymentStatus") {
     return (
       <div className="prose mx-auto text-center">
-        <h1>Booking Confirmed</h1>
-        <p>We have emailed details to {email}</p>
+        <CircularProgress
+          size={48}
+          value={100}
+          variant={
+            value === "AwaitingPaymentStatus" ? "determinate" : "indeterminate"
+          }
+        />{" "}
+        ... <CircularProgress size={48} />
+        <p>Double checking payment...</p>
+        <p>This should only take a few seconds!</p>
       </div>
     );
   }
 
-  if (bookingUIState === "checkBookingStatus") {
+  if (value === "Confirmation") {
     return (
       <div className="prose mx-auto text-center">
-        <CircularProgress size={48} /> <p>Double checking payment...</p>
-        <p>This should only take a few seconds!</p>
+        <CircularProgress size={48} value={100} variant={"determinate"} /> ...{" "}
+        <CircularProgress size={48} value={100} variant={"determinate"} />{" "}
+        <h1>Booking Confirmed</h1>
+        <p>We have emailed details to {context.email}</p>
       </div>
     );
   }

@@ -17,9 +17,9 @@ import { CircularProgress } from "@mui/material";
 import { SButton } from "../../../components/ui/SButton";
 
 export default function FormPayment({
-  setPopupMessage,
+  setError,
 }: {
-  setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setError: (errorMessage: string) => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -42,15 +42,17 @@ export default function FormPayment({
 
       console.log("executing payment via stripe");
 
-      const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          // Make sure to change this to your payment completion page
-          return_url: `${window.location.origin}${path}`,
-        },
-      });
+      const [{ error }] = await Promise.all([
+        stripe.confirmPayment({
+          elements,
+          confirmParams: {
+            // Make sure to change this to your payment completion page
+            return_url: `${window.location.origin}${path}`,
+          }
+        }),
+      ]);
 
-      console.log("SOMETHING WENT WRONG!", error);
+      console.log("Stripe payment failed early with error:", error.message);
       console.error(error);
 
       // This point will only be reached if there is an immediate error when
@@ -62,9 +64,9 @@ export default function FormPayment({
         (error.type === "card_error" || error.type === "validation_error") &&
         error.message
       ) {
-        setPopupMessage(error.message);
+        setError(error.message);
       } else {
-        setPopupMessage("An unexpected error occurred.");
+        setError(`An unexpected payment error occurred: ${error.message}`);
       }
 
       setIsLoading(false);

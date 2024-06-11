@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 
 import { Divider, Typography } from "@mui/material";
 
-import createPersistedState from "use-persisted-state";
+import { SnapshotFrom } from "xstate";
+import { useMachine } from "@xstate/react";
 
 import BackButton from "@/app/components/others/BackButton";
 
@@ -16,27 +17,11 @@ import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromEx
 import ViewConfirmation from "./ViewConfirmation";
 import ViewBookingForms from "./ViewBookingForms";
 import Sidebar from "./Sidebar";
-import useBookingConfirmation from "./useBookingConfirmation";
-import useBookingMutations from "./useBookingMutations";
+import { bookingMachine } from "./bookingMachine";
+import { Client, useClient } from "urql";
+import StyledDialog from "@/app/components/ui/StyledDialog";
 
-// Allows one booking per experience with dedicated date and information
-export interface BookingStore {
-  experienceId: string;
-  bookingFlowToken?: string;
-  date?: Date;
-  email?: string;
-  activityId?: string;
-}
-
-const useBookingStore = createPersistedState<BookingStore>(
-  "mybookr-experience-booking-v0",
-);
-
-export interface BookingFormData {
-  bookingDate?: Date;
-  activityId?: string;
-  email?: string;
-}
+type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
 
 export type BookingUIStates =
   | "bookingDetails"
@@ -49,79 +34,89 @@ export default function PageCheckout({
 }: {
   experience: ExperienceItemFragment;
 }) {
-  // (Booking) Context
-  const { activities } = useContext(BookingContext);
+  const client = useClient();
+
+  // Get price based on selected activity
+  const { activities, bookingDate } = useContext(BookingContext);
   const activityId = activities[experience.id];
   const activity = useGetActivityFromExperience(activityId, experience);
-
-  // Permanent Storage (Booking)
-  const [booking, setBooking] = useBookingStore({
-    experienceId: experience.id,
-  });
-
-  // Reset booking if user switches experience (multi booking support later!)
-  useEffect(() => {
-    if (booking.experienceId !== experience.id) {
-      setBooking({ experienceId: experience.id });
-    }
-  }, [experience, booking]);
-
-  const setBookingFlowToken = useCallback(
-    (newToken: string) => {
-      setBooking((curr) => ({ ...curr, bookingFlowToken: newToken }));
-    },
-    [booking],
-  );
-
-  const [bookingFormData, setBookingFormData] = useState<
-    BookingFormData | undefined
-  >({ 
-    activityId: booking.activityId,
-    bookingDate: booking.date,
-    email: booking.email
-   });
-
-  // Set initial booking UI state based on URL parameters (coming from stripe)
-  const urlClientSecret = new URLSearchParams(window.location.search).get(
-    "payment_intent_client_secret",
-  );
-  const [bookingUIState, setBookingUIState] = useState<BookingUIStates>(
-    urlClientSecret ? "checkBookingStatus" : "bookingDetails",
-  );
-
-  // Frontend rendering and UI meta
-  const [clientSecret, setClientSecret] = React.useState<string | undefined>();
-  const [popupMessage, setPopupMessage] = useState<string | undefined>();
-
-  // # UI Business Logic
-  // ==== Create / Update Booking ====
-  // Create new booking as soon we have availability and a booking flow token
-  useBookingMutations({
-    bookingUIState,
-    activity,
-    booking,
-    bookingFormData,
-    setBookingFlowToken,
-    setBookingUIState,
-    setClientSecret,
-    setPopupMessage,
-    setBooking
-  });
-
-  // ===== Confirm Booking =====
-  useBookingConfirmation({
-    booking,
-    bookingUIState,
-    setBookingUIState,
-    setPopupMessage,
-    setBooking,
-  });
-
-  const isClient = useIsClient();
-
   const price = activity?.availabilities
     ? activity.availabilities[0].pricePerUnit
     : undefined;
+
+  // Permanently store state machine in local stoarage
+  const initialBookingMachineSnapshot = useMemo(() => {
+    let dumbRestore;
+    try {
+      const entry = localStorage.getItem(`experience-${experience.id}-booking`);
+      if (!entry) {
+        return undefined;
+      }
+      dumbRestore = JSON.parse(entry);
+    } catch (err) {
+      return undefined;
+    }
+    return {
+      ...dumbRestore,
+      context: {
+        ...dumbRestore.context,
+        client,
+        date: new Date(dumbRestore.context.date || new Date()),
+      },
+    } as BookingSnapshot;
+  }, []);
+
+  const [bookingState, sendBookingAction] = useMachine(bookingMachine, {
+    input: {
+      experienceId: experience.id,
+      client,
+      date: bookingDate,
+      activityId: activityId,
+    },
+    snapshot: initialBookingMachineSnapshot,
+  });
+
+  useEffect(() => {
+    // Debugger for us
+    console.log("State updated:", bookingState.value);
+    console.table({ context: bookingState.context });
+
+    // Store current state to localStorage for recovery
+    localStorage.setItem(
+      `experience-${experience.id}-booking`,
+      JSON.stringify(bookingState.machine.getPersistedSnapshot(bookingState)),
+    );
+  }, [bookingState]);
+
+  // Catch redirect
+  useEffect(() => {
+    if (!window) {
+      return;
+    }
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const redirectStatus = searchParams.get("redirect_status");
+    const paymentIntentClientSecret = searchParams.get(
+      "payment_intent_client_secret",
+    );
+
+    if (
+      bookingState.value === "ProvidePaymentCredentials" &&
+      redirectStatus === "succeeded" &&
+      paymentIntentClientSecret === bookingState.context.clientSecret
+    ) {
+      sendBookingAction({ type: "paymentIsProcessing" });
+    }
+  }, [window, bookingState]);
+
+  // Catch confirmation
+  useEffect(() => {
+    if (bookingState.value === "Confirmation") {
+      localStorage.removeItem(`experience-${experience.id}-booking`);
+    }
+  }, [window]);
+
+  const isClient = useIsClient();
 
   if (!isClient) {
     return null;
@@ -129,49 +124,56 @@ export default function PageCheckout({
 
   return (
     <>
+      <StyledDialog
+        title="Ooops - an error occurred"
+        children={bookingState.context.errorMessage}
+        showDialog={bookingState.value === "DisplayError"}
+        setShowDialog={() => sendBookingAction({ type: "closePopup" })}
+        backButton={true}
+      />
       <BackButton pageName="details" />
-
       <Typography
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
       >
         Let’s make sure everything looks right.
       </Typography>
-
       <Divider />
-
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
         <div className="grid grid-cols-1 gap-16 px-0 py-8">
-          <div className="px-4 py-0 md:pl-40 md:pr-16">
-            <pre>
+          <ViewConfirmation
+            value={bookingState.value}
+            context={bookingState.context}
+          />
+          <ViewBookingForms
+            submit={(formData) =>
+              sendBookingAction({ type: "submit", formData })
+            }
+            setError={(errorMessage: string) =>
+              sendBookingAction({ type: "error", errorMessage })
+            }
+            value={bookingState.value}
+            context={bookingState.context}
+            experience={experience}
+          />
+          {process.env.NODE_ENV === "development" && (
+            <pre className="max-w-20">
               <code>
                 {JSON.stringify(
                   {
-                    bookingUIState,
-                    popupMessage,
-                    booking,
-                    bookingFormData,
+                    bookingState,
+                    isInstanceOfDate: bookingState.context.date instanceof Date,
+                    typeofDate: typeof bookingState.context.date,
+                    isInstanceOfClient:
+                      bookingState.context.client instanceof Client,
+                    typeofClient: typeof bookingState.context.client,
                   },
                   null,
                   2,
                 )}
               </code>
             </pre>
-          </div>
-          {popupMessage && (
-            <div>
-              <strong>popupMessage: {popupMessage}</strong> @todo turn this into
-              real popup
-            </div>
           )}
-          <ViewConfirmation bookingUIState={bookingUIState} />
-          <ViewBookingForms
-            bookingUIState={bookingUIState}
-            experience={experience}
-            setBookingFormData={setBookingFormData}
-            setPopupMessage={setPopupMessage}
-            clientSecret={clientSecret}
-          />
         </div>
 
         {/* Right section */}

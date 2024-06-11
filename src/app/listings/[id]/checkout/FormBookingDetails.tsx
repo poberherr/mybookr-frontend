@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useUser } from "@clerk/clerk-react";
@@ -11,33 +11,32 @@ import StyledTextField from "@/app/components/form/TextField";
 import { SButton } from "@/app/components/ui/SButton";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 
-import {
-  BookingContext,
-  useWatchActivityId,
-  useWatchBookingDate,
-  useWatchEmail,
-} from "@/app/contexts/booking";
+import { useWatchActivityId, useWatchBookingDate } from "@/app/contexts/booking";
 import { formatDate } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
-import { BookingFormData, BookingUIStates } from "./PageCheckout";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
+import { StateValueFrom } from "xstate";
+import { IBookingContext, bookingMachine } from "./bookingMachine";
+
+export interface BookingFormData {
+  bookingDate: Date;
+  activityId: string;
+  email: string;
+}
 
 export default function FormBookingDetails({
   experience,
-  setBookingFormData,
-  bookingUIState,
+  submit,
+  value,
+  context,
 }: {
   experience: ExperienceItemFragment;
-  setBookingFormData: React.Dispatch<
-    React.SetStateAction<BookingFormData | undefined>
-  >;
-  bookingUIState: BookingUIStates
+  submit: (formData: BookingFormData) => void;
+  value: StateValueFrom<typeof bookingMachine>;
+  context: IBookingContext;
 }) {
-  const { bookingDate, activities, email } = useContext(BookingContext);
-  const activityId = activities[experience.id];
-  const activity = useGetActivityFromExperience(activityId, experience);
   const user = useUser();
 
   const [flagCalender, setFlagCalender] = useState(false);
@@ -47,34 +46,23 @@ export default function FormBookingDetails({
   // We can't put these inside the form component (PaymentMethodForm), because we need the trigger method for the Request booking button inside this (ShoppingCart) component
   const methods = useForm<BookingFormData>({
     defaultValues: {
-      bookingDate,
-      activityId,
-      email: email || user.user?.primaryEmailAddress?.emailAddress || "",
+      bookingDate: context.date,
+      activityId: context.activityId,
+      email:
+        context.email || user.user?.primaryEmailAddress?.emailAddress || "",
     },
   });
 
   const onSubmit = methods.handleSubmit((data) => {
-    console.log('Setting booking form data')
-    setBookingFormData(data);
+    submit(data);
   });
 
-  // handle email
-  const emailValue = methods.watch("email");
-  useEffect(() => {
-    const userEmail = user.user?.primaryEmailAddress?.emailAddress
-    if (
-      userEmail &&
-      (emailValue === undefined || emailValue.trim() === "") &&
-      emailValue !== userEmail
-    ) {
-      console.log('Setting email from user')
-      methods.setValue("email", userEmail);
-    }
-  }, [user.user, methods.resetField]);
-  useWatchEmail(methods.control, "email");
-
-  useWatchBookingDate(methods.control, "bookingDate");
+  const bookingDate = methods.watch("bookingDate");
+  const activityId = methods.watch("activityId");
+  const activity =
+    activityId && useGetActivityFromExperience(activityId, experience);
   useWatchActivityId(methods.control, "activityId", experience.id);
+  useWatchBookingDate(methods.control, "bookingDate")
 
   return (
     <FormProvider {...methods}>
@@ -97,15 +85,19 @@ export default function FormBookingDetails({
 
               <div className="flex justify-between">
                 <Typography className="mt-2" variant="body1">
-                  {bookingDate ? formatDate(bookingDate) : "No date selected"}
+                  {bookingDate && bookingDate instanceof Date
+                    ? formatDate(bookingDate)
+                    : "No date selected"}
                 </Typography>
 
-                <Typography
-                  className="cursor-pointer !font-bold"
-                  onClick={() => setFlagCalender(true)}
-                >
-                  Edit
-                </Typography>
+                {value === "BookingDetails" && (
+                  <Typography
+                    className="cursor-pointer !font-bold"
+                    onClick={() => setFlagCalender(true)}
+                  >
+                    Edit
+                  </Typography>
+                )}
               </div>
             </div>
 
@@ -126,12 +118,14 @@ export default function FormBookingDetails({
                   {activity ? activity.title : "No yacht selected"}
                 </Typography>
 
-                <Typography
-                  className="cursor-pointer !font-bold"
-                  onClick={() => setFlagEditActivityDialog(true)}
-                >
-                  Edit
-                </Typography>
+                {value === "BookingDetails" && (
+                  <Typography
+                    className="cursor-pointer !font-bold"
+                    onClick={() => setFlagEditActivityDialog(true)}
+                  >
+                    Edit
+                  </Typography>
+                )}
               </div>
             </div>
 
@@ -155,25 +149,41 @@ export default function FormBookingDetails({
 
             {/* Email */}
             <div className="mt-6">
-              <StyledTextField
-                control={methods.control}
-                type="email"
-                name="email"
-                id="email"
-                label="Email"
-                errors={methods.formState.errors.email}
-                rules={{
-                  required: "Email is required",
-                  pattern: {
-                    value: /^.+@.+$/,
-                    message: "Please enter a valid email",
-                  },
-                }}
-              />
+              {value !== "BookingDetails" ? (
+                <>
+                  <Typography
+                    className="uppercase tracking-wide"
+                    variant="caption"
+                  >
+                    Email
+                  </Typography>
+                  <Typography className="mt-2" variant="body1">
+                    {context.email}
+                  </Typography>
+                </>
+              ) : (
+                <StyledTextField
+                  control={methods.control}
+                  type="email"
+                  name="email"
+                  id="email"
+                  label="Email"
+                  errors={methods.formState.errors.email}
+                  rules={{
+                    required: "Email is required",
+                    pattern: {
+                      value: /^.+@.+$/,
+                      message: "Please enter a valid email",
+                    },
+                  }}
+                />
+              )}
             </div>
           </div>
           <SButton className="mt-8" disabled={!methods.formState.isValid}>
-            {bookingUIState == "bookingDetails" ? "Continue to payment" : "Edit booking details"}
+            {value === "BookingDetails"
+              ? "Continue to payment"
+              : "Edit booking details (@todo)"}
           </SButton>
         </div>
       </form>

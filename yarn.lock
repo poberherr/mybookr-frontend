@@ -2899,6 +2899,14 @@
     fast-querystring "^1.1.1"
     tslib "^2.3.1"
 
+"@xstate/react@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/@xstate/react/-/react-4.1.1.tgz"
+  integrity sha512-pFp/Y+bnczfaZ0V8B4LOhx3d6Gd71YKAPbzerGqydC2nsYN/mp7RZu3q/w6/kvI2hwR/jeDeetM7xc3JFZH2NA==
+  dependencies:
+    use-isomorphic-layout-effect "^1.1.2"
+    use-sync-external-store "^1.2.0"
+
 agent-base@^7.0.2, agent-base@^7.1.0:
   version "7.1.1"
   resolved "https://registry.npmjs.org/agent-base/-/agent-base-7.1.1.tgz"
@@ -7490,6 +7498,11 @@ urql@^4.1.0:
     "@urql/core" "^5.0.0"
     wonka "^6.3.2"
 
+use-isomorphic-layout-effect@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/use-isomorphic-layout-effect/-/use-isomorphic-layout-effect-1.1.2.tgz"
+  integrity sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==
+
 use-persisted-state@^0.3.3:
   version "0.3.3"
   resolved "https://registry.npmjs.org/use-persisted-state/-/use-persisted-state-0.3.3.tgz"
@@ -7662,6 +7675,11 @@ xss@^1.0.15:
   dependencies:
     commander "^2.20.3"
     cssfilter "0.0.10"
+
+xstate@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.npmjs.org/xstate/-/xstate-5.13.1.tgz"
+  integrity sha512-saBUxsTb29Vq8bjq1TjLdGCYs2pneGMzQ7pqQyXh1nqZaSnKHkCkxf3EV+EDYbLnQioxK9HNMYPQrz4whj3RJQ==
 
 y18n@^4.0.0:
   version "4.0.3"

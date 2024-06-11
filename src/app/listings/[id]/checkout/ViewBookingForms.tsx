@@ -1,36 +1,34 @@
-import { BookingFormData, BookingUIStates } from "./PageCheckout";
-
 import React, { useEffect, useRef } from "react";
 
 import { Elements } from "@stripe/react-stripe-js";
 
 import BlaBla from "./BlaBla";
-import FormBookingDetails from "./FormBookingDetails";
+import FormBookingDetails, { BookingFormData } from "./FormBookingDetails";
 import FormPayment from "./FormPayment";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { StateValueFrom } from "xstate";
 
 import {
   Appearance,
   StripeElementsOptions,
   loadStripe,
 } from "@stripe/stripe-js";
+import { IBookingContext, bookingMachine } from "./bookingMachine";
 
 interface IProps {
-  bookingUIState: BookingUIStates;
+  submit: (formData: BookingFormData) => void;
+  setError: (errorMessage: string) => void;
+  value: StateValueFrom<typeof bookingMachine>;
+  context: IBookingContext;
   experience: ExperienceItemFragment;
-  setBookingFormData: React.Dispatch<
-    React.SetStateAction<BookingFormData | undefined>
-  >;
-  setPopupMessage: React.Dispatch<React.SetStateAction<string | undefined>>;
-  clientSecret: string | undefined;
 }
 
 const ViewConfirmation = ({
-  bookingUIState,
+  submit,
+  value,
+  context,
   experience,
-  setBookingFormData,
-  setPopupMessage,
-  clientSecret,
+  setError,
 }: IProps) => {
   const stripe = React.useMemo(() => {
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
@@ -43,38 +41,39 @@ const ViewConfirmation = ({
     theme: "stripe",
   };
   const options: StripeElementsOptions = {
-    clientSecret,
+    clientSecret: context.clientSecret,
     appearance,
   };
   const paymentWrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (
-      bookingUIState === "providePaymentCredentials" &&
-      paymentWrapperRef.current
-    ) {
-      paymentWrapperRef.current.scrollIntoView({
-        behavior: "smooth",
-      });
+    if (value === "ProvidePaymentCredentials") {
+      setTimeout(() => {
+        paymentWrapperRef.current &&
+          paymentWrapperRef.current.scrollIntoView({
+            behavior: "smooth",
+          });
+      }, 300);
     }
-  }, [bookingUIState, paymentWrapperRef.current]);
+  }, [value, paymentWrapperRef.current]);
 
   return (
     <>
-      {(bookingUIState === "bookingDetails" ||
-        bookingUIState === "providePaymentCredentials") && (
+      {(value === "BookingDetails" ||
+        value === "ProvidePaymentCredentials") && (
         <FormBookingDetails
           experience={experience}
-          setBookingFormData={setBookingFormData}
-          bookingUIState={bookingUIState}
+          submit={submit}
+          context={context}
+          value={value}
         />
       )}
       <div ref={paymentWrapperRef}>
-        {bookingUIState === "providePaymentCredentials" &&
+        {value === "ProvidePaymentCredentials" &&
           stripe &&
-          clientSecret && (
+          context.clientSecret && (
             <Elements options={options} stripe={stripe}>
-              <FormPayment setPopupMessage={setPopupMessage} />
+              <FormPayment setError={setError} />
             </Elements>
           )}
       </div>

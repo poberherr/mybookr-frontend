@@ -2,7 +2,11 @@ import React, { useContext, useMemo, useState } from "react";
 import { DateRangePicker, Range, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import { Controller, ControllerRenderProps, useFormContext } from "react-hook-form";
+import {
+  Controller,
+  ControllerRenderProps,
+  useFormContext,
+} from "react-hook-form";
 
 import differenceInDays from "date-fns/differenceInDays";
 
@@ -44,8 +48,8 @@ export default function CalendarSingleDay({
 
   const bookingDate = getValues("bookingDate");
   const selectionRange: Range = {
-    startDate: bookingDate,
-    endDate: bookingDate,
+    startDate: new Date(bookingDate || new Date()),
+    endDate: new Date(bookingDate || new Date()),
   };
   const handleOnChange = (
     keyDict: RangeKeyDict,
@@ -53,9 +57,12 @@ export default function CalendarSingleDay({
   ) => {
     const selected = keyDict.range1;
 
-    if (selected.startDate && selected.startDate.getTime() !== field.value?.getTime()) {
+    if (
+      selected.startDate &&
+      selected.startDate.getTime() !== new Date(field?.value || new Date())?.getTime()
+    ) {
       field.onChange(selected.startDate);
-      return
+      return;
     }
 
     if (

@@ -32,6 +32,7 @@
     "@types/mapbox-gl": "^3.1.0",
     "@urql/core": "^5.0.3",
     "@urql/next": "^1.1.1",
+    "@xstate/react": "^4.1.1",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "graphql": "^16.8.1",
@@ -59,7 +60,8 @@
     "urql": "^4.1.0",
     "use-persisted-state": "^0.3.3",
     "web-streams-polyfill": "^4.0.0",
-    "xss": "^1.0.15"
+    "xss": "^1.0.15",
+    "xstate": "^5.13.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",

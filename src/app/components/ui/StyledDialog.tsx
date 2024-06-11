@@ -17,14 +17,14 @@ interface IProps {
   showDialog: boolean;
   setShowDialog: any;
   title: string;
-  BackButton?: any;
+  backButton?: boolean;
   children: any;
 }
 export default function StyledDialog({
   showDialog,
   setShowDialog,
   title,
-  BackButton,
+  backButton,
   children,
 }: IProps) {
   const mTheme = useTheme();
@@ -74,7 +74,7 @@ export default function StyledDialog({
       >
         {/* Back button */}
         {/* By defautl, do not show the back button */}
-        {BackButton && (
+        {backButton && (
           <TitleButton left={"16px"}>
             <LeftArrowIcon width={"11px"} height={"auto"} alt={"back button"} />
           </TitleButton>
