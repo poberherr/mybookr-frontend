@@ -14,6 +14,7 @@ import {
   loadStripe,
 } from "@stripe/stripe-js";
 import { IBookingContext, bookingMachine } from "./bookingMachine";
+import { CircularProgress } from "@mui/material";
 
 interface IProps {
   submit: (formData: BookingFormData) => void;
@@ -67,6 +68,12 @@ const ViewConfirmation = ({
           context={context}
           value={value}
         />
+      )}
+      {(value === "CreateBooking" || value === "UpdateBooking") && (
+        <div className="prose mx-auto text-center">
+          <CircularProgress size={48} />
+          <h1>Updating Booking</h1>
+        </div>
       )}
       <div ref={paymentWrapperRef}>
         {value === "ProvidePaymentCredentials" &&

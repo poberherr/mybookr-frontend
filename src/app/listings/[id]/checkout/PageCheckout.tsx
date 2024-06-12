@@ -107,14 +107,14 @@ export default function PageCheckout({
     ) {
       sendBookingAction({ type: "paymentIsProcessing" });
     }
-  }, [window, bookingState]);
+  }, [bookingState]);
 
   // Catch confirmation
   useEffect(() => {
     if (bookingState.value === "Confirmation") {
       localStorage.removeItem(`experience-${experience.id}-booking`);
     }
-  }, [window]);
+  }, [bookingState.value]);
 
   const isClient = useIsClient();
 
@@ -161,12 +161,7 @@ export default function PageCheckout({
               <code>
                 {JSON.stringify(
                   {
-                    bookingState,
-                    isInstanceOfDate: bookingState.context.date instanceof Date,
-                    typeofDate: typeof bookingState.context.date,
-                    isInstanceOfClient:
-                      bookingState.context.client instanceof Client,
-                    typeofClient: typeof bookingState.context.client,
+                    bookingState
                   },
                   null,
                   2,

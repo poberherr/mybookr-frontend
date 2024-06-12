@@ -76,7 +76,7 @@ export default async function LandingPage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-6 border-t border-solid border-gray-100 p-6 text-center md:py-24">
+      {/* <div className="flex flex-col items-center gap-6 border-t border-solid border-gray-100 p-6 text-center md:py-24">
         <h2 className="text-xl md:text-3xl">Join The Movement!</h2>
         <p>
           Be part of a revolutionary way to book your holidays.
@@ -84,7 +84,7 @@ export default async function LandingPage() {
           Sign up to stay informed and get involved:
         </p>
         <JoinForm />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { setup, assign, fromPromise } from "xstate";
-import { Client } from "urql";
+import { Client, TypedDocumentNode, AnyVariables, OperationResult } from "urql";
 import { graphql } from "@/gql";
 import {
   BookingStatus,
@@ -75,6 +75,35 @@ const CheckBookingMutation = graphql(`
   }
 `);
 
+function withMinimumDuration<T>(
+  promise: Promise<T>,
+  duration: number = 600,
+): Promise<T> {
+  return Promise.all([
+    promise,
+    new Promise<void>((resolve) => setTimeout(resolve, duration)),
+  ]).then(([result]) => result);
+}
+
+async function performMutation<TMutation, TVariables>(
+  client: Client,
+  mutation: TypedDocumentNode<TMutation, TVariables>,
+  variables: TVariables,
+): Promise<NonNullable<OperationResult<TMutation>["data"]>> {
+  const result = await client.mutation(mutation, variables as AnyVariables);
+
+  if (result.error) {
+    console.log("API returned error: Throwing.");
+    throw result.error;
+  }
+
+  if (!result.data) {
+    throw new Error("API returned empty response");
+  }
+
+  return result.data;
+}
+
 export const bookingMachine = setup({
   types: {
     input: {} as {
@@ -100,26 +129,20 @@ export const bookingMachine = setup({
           throw new Error("Incomplete data for creation");
         }
 
-        const result = await context.client.mutation(CreateBookingMutation, {
-          activityId: formData.activityId,
-          email: formData.email,
-          date: formData.bookingDate,
-          availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
-          name: "John Does (mocked - do we need this?)",
-          numberOfSlots: 1,
-        });
-
-        if (result.error) {
-          throw result.error;
-        }
-
-        if (!result.data) {
-          throw new Error("No data recieved");
-        }
+        const result = await withMinimumDuration(
+          performMutation(context.client, CreateBookingMutation, {
+            activityId: formData.activityId,
+            email: formData.email,
+            date: formData.bookingDate,
+            availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
+            name: "John Does (mocked - do we need this?)",
+            numberOfSlots: 1,
+          }),
+        );
 
         return {
-          bookingFlowToken: result.data.createBooking.bookingFlowToken,
-          paymentClientSecret: result.data.createBooking.paymentClientSecret,
+          bookingFlowToken: result.createBooking.bookingFlowToken,
+          paymentClientSecret: result.createBooking.paymentClientSecret,
         };
       } catch (err) {
         throw err;
@@ -137,26 +160,20 @@ export const bookingMachine = setup({
           throw new Error("Incomplete data for creation");
         }
 
-        const result = await context.client.mutation(UpdateBookingMutation, {
-          bookingFlowToken: context.bookingFlowToken,
-          activityId: formData.activityId,
-          email: formData.email,
-          date: formData.bookingDate,
-          availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
-          name: "John Does (mocked - do we need this?)",
-          numberOfSlots: 1,
-        });
-
-        if (result.error) {
-          throw result.error;
-        }
-
-        if (!result.data) {
-          throw new Error("No data recieved");
-        }
+        const result = await withMinimumDuration(
+          performMutation(context.client, UpdateBookingMutation, {
+            bookingFlowToken: context.bookingFlowToken,
+            activityId: formData.activityId,
+            email: formData.email,
+            date: formData.bookingDate,
+            availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
+            name: "John Does (mocked - do we need this?)",
+            numberOfSlots: 1,
+          }),
+        );
 
         return {
-          paymentClientSecret: result.data.updateBooking.paymentClientSecret,
+          paymentClientSecret: result.updateBooking.paymentClientSecret,
         };
       } catch (err) {
         throw err;
@@ -171,23 +188,48 @@ export const bookingMachine = setup({
           throw new Error("bookingFlowToken required to check booking status");
         }
 
-        const result = await context.client.mutation(CheckBookingMutation, {
-          bookingFlowToken: context.bookingFlowToken,
-        });
+        const result = await withMinimumDuration(
+          performMutation(context.client, CheckBookingMutation, {
+            bookingFlowToken: context.bookingFlowToken
+          }),
+        );
 
-        if (result.error) {
-          throw result.error;
-        }
-
-        if (!result.data) {
-          throw new Error("No data recieved");
-        }
-
-        return result.data.checkBookingStatus;
+        return result.checkBookingStatus;
       } catch (err) {
         throw err;
       }
     }),
+    awaitPaymentStatus: fromPromise<boolean, { context: IBookingContext }>(
+      async ({ input: { context } }) => {
+        return await withMinimumDuration(
+          (async () => {
+            if (!window || !context.bookingFlowToken) {
+              return false;
+            }
+            const searchParams = new URLSearchParams(window.location.search);
+
+            const redirectStatus = searchParams.get("redirect_status");
+            const paymentIntentClientSecret = searchParams.get(
+              "payment_intent_client_secret",
+            );
+            const res =
+              !!redirectStatus &&
+              paymentIntentClientSecret === context.clientSecret;
+
+            console.log(
+              "Payment status is",
+              redirectStatus,
+              "for client",
+              paymentIntentClientSecret,
+              "resulting in",
+              res,
+            );
+
+            return res;
+          })(),
+        );
+      },
+    ),
   },
   actions: {
     logTelemetry: () => {
@@ -316,42 +358,21 @@ export const bookingMachine = setup({
       },
     },
     AwaitingPaymentStatus: {
-      always: [
-        {
+      invoke: {
+        id: "awaitPaymentStatus",
+        src: "awaitPaymentStatus",
+        input: ({ context }) => ({ context }),
+        onDone: {
           target: "CheckBookingStatus",
-          guard: ({ context }) => {
-            if (!window || !context.bookingFlowToken) {
-              return false;
-            }
-            const searchParams = new URLSearchParams(window.location.search);
-
-            const redirectStatus = searchParams.get("redirect_status");
-            const paymentIntentClientSecret = searchParams.get(
-              "payment_intent_client_secret",
-            );
-            const res =
-              !!redirectStatus &&
-              paymentIntentClientSecret === context.clientSecret;
-
-            console.log(
-              "Payment status is",
-              redirectStatus,
-              "for client",
-              paymentIntentClientSecret,
-              "resulting in",
-              res,
-            );
-
-            return res;
-          },
         },
-        {
+        onError: {
           target: "DisplayError",
           actions: assign({
-            errorMessage: "Failed to process payment success on client side. Please try again.",
+            errorMessage:
+              "Failed to process payment success on client side. Please try again.",
           }),
         },
-      ],
+      },
     },
     CheckBookingStatus: {
       invoke: {
@@ -368,7 +389,8 @@ export const bookingMachine = setup({
             target: "DisplayError",
             guard: ({ event }) => event.output === BookingStatus.PaymentFailed,
             actions: assign({
-              errorMessage: "Payment Failed. Please try again.",
+              errorMessage:
+                "Stripe said that the payment failed. Please try again.",
             }),
           },
           {
