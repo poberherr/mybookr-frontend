@@ -98,8 +98,10 @@ export default function FormBookingDetails({
 
             {/* Calendar */}
             <CalendarSingleDay
+              startDate={context.date || new Date()}
               flagCalender={flagCalender}
               setFlagCalender={setFlagCalender}
+              experienceId={experience.id}
             />
 
             {/* Activity */}

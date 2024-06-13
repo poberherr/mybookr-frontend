@@ -27,16 +27,14 @@ const CreateBookingMutation = graphql(`
     $name: String!
     $email: String!
     $activityId: ID!
-    $availabilityId: ID!
-    $numberOfSlots: Int!
+    $bookedDate: Date!
   ) {
     createBooking(
       data: {
         name: $name
         email: $email
         activityId: $activityId
-        availabilityId: $availabilityId
-        numberOfSlots: $numberOfSlots
+        bookedDate: $bookedDate
       }
     ) {
       bookingFlowToken
@@ -51,8 +49,7 @@ const UpdateBookingMutation = graphql(`
     $name: String!
     $email: String!
     $activityId: ID!
-    $availabilityId: ID!
-    $numberOfSlots: Int!
+    $bookedDate: Date!
   ) {
     updateBooking(
       data: {
@@ -60,8 +57,7 @@ const UpdateBookingMutation = graphql(`
         name: $name
         email: $email
         activityId: $activityId
-        availabilityId: $availabilityId
-        numberOfSlots: $numberOfSlots
+        bookedDate: $bookedDate
       }
     ) {
       paymentClientSecret
@@ -133,7 +129,7 @@ export const bookingMachine = setup({
           performMutation(context.client, CreateBookingMutation, {
             activityId: formData.activityId,
             email: formData.email,
-            date: formData.bookingDate,
+            bookedDate: formData.bookingDate,
             availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
             name: "John Does (mocked - do we need this?)",
             numberOfSlots: 1,
@@ -165,7 +161,7 @@ export const bookingMachine = setup({
             bookingFlowToken: context.bookingFlowToken,
             activityId: formData.activityId,
             email: formData.email,
-            date: formData.bookingDate,
+            bookedDate: formData.bookingDate,
             availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
             name: "John Does (mocked - do we need this?)",
             numberOfSlots: 1,
@@ -190,7 +186,7 @@ export const bookingMachine = setup({
 
         const result = await withMinimumDuration(
           performMutation(context.client, CheckBookingMutation, {
-            bookingFlowToken: context.bookingFlowToken
+            bookingFlowToken: context.bookingFlowToken,
           }),
         );
 

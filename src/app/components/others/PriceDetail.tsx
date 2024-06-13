@@ -13,13 +13,7 @@ export default function PriceDetail({
 }) {
   const activity = useGetActivityFromExperience(experience);
 
-  const price = useMemo(
-    () =>
-      activity?.availabilities
-        ? activity.availabilities[0].pricePerUnit
-        : undefined,
-    [activity],
-  );
+  const price = activity?.price;
 
   const formattedPrice = useFormatPrice(price, true);
 

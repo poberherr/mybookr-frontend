@@ -33,8 +33,7 @@ const ActivityCard = ({
 }: IActivityCardProps) => {
   const { sendSearchMachineAction } = useContext(SearchStateMachineContext);
   const formattedPrice = useFormatPrice(
-    (activity?.availabilities && activity?.availabilities[0].pricePerUnit) ||
-      undefined,
+    activity.price
   );
 
   return (

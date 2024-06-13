@@ -44,9 +44,7 @@ export default function PageCheckout({
   } = useContext(SearchStateMachineContext);
   const activity = useGetActivityFromExperience(experience);
 
-  const price = activity?.availabilities
-    ? activity.availabilities[0].pricePerUnit
-    : undefined;
+  const price = activity?.price;
 
   // Permanently store state machine in local stoarage
   const initialBookingMachineSnapshot = useMemo(() => {

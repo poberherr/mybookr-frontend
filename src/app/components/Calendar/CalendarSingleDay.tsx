@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useMemo } from "react";
 import { DateRangePicker, Range, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -9,21 +9,92 @@ import {
 } from "react-hook-form";
 
 import { Box, Theme, css, styled } from "@mui/material";
+import format from "date-fns/format";
 
 import { SButton } from "../ui/SButton";
 import StyledDialog from "../ui/StyledDialog";
 import { CheckoutStartForm } from "@/app/listings/[id]/CheckoutStart";
-import { startOfToday } from "date-fns";
+import {
+  addMinutes,
+  addMonths,
+  endOfMonth,
+  startOfMonth,
+  startOfToday,
+} from "date-fns";
+import { useQuery } from "@urql/next";
+import { graphql } from "@/gql";
 
 interface CalendarProps {
+  startDate: Date;
+  experienceId: string;
   flagCalender: boolean;
   setFlagCalender: (flag: boolean) => void;
 }
 
+const AvailableActivitiesPerExperienceQuery = graphql(`
+  query AvailableActivitiesPerExperienceQuery(
+    $id: ID!
+    $dateStart: Date!
+    $dateEnd: Date!
+  ) {
+    experienceAvailableActivities(
+      id: $id
+      dateStart: $dateStart
+      dateEnd: $dateEnd
+    ) {
+      activities {
+        id
+        blockedDays
+      }
+    }
+  }
+`);
+
 export default function CalendarSingleDay({
+  startDate,
+  experienceId,
   flagCalender,
   setFlagCalender,
 }: CalendarProps) {
+
+  const { dateStart, dateEnd } = useMemo(() => {
+    return {
+      dateStart: format(startOfMonth(startDate || new Date()), "yyyy-MM-dd"),
+      dateEnd: format(startOfMonth(startDate || new Date()), "yyyy-MM-dd"),
+    };
+  }, [startDate]);
+
+  const [availableActivitiesPerExperience] = useQuery({
+    query: AvailableActivitiesPerExperienceQuery,
+    variables: {
+      id: experienceId,
+      dateStart,
+      dateEnd,
+    },
+  });
+
+  const disabledDates = useMemo<Date[]>(() => {
+    if (!availableActivitiesPerExperience.data) {
+      return [];
+    }
+    const allDisabledDates = new Set<Date>();
+    for (const activity of availableActivitiesPerExperience.data
+      .experienceAvailableActivities?.activities ?? []) {
+      activity.blockedDays.forEach((blockedDay) =>
+        allDisabledDates.add(blockedDay),
+      );
+    }
+    // console.dir({
+    //   data: availableActivitiesPerExperience.data,
+    //   allDisabledDates: [...allDisabledDates.values()],
+    // });
+    return [...allDisabledDates.values()].map((v) =>
+      addMinutes(new Date(v), new Date().getTimezoneOffset()),
+    );
+  }, [availableActivitiesPerExperience.data]);
+
+  // console.log(disabledDates);
+
   const { control, resetField, getValues } =
     useFormContext<CheckoutStartForm>();
 
@@ -76,6 +147,8 @@ export default function CalendarSingleDay({
                 ranges={[selectionRange]}
                 showPreview={true}
                 moveRangeOnFirstSelection={false}
+                disabledDates={disabledDates}
+                // disabledDay={(d) => disabledDates.includes(d) || d < new Date()}
                 months={1}
                 direction="horizontal"
                 preventSnapRefocus={true}

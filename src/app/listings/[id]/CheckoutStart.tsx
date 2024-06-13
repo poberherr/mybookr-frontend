@@ -105,7 +105,7 @@ export default function CheckoutStart({ experience }: IProps) {
   const onSubmit = methods.handleSubmit((data) => {
     if (!data.bookingDate) {
       methods.trigger("bookingDate");
-      return
+      return;
     }
     if (!data.activityId) {
       methods.trigger("activityId");
@@ -114,9 +114,7 @@ export default function CheckoutStart({ experience }: IProps) {
     router.push(`/listings/${experience.id}/checkout`);
   });
 
-  const price = activity?.availabilities
-    ? activity.availabilities[0].pricePerUnit
-    : undefined;
+  const price = activity?.price;
 
   const formattedPrice = useFormatPrice(price, true);
 
@@ -194,8 +192,14 @@ export default function CheckoutStart({ experience }: IProps) {
 
         {/* Calendar */}
         <CalendarSingleDay
+          startDate={
+            searchMachineState.context.bookingDate ||
+            searchMachineState.context.dateFrom ||
+            new Date()
+          }
           flagCalender={flagCalender}
           setFlagCalender={setFlagCalender}
+          experienceId={experience.id}
         />
       </form>
     </FormProvider>

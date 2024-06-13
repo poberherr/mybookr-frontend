@@ -22,11 +22,8 @@ export const ExperienceItem = graphql(/* GraphQL */ `
       id
       title
       description
-      availabilities {
-        id
-        dateAvailable
-        pricePerUnit
-      }
+      blockedDays
+      price
       medias {
         url
         width

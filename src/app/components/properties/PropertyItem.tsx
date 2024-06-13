@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import clsx from "clsx/lite";
 
 import { Typography } from "@mui/material";
 
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import { useMemo } from "react";
 
 interface IProps {
   property: ExperienceItemFragment;
@@ -17,16 +19,21 @@ export default function PropertyItem({ property: experience }: IProps) {
   const isBoosted = false;
   const minimumPrice = useMinimumPrice(experience);
   const formattedPrice = useFormatPrice(minimumPrice);
+  const availableActivityCount = useMemo(() => {
+    return experience.activities.filter(
+      (activity) => activity.blockedDays.length > 0,
+    ).length;
+  }, [experience]);
 
   return (
     <Link
-      className={`relative cursor-pointer rounded-lg bg-white shadow-csm
-      ${
+      className={clsx(
+        `relative cursor-pointer rounded-lg bg-white shadow-csm`,
         isBoosted
           ? "col-start-1 col-end-[span_2] row-start-1 row-end-[span_2]"
-          : "col-end-[span_2] sm:col-end-[span_1]"
-      }
-      `}
+          : "col-end-[span_2] sm:col-end-[span_1]",
+        availableActivityCount === 0 && "opacity-80 grayscale"
+      )}
       href={`/listings/${experience.id}`}
     >
       <div className="relative aspect-video">
@@ -81,8 +88,8 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from {formattedPrice} • {experience.activities.length} yacht
-            {experience.activities.length > 1 && "s"} available
+            from {formattedPrice} • {availableActivityCount} yacht
+            {availableActivityCount > 1 && "s"} available
           </Typography>
         </div>
       </div>
