@@ -5,7 +5,6 @@ import Link from "next/link";
 
 import { Typography } from "@mui/material";
 
-import BoostedBadge from "../others/BoostedBadge";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
@@ -87,8 +86,6 @@ export default function PropertyItem({ property: experience }: IProps) {
           </Typography>
         </div>
       </div>
-
-      {isBoosted && <BoostedBadge />}
     </Link>
   );
 }
