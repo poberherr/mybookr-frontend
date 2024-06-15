@@ -15,22 +15,17 @@ import ShareIcon from "@/assets/icons/share.svg";
 import CheckoutStart from "@/app/listings/[id]/CheckoutStart";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { SButton } from "@/app/components/ui/SButton";
-import { BookingContext } from "@/app/contexts/booking";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
 interface IProps {
   experience: ExperienceItemFragment;
   activity: ExperienceItemFragment["activities"][0];
-  setActivityForExperience: (experienceId: string, activityId: string) => void;
   checkoutStartRef: RefObject<HTMLDivElement>;
 }
 
-const ActivityCard = ({
-  experience,
-  activity,
-  setActivityForExperience,
-  checkoutStartRef,
-}: IProps) => {
+const ActivityCard = ({ activity, experience, checkoutStartRef }: IProps) => {
+  const { sendSearchMachineAction } = useContext(SearchStateMachineContext);
   const formattedPrice = useFormatPrice(
     (activity?.availabilities && activity?.availabilities[0].pricePerUnit) ||
       undefined,
@@ -63,7 +58,10 @@ const ActivityCard = ({
           variant="outlined"
           disabled={!formattedPrice}
           onClick={() => {
-            setActivityForExperience(experience.id, activity.id);
+            sendSearchMachineAction({
+              type: "updateBooking",
+              data: { activityId: activity.id, experienceId: experience.id },
+            });
             checkoutStartRef.current &&
               checkoutStartRef.current.scrollIntoView({
                 behavior: "smooth",
@@ -96,7 +94,6 @@ export default function ListingComponent({
 }: {
   experience: ExperienceItemFragment;
 }) {
-  const { setActivityForExperience } = useContext(BookingContext);
   const [flagGallery, setFlagGallery] = useState(false);
   const checkoutStartRef = useRef<HTMLDivElement>(null);
 
@@ -304,10 +301,9 @@ export default function ListingComponent({
               {experience.activities.map((activity) => (
                 <ActivityCard
                   key={activity.id}
-                  activity={activity}
                   experience={experience}
+                  activity={activity}
                   checkoutStartRef={checkoutStartRef}
-                  setActivityForExperience={setActivityForExperience}
                 />
               ))}
             </div>

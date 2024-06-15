@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 import StyledSelect from "../form/StyledSelect";
@@ -21,10 +21,12 @@ export default function ActivityForm({ experience }: IProps) {
     setValue("activityId", activityId, { shouldValidate: true });
   }, [activityId, setValue]);
 
-  const activities = experience.activities.map((activity) => ({
-    title: activity.title,
-    value: activity.id,
-  }));
+  const activities = useMemo(() => {
+    return experience.activities.map((activity) => ({
+      title: activity.title,
+      value: activity.id,
+    }));
+  }, [experience]);
 
   const formValidator = {
     activityId: {
@@ -44,7 +46,7 @@ export default function ActivityForm({ experience }: IProps) {
       menuItems={activities}
       rules={formValidator.activityId}
       errors={errors.activityId}
-      placeholder="With which yacht do you want to cruise?"
+      placeholder="Please select your yacht..."
     />
   );
 }

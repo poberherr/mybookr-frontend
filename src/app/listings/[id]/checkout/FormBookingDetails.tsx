@@ -11,7 +11,6 @@ import StyledTextField from "@/app/components/form/TextField";
 import { SButton } from "@/app/components/ui/SButton";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 
-import { useWatchActivityId, useWatchBookingDate } from "@/app/contexts/booking";
 import { formatDate } from "@/app/helpers/date-format";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
@@ -58,11 +57,7 @@ export default function FormBookingDetails({
   });
 
   const bookingDate = methods.watch("bookingDate");
-  const activityId = methods.watch("activityId");
-  const activity =
-    activityId && useGetActivityFromExperience(activityId, experience);
-  useWatchActivityId(methods.control, "activityId", experience.id);
-  useWatchBookingDate(methods.control, "bookingDate")
+  const activity = useGetActivityFromExperience(experience);
 
   return (
     <FormProvider {...methods}>

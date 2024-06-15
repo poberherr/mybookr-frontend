@@ -1,12 +1,13 @@
+import { useContext } from "react";
+import { format } from "date-fns";
+import { useQuery, gql } from "@urql/next";
+
+import { graphql, useFragment } from "@/gql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
+import { useIsClient } from "@/app/helpers/useIsClient";
 import PropertyItem from "./PropertyItem";
 import PropertyItemSkeleton from "./PropertyItemSkeleton";
-import { useQuery, gql } from "@urql/next";
-import { graphql, useFragment } from "@/gql";
-import { useIsClient } from "@/app/helpers/useIsClient";
-import { useContext } from "react";
-import { BookingContext } from "@/app/contexts/booking";
-import { format } from "date-fns";
+import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {
@@ -22,12 +23,12 @@ const ExperiencesQuery = graphql(`
 
 export default function PropertiesList() {
   const isClient = useIsClient();
-  const { dateFrom, dateTo } = useContext(BookingContext);
+  const { searchMachineState } = useContext(SearchStateMachineContext);
   const [result] = useQuery({
     query: ExperiencesQuery,
     variables: {
-      dateStart: dateFrom ? format(dateFrom, "yyyy-MM-dd") : null,
-      dateEnd: dateTo ? format(dateTo, "yyyy-MM-dd") : null,
+      dateStart: searchMachineState.context.dateFrom.toISOString().split('T')[0],
+      dateEnd: searchMachineState.context.dateTo.toISOString().split('T')[0],
     },
   });
 

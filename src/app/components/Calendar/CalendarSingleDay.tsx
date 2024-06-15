@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React from "react";
 import { DateRangePicker, Range, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
@@ -8,23 +8,11 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import differenceInDays from "date-fns/differenceInDays";
+import { Box, Theme, css, styled } from "@mui/material";
 
-import {
-  Box,
-  Theme,
-  Typography,
-  css,
-  styled,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-
-import { FormData } from "../search-bar/SearchBar";
 import { SButton } from "../ui/SButton";
 import StyledDialog from "../ui/StyledDialog";
 import { CheckoutStartForm } from "@/app/listings/[id]/CheckoutStart";
-import { BookingContext } from "@/app/contexts/booking";
 import { startOfToday } from "date-fns";
 
 interface CalendarProps {
@@ -36,11 +24,8 @@ export default function CalendarSingleDay({
   flagCalender,
   setFlagCalender,
 }: CalendarProps) {
-  const { dateFrom } = useContext(BookingContext);
   const { control, resetField, getValues } =
     useFormContext<CheckoutStartForm>();
-  const mTheme = useTheme();
-  const isMobile = useMediaQuery(mTheme.breakpoints.down("md"));
 
   const handleClose = () => {
     setFlagCalender(false);
@@ -59,7 +44,8 @@ export default function CalendarSingleDay({
 
     if (
       selected.startDate &&
-      selected.startDate.getTime() !== new Date(field?.value || new Date())?.getTime()
+      selected.startDate.getTime() !==
+        new Date(field?.value || new Date())?.getTime()
     ) {
       field.onChange(selected.startDate);
       return;

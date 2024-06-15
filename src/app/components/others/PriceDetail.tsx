@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { useMemo } from "react";
 
 import { Typography } from "@mui/material";
 
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { BookingContext } from "@/app/contexts/booking";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 
@@ -12,12 +11,17 @@ export default function PriceDetail({
 }: {
   experience: ExperienceItemFragment;
 }) {
-  const { activities } = useContext(BookingContext);
-  const activityId = activities[experience.id];
-  const activity = useGetActivityFromExperience(activityId, experience)
-  const price =
-    activity?.availabilities ? activity.availabilities[0].pricePerUnit : undefined;
-  const formattedPrice = useFormatPrice(price, true)
+  const activity = useGetActivityFromExperience(experience);
+
+  const price = useMemo(
+    () =>
+      activity?.availabilities
+        ? activity.availabilities[0].pricePerUnit
+        : undefined,
+    [activity],
+  );
+
+  const formattedPrice = useFormatPrice(price, true);
 
   return (
     <div className="grid gap-4">

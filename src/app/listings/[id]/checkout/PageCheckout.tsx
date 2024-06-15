@@ -12,14 +12,14 @@ import BackButton from "@/app/components/others/BackButton";
 import { useIsClient } from "@/app/helpers/useIsClient";
 
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { BookingContext } from "@/app/contexts/booking";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 import ViewConfirmation from "./ViewConfirmation";
 import ViewBookingForms from "./ViewBookingForms";
 import Sidebar from "./Sidebar";
 import { bookingMachine } from "./bookingMachine";
-import { Client, useClient } from "urql";
+import { useClient } from "urql";
 import StyledDialog from "@/app/components/ui/StyledDialog";
+import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
 type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
 
@@ -37,9 +37,13 @@ export default function PageCheckout({
   const client = useClient();
 
   // Get price based on selected activity
-  const { activities, bookingDate } = useContext(BookingContext);
-  const activityId = activities[experience.id];
-  const activity = useGetActivityFromExperience(activityId, experience);
+  const {
+    searchMachineState: {
+      context: { bookingDate },
+    },
+  } = useContext(SearchStateMachineContext);
+  const activity = useGetActivityFromExperience(experience);
+
   const price = activity?.availabilities
     ? activity.availabilities[0].pricePerUnit
     : undefined;
@@ -71,7 +75,7 @@ export default function PageCheckout({
       experienceId: experience.id,
       client,
       date: bookingDate,
-      activityId: activityId,
+      activityId: activity?.id,
     },
     snapshot: initialBookingMachineSnapshot,
   });
@@ -161,7 +165,7 @@ export default function PageCheckout({
               <code>
                 {JSON.stringify(
                   {
-                    bookingState
+                    bookingState,
                   },
                   null,
                   2,

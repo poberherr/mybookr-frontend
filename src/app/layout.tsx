@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
@@ -14,7 +14,7 @@ import { inter, montserrat } from "@/styles/fonts";
 
 import "../global.css";
 import { theme } from "../theme";
-import { BookingContextProvider } from "./contexts/booking";
+import ContextProviders from "./providers";
 
 export const metadata: Metadata = {
   title: "mybookr.io",
@@ -32,7 +32,7 @@ export default function RootLayout({
     <AppRouterCacheProvider>
       <ThemeProvider theme={theme}>
         <ClerkProvider>
-          <BookingContextProvider>
+          <ContextProviders>
             <MatomoTracking />
             <html lang="en">
               <body className={`${montserrat.className} ${inter.className}`}>
@@ -43,7 +43,7 @@ export default function RootLayout({
                 </main>
               </body>
             </html>
-          </BookingContextProvider>
+          </ContextProviders>
         </ClerkProvider>
       </ThemeProvider>
     </AppRouterCacheProvider>

@@ -2,11 +2,15 @@ import { useContext, useMemo } from "react";
 
 import { addDays, isWithinInterval } from "date-fns";
 
-import { BookingContext } from "../contexts/booking";
 import { ExperienceItemFragment } from "@/gql/graphql";
+import { SearchStateMachineContext } from "../state-machines/searchMachine";
 
 export const useMinimumPrice = (experience: ExperienceItemFragment): number => {
-  const { dateFrom, dateTo } = useContext(BookingContext);
+  const {
+    searchMachineState: {
+      context: { dateFrom, dateTo },
+    },
+  } = useContext(SearchStateMachineContext);
   return useMemo(() => {
     if (!dateFrom || !dateTo || !experience.activities) {
       return 0;

@@ -11,65 +11,105 @@ import CalendarSingleDay from "../../components/Calendar/CalendarSingleDay";
 import PriceDetail from "@/app/components/others/PriceDetail";
 import { SButton } from "@/app/components/ui/SButton";
 
-import {
-  BookingContext,
-  useWatchActivityId,
-  useWatchBookingDate,
-} from "@/app/contexts/booking";
-
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { formatDate } from "@/app/helpers/date-format";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
+import { startOfToday } from "date-fns";
 
 interface IProps {
   experience: ExperienceItemFragment;
 }
 export interface CheckoutStartForm {
   activityId: string;
-  bookingDate?: Date;
+  bookingDate: Date;
 }
 
 export default function CheckoutStart({ experience }: IProps) {
   const router = useRouter();
-  const { activities, bookingDate, dateFrom } = useContext(BookingContext);
+  const { searchMachineState, sendSearchMachineAction } = useContext(
+    SearchStateMachineContext,
+  );
 
   const [flagCalender, setFlagCalender] = useState(false);
-  const activityId = activities[experience.id];
-  const activity = useGetActivityFromExperience(activityId, experience)
+  const activity = useGetActivityFromExperience(experience);
 
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
     defaultValues: {
-      activityId,
-      bookingDate: bookingDate || dateFrom || new Date(),
+      activityId: activity?.id,
+      bookingDate:
+        searchMachineState.context.bookingDate ||
+        searchMachineState.context.dateFrom ||
+        startOfToday(),
     },
   });
 
-  // Connect form values to booking context
-  const activityIdValue = methods.watch("activityId");
-  useWatchActivityId<CheckoutStartForm>(
-    methods.control,
-    "activityId",
-    experience.id,
-  );
-  useWatchBookingDate<CheckoutStartForm>(methods.control, "bookingDate");
+  // Watch form fields
+  const formValueActivityId = methods.watch("activityId");
+  const formValueBookingDate = methods.watch("bookingDate");
+
+  // Sync form values with state machine context
+  useEffect(() => {
+    if (
+      !activity ||
+      (formValueActivityId && formValueActivityId !== activity.id)
+    ) {
+      sendSearchMachineAction({
+        type: "updateBooking",
+        data: {
+          activityId: formValueActivityId,
+          experienceId: experience.id,
+        },
+      });
+    }
+  }, [formValueActivityId]);
 
   useEffect(() => {
-    if (activityIdValue !== activityId) {
-      methods.setValue("activityId", activityId)
+    if (
+      !searchMachineState.context.bookingDate ||
+      (formValueBookingDate &&
+        formValueBookingDate.getTime() !==
+          searchMachineState.context.bookingDate.getTime())
+    ) {
+      sendSearchMachineAction({
+        type: "updateBooking",
+        data: { bookingDate: formValueBookingDate },
+      });
     }
-  }, [activityIdValue, activityId])
+  }, [formValueBookingDate]);
+
+  // Sync form fields with state machine context when the context changes
+  useEffect(() => {
+    if (activity?.id && activity.id !== formValueActivityId) {
+      methods.reset({
+        activityId: activity?.id ? activity.id : "",
+      });
+    }
+    if (
+      searchMachineState.context.bookingDate &&
+      formValueBookingDate &&
+      searchMachineState.context.bookingDate.getTime() !==
+        formValueBookingDate.getTime()
+    ) {
+      methods.reset({
+        bookingDate: searchMachineState.context.bookingDate,
+      });
+    }
+  }, [activity?.id, searchMachineState.context.bookingDate, methods.reset]);
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {
     if (!data.bookingDate) {
       methods.trigger("bookingDate");
+      return
     }
     if (!data.activityId) {
       methods.trigger("activityId");
+      return;
     }
     router.push(`/listings/${experience.id}/checkout`);
   });
@@ -78,13 +118,14 @@ export default function CheckoutStart({ experience }: IProps) {
     ? activity.availabilities[0].pricePerUnit
     : undefined;
 
-  const formattedPrice = useFormatPrice(price, true)
+  const formattedPrice = useFormatPrice(price, true);
 
   const isClient = useIsClient();
 
   if (!isClient) {
     return null;
   }
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={onSubmit}>
@@ -104,7 +145,9 @@ export default function CheckoutStart({ experience }: IProps) {
                 variant="body1"
                 onClick={() => setFlagCalender(true)}
               >
-                {bookingDate && formatDate(bookingDate)}
+                {formValueBookingDate
+                  ? formatDate(formValueBookingDate)
+                  : "Select your cruise date..."}
               </Typography>
             </div>
             <div>

@@ -68,7 +68,7 @@ function StyledSelect<TFieldValues extends FieldValues>({
         }) => (
           <Select
             error={!!error}
-            value={value}
+            value={!value ? "" : value}
             onChange={onChange}
             onBlur={onBlur}
             ref={fieldRef}
