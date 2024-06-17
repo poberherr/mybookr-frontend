@@ -161,17 +161,20 @@ export default function PageCheckout({
             experience={experience}
           />
           {process.env.NODE_ENV === "development" && (
-            <pre className="max-w-20">
-              <code>
-                {JSON.stringify(
-                  {
-                    bookingState,
-                  },
-                  null,
-                  2,
-                )}
-              </code>
-            </pre>
+            <div className="px-4 py-0 md:pl-40 md:pr-16 prose">
+              <h2>Development debugging (invisible on production)</h2>
+              <pre>
+                <code>
+                  {JSON.stringify(
+                    {
+                      bookingState,
+                    },
+                    null,
+                    2,
+                  )}
+                </code>
+              </pre>
+            </div>
           )}
         </div>
 
