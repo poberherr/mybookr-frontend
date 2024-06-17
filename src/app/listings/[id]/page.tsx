@@ -2,6 +2,7 @@ import { graphql, useFragment } from "@/gql";
 import ListingComponent from "./listing";
 import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
+import { renderMarkdown } from "@/app/helpers/renderMarkdown";
 
 const ExperienceQuery = graphql(`
   query ExperienceQuery($experienceId: ID!) {
@@ -23,7 +24,14 @@ export default async function ListingPage({
   if (!experience) {
     throw new Error("unable to experience detail page results");
   }
-  return <ListingComponent experience={experience} />;
+
+  const renderedDescription = await renderMarkdown(experience.description);
+  return (
+    <ListingComponent
+      experience={experience}
+      description={renderedDescription}
+    />
+  );
 }
 
 export const revalidate = false;
