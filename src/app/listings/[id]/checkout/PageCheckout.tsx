@@ -133,7 +133,6 @@ export default function PageCheckout({
         children={bookingState.context.errorMessage}
         showDialog={bookingState.value === "DisplayError"}
         setShowDialog={() => sendBookingAction({ type: "closePopup" })}
-        backButton={true}
       />
       <BackButton pageName="details" />
       <Typography

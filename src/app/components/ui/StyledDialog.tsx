@@ -76,7 +76,7 @@ export default function StyledDialog({
         {/* By defautl, do not show the back button */}
         {backButton && (
           <TitleButton left={"16px"}>
-            <LeftArrowIcon width={"11px"} height={"auto"} alt={"back button"} />
+            <LeftArrowIcon width={"11px"} height={"14px"} alt={"back button"} />
           </TitleButton>
         )}
 
@@ -85,7 +85,7 @@ export default function StyledDialog({
 
         {/* Close button */}
         <TitleButton onClick={handleClose} right={"16px"}>
-          <CloseIcon width={"14px"} height={"auto"} alt={"close"} />
+          <CloseIcon width={"14px"} height={"14px"} alt={"close"} />
         </TitleButton>
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
