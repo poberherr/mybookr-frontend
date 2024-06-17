@@ -18,13 +18,19 @@ import { SButton } from "@/app/components/ui/SButton";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
-interface IProps {
+interface IActivityCardProps {
   experience: ExperienceItemFragment;
   activity: ExperienceItemFragment["activities"][0];
   checkoutStartRef: RefObject<HTMLDivElement>;
+  renderedActivityDescriptions: { [key: string]: string };
 }
 
-const ActivityCard = ({ activity, experience, checkoutStartRef }: IProps) => {
+const ActivityCard = ({
+  activity,
+  experience,
+  checkoutStartRef,
+  renderedActivityDescriptions,
+}: IActivityCardProps) => {
   const { sendSearchMachineAction } = useContext(SearchStateMachineContext);
   const formattedPrice = useFormatPrice(
     (activity?.availabilities && activity?.availabilities[0].pricePerUnit) ||
@@ -32,30 +38,35 @@ const ActivityCard = ({ activity, experience, checkoutStartRef }: IProps) => {
   );
 
   return (
-    <div
-      className="flex justify-between border border-gray-100 p-4"
-      key={activity.id}
-    >
-      <div>
-        <Typography
-          className="!mb-6 w-full !text-lg !font-extrabold"
-          variant="h2"
-        >
-          {activity.title}
-        </Typography>
-        {activity.description && (
-          <div
-            className="prose"
-            dangerouslySetInnerHTML={{
-              __html: activity.description,
-            }}
-          />
+    <div className="grid gap-4 border border-gray-100 p-4 lg:gap-8">
+      <div className="grid justify-between gap-4 lg:flex">
+        {activity.medias && (
+          <div className="order-1 w-full flex-shrink-0 lg:w-64 lg:order-2 lg:ml-4">
+            <Image
+              className="w-full rounded-lg"
+              src={activity.medias[0].url}
+              alt=""
+              width={activity.medias[0].width}
+              height={activity.medias[0].height}
+              sizes={"420px"}
+            />
+          </div>
         )}
+        <div className="prose order-2 lg:order-1">
+          <h2 className="mb-0 text-2xl font-bold">{activity.title}</h2>
+          {activity.description && (
+            <div
+              dangerouslySetInnerHTML={{
+                __html: renderedActivityDescriptions[activity.id],
+              }}
+            />
+          )}
+        </div>
+      </div>
 
+      <div className="flex w-full items-center justify-between">
         <SButton
-          className="mt-4"
           size="small"
-          variant="outlined"
           disabled={!formattedPrice}
           onClick={() => {
             sendSearchMachineAction({
@@ -68,34 +79,38 @@ const ActivityCard = ({ activity, experience, checkoutStartRef }: IProps) => {
               });
           }}
         >
-          {formattedPrice
-            ? `Select cruise for ${formattedPrice}`
-            : `unavailable`}
+          <span className="hidden lg:inline-block mr-1">Cruise with the </span>
+          <span className="font-bold">{activity.title}</span>
         </SButton>
-      </div>
-      {activity.medias && (
-        <div className="ml-4 flex-shrink-0">
-          <Image
-            className="w-48 rounded-lg"
-            src={activity.medias[0].url}
-            alt=""
-            width={activity.medias[0].width}
-            height={activity.medias[0].height}
-            sizes={"420px"}
-          />
+        <div className="flex items-center gap-2">
+          {formattedPrice ? (
+            <>
+              <span className="text-sm opacity-80">starting price:</span>
+              <span className="text-xl font-bold">{formattedPrice}</span>
+              <span className="hidden text-sm opacity-80 lg:inline-block">
+                per cruise
+              </span>
+            </>
+          ) : (
+            <span className="text-xl font-bold opacity-80">Unavailable</span>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
+interface IListingComponentProps {
+  experience: ExperienceItemFragment;
+  renderedDescription: string;
+  renderedActivityDescriptions: { [key: string]: string };
+}
+
 export default function ListingComponent({
   experience,
-  description,
-}: {
-  experience: ExperienceItemFragment;
-  description: string;
-}) {
+  renderedDescription,
+  renderedActivityDescriptions,
+}: IListingComponentProps) {
   const [flagGallery, setFlagGallery] = useState(false);
   const checkoutStartRef = useRef<HTMLDivElement>(null);
 
@@ -108,15 +123,15 @@ export default function ListingComponent({
       {/* Hero */}
       <div className="flex flex-col gap-8">
         {/* Hero title */}
-        <div className="px-4 py-0 md:px-40">
-          <Typography className="!mt-8 flex w-full !text-xl !font-extrabold md:!text-3xl">
+        <div className="px-4 py-0 lg:px-40">
+          <Typography className="!mt-8 flex w-full !text-xl !font-extrabold lg:!text-3xl">
             {experience.title}
           </Typography>
 
           {/* Rate, Number of reviews, Like and Share button */}
-          <div className="mt-4 grid-cols-[1fr_auto] gap-5 md:grid">
+          <div className="mt-4 grid-cols-[1fr_auto] gap-5 lg:grid">
             <Typography
-              className="flex flex-wrap items-center !text-gray-500 md:!text-base"
+              className="flex flex-wrap items-center !text-gray-500 lg:!text-base"
               variant="body2"
             >
               <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
@@ -128,7 +143,7 @@ export default function ListingComponent({
             </Typography>
 
             {/* Like and Share button */}
-            <div className="hidden items-center justify-end gap-6 md:flex">
+            <div className="hidden items-center justify-end gap-6 lg:flex">
               <div className="cursor-pointer items-center">
                 <HeartIcon className="h-auto w-5" alt="" />
               </div>
@@ -142,7 +157,7 @@ export default function ListingComponent({
         {/* Hero Image */}
         {/* Hero Image: Mobile */}
         {experience.medias && experience.medias.length > 0 && (
-          <div className="relative block md:hidden">
+          <div className="relative block lg:hidden">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
@@ -179,7 +194,7 @@ export default function ListingComponent({
 
                 {/* Show all images */}
                 <Typography
-                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
+                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl lg:right-[calc(160px+16px)]"
                   onClick={() => {
                     setFlagGallery(true);
                   }}
@@ -193,7 +208,7 @@ export default function ListingComponent({
 
         {/* Hero Image: Desktop */}
         {experience.medias && experience.medias.length > 0 && (
-          <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 md:grid">
+          <div className="relative hidden h-[550px] w-full grid-cols-4 grid-rows-2 gap-5 px-40 py-0 lg:grid">
             {flagGallery ? (
               <Gallery
                 flagGallery={flagGallery}
@@ -249,7 +264,7 @@ export default function ListingComponent({
                 )}
 
                 <Typography
-                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl md:right-[calc(160px+16px)]"
+                  className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl bg-white bg-opacity-30 px-6 py-3 text-center !text-xs !font-semibold !tracking-widest backdrop-blur-xl lg:right-[calc(160px+16px)]"
                   onClick={() => {
                     setFlagGallery(true);
                   }}
@@ -265,42 +280,43 @@ export default function ListingComponent({
       <Divider className="!mt-16" />
 
       {/* Content */}
-      <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,600px)]">
+      <div className="grid grid-cols-1 grid-rows-1 lg:grid-cols-[2fr_minmax(min-content,600px)]">
         {/* Left content */}
-        <div className="p-0 pt-16 md:pb-16">
+        <div className="p-0 pt-16 lg:pb-16">
           {/* Introduction */}
-          <div className="px-4 py-0 md:pl-40 md:pr-16">
+          <div className="px-4 py-0 lg:pl-40 lg:pr-16">
             <Typography
-              className="w-full !text-xl !font-extrabold md:!text-3xl"
+              className="w-full !text-xl !font-extrabold lg:!text-3xl"
               variant="h3"
             >
               About the experience
             </Typography>
 
             {/* Description */}
-            {description && (
+            {renderedDescription && (
               <div
                 className="prose !mt-8 !leading-relaxed"
-                dangerouslySetInnerHTML={{ __html: description }}
+                dangerouslySetInnerHTML={{ __html: renderedDescription }}
               />
             )}
           </div>
 
           <Divider className="!mt-16" />
 
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+          <div className="mt-16 px-4 py-0 lg:pl-40 lg:pr-16">
             <Typography
-              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+              className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
               variant="h3"
             >
               Choose your yacht
             </Typography>
-            <div className="grid gap-2">
+            <div className="grid gap-8">
               {experience.activities.map((activity) => (
                 <ActivityCard
                   key={activity.id}
                   experience={experience}
                   activity={activity}
+                  renderedActivityDescriptions={renderedActivityDescriptions}
                   checkoutStartRef={checkoutStartRef}
                 />
               ))}
@@ -310,9 +326,9 @@ export default function ListingComponent({
           <Divider className="!mt-16" />
 
           {/* Location */}
-          <div className="mt-16 px-4 py-0 md:pl-40 md:pr-16">
+          <div className="mt-16 px-4 py-0 lg:pl-40 lg:pr-16">
             <Typography
-              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+              className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
               variant="h3"
             >
               Location
@@ -342,9 +358,9 @@ export default function ListingComponent({
           </div>
 
           {/* Things to know */}
-          <div className="mt-16 hidden px-4 py-0 md:pl-40 md:pr-16">
+          <div className="mt-16 hidden px-4 py-0 lg:pl-40 lg:pr-16">
             <Typography
-              className="!mb-6 w-full !text-xl !font-extrabold md:!text-3xl"
+              className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
               variant="h3"
             >
               Things to know
@@ -361,7 +377,7 @@ export default function ListingComponent({
 
         {/* Right content - Desktop */}
         <div
-          className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 md:mr-40 md:mt-0 md:px-0 md:py-0"
+          className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 lg:mr-40 lg:mt-0 lg:px-0 lg:py-0"
           ref={checkoutStartRef}
         >
           <CheckoutStart experience={experience} />

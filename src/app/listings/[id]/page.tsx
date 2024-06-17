@@ -26,10 +26,17 @@ export default async function ListingPage({
   }
 
   const renderedDescription = await renderMarkdown(experience.description);
+  const renderedActivityDescriptions: { [key: string]: string } = {};
+  for (const activity of experience.activities) {
+    renderedActivityDescriptions[activity.id] = await renderMarkdown(
+      activity.description,
+    );
+  }
   return (
     <ListingComponent
       experience={experience}
-      description={renderedDescription}
+      renderedDescription={renderedDescription}
+      renderedActivityDescriptions={renderedActivityDescriptions}
     />
   );
 }
