@@ -1,13 +1,14 @@
+"use client"
+
 import { useContext } from "react";
-import { format } from "date-fns";
-import { useQuery, gql } from "@urql/next";
+import { useQuery } from "@urql/next";
 
 import { graphql, useFragment } from "@/gql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import PropertyItem from "./PropertyItem";
-import PropertyItemSkeleton from "./PropertyItemSkeleton";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
+import { PropertiesListSkeleton } from "./PropertiesListSkeleton";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {
@@ -24,11 +25,13 @@ const ExperiencesQuery = graphql(`
 export default function PropertiesList() {
   const isClient = useIsClient();
   const { searchMachineState } = useContext(SearchStateMachineContext);
-  const [result] = useQuery({
+  const [result, executeSearch] = useQuery({
     query: ExperiencesQuery,
     variables: {
-      dateStart: searchMachineState.context.dateFrom.toISOString().split('T')[0],
-      dateEnd: searchMachineState.context.dateTo.toISOString().split('T')[0],
+      dateStart: searchMachineState.context.dateFrom
+        .toISOString()
+        .split("T")[0],
+      dateEnd: searchMachineState.context.dateTo.toISOString().split("T")[0],
     },
   });
 
@@ -39,25 +42,47 @@ export default function PropertiesList() {
 
   if (result.error) {
     console.error(result.error);
+    return (
+      <div className="prose max-w-full">
+        <h1>Oops, something went wrong!</h1>
+        <p>We're sorry, but an unexpected error occurred.</p>
+        <p>
+          <button
+            className="font-bold"
+            onClick={() => {
+              executeSearch();
+            }}
+          >
+            Click here
+          </button>
+          to try again.
+        </p>
+      </div>
+    );
   }
 
-  return (
-    <div className="grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {loading ? (
-        <>
-          {Array(8)
-            .fill(1)
-            .map((value, index) => (
-              <PropertyItemSkeleton key={index} />
-            ))}
-        </>
-      ) : (
-        <>
-          {listings?.map((listing) => (
-            <PropertyItem key={listing.id} property={listing} />
-          ))}
-        </>
-      )}
-    </div>
-  );
+  if (loading) {
+    return <PropertiesListSkeleton />;
+  }
+
+  if (!listings || listings.length === 0) {
+    return (
+      <div className="prose max-w-full">
+        <h1>No availability for your selected dates</h1>
+        <p>
+          Unfortunately, there are no available options for the dates you
+          selected. Please try choosing different dates to find available
+          options.
+        </p>
+      </div>
+    ); 
+  }
+
+    return (
+      <div className="grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {listings.map((listing) => (
+          <PropertyItem key={listing.id} property={listing} />
+        ))}
+      </div>
+    );
 }
