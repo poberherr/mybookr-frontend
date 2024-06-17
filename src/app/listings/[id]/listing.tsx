@@ -17,6 +17,7 @@ import { ExperienceItemFragment } from "@/gql/graphql";
 import { SButton } from "@/app/components/ui/SButton";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
+import { useRenderMarkdown } from "@/app/helpers/useRenderMarkdown";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -96,6 +97,8 @@ export default function ListingComponent({
 }) {
   const [flagGallery, setFlagGallery] = useState(false);
   const checkoutStartRef = useRef<HTMLDivElement>(null);
+
+  const formattedMarkdown = useRenderMarkdown(experience?.description);
 
   if (!experience) {
     return "Error - No listing found.";
@@ -277,14 +280,10 @@ export default function ListingComponent({
 
             {/* Description */}
             {experience.description && (
-              <Typography
+              <div
                 className="prose !mt-8 !leading-relaxed"
-                variant="body1"
-              >
-                <span
-                  dangerouslySetInnerHTML={{ __html: experience.description }}
-                />
-              </Typography>
+                dangerouslySetInnerHTML={{ __html: formattedMarkdown }}
+              />
             )}
           </div>
 
