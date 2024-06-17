@@ -134,7 +134,7 @@ export default function PageCheckout({
         showDialog={bookingState.value === "DisplayError"}
         setShowDialog={() => sendBookingAction({ type: "closePopup" })}
       />
-      <BackButton pageName="details" />
+      <BackButton pageName={experience.title} route={`/listings/${experience.id}`} />
       <Typography
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
