@@ -129,7 +129,7 @@ export const bookingMachine = setup({
           performMutation(context.client, CreateBookingMutation, {
             activityId: formData.activityId,
             email: formData.email,
-            bookedDate: formData.bookingDate,
+            bookedDate: formData.bookingDate.toISOString().split("T")[0],
             availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
             name: "John Does (mocked - do we need this?)",
             numberOfSlots: 1,
@@ -161,7 +161,7 @@ export const bookingMachine = setup({
             bookingFlowToken: context.bookingFlowToken,
             activityId: formData.activityId,
             email: formData.email,
-            bookedDate: formData.bookingDate,
+            bookedDate: formData.bookingDate.toISOString().split("T")[0],
             availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
             name: "John Does (mocked - do we need this?)",
             numberOfSlots: 1,
@@ -335,7 +335,9 @@ export const bookingMachine = setup({
         onError: {
           target: "DisplayError",
           actions: assign({
-            errorMessage: ({ event }) => (event.error as Error).message,
+            bookingFlowToken: undefined,
+            errorMessage: ({ event }) =>
+              `Updating booking reservation failed. Please try submitting this again. Error: ${(event.error as Error).message}`,
           }),
         },
       },
