@@ -15,8 +15,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "Product", href: "/#product" },
+  { name: "Demos", href: "/#demos" },
   { name: "Contact", href: "/contact" },
-  { name: "Demo", href: "/listings" },
   // { name: "Marketplace", href: "#" },
   // { name: "Company", href: "#" },
 ];
@@ -31,7 +31,7 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link className="-m-1.5 p-1.5" href={"/"}>
+          <Link className="-m-1.5 p-1.5" href={"/#top"}>
             <span className="sr-only">MyBookR</span>
             <Logo className="h-4 w-auto sm:h-6" alt="MyBookR logo" />
           </Link>

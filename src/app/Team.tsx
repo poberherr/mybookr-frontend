@@ -1,68 +1,45 @@
 const people = [
   {
-    name: "Emma Dorsey",
-    role: "Senior Developer",
+    name: "Sebastian Melz",
+    role: "CEO",
     imageUrl:
-      "https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
-    bio: "Praesentium iure error aliquam voluptas ut libero. Commodi placeat sit iure nulla officiis. Ut ex sit repellat tempora. Qui est accusamus exercitationem natus ut voluptas. Officiis velit eos ducimus.",
-    xUrl: "#",
+      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80",
     linkedinUrl: "#",
   },
-  // More people...
 ];
 
 export default function Team() {
   return (
-    <div className="bg-white py-24 md:py-32 lg:py-40">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
-        <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Our team
+    <div className="py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-6 text-center lg:px-8">
+        <div className="mx-auto max-w-2xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            Meet our team
           </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-600">
-            We’re a dynamic group of individuals who are passionate about what
-            we do and dedicated to delivering the best results for our clients.
+          <p className="mt-4 text-lg leading-8 text-gray-600">
+            A dynamic group of passionate individuals dedicated to excellence.
           </p>
         </div>
         <ul
           role="list"
-          className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2"
+          className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8"
         >
           {people.map((person) => (
-            <li key={person.name}>
+            <li key={person.name} className="rounded-2xl bg-gray-50 px-8 py-10">
               <img
-                className="aspect-[3/2] w-full rounded-2xl object-cover"
+                className="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56"
                 src={person.imageUrl}
                 alt=""
               />
-              <h3 className="mt-6 text-lg font-semibold leading-8 text-gray-900">
+              <h3 className="mt-6 text-base font-semibold leading-7 tracking-tight">
                 {person.name}
               </h3>
-              <p className="text-base leading-7 text-gray-600">{person.role}</p>
-              <p className="mt-4 text-base leading-7 text-gray-600">
-                {person.bio}
-              </p>
-              <ul role="list" className="mt-6 flex gap-x-6">
-                <li>
-                  <a
-                    href={person.xUrl}
-                    className="text-gray-400 hover:text-gray-500"
-                  >
-                    <span className="sr-only">X</span>
-                    <svg
-                      className="h-5 w-5"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M11.4678 8.77491L17.2961 2H15.915L10.8543 7.88256L6.81232 2H2.15039L8.26263 10.8955L2.15039 18H3.53159L8.87581 11.7878L13.1444 18H17.8063L11.4675 8.77491H11.4678ZM9.57608 10.9738L8.95678 10.0881L4.02925 3.03974H6.15068L10.1273 8.72795L10.7466 9.61374L15.9156 17.0075H13.7942L9.57608 10.9742V10.9738Z" />
-                    </svg>
-                  </a>
-                </li>
+              <p className="text-sm leading-6 text-gray-400">{person.role}</p>
+              <ul role="list" className="mt-6 flex justify-center gap-x-6">
                 <li>
                   <a
                     href={person.linkedinUrl}
-                    className="text-gray-400 hover:text-gray-500"
+                    className="text-gray-400 hover:text-gray-300"
                   >
                     <span className="sr-only">LinkedIn</span>
                     <svg

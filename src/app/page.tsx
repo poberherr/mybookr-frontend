@@ -8,18 +8,25 @@ import JoinForm from "./components/others/JoinForm";
 import Logo from "@/assets/mybookr.svg";
 import Hero from "./Hero";
 import Stats from "./Stats";
-import Feature from "./Feature";
 import Team from "./Team";
 import Logos from "./Logos";
+import ProductTraveler from "./ProductTraveler";
+import ProductHost from "./ProductHost";
+import CTAContact from "./CTAContact";
+import Demos from "./Demos";
 
 export default async function LandingPage() {
   return (
     <div>
+      <a id="top"/>
       <Hero />
-      <Stats />
-      <Feature />
-      <Team />
-      <Logos />
+      {/* <Stats /> */}
+      <ProductTraveler />
+      <ProductHost />
+      <CTAContact />
+      <Demos />
+      {/* <Team /> */}
+      {/* <Logos /> */}
       {/* <div className="flex flex-col items-center gap-12 p-6 text-center md:py-24">
         <h1 className="text-2xl md:text-5xl">Welcome to</h1>
         <Logo style={{ width: "50%" }} />

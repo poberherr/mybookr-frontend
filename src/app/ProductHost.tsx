@@ -1,52 +1,57 @@
 import {
-  CloudArrowUpIcon,
-  LockClosedIcon,
-  ServerIcon,
+  CurrencyDollarIcon,
+  LinkIcon,
+  CursorArrowRaysIcon,
+  ChartBarSquareIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
 
-const features = [
+const featuresHost = [
   {
-    name: "Push to deploy.",
+    name: "Better Pricing",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-    icon: CloudArrowUpIcon,
+      "Payments through trusted partners and low margin policies provide you with competitive pricing.",
+    icon: CurrencyDollarIcon,
   },
   {
-    name: "SSL certificates.",
+    name: "Seamless Integration",
     description:
-      "Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.",
-    icon: LockClosedIcon,
+      "Effortlessly integrates with your website and management software, supporting various channel management tools.",
+    icon: LinkIcon,
   },
   {
-    name: "Database backups.",
+    name: "Advanced Data Analytics",
     description:
-      "Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus. Et magna sit morbi lobortis.",
-    icon: ServerIcon,
+      "Gain insights into guest preferences and booking trends for informed decision-making.",
+    icon: ChartBarSquareIcon,
+  },
+  {
+    name: "Innovative User Interface",
+    description:
+      "Regular updates ensure a user-friendly interface, enhancing ease of use and client conversion rates.",
+    icon: CursorArrowRaysIcon,
   },
 ];
 
-export default function Product() {
+export default function ProductHost() {
   return (
     <div className="overflow-hidden bg-white py-24 sm:py-32">
-      <a id="product" />
       <div className="mx-auto max-w-7xl md:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:grid-cols-2 lg:items-start">
           <div className="px-6 lg:px-0 lg:pr-4 lg:pt-4">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-lg">
               <h2 className="text-base font-semibold leading-7 text-indigo-600">
-                Enjoy the process
+                Streamline Your Operations
               </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                A booking journey that is fun
+                A Booking System Tailored For Boutique Travel
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Maiores impedit perferendis suscipit eaque, iste dolor
-                cupiditate blanditiis ratione.
+                Experience a seamless, efficient, and enjoyable booking system
+                designed specifically for boutique travel operators.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
-                {features.map((feature) => (
+                {featuresHost.map((feature) => (
                   <div key={feature.name} className="relative pl-9">
                     <dt className="inline font-semibold text-gray-900">
                       <feature.icon
@@ -69,10 +74,10 @@ export default function Product() {
               />
               <div className="mx-auto max-w-2xl sm:mx-0 sm:max-w-none">
                 <Image
-                  src="/screenshots/hotels-list.png"
+                  src="/screenshots/hotels-detail-2.png"
                   alt="App screenshot"
-                  width={1733}
-                  height={1246}
+                  width={1515}
+                  height={1208}
                   className="-mb-12 w-[57rem] max-w-none "
                 />
               </div>
