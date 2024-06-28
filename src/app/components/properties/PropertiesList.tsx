@@ -48,7 +48,7 @@ export default function PropertiesList() {
         <p>We're sorry, but an unexpected error occurred.</p>
         <p>
           <button
-            className="font-bold"
+            className="font-bold pr-1"
             onClick={() => {
               executeSearch();
             }}
