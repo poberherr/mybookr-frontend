@@ -1,16 +1,12 @@
-import { SignedIn } from "@clerk/clerk-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import LogoOnly from "@/assets/mybookr-logo.svg";
-import Logo from "@/assets/mybookr.svg";
 
 const navigation = {
-  solutions: [
-    { name: "Marketing", href: "#" },
-    { name: "Analytics", href: "#" },
-    { name: "Commerce", href: "#" },
-    { name: "Insights", href: "#" },
+  demos: [
+    { name: "Yachts", href: "https://mybookr.io/listings" },
+    { name: "Hotels", href: "https://hotels.mybookr.io/listings" },
+    { name: "NFT", href: "https://nft.mybookr.io" },
   ],
   support: [
     { name: "Pricing", href: "#" },
@@ -104,7 +100,12 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
-            <LogoOnly className="h-7" alt="MyBookR" />
+            <Link href="/">
+              <LogoOnly
+                className="h-7 cursor-pointer"
+                alt="MyBookR"
+              />
+            </Link>
             <p className="text-sm leading-6 text-gray-600">
               Making the world a better place through constructing elegant
               hierarchies.
@@ -126,10 +127,10 @@ export default function Footer() {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6 text-gray-900">
-                  Solutions
+                  Demos
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
-                  {navigation.solutions.map((item) => (
+                  {navigation.demos.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}

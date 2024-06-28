@@ -34,7 +34,7 @@ export default function RootLayout({
         <ClerkProvider>
           <ContextProviders>
             <MatomoTracking />
-            <html lang="en">
+            <html lang="en" className="scroll-smooth">
               <body className={`${montserrat.className} ${inter.className}`}>
                 <main>
                   <Header />
