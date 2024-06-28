@@ -34,7 +34,7 @@ export default function Hero() {
           <Logo className="h-11 w-11" alt="MyBookR" />
           {/* <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
-              <span className="rounded-full bg-indigo-600/10 px-3 py-1 text-sm font-semibold leading-6 text-indigo-600 ring-1 ring-inset ring-indigo-600/10">
+              <span className="rounded-full bg-purple/10 px-3 py-1 text-sm font-semibold leading-6 text-purple ring-1 ring-inset ring-purple/10">
                 What's new
               </span>
               <span className="inline-flex items-center space-x-2 text-sm font-medium leading-6 text-gray-600">
@@ -57,7 +57,7 @@ export default function Hero() {
           <div className="mt-10 flex items-center gap-x-6">
             <Link
               href="/listings"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
             >
               Try it
             </Link>

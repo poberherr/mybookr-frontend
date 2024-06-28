@@ -15,6 +15,12 @@ module.exports = {
         gray: {
           100: "#f2f2f2",
         },
+        purple: "#6E5EE1",
+        blue: {
+          900: "#282EB7",
+          500: "#12A594",
+          300: "#21D9B8",
+        },
       },
       boxShadow: {
         csm: "0 3px 10px 3px rgba(0,0,0,0.05)",
