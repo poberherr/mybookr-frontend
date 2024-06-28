@@ -3,13 +3,13 @@ import Link from "next/link";
 
 const posts = [
   {
-    title: "Yachts",
+    title: "Yacht Booking Demo",
     href: "/listings",
     imageUrl: "/mood/phinisi-vessel.png",
     sizes: [1280, 850]
   },
   {
-    title: "Hotels",
+    title: "Hotel Booking Demo",
     href: "https://hotels.mybookr.io/listings",
     imageUrl: "/mood/swan-paradise.webp",
     sizes: [2160, 1440]
