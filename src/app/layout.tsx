@@ -17,9 +17,9 @@ import { theme } from "../theme";
 import ContextProviders from "./providers";
 
 export const metadata: Metadata = {
-  title: "mybookr.io",
+  title: "mybookr.io - Enhancing Holiday Booking for Owners and Travelers",
   description:
-    "The whitelabel booking solution for a better booking experience for owners and visitors",
+    "A new seamless solution to directly attract guests and boost operators' profit margins. This innovative approach ensures a smoother experience for both parties.",
   metadataBase: new URL(process.env.URL || "https://mybookr.io"),
 };
 
