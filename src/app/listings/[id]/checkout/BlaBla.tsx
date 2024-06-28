@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { Divider, Typography } from "@mui/material";
 
@@ -46,9 +47,9 @@ const BlaBla = () => (
       <div>
         <Typography className="!text-gray-400" variant="caption" component="p">
           By clicking the button below, I agree to the{" "}
-          <Typography className="text-black underline" variant="caption">
+          <span className="font-bold text-black">
             host's house rules, mybookr Changes and Refunds Policies
-          </Typography>{" "}
+          </span>{" "}
           and confirm that mybookr agrees to my payment method can charge and to
           whom I am responsible for damages. Total amount is to be paid when the
           host/hostess confirms my booking request.
@@ -68,22 +69,27 @@ const BlaBla = () => (
           variant="caption"
         >
           I also agree to the updated{" "}
-          <Typography className="text-black underline" variant="caption">
+          <Link className="text-black underline" href="/terms-of-service">
             Terms of Service
-          </Typography>{" "}
+          </Link>{" "}
           and{" "}
-          <Typography className="text-black underline" variant="caption">
+          <Link
+            className="text-black underline"
+            href="/terms-of-service#terms-of-use"
+          >
             Terms of Use
-          </Typography>{" "}
+          </Link>{" "}
           for{" "}
-          <Typography className="text-black underline" variant="caption">
+          <Link className="text-black underline" href="https://www.xendit.co/">
             payment services
-          </Typography>{" "}
-          and agree to the{" "}
-          <Typography className="text-black underline" variant="caption">
-            payment services
-          </Typography>{" "}
-          privacy policy.
+          </Link>{" "}
+          and agree to the payment services{" "}
+          <Link
+            className="text-black underline"
+            href="https://www.xendit.co/en/privacy-policy/"
+          >
+            privacy policy.
+          </Link>{" "}
         </Typography>
       </div>
     </div>
