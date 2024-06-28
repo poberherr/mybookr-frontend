@@ -7,6 +7,7 @@ const navigation = {
     { name: "Contact", href: "/contact" },
     { name: "Privacy Policy", href: "/privacy-policy" },
     { name: "Site Notice", href: "/site-notice" },
+    { name: "Terms of Service", href: "/terms-of-service" },
     // { name: "Demo - Yachts", href: "https://mybookr.io/listings" },
     // { name: "Demo - Hotels", href: "https://hotels.mybookr.io/listings" },
     // { name: "Demo - NFT", href: "https://nft.mybookr.io" },
