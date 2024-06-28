@@ -6,11 +6,21 @@ import Link from "next/link";
 import JoinForm from "./components/others/JoinForm";
 
 import Logo from "@/assets/mybookr.svg";
+import Hero from "./Hero";
+import Stats from "./Stats";
+import Feature from "./Feature";
+import Team from "./Team";
+import Logos from "./Logos";
 
 export default async function LandingPage() {
   return (
     <div>
-      <div className="flex flex-col items-center gap-12 p-6 text-center md:py-24">
+      <Hero />
+      <Stats />
+      <Feature />
+      <Team />
+      <Logos />
+      {/* <div className="flex flex-col items-center gap-12 p-6 text-center md:py-24">
         <h1 className="text-2xl md:text-5xl">Welcome to</h1>
         <Logo style={{ width: "50%" }} />
         <h2 className="text-lg md:text-2xl">
@@ -75,7 +85,7 @@ export default async function LandingPage() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <div className="flex flex-col items-center gap-6 border-t border-solid border-gray-100 p-6 text-center md:py-24">
         <h2 className="text-xl md:text-3xl">Join The Movement!</h2>
         <p>
