@@ -51,6 +51,7 @@ const BlaBla = () => (
           <Link
             className="font-bold text-black underline"
             href="/terms-of-service#refund-and-dispute-policy"
+            target="_blank"
           >
             mybookr.io's Refunds and Dispute Policy
           </Link>{" "}
@@ -73,13 +74,18 @@ const BlaBla = () => (
           variant="caption"
         >
           I also agree to the updated{" "}
-          <Link className="text-black underline" href="/terms-of-service">
+          <Link
+            className="text-black underline"
+            href="/terms-of-service"
+            target="_blank"
+          >
             Terms of Service
           </Link>{" "}
           and{" "}
           <Link
             className="text-black underline"
             href="/terms-of-service#terms-of-use"
+            target="_blank"
           >
             Terms of Use
           </Link>{" "}
@@ -87,6 +93,7 @@ const BlaBla = () => (
           <Link
             className="text-black underline"
             href="/terms-of-service#security-capabilities-and-policy-for-transmission-of-payment-card-details"
+            target="_blank"
           >
             payment services
           </Link>{" "}
@@ -94,6 +101,7 @@ const BlaBla = () => (
           <Link
             className="text-black underline"
             href="/privacy-policy#payment-services"
+            target="_blank"
           >
             privacy policy.
           </Link>{" "}
