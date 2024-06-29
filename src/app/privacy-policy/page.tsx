@@ -445,6 +445,71 @@ export default function PrivacyPolicyPage() {
             We use the following payment services / payment service providers
             within the scope of this website:
           </p>
+          <h4 id="xendit-payment-options">Xendit Payment Options</h4>
+          <p>
+            Xendit offers a variety of payment options to cater to different
+            customer preferences and needs:
+          </p>
+          <ol>
+            <li>
+              <p>
+                <strong>Bank Transfer</strong>: Enables transfers between bank
+                accounts within Indonesia.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Credit Cards</strong>: Accepts payments from major
+                credit card networks, including:
+              </p>
+              <ul>
+                <li>Visa</li>
+                <li>Mastercard</li>
+                <li>American Express (Amex)</li>
+                <li>UnionPay</li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <strong>Virtual Accounts</strong>: Provides virtual account
+                numbers for convenient fund transfers and payments. This
+                includes support for various Indonesian banks.
+              </p>
+            </li>
+            <li>
+              <p>
+                <strong>Retail Outlets</strong>: Allows payments through various
+                retail channels such as:
+              </p>
+              <ul>
+                <li>Alfamart</li>
+                <li>Indomaret</li>
+                <li>Lawson</li>
+              </ul>
+            </li>
+            <li>
+              <p>
+                <strong>E-wallets</strong>: Supports payments via popular
+                e-wallet platforms, including:
+              </p>
+              <ul>
+                <li>OVO</li>
+                <li>GoPay</li>
+              </ul>
+            </li>
+          </ol>
+          <p>
+            These options ensure that Xendit users have flexibility in how they
+            send and receive payments, whether through traditional banking
+            methods, credit cards, retail outlets, or digital wallets. For the
+            most up-to-date information on supported payment options and any
+            additional services, it&#39;s recommended to check{" "}
+            <a href="https://www.xendit.co/en/">
+              Xendit&#39;s official website
+            </a>{" "}
+            or contact their customer support.
+          </p>
+
           <h4>Mastercard</h4>
           <p>
             The provider of this payment service is the Mastercard Europe SA,
