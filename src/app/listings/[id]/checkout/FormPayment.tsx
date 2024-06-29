@@ -1,5 +1,7 @@
 "use client";
 
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
+
 import React, { FormEvent, useCallback } from "react";
 
 import { Divider, Typography } from "@mui/material";
@@ -85,13 +87,29 @@ export default function FormPayment({
   return (
     <>
       <Divider />
-      <div className="px-4 py-0 md:pl-40 md:pr-16">
+      <div className="px-4 py-0 pt-8 md:pl-40 md:pr-16">
         <Typography
           className="!mb-4 p-0 !font-extrabold md:!text-2xl"
           variant="h6"
         >
           Payment
         </Typography>
+        <p className="my-8 rounded-xl border border-yellow-100 bg-yellow-50 p-8">
+          <span className="mb-2 inline-block text-lg font-bold">
+            <InformationCircleIcon className="inline-block w-6 text-gray-600" />{" "}
+            Payment is in demo mode!
+          </span>
+          <br />
+          You can use the credit card number{" "}
+          <code className="rounded-sm border border-gray-100 p-1 px-2">
+            4242 4242 4242 4242
+          </code>{" "}
+          with{" "}
+          <code className="rounded-sm border border-gray-100 p-1 px-2">
+            CVC 420
+          </code>{" "}
+          and any future date to test the payment!
+        </p>
 
         <form onSubmit={onSubmit}>
           <PaymentElement
@@ -111,10 +129,6 @@ export default function FormPayment({
               {isLoading ? "Loading..." : "Book now and execute payment"}
             </span>
           </SButton>
-          <p className="mt-4 text-sm">
-            <strong>No worries!</strong> In case of early cancellation, you will
-            receive the full amount back.
-          </p>
         </form>
       </div>
     </>
