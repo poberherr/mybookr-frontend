@@ -147,19 +147,47 @@ export default function PrivacyPolicyPage() {
           </h3>
           <p>The data processing controller on this website is:</p>
           <p>
-            P.A.M.M.M VENTURES LIMITED
-            <br />
-            APEC PLAZA
-            <br />
-            49 HOI YUEN ROAD KWUN TONG
-            <br />
-            Hong Kong
+            <strong>Company Name:</strong> MYBOOKR OPERATIONS INDONESIA
           </p>
           <p>
-            Phone: +62 82 147 4567 42
-            <br />
-            E-mail: info@mybookr.io
+            <strong>Address:</strong>
+            Jl. Raya Semat No. 17b, Tibubeennag, Kuta Utara, KABUPATEN BADUNG,
+            Bali, Indonesia
           </p>
+          <ul>
+            <li>
+              <strong>Establishment Date:</strong> 31 May 2024
+            </li>
+            <li>
+              <strong>Registration Number:</strong> 4024053151108515
+            </li>
+            <li>
+              <strong>Deed of Establishment Number:</strong> 264
+            </li>
+            <li>
+              <strong>Deed Date:</strong> 29 May 2024
+            </li>
+            <li>
+              <strong>Ministry Approval Number:</strong>{" "}
+              AHU-0038985.AH.01.01.TAHUN 2024
+            </li>
+            <li>
+              <strong>Approval Date:</strong> 31 May 2024
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Tax Registry Number (NPWP):</strong> 20.530.205.2-906.000
+            </li>
+            <li>
+              <strong>Tax Registry Date:</strong> 31 May 2024
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Email:</strong> info@mybookr.io
+            </li>
+          </ul>
           <p>
             The controller is the natural person or legal entity that
             single-handedly or jointly with others makes decisions as to the
