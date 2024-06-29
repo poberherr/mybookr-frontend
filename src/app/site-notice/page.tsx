@@ -12,69 +12,47 @@ export default function PrivacyPolicyPage() {
             Site Notice (Impressum)
           </h1>
 
-          <h2>Information according to § 5 TMG</h2>
           <p>
-            Company Name
+            P.A.M.M.M VENTURES LIMITED
             <br />
-            Street Address
+            APEC PLAZA
             <br />
-            Postal Code City
+            49 HOI YUEN ROAD KWUN TONG
+            <br />
+            Hong Kong
           </p>
 
-          <h2>Represented by:</h2>
-          <p>Name of the Authorized Representative</p>
+          <p> Business Registration Number: 74948082</p>
 
-          <h2>Contact:</h2>
-          <p>
-            Phone: Phone Number
-            <br />
-            Email: Email Address
-          </p>
+          <h2>Contact</h2>
+          <ul>
+            <li>
+              Phone: <a href="tel:+6282147456742">+62 82 147 4567 42</a>
+            </li>
+            <li>
+              WhatsApp:{" "}
+              <a
+                href={`https://wa.me/6282147456742?text=${encodeURI("Hey mybookr.io team!")}`}
+                target="_blank"
+              >
+                +62 82 147 4567 42
+              </a>
+            </li>
+            <li>
+              E-mail: <a href="mailto:info@mybookr.io">info@mybookr.io</a>
+            </li>
+          </ul>
 
-          <h2>Register Entry:</h2>
-          <p>
-            Entry in the commercial register.
-            <br />
-            Register Court: Local Court
-            <br />
-            Register Number: HRB 12345
-          </p>
+          <h2>Person responsible for editorial</h2>
+          <p>Sebastian Melz</p>
 
-          <h2>VAT ID:</h2>
-          <p>
-            Value Added Tax Identification Number according to §27 a VAT Act:
-            DE123456789
-          </p>
-
-          <h2>Responsible for content according to § 55 Abs. 2 RStV:</h2>
-          <p>
-            Name of the Person Responsible
-            <br />
-            Address of the Person Responsible
-          </p>
-
-          <h2>Dispute Resolution</h2>
+          <h2>
+            Dispute resolution proceedings in front of a consumer arbitration
+            board
+          </h2>
           <p>
             We are not willing or obliged to participate in dispute resolution
-            proceedings before a consumer arbitration board.
-          </p>
-
-          <h2>Disclaimer:</h2>
-          <h2>Liability for Content</h2>
-          <p>
-            As service providers, we are liable for own contents of these
-            websites according to § 7, paragraph 1 of TMG (German Telemedia
-            Act). However, according to §§ 8 to 10 TMG, service providers are
-            not obligated to permanently monitor submitted or stored information
-            or to search for evidences that indicate illegal activities.
-          </p>
-
-          <p>
-            Legal obligations to removing information or to blocking the use of
-            information remain unchallenged. In this case, liability is only
-            possible at the time of knowledge about a specific violation of law.
-            Illegal contents will be removed immediately at the time we get
-            knowledge of them.
+            proceedings in front of a consumer arbitration board.
           </p>
         </div>
       </div>
