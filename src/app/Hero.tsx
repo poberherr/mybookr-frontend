@@ -59,7 +59,7 @@ export default function Hero() {
               href="/listings"
               className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
             >
-              Try it
+              Try it out
             </Link>
             <a
               href="#product"
