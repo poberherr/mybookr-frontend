@@ -188,6 +188,7 @@ export const bookingMachine = setup({
           performMutation(context.client, CheckBookingMutation, {
             bookingFlowToken: context.bookingFlowToken,
           }),
+          1500,
         );
 
         return result.checkBookingStatus;
@@ -223,6 +224,7 @@ export const bookingMachine = setup({
 
             return res;
           })(),
+          1500,
         );
       },
     ),
