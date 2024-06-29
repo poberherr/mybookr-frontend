@@ -31,7 +31,7 @@ export default function Hero() {
       </svg>
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:pb-40 lg:pt-12">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
-          <Logo className="h-11 w-11" alt="MyBookR" />
+          <Logo className="h-11 w-11" alt="MyBookr" />
           {/* <div className="mt-24 sm:mt-32 lg:mt-16">
             <a href="#" className="inline-flex space-x-6">
               <span className="rounded-full bg-purple/10 px-3 py-1 text-sm font-semibold leading-6 text-purple ring-1 ring-inset ring-purple/10">
