@@ -15,6 +15,7 @@ import { inter, montserrat } from "@/styles/fonts";
 import "../global.css";
 import { theme } from "../theme";
 import ContextProviders from "./providers";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "mybookr.io - Enhancing Holiday Booking for Owners and Travelers",
@@ -41,6 +42,14 @@ export default function RootLayout({
                   {children}
                   <Footer />
                 </main>
+                {/* Hubspot */}
+                <Script
+                  id="hs-script-loader"
+                  async
+                  defer
+                  src="//js-eu1.hs-scripts.com/144669380.js"
+                  strategy={"lazyOnload"}
+                />
               </body>
             </html>
           </ContextProviders>
