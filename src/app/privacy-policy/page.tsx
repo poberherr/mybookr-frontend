@@ -426,7 +426,7 @@ export default function PrivacyPolicyPage() {
             .
           </p>
           <h2>5. eCommerce and payment service providers</h2>
-          <h3>Payment services</h3>
+          <h3 id="payment-services">Payment services</h3>
           <p>
             We integrate payment services of third-party companies on our
             website. When you make a purchase from us, your payment data (e.g.

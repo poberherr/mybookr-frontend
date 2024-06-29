@@ -47,9 +47,13 @@ const BlaBla = () => (
       <div>
         <Typography className="!text-gray-400" variant="caption" component="p">
           By clicking the button below, I agree to the{" "}
-          <span className="font-bold text-black">
-            host's house rules, mybookr Changes and Refunds Policies
-          </span>{" "}
+          <span className="font-bold text-black">host's house rules,</span>{" "}
+          <Link
+            className="font-bold text-black underline"
+            href="/terms-of-service#refund-and-dispute-policy"
+          >
+            mybookr.io's Refunds and Dispute Policy
+          </Link>{" "}
           and confirm that mybookr agrees to my payment method can charge and to
           whom I am responsible for damages. Total amount is to be paid when the
           host/hostess confirms my booking request.
@@ -80,13 +84,16 @@ const BlaBla = () => (
             Terms of Use
           </Link>{" "}
           for{" "}
-          <Link className="text-black underline" href="https://www.xendit.co/">
+          <Link
+            className="text-black underline"
+            href="/terms-of-service#security-capabilities-and-policy-for-transmission-of-payment-card-details"
+          >
             payment services
           </Link>{" "}
           and agree to the payment services{" "}
           <Link
             className="text-black underline"
-            href="https://www.xendit.co/en/privacy-policy/"
+            href="/privacy-policy#payment-services"
           >
             privacy policy.
           </Link>{" "}
