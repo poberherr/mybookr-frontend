@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             <strong>Address:</strong> Jl. Raya Semat No. 17B, Desa/Kelurahan
-            Tibubeneng, Kec. Kuta Utara, Bali 80239, Indonesia
+            Tibubeneng, Kec. Kuta Utara, Bali 80361, Indonesia
           </p>
           <h2 id="legal-entity-information-">Legal Entity Information:</h2>
           <ul>

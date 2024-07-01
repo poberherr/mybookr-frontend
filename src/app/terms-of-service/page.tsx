@@ -515,7 +515,7 @@ export default function TermsOfService() {
             </li>
             <li>
               <strong>Address:</strong> Jl. Raya Semat No. 17B, Desa/Kelurahan
-              Tibubeneng, Kec. Kuta Utara, Bali 80239, Indonesia
+              Tibubeneng, Kec. Kuta Utara, Bali 80361, Indonesia
             </li>
             <li>
               <strong>Establishment Date:</strong> 31 May 2024
