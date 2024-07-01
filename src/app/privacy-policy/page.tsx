@@ -187,6 +187,9 @@ export default function PrivacyPolicyPage() {
             <li>
               <strong>Email:</strong> info@mybookr.io
             </li>
+            <li>
+              <strong>Telephone:</strong> +62 851-9005-3651
+            </li>
           </ul>
           <p>
             The controller is the natural person or legal entity that
