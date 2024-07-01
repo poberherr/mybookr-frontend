@@ -23,7 +23,7 @@ export default function ContextProviders({
       }
       dumbRestore = JSON.parse(entry);
     } catch (err) {
-      console.log("broken search-machine-state in localStorage")
+      console.log("broken search-machine-state in localStorage");
       return undefined;
     }
 

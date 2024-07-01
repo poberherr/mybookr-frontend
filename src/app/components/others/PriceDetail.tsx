@@ -41,7 +41,7 @@ export default function PriceDetail({
           variant="h6"
           component="p"
         >
-          $0.00
+          Rp 0.00
         </Typography>
       </div>
     </div>

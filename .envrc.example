@@ -31,3 +31,6 @@ export SUPABASE_KEY=XXXXX
 # Mailtrap
 export MAILTRAP_PASSWORD_LIVE=XXXXX
 export MAILTRAP_PASSWORD_SANDBOX=XXXXX
+
+# Currency Conversion - freecurrencyapi.com
+export FREE_CURRENCY_API_KEY=fca_live_XXXXX
