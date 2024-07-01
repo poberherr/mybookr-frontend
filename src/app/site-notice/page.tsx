@@ -15,9 +15,8 @@ export default function PrivacyPolicyPage() {
             <strong>Company Name:</strong> MYBOOKR OPERATIONS INDONESIA
           </p>
           <p>
-            <strong>Address:</strong>
-            Jl. Raya Semat No. 17b, Tibubeennag, Kuta Utara, KABUPATEN BADUNG,
-            Bali, Indonesia
+            <strong>Address:</strong> Jl. Raya Semat No. 17B, Desa/Kelurahan
+            Tibubeneng, Kec. Kuta Utara, Bali 80239, Indonesia
           </p>
           <h2 id="legal-entity-information-">Legal Entity Information:</h2>
           <ul>

@@ -514,8 +514,8 @@ export default function TermsOfService() {
               <strong>Company Name:</strong> MYBOOKR OPERATIONS INDONESIA
             </li>
             <li>
-              <strong>Address:</strong> Jl. Raya Semat No. 17b, Tibubeennag,
-              Kuta Utara, KABUPATEN BADUNG, Bali, Indonesia
+              <strong>Address:</strong> Jl. Raya Semat No. 17B, Desa/Kelurahan
+              Tibubeneng, Kec. Kuta Utara, Bali 80239, Indonesia
             </li>
             <li>
               <strong>Establishment Date:</strong> 31 May 2024
