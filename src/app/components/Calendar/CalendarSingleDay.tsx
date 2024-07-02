@@ -15,6 +15,7 @@ import { SButton } from "../ui/SButton";
 import StyledDialog from "../ui/StyledDialog";
 import { CheckoutStartForm } from "@/app/listings/[id]/CheckoutStart";
 import {
+  addDays,
   addMinutes,
   addMonths,
   endOfMonth,
@@ -60,7 +61,7 @@ export default function CalendarSingleDay({
   const { dateStart, dateEnd } = useMemo(() => {
     return {
       dateStart: format(startOfMonth(startDate || new Date()), "yyyy-MM-dd"),
-      dateEnd: format(startOfMonth(startDate || new Date()), "yyyy-MM-dd"),
+      dateEnd: format(addDays(startDate || new Date(), 365), "yyyy-MM-dd"),
     };
   }, [startDate]);
 
