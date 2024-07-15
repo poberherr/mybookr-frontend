@@ -147,48 +147,47 @@ export default function PrivacyPolicyPage() {
           </h3>
           <p>The data processing controller on this website is:</p>
           <p>
-            <strong>Company Name:</strong> MYBOOKR OPERATIONS INDONESIA
+            <strong>Company Name:</strong> PT NUSA AKSHITA KENCANA
           </p>
           <p>
             <strong>Address:</strong>
-            Jl. Raya Semat No. 17B, Desa/Kelurahan Tibubeneng, Kec. Kuta Utara,
-            Bali 80361, Indonesia
+            Legalyn Indonesia, Kawasan Rasuna Epicentrum, Epiwalk Office Suite
+            Lt. 5 Unit A501, Jl. HR Rasuna Said, Karet Kuningan
+            Village/Subdistrict, Setiabudi District, South Jakarta
+            Administrative City, DKI Jakarta Province, Postal Code: 12940
           </p>
           <ul>
             <li>
-              <strong>Establishment Date:</strong> 31 May 2024
+              <strong>Establishment Date:</strong> 28 June 2024
             </li>
             <li>
-              <strong>Registration Number:</strong> 4024053151108515
-            </li>
-            <li>
-              <strong>Deed of Establishment Number:</strong> 264
-            </li>
-            <li>
-              <strong>Deed Date:</strong> 29 May 2024
+              <strong>Registration Number (NIB):</strong> 2806240062369
             </li>
             <li>
               <strong>Ministry Approval Number:</strong>{" "}
-              AHU-0038985.AH.01.01.TAHUN 2024
+              AHU-036745.AH.01.30.Tahun 2024
             </li>
             <li>
-              <strong>Approval Date:</strong> 31 May 2024
-            </li>
-          </ul>
-          <ul>
-            <li>
-              <strong>Tax Registry Number (NPWP):</strong> 20.530.205.2-906.000
+              <strong>Standard Certificate Number:</strong> 28062400623690001
             </li>
             <li>
-              <strong>Tax Registry Date:</strong> 31 May 2024
+              <strong>Approval Date:</strong> 28 June 2024
             </li>
           </ul>
           <ul>
             <li>
-              <strong>Email:</strong> info@mybookr.io
+              <strong>Tax Registry Number (NPWP):</strong> 19.687.047.1-011.000
             </li>
             <li>
-              <strong>Telephone:</strong> +62 851-9005-3651
+              <strong>Tax Registry Date:</strong> 28 June 2024
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Email:</strong> mybookrid@gmail.com
+            </li>
+            <li>
+              <strong>Telephone:</strong> +62 896 9188 2211
             </li>
           </ul>
           <p>
