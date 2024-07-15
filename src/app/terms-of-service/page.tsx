@@ -406,7 +406,7 @@ export default function TermsOfService() {
             in the forfeiture of the promotion.
           </p>
           <p>
-            <strong>Changes:</strong> MyBookr Operations Indonesia reserves the
+            <strong>Changes:</strong> PT NUSA AKSHITA KENCANA reserves the
             right to modify or terminate promotions at any time without prior
             notice.
           </p>
