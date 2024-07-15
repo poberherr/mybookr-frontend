@@ -184,7 +184,7 @@ export default function PrivacyPolicyPage() {
           </ul>
           <ul>
             <li>
-              <strong>Email:</strong> mybookrid@gmail.com
+              <strong>Email:</strong> info@mybookr.io
             </li>
             <li>
               <strong>Telephone:</strong> +62 896 9188 2211

@@ -51,7 +51,7 @@ export default function PrivacyPolicyPage() {
           <h2 id="contact-information-">Contact Information:</h2>
           <ul>
             <li>
-              <strong>Email:</strong> mybookrid@gmail.com
+              <strong>Email:</strong> info@mybookr.io
             </li>
             <li>
               <strong>Telephone:</strong> +62 8969 1882 211
