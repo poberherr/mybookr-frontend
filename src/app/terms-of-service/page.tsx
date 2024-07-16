@@ -163,8 +163,8 @@ export default function TermsOfService() {
           </ul>
           <h2 id="1-acceptance-of-terms">1. Acceptance of Terms</h2>
           <p>
-            By accessing and using the services provided by PT NUSA AKSHITA
-            KENCANA (&quot;<a href="http://MyBookr.io">MyBookr.io</a>&quot;),
+            By accessing and using the services provided by MYBOOKR OPERATIONS
+            INDONESIA (&quot;<a href="http://MyBookr.io">MyBookr.io</a>&quot;),
             you agree to comply with and be bound by these Terms of Service. If
             you do not agree to these terms, please do not use our services.
           </p>
@@ -406,8 +406,9 @@ export default function TermsOfService() {
             in the forfeiture of the promotion.
           </p>
           <p>
-            <strong>Changes:</strong> PT NUSA AKSHITA KENCANA reserves the right
-            to modify or terminate promotions at any time without prior notice.
+            <strong>Changes:</strong> MyBookr Operations Indonesia reserves the
+            right to modify or terminate promotions at any time without prior
+            notice.
           </p>
           <h1 id="transaction-currency">Transaction Currency</h1>
           <h2 id="31-standard-currency">3.1 Standard Currency</h2>

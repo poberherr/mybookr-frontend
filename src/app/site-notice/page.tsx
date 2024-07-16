@@ -60,7 +60,7 @@ export default function PrivacyPolicyPage() {
           </ul>
           <h2 id="disclaimer-">Disclaimer:</h2>
           <p>
-            PT NUSA AKSHITA KENCANA (&quot;MyBookr.io&quot;) offers booking
+            MYBOOKR OPERATIONS INDONESIA (&quot;MyBookr.io&quot;) offers booking
             software services and acts as an agent on behalf of clients in
             various industries including hotel room bookings, villa bookings,
             yacht bookings, diving school bookings, retreat bookings, and other
