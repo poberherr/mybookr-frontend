@@ -13,7 +13,7 @@ export interface IBookingContext {
   experienceId: string;
   client: Client;
   // UI
-  clientSecret?: string;
+  invoiceUrl?: string;
   bookingFlowToken?: string;
   errorMessage?: string;
   // Booking Form
@@ -38,7 +38,6 @@ const CreateBookingMutation = graphql(`
       }
     ) {
       bookingFlowToken
-      paymentClientSecret
     }
   }
 `);
@@ -59,8 +58,14 @@ const UpdateBookingMutation = graphql(`
         activityId: $activityId
         bookedDate: $bookedDate
       }
-    ) {
-      paymentClientSecret
+    )
+  }
+`);
+
+const CreatePaymentMutation = graphql(`
+  mutation CreatePayment($bookingFlowToken: String!) {
+    createPayment(bookingFlowToken: $bookingFlowToken) {
+      url
     }
   }
 `);
@@ -138,14 +143,13 @@ export const bookingMachine = setup({
 
         return {
           bookingFlowToken: result.createBooking.bookingFlowToken,
-          paymentClientSecret: result.createBooking.paymentClientSecret,
         };
       } catch (err) {
         throw err;
       }
     }),
     updateBooking: fromPromise<
-      UpdateBookingResultType,
+      Boolean,
       { context: IBookingContext; formData: BookingFormData }
     >(async ({ input: { context, formData } }) => {
       try {
@@ -168,13 +172,33 @@ export const bookingMachine = setup({
           }),
         );
 
-        return {
-          paymentClientSecret: result.updateBooking.paymentClientSecret,
-        };
+        return true;
       } catch (err) {
         throw err;
       }
     }),
+    createPayment: fromPromise<string, { context: IBookingContext }>(
+      async ({ input: { context } }) => {
+        try {
+          if (!context.bookingFlowToken) {
+            throw new Error("bookingFlowToken required to update booking");
+          }
+          if (!context.activityId || !context.email || !context.date) {
+            throw new Error("Incomplete data for creation");
+          }
+
+          const result = await withMinimumDuration(
+            performMutation(context.client, CreatePaymentMutation, {
+              bookingFlowToken: context.bookingFlowToken,
+            }),
+          );
+
+          return result.createPayment.url;
+        } catch (err) {
+          throw err;
+        }
+      },
+    ),
     checkBookingStatus: fromPromise<
       BookingStatus,
       { context: IBookingContext }
@@ -196,6 +220,22 @@ export const bookingMachine = setup({
         throw err;
       }
     }),
+    redirectToPayment: fromPromise<Boolean, { context: IBookingContext }>(
+      async ({ input: { context } }) => {
+        try {
+          if (!context.invoiceUrl) {
+            throw new Error(
+              "Unable to redirect to payment provider. Please retry again.",
+            );
+          }
+          window.location.replace(context.invoiceUrl);
+
+          return true;
+        } catch (err) {
+          throw err;
+        }
+      },
+    ),
     awaitPaymentStatus: fromPromise<boolean, { context: IBookingContext }>(
       async ({ input: { context } }) => {
         return await withMinimumDuration(
@@ -209,9 +249,7 @@ export const bookingMachine = setup({
             const paymentIntentClientSecret = searchParams.get(
               "payment_intent_client_secret",
             );
-            const res =
-              !!redirectStatus &&
-              paymentIntentClientSecret === context.clientSecret;
+            const res = !!redirectStatus;
 
             console.log(
               "Payment status is",
@@ -301,10 +339,9 @@ export const bookingMachine = setup({
           };
         },
         onDone: {
-          target: "ProvidePaymentCredentials",
+          target: "CreatePayment",
           actions: assign(({ event }) => ({
             bookingFlowToken: event.output.bookingFlowToken,
-            clientSecret: event.output.paymentClientSecret,
           })),
         },
         onError: {
@@ -329,10 +366,7 @@ export const bookingMachine = setup({
           };
         },
         onDone: {
-          target: "ProvidePaymentCredentials",
-          actions: assign(({ event }) => ({
-            clientSecret: event.output.paymentClientSecret,
-          })),
+          target: "CreatePayment",
         },
         onError: {
           target: "DisplayError",
@@ -344,17 +378,31 @@ export const bookingMachine = setup({
         },
       },
     },
-    ProvidePaymentCredentials: {
-      on: {
-        paymentIsProcessing: {
-          target: "AwaitingPaymentStatus",
+    CreatePayment: {
+      invoke: {
+        id: "createPayment",
+        src: "createPayment",
+        input: ({ context }) => ({ context }),
+        onDone: {
+          target: "RedirectToPayment",
+          actions: assign(({ event }) => ({
+            invoiceUrl: event.output,
+          })),
         },
-        error: {
+        onError: {
           target: "DisplayError",
           actions: assign({
-            errorMessage: ({ event }) => event.errorMessage,
+            errorMessage: "Unable to create new payment. Please try again.",
           }),
         },
+      },
+    },
+    RedirectToPayment: {
+      invoke: {
+        id: "redirectToPayment",
+        src: "redirectToPayment",
+        input: ({ context }) => ({ context }),
+        onDone: { target: "AwaitingPaymentStatus" },
       },
     },
     AwaitingPaymentStatus: {

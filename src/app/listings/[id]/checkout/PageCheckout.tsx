@@ -50,7 +50,9 @@ export default function PageCheckout({
   const initialBookingMachineSnapshot = useMemo(() => {
     let dumbRestore;
     try {
-      const entry = localStorage.getItem(`experience-${experience.id}-booking`);
+      const entry = localStorage.getItem(
+        `experience-${experience.id}-booking-v2`,
+      );
       if (!entry) {
         return undefined;
       }
@@ -80,36 +82,41 @@ export default function PageCheckout({
 
   useEffect(() => {
     // Debugger for us
-    console.log("State updated:", bookingState.value);
+    console.log("State updated:", bookingState);
     console.table({ context: bookingState.context });
 
     // Store current state to localStorage for recovery
-    localStorage.setItem(
-      `experience-${experience.id}-booking`,
-      JSON.stringify(bookingState.machine.getPersistedSnapshot(bookingState)),
-    );
+    try {
+      localStorage.setItem(
+        `experience-${experience.id}-booking`,
+        JSON.stringify(bookingState.machine.getPersistedSnapshot(bookingState)),
+      );
+    } catch (err) {
+      console.log("Failed to store booking machine state to local storage");
+      console.error(err);
+    }
   }, [bookingState]);
 
   // Catch redirect
-  useEffect(() => {
-    if (!window) {
-      return;
-    }
-    const searchParams = new URLSearchParams(window.location.search);
+  // useEffect(() => {
+  //   if (!window) {
+  //     return;
+  //   }
+  //   const searchParams = new URLSearchParams(window.location.search);
 
-    const redirectStatus = searchParams.get("redirect_status");
-    const paymentIntentClientSecret = searchParams.get(
-      "payment_intent_client_secret",
-    );
+  //   const redirectStatus = searchParams.get("redirect_status");
+  //   const paymentIntentClientSecret = searchParams.get(
+  //     "payment_intent_client_secret",
+  //   );
 
-    if (
-      bookingState.value === "ProvidePaymentCredentials" &&
-      redirectStatus === "succeeded" &&
-      paymentIntentClientSecret === bookingState.context.clientSecret
-    ) {
-      sendBookingAction({ type: "paymentIsProcessing" });
-    }
-  }, [bookingState]);
+  //   if (
+  //     bookingState.value === "ProvidePaymentCredentials" &&
+  //     redirectStatus === "succeeded" &&
+  //     paymentIntentClientSecret === bookingState.context.clientSecret
+  //   ) {
+  //     sendBookingAction({ type: "paymentIsProcessing" });
+  //   }
+  // }, [bookingState]);
 
   // Catch confirmation
   useEffect(() => {

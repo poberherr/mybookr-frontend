@@ -19,10 +19,12 @@ const documents = {
     types.ExperiencesQueryDocument,
   "\n  fragment ExperienceItem on Experience {\n    id\n    title\n    description\n    medias {\n      url\n    }\n    location {\n      addressLineOne\n      addressLineTwo\n      city\n      country\n      federalState\n      postalCode\n      longitude\n      latitude\n    }\n    activities {\n      id\n      title\n      description\n      blockedDays\n      price\n      medias {\n        url\n        width\n        height\n      }\n    }\n  }\n":
     types.ExperienceItemFragmentDoc,
-  "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n      paymentClientSecret\n    }\n  }\n":
+  "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n    }\n  }\n":
     types.CreateBookingDocument,
-  "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      paymentClientSecret\n    }\n  }\n":
+  "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    )\n  }\n":
     types.UpdateBookingDocument,
+  "\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      # id @todo dont even expose it in the backend!\n      url\n    }\n  }\n":
+    types.CreatePaymentDocument,
   "\n  mutation CheckBookingMutation($bookingFlowToken: String!) {\n    checkBookingStatus(bookingFlowToken: $bookingFlowToken)\n  }\n":
     types.CheckBookingMutationDocument,
   "\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n":
@@ -67,14 +69,20 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n      paymentClientSecret\n    }\n  }\n",
-): (typeof documents)["\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n      paymentClientSecret\n    }\n  }\n"];
+  source: "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n    }\n  }\n",
+): (typeof documents)["\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      paymentClientSecret\n    }\n  }\n",
-): (typeof documents)["\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      paymentClientSecret\n    }\n  }\n"];
+  source: "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    )\n  }\n",
+): (typeof documents)["\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    )\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      # id @todo dont even expose it in the backend!\n      url\n    }\n  }\n",
+): (typeof documents)["\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      # id @todo dont even expose it in the backend!\n      url\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

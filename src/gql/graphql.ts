@@ -86,7 +86,6 @@ export type CreateBooking = {
 export type CreateBookingResultType = {
   __typename?: "CreateBookingResultType";
   bookingFlowToken: Scalars["String"]["output"];
-  paymentClientSecret: Scalars["String"]["output"];
 };
 
 export type CreateExperience = {
@@ -128,6 +127,7 @@ export type LocationInput = {
 export type Media = {
   __typename?: "Media";
   aspectRatio: Scalars["Float"]["output"];
+  hash: Scalars["String"]["output"];
   height: Scalars["Int"]["output"];
   id: Scalars["ID"]["output"];
   mediaType: MediaType;
@@ -146,7 +146,8 @@ export type Mutation = {
   checkBookingStatus: BookingStatus;
   createBooking: CreateBookingResultType;
   createExperience: Experience;
-  updateBooking: UpdateBookingResultType;
+  createPayment: UpdateBookingResultType;
+  updateBooking: Scalars["Boolean"]["output"];
   updateExperience: Experience;
 };
 
@@ -160,6 +161,10 @@ export type MutationCreateBookingArgs = {
 
 export type MutationCreateExperienceArgs = {
   data: CreateExperience;
+};
+
+export type MutationCreatePaymentArgs = {
+  bookingFlowToken: Scalars["String"]["input"];
 };
 
 export type MutationUpdateBookingArgs = {
@@ -192,18 +197,16 @@ export type Payment = {
 };
 
 export enum PaymentProvider {
-  Midtrans = "MIDTRANS",
   Stripe = "STRIPE",
+  Xendit = "XENDIT",
 }
 
 export enum PaymentStatus {
-  Canceled = "CANCELED",
-  Processing = "PROCESSING",
-  RequiresAction = "REQUIRES_ACTION",
-  RequiresCapture = "REQUIRES_CAPTURE",
-  RequiresConfirmation = "REQUIRES_CONFIRMATION",
-  RequiresPaymentMethod = "REQUIRES_PAYMENT_METHOD",
-  Succeeded = "SUCCEEDED",
+  Expired = "Expired",
+  Paid = "Paid",
+  Pending = "Pending",
+  Settled = "Settled",
+  XenditEnumDefaultFallback = "XenditEnumDefaultFallback",
 }
 
 export type Query = {
@@ -376,7 +379,8 @@ export type UpdateBooking = {
 
 export type UpdateBookingResultType = {
   __typename?: "UpdateBookingResultType";
-  paymentClientSecret: Scalars["String"]["output"];
+  id: Scalars["String"]["output"];
+  url: Scalars["String"]["output"];
 };
 
 export type UpdateExperience = {
@@ -481,7 +485,6 @@ export type CreateBookingMutation = {
   createBooking: {
     __typename?: "CreateBookingResultType";
     bookingFlowToken: string;
-    paymentClientSecret: string;
   };
 };
 
@@ -495,10 +498,16 @@ export type UpdateBookingMutationVariables = Exact<{
 
 export type UpdateBookingMutation = {
   __typename?: "Mutation";
-  updateBooking: {
-    __typename?: "UpdateBookingResultType";
-    paymentClientSecret: string;
-  };
+  updateBooking: boolean;
+};
+
+export type CreatePaymentMutationVariables = Exact<{
+  bookingFlowToken: Scalars["String"]["input"];
+}>;
+
+export type CreatePaymentMutation = {
+  __typename?: "Mutation";
+  createPayment: { __typename?: "UpdateBookingResultType"; url: string };
 };
 
 export type CheckBookingMutationMutationVariables = Exact<{
@@ -999,10 +1008,6 @@ export const CreateBookingDocument = {
                   kind: "Field",
                   name: { kind: "Name", value: "bookingFlowToken" },
                 },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "paymentClientSecret" },
-                },
               ],
             },
           },
@@ -1141,15 +1146,6 @@ export const UpdateBookingDocument = {
                 },
               },
             ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "paymentClientSecret" },
-                },
-              ],
-            },
           },
         ],
       },
@@ -1158,6 +1154,60 @@ export const UpdateBookingDocument = {
 } as unknown as DocumentNode<
   UpdateBookingMutation,
   UpdateBookingMutationVariables
+>;
+export const CreatePaymentDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreatePayment" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "bookingFlowToken" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createPayment" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "bookingFlowToken" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "bookingFlowToken" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreatePaymentMutation,
+  CreatePaymentMutationVariables
 >;
 export const CheckBookingMutationDocument = {
   kind: "Document",
