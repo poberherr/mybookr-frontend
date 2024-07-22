@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {SiLinkedin} from "react-icons/si";
+import { SiLinkedin } from "react-icons/si";
 
 const navigation = {
   main: [

@@ -103,7 +103,11 @@ function StyledSelect<TFieldValues extends FieldValues>({
             }}
           >
             {menuItems.map((item, index) => (
-              <MenuItem key={index} value={item.value} sx={{ fontFamily: "Inter" }}>
+              <MenuItem
+                key={index}
+                value={item.value}
+                sx={{ fontFamily: "Inter" }}
+              >
                 {item.title || item.value}
               </MenuItem>
             ))}

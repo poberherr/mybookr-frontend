@@ -6,13 +6,13 @@ const posts = [
     title: "Yacht Booking Demo",
     href: "/listings",
     imageUrl: "/mood/phinisi-vessel.png",
-    sizes: [1280, 850]
+    sizes: [1280, 850],
   },
   {
     title: "Hotel Booking Demo",
     href: "https://hotels.mybookr.io/listings",
     imageUrl: "/mood/swan-paradise.webp",
-    sizes: [2160, 1440]
+    sizes: [2160, 1440],
   },
 ];
 

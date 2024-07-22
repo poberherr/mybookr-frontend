@@ -19,9 +19,7 @@ const ViewConfirmation = ({ value, context }: IProps) => {
             variant={
               value === "CheckBookingStatus" ? "determinate" : "indeterminate"
             }
-            color={
-              value === "CheckBookingStatus" ? "success" : "primary"
-            }
+            color={value === "CheckBookingStatus" ? "success" : "primary"}
           />
           <div className="text-3xl">➡️</div>
           <CircularProgress size={48} />
@@ -35,7 +33,7 @@ const ViewConfirmation = ({ value, context }: IProps) => {
   if (value === "Confirmation") {
     return (
       <div className="prose mx-auto text-center">
-        <p className="text-5xl mb-2">✅</p>
+        <p className="mb-2 text-5xl">✅</p>
         <h1>Booking Confirmed</h1>
         <p>We have emailed details to {context.email}</p>
       </div>

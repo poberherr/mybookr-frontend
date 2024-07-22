@@ -132,7 +132,10 @@ export default function PageCheckout({
         showDialog={bookingState.value === "DisplayError"}
         setShowDialog={() => sendBookingAction({ type: "closePopup" })}
       />
-      <BackButton pageName={experience.title} route={`/listings/${experience.id}`} />
+      <BackButton
+        pageName={experience.title}
+        route={`/listings/${experience.id}`}
+      />
       <Typography
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
@@ -158,7 +161,7 @@ export default function PageCheckout({
             experience={experience}
           />
           {process.env.NODE_ENV === "development" && (
-            <div className="px-4 py-0 md:pl-40 md:pr-16 prose">
+            <div className="prose px-4 py-0 md:pl-40 md:pr-16">
               <h2>Development debugging (invisible on production)</h2>
               <pre>
                 <code>

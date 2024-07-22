@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useContext } from "react";
 import { useQuery } from "@urql/next";
@@ -48,7 +48,7 @@ export default function PropertiesList() {
         <p>We're sorry, but an unexpected error occurred.</p>
         <p>
           <button
-            className="font-bold pr-1"
+            className="pr-1 font-bold"
             onClick={() => {
               executeSearch();
             }}
@@ -75,14 +75,14 @@ export default function PropertiesList() {
           options.
         </p>
       </div>
-    ); 
+    );
   }
 
-    return (
-      <div className="grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {listings.map((listing) => (
-          <PropertyItem key={listing.id} property={listing} />
-        ))}
-      </div>
-    );
+  return (
+    <div className="grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {listings.map((listing) => (
+        <PropertyItem key={listing.id} property={listing} />
+      ))}
+    </div>
+  );
 }

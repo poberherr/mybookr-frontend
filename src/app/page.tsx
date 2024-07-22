@@ -18,7 +18,7 @@ import Demos from "./Demos";
 export default async function LandingPage() {
   return (
     <div>
-      <a id="top"/>
+      <a id="top" />
       <Hero />
       {/* <Stats /> */}
       <ProductTraveler />

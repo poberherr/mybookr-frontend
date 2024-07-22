@@ -111,7 +111,6 @@ export default function Header() {
   );
 }
 
-
 export function HeaderOld() {
   const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
 

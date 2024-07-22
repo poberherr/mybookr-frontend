@@ -57,7 +57,6 @@ export default function CalendarSingleDay({
   flagCalender,
   setFlagCalender,
 }: CalendarProps) {
-
   const { dateStart, dateEnd } = useMemo(() => {
     return {
       dateStart: format(startOfMonth(startDate || new Date()), "yyyy-MM-dd"),

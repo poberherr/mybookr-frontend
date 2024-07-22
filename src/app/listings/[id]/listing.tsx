@@ -32,15 +32,13 @@ const ActivityCard = ({
   renderedActivityDescriptions,
 }: IActivityCardProps) => {
   const { sendSearchMachineAction } = useContext(SearchStateMachineContext);
-  const formattedPrice = useFormatPrice(
-    activity.price
-  );
+  const formattedPrice = useFormatPrice(activity.price);
 
   return (
     <div className="grid gap-4 border border-gray-100 p-4 lg:gap-8">
       <div className="grid justify-between gap-4 lg:flex">
         {activity.medias && (
-          <div className="order-1 w-full flex-shrink-0 lg:w-64 lg:order-2 lg:ml-4">
+          <div className="order-1 w-full flex-shrink-0 lg:order-2 lg:ml-4 lg:w-64">
             <Image
               className="w-full rounded-lg"
               src={activity.medias[0].url}
@@ -78,7 +76,7 @@ const ActivityCard = ({
               });
           }}
         >
-          <span className="hidden lg:inline-block mr-1">Cruise with the </span>
+          <span className="mr-1 hidden lg:inline-block">Cruise with the </span>
           <span className="font-bold">{activity.title}</span>
         </SButton>
         <div className="flex items-center gap-2">

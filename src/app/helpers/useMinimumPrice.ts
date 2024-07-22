@@ -16,10 +16,8 @@ export const useMinimumPrice = (experience: ExperienceItemFragment): number => {
       return 0;
     }
     if (experience.activities.length) {
-
       const cheapest = experience.activities.reduce(
-        (res, cur) =>
-          res === 0 || cur.price < res ? cur.price : res,
+        (res, cur) => (res === 0 || cur.price < res ? cur.price : res),
         0,
       );
       return cheapest;

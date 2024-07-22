@@ -32,7 +32,7 @@ export default function PropertyItem({ property: experience }: IProps) {
         isBoosted
           ? "col-start-1 col-end-[span_2] row-start-1 row-end-[span_2]"
           : "col-end-[span_2] sm:col-end-[span_1]",
-        availableActivityCount === 0 && "opacity-80 grayscale"
+        availableActivityCount === 0 && "opacity-80 grayscale",
       )}
       href={`/listings/${experience.id}`}
     >

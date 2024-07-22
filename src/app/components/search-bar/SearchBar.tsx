@@ -114,8 +114,7 @@ export default function SearchBar() {
     if (
       formValueDateFrom &&
       formValueDateTo &&
-      formValueDateTo.getTime() !==
-        searchMachineState.context.dateTo.getTime()
+      formValueDateTo.getTime() !== searchMachineState.context.dateTo.getTime()
     ) {
       methods.reset({
         dateRange: {
@@ -136,7 +135,9 @@ export default function SearchBar() {
       <form>
         {/* Search bar */}
         {/* Search bar and Filter button */}
-        <h1 className="text-xl text-center font-bold mb-4">Book your yacht cruise:</h1>
+        <h1 className="mb-4 text-center text-xl font-bold">
+          Book your yacht cruise:
+        </h1>
         <div className="flex flex-col items-center justify-center gap-4 md:flex-row lg:gap-8 xl:relative">
           {/* Search bar */}
           <div className="flex w-full flex-col gap-4 border-gray-100 md:h-[50px] md:w-auto md:flex-row md:gap-8 md:rounded-[32px] md:border md:border-solid">
