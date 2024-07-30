@@ -23,12 +23,17 @@ export const ExperienceItem = graphql(/* GraphQL */ `
       title
       description
       blockedDays
+      durationMinutes
       price
       medias {
         url
         width
         height
       }
+    }
+    category {
+      name
+      depth
     }
   }
 `);

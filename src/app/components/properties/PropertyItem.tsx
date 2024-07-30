@@ -88,8 +88,7 @@ export default function PropertyItem({ property: experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from {formattedPrice} • {availableActivityCount} yacht
-            {availableActivityCount > 1 && "s"} available
+            from {formattedPrice} • {availableActivityCount} available
           </Typography>
         </div>
       </div>

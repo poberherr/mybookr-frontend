@@ -9,10 +9,12 @@ import { useIsClient } from "@/app/helpers/useIsClient";
 import PropertyItem from "./PropertyItem";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { PropertiesListSkeleton } from "./PropertiesListSkeleton";
+import { useGroupedExperiences } from "@/app/helpers/useGroupedExperiences";
+import { Typography } from "@mui/material";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {
-    experiences(dateStart: $dateStart, dateEnd: $dateEnd) {
+    filterExperiences(dateStart: $dateStart, dateEnd: $dateEnd) {
       edges {
         node {
           ...ExperienceItem
@@ -36,9 +38,11 @@ export default function PropertiesList() {
   });
 
   const loading = !isClient || result.fetching;
-  const listings = result.data?.experiences.edges
+  const listings = result.data?.filterExperiences.edges
     .map((edge) => useFragment(ExperienceItem, edge?.node))
     .flatMap((f) => f ?? []);
+
+  const groupedExperiences = useGroupedExperiences(listings);
 
   if (result.error) {
     console.error(result.error);
@@ -65,7 +69,7 @@ export default function PropertiesList() {
     return <PropertiesListSkeleton />;
   }
 
-  if (!listings || listings.length === 0) {
+  if (!listings || listings.length === 0 || !groupedExperiences) {
     return (
       <div className="prose max-w-full">
         <h1>No availability for your selected dates</h1>
@@ -79,10 +83,21 @@ export default function PropertiesList() {
   }
 
   return (
-    <div className="grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {listings.map((listing) => (
-        <PropertyItem key={listing.id} property={listing} />
-      ))}
+    <div className="grid gap-8">
+      {Object.entries(groupedExperiences).map(
+        ([categoryName, { category, experiences }]) => (
+          <div key={categoryName}>
+            <Typography variant={`h4`}>
+              {categoryName}:
+            </Typography>
+            <div className="mt-2 grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {experiences.map((experience) => (
+                <PropertyItem key={experience.id} property={experience} />
+              ))}
+            </div>
+          </div>
+        ),
+      )}
     </div>
   );
 }
