@@ -246,8 +246,10 @@ export const bookingMachine = setup({
             const searchParams = new URLSearchParams(window.location.search);
 
             const paymentStatus = searchParams.get("paymentStatus");
-
-            return paymentStatus === "success";
+            if (paymentStatus !== "success") {
+              throw new Error("Payment failed");
+            }
+            return true;
           })(),
           1500,
         );
