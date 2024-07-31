@@ -27,8 +27,6 @@
     "@mui/material": "^5.15.15",
     "@mui/material-nextjs": "^5.15.11",
     "@socialgouv/matomo-next": "^1.9.0",
-    "@stripe/react-stripe-js": "^2.7.0",
-    "@stripe/stripe-js": "^3.3.0",
     "@supabase/supabase-js": "^2.43.2",
     "@svgr/webpack": "^8.1.0",
     "@transak/transak-sdk": "^3.1.1",
