@@ -25,19 +25,13 @@ const ViewConfirmation = ({
 }: IProps) => {
   return (
     <>
-      {(value === "BookingDetails") && (
+      {value === "BookingDetails" && (
         <FormBookingDetails
           experience={experience}
           submit={submit}
           context={context}
           value={value}
         />
-      )}
-      {(value === "CreateBooking" || value === "UpdateBooking") && (
-        <div className="prose mx-auto text-center">
-          <CircularProgress size={48} />
-          <h1>Updating Booking</h1>
-        </div>
       )}
       <BlaBla />
     </>

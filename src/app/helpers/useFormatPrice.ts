@@ -11,8 +11,6 @@ export const useFormatPrice = (price: number | undefined, full = false) => {
     const convertedPrice = usd * conversionRate;
     let rounded: number;
 
-    console.dir({price, usd, conversionRate, convertedPrice})
-
     if (convertedPrice >= 10000000) {
       rounded = Math.round(convertedPrice / 1000000) * 1000000;
     } else {

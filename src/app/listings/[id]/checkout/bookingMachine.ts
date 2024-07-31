@@ -236,7 +236,7 @@ export const bookingMachine = setup({
         }
       },
     ),
-    awaitPaymentStatus: fromPromise<boolean, { context: IBookingContext }>(
+    checkRedirectStatus: fromPromise<boolean, { context: IBookingContext }>(
       async ({ input: { context } }) => {
         return await withMinimumDuration(
           (async () => {
@@ -245,22 +245,9 @@ export const bookingMachine = setup({
             }
             const searchParams = new URLSearchParams(window.location.search);
 
-            const redirectStatus = searchParams.get("redirect_status");
-            const paymentIntentClientSecret = searchParams.get(
-              "payment_intent_client_secret",
-            );
-            const res = !!redirectStatus;
+            const paymentStatus = searchParams.get("paymentStatus");
 
-            console.log(
-              "Payment status is",
-              redirectStatus,
-              "for client",
-              paymentIntentClientSecret,
-              "resulting in",
-              res,
-            );
-
-            return res;
+            return paymentStatus === "success";
           })(),
           1500,
         );
@@ -402,13 +389,13 @@ export const bookingMachine = setup({
         id: "redirectToPayment",
         src: "redirectToPayment",
         input: ({ context }) => ({ context }),
-        onDone: { target: "AwaitingPaymentStatus" },
+        onDone: { target: "checkRedirectStatus" },
       },
     },
-    AwaitingPaymentStatus: {
+    checkRedirectStatus: {
       invoke: {
-        id: "awaitPaymentStatus",
-        src: "awaitPaymentStatus",
+        id: "checkRedirectStatus",
+        src: "checkRedirectStatus",
         input: ({ context }) => ({ context }),
         onDone: {
           target: "CheckBookingStatus",
@@ -417,7 +404,7 @@ export const bookingMachine = setup({
           target: "DisplayError",
           actions: assign({
             errorMessage:
-              "Failed to process payment success on client side. Please try again.",
+              "Looks like you had issues with your payment. Please try again.",
           }),
         },
       },
@@ -438,7 +425,7 @@ export const bookingMachine = setup({
             guard: ({ event }) => event.output === BookingStatus.PaymentFailed,
             actions: assign({
               errorMessage:
-                "Stripe said that the payment failed. Please try again.",
+                "Our payment provider told us that the payment failed. Please try again.",
             }),
           },
           {

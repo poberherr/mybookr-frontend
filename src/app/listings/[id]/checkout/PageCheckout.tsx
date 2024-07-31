@@ -17,11 +17,11 @@ import ViewConfirmation from "./ViewConfirmation";
 import ViewBookingForms from "./ViewBookingForms";
 import Sidebar from "./Sidebar";
 import { bookingMachine } from "./bookingMachine";
-import { useClient } from "urql";
+import { Client, useClient } from "urql";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
-type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
+export type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
 
 export type BookingUIStates =
   | "bookingDetails"
@@ -31,11 +31,13 @@ export type BookingUIStates =
 
 export default function PageCheckout({
   experience,
+  initialBookingMachineSnapshot,
+  client
 }: {
   experience: ExperienceItemFragment;
+  initialBookingMachineSnapshot: BookingSnapshot | undefined
+  client: Client
 }) {
-  const client = useClient();
-
   // Get price based on selected activity
   const {
     searchMachineState: {
@@ -47,28 +49,6 @@ export default function PageCheckout({
   const price = activity?.price;
 
   // Permanently store state machine in local stoarage
-  const initialBookingMachineSnapshot = useMemo(() => {
-    let dumbRestore;
-    try {
-      const entry = localStorage.getItem(
-        `experience-${experience.id}-booking-v2`,
-      );
-      if (!entry) {
-        return undefined;
-      }
-      dumbRestore = JSON.parse(entry);
-    } catch (err) {
-      return undefined;
-    }
-    return {
-      ...dumbRestore,
-      context: {
-        ...dumbRestore.context,
-        client,
-        date: new Date(dumbRestore.context.date || new Date()),
-      },
-    } as BookingSnapshot;
-  }, []);
 
   const [bookingState, sendBookingAction] = useMachine(bookingMachine, {
     input: {
@@ -80,15 +60,19 @@ export default function PageCheckout({
     snapshot: initialBookingMachineSnapshot,
   });
 
+  // console.dir({ initialBookingMachineSnapshot }, {depth: null});
+
   useEffect(() => {
     // Debugger for us
     console.log("State updated:", bookingState);
     console.table({ context: bookingState.context });
-
+    if (bookingState.value === "BookingDetails") {
+      return;
+    }
     // Store current state to localStorage for recovery
     try {
       localStorage.setItem(
-        `experience-${experience.id}-booking`,
+        `experience-${experience.id}-booking-v2`,
         JSON.stringify(bookingState.machine.getPersistedSnapshot(bookingState)),
       );
     } catch (err) {
@@ -96,27 +80,6 @@ export default function PageCheckout({
       console.error(err);
     }
   }, [bookingState]);
-
-  // Catch redirect
-  // useEffect(() => {
-  //   if (!window) {
-  //     return;
-  //   }
-  //   const searchParams = new URLSearchParams(window.location.search);
-
-  //   const redirectStatus = searchParams.get("redirect_status");
-  //   const paymentIntentClientSecret = searchParams.get(
-  //     "payment_intent_client_secret",
-  //   );
-
-  //   if (
-  //     bookingState.value === "ProvidePaymentCredentials" &&
-  //     redirectStatus === "succeeded" &&
-  //     paymentIntentClientSecret === bookingState.context.clientSecret
-  //   ) {
-  //     sendBookingAction({ type: "paymentIsProcessing" });
-  //   }
-  // }, [bookingState]);
 
   // Catch confirmation
   useEffect(() => {
@@ -147,7 +110,7 @@ export default function PageCheckout({
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
       >
-        Let’s make sure everything looks right.
+        Checkout for your booking:
       </Typography>
       <Divider />
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">

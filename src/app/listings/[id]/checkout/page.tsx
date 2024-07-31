@@ -2,6 +2,7 @@ import CheckoutPageComponent from "./PageCheckout";
 import { graphql, useFragment } from "@/gql";
 import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
+import CheckoutWrapper from "./CheckoutWrapper";
 
 const CheckoutQuery = graphql(`
   query CheckoutQuery($experienceId: ID!) {
@@ -23,7 +24,8 @@ export default async function CheckoutPage({
   if (!experience) {
     throw new Error("unable to load checkout page results");
   }
-  return <CheckoutPageComponent experience={experience} />;
+  
+  return <CheckoutWrapper experience={experience}/>;
 }
 
 export const revalidate = false;

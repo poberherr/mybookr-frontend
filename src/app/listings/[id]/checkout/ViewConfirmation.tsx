@@ -8,24 +8,24 @@ interface IProps {
   context: IBookingContext;
 }
 
+const headlines: Map<StateValueFrom<typeof bookingMachine>, string> = new Map([
+  ["RedirectToPayment", "Redirecting you now to our payment partner"],
+  ["CheckBookingStatus", "Checking your payment status"],
+  ["CreateBooking", "Preparing your booking"],
+  ["UpdateBooking", "Updating your booking"],
+  ["CreatePayment", "Preparing your payment"],
+  ["checkRedirectStatus", "Checking your payment status"],
+]);
+
 const ViewConfirmation = ({ value, context }: IProps) => {
-  if (value === "CheckBookingStatus" || value === "AwaitingPaymentStatus") {
+  if (headlines.has(value)) {
     return (
       <div className="prose mx-auto text-center">
         <div className="flex items-center justify-center gap-8">
-          <CircularProgress
-            size={48}
-            value={100}
-            variant={
-              value === "CheckBookingStatus" ? "determinate" : "indeterminate"
-            }
-            color={value === "CheckBookingStatus" ? "success" : "primary"}
-          />
-          <div className="text-3xl">➡️</div>
-          <CircularProgress size={48} />
+          <CircularProgress size={48} value={100} variant={"indeterminate"} />
         </div>
-        <p>Double checking payment...</p>
-        <p>This should only take a few seconds!</p>
+        <p>{headlines.get(value)}</p>
+        <p className="text-gray-400 text-sm">This should only take a few seconds!</p>
       </div>
     );
   }
