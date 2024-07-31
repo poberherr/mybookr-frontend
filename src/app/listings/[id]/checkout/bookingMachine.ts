@@ -246,6 +246,11 @@ export const bookingMachine = setup({
             const searchParams = new URLSearchParams(window.location.search);
 
             const paymentStatus = searchParams.get("paymentStatus");
+
+            if (!paymentStatus) {
+              return false;
+            }
+
             if (paymentStatus !== "success") {
               throw new Error("Payment failed");
             }
@@ -391,10 +396,13 @@ export const bookingMachine = setup({
         id: "redirectToPayment",
         src: "redirectToPayment",
         input: ({ context }) => ({ context }),
-        onDone: { target: "checkRedirectStatus" },
+        onDone: {
+          target: "CheckRedirectStatus",
+          guard: ({ event }) => event.output === true,
+        },
       },
     },
-    checkRedirectStatus: {
+    CheckRedirectStatus: {
       invoke: {
         id: "checkRedirectStatus",
         src: "checkRedirectStatus",

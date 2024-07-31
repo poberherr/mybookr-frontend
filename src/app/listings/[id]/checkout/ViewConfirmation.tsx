@@ -16,7 +16,7 @@ const headlines: Map<StateValueFrom<typeof bookingMachine>, string> = new Map([
   ["CreateBooking", "Preparing your booking"],
   ["UpdateBooking", "Updating your booking"],
   ["CreatePayment", "Preparing your payment"],
-  ["checkRedirectStatus", "Checking your payment status"],
+  ["CheckRedirectStatus", "Checking your payment status"],
 ]);
 
 const ViewConfirmation = ({ value, context }: IProps) => {
