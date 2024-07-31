@@ -3,6 +3,8 @@ import { CircularProgress } from "@mui/material";
 import { StateValueFrom } from "xstate";
 import { IBookingContext, bookingMachine } from "./bookingMachine";
 
+import "./ViewConfirmation.css"
+
 interface IProps {
   value: StateValueFrom<typeof bookingMachine>;
   context: IBookingContext;
@@ -33,7 +35,24 @@ const ViewConfirmation = ({ value, context }: IProps) => {
   if (value === "Confirmation") {
     return (
       <div className="prose mx-auto text-center">
-        <p className="mb-2 text-5xl">✅</p>
+        <svg
+          className="checkmark mb-12"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 52 52"
+        >
+          <circle
+            className="checkmark__circle"
+            cx="26"
+            cy="26"
+            r="25"
+            fill="none"
+          />
+          <path
+            className="checkmark__check"
+            fill="none"
+            d="M14.1 27.2l7.1 7.2 16.7-16.8"
+          />
+        </svg>
         <h1>Booking Confirmed</h1>
         <p>We have emailed details to {context.email}</p>
       </div>
