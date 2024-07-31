@@ -84,7 +84,7 @@ export default function PageCheckout({
   // Catch confirmation
   useEffect(() => {
     if (bookingState.value === "Confirmation") {
-      localStorage.removeItem(`experience-${experience.id}-booking`);
+      localStorage.removeItem(`experience-${experience.id}-booking-v2`);
     }
   }, [bookingState.value]);
 
