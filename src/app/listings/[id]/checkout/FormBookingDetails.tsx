@@ -28,12 +28,10 @@ export interface BookingFormData {
 export default function FormBookingDetails({
   experience,
   submit,
-  value,
   context,
 }: {
   experience: ExperienceItemFragment;
   submit: (formData: BookingFormData) => void;
-  value: StateValueFrom<typeof bookingMachine>;
   context: IBookingContext;
 }) {
   const user = useUser();
@@ -85,14 +83,12 @@ export default function FormBookingDetails({
                     : "No date selected"}
                 </Typography>
 
-                {value === "BookingDetails" && (
-                  <Typography
-                    className="cursor-pointer !font-bold"
-                    onClick={() => setFlagCalender(true)}
-                  >
-                    Edit
-                  </Typography>
-                )}
+                <Typography
+                  className="cursor-pointer !font-bold"
+                  onClick={() => setFlagCalender(true)}
+                >
+                  Edit
+                </Typography>
               </div>
             </div>
 
@@ -115,14 +111,12 @@ export default function FormBookingDetails({
                   {activity ? activity.title : "No yacht selected"}
                 </Typography>
 
-                {value === "BookingDetails" && (
-                  <Typography
-                    className="cursor-pointer !font-bold"
-                    onClick={() => setFlagEditActivityDialog(true)}
-                  >
-                    Edit
-                  </Typography>
-                )}
+                <Typography
+                  className="cursor-pointer !font-bold"
+                  onClick={() => setFlagEditActivityDialog(true)}
+                >
+                  Edit
+                </Typography>
               </div>
             </div>
 
@@ -146,41 +140,24 @@ export default function FormBookingDetails({
 
             {/* Email */}
             <div className="mt-6">
-              {value !== "BookingDetails" ? (
-                <>
-                  <Typography
-                    className="uppercase tracking-wide"
-                    variant="caption"
-                  >
-                    Email
-                  </Typography>
-                  <Typography className="mt-2" variant="body1">
-                    {context.email}
-                  </Typography>
-                </>
-              ) : (
-                <StyledTextField
-                  control={methods.control}
-                  type="email"
-                  name="email"
-                  id="email"
-                  label="Email"
-                  errors={methods.formState.errors.email}
-                  rules={{
-                    required: "Email is required",
-                    pattern: {
-                      value: /^.+@.+$/,
-                      message: "Please enter a valid email",
-                    },
-                  }}
-                />
-              )}
+              <StyledTextField
+                control={methods.control}
+                type="email"
+                name="email"
+                id="email"
+                label="Email"
+                errors={methods.formState.errors.email}
+                rules={{
+                  pattern: {
+                    value: /^.+@.+$/,
+                    message: "Please enter a valid email",
+                  },
+                }}
+              />
             </div>
           </div>
           <SButton className="mt-8" disabled={!methods.formState.isValid}>
-            {value === "BookingDetails"
-              ? "Continue to payment"
-              : "Edit booking details (@todo)"}
+            Continue to payment
           </SButton>
         </div>
       </form>
