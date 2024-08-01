@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import StyledSelect from "../form/StyledSelect";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { CheckoutStartForm } from "@/app/listings/[id]/CheckoutStart";
+import { useRenderLabel } from "@/app/helpers/labels";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -37,12 +38,14 @@ export default function ActivityForm({ experience }: IProps) {
     },
   };
 
+  const bookingFormActivity = useRenderLabel("bookingFormActivity");
+
   return (
     <StyledSelect
       name="activityId"
       id="activityId"
       control={control}
-      label="Cruise Type"
+      label={bookingFormActivity}
       menuItems={activities}
       rules={formValidator.activityId}
       errors={errors.activityId}

@@ -17,6 +17,7 @@ import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
 import { IBookingContext } from "./bookingMachine";
+import { RenderLabel } from "@/app/helpers/labels";
 
 export interface BookingFormData {
   bookingDate: Date;
@@ -66,19 +67,11 @@ export default function FormBookingDetails({
     <FormProvider {...methods}>
       <form onSubmit={onSubmit}>
         <div className="px-4 py-0 md:pl-40 md:pr-16">
-          {/* Your journey */}
-          <Typography
-            className="!mb-4 p-0 !font-extrabold md:!text-2xl"
-            variant="h6"
-          >
-            Your cruise
-          </Typography>
-
           {/* Booking Date */}
           <div>
             <div>
               <Typography className="uppercase tracking-wide" variant="caption">
-                Cruise Date
+                <RenderLabel labelId="bookingFormDate" />
               </Typography>
 
               <div className="flex justify-between">
@@ -108,7 +101,7 @@ export default function FormBookingDetails({
             {/* Activity */}
             <div className="mt-6">
               <Typography className="uppercase tracking-wide" variant="caption">
-                Yacht
+                <RenderLabel labelId="bookingFormActivity" />
               </Typography>
 
               <div className="flex justify-between">

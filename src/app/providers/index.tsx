@@ -8,6 +8,7 @@ import {
 } from "../state-machines/searchMachine";
 import { startOfToday, startOfTomorrow } from "date-fns";
 import { useMachine } from "@xstate/react";
+import { CategoryContext } from "../helpers/categoryContext";
 
 export default function ContextProviders({
   children,
@@ -64,10 +65,14 @@ export default function ContextProviders({
     );
   }, [searchMachineState.value]);
   return (
-    <SearchStateMachineContext.Provider
-      value={{ searchMachineState, sendSearchMachineAction }}
+    <CategoryContext.Provider
+      value={process.env.NEXT_PUBLIC_BASE_CATEGORY || "Root"}
     >
-      {children}
-    </SearchStateMachineContext.Provider>
+      <SearchStateMachineContext.Provider
+        value={{ searchMachineState, sendSearchMachineAction }}
+      >
+        {children}
+      </SearchStateMachineContext.Provider>
+    </CategoryContext.Provider>
   );
 }

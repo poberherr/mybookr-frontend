@@ -9,7 +9,9 @@ import { Typography } from "@mui/material";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
+import { useRenderLabel } from "@/app/helpers/labels";
+import { CategoryContext } from "@/app/helpers/categoryContext";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -24,6 +26,10 @@ export default function ExperienceTeaser({ experience }: IProps) {
       (activity) => activity.blockedDays.length > 0,
     ).length;
   }, [experience]);
+
+  const teaserPhysicalItemsAvailable = useRenderLabel(
+    "teaserPhysicalItemsAvailable",
+  );
 
   return (
     <Link
@@ -88,7 +94,8 @@ export default function ExperienceTeaser({ experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from {formattedPrice} • {availableActivityCount} available
+            from {formattedPrice} • {availableActivityCount}{" "}
+            {teaserPhysicalItemsAvailable}
           </Typography>
         </div>
       </div>

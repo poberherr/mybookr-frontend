@@ -3,7 +3,8 @@ import { CircularProgress, Typography } from "@mui/material";
 import { StateValueFrom } from "xstate";
 import { IBookingContext, bookingMachine } from "./bookingMachine";
 
-import "./ViewConfirmation.css"
+import "./ViewConfirmation.css";
+import { RenderLabel } from "@/app/helpers/labels";
 
 interface IProps {
   value: StateValueFrom<typeof bookingMachine>;
@@ -27,7 +28,9 @@ const ViewConfirmation = ({ value, context }: IProps) => {
           <CircularProgress size={48} value={100} variant={"indeterminate"} />
         </div>
         <p>{headlines.get(value)}</p>
-        <p className="text-gray-400 text-sm">This should only take a few seconds!</p>
+        <p className="text-sm text-gray-400">
+          This should only take a few seconds!
+        </p>
       </div>
     );
   }
@@ -54,14 +57,18 @@ const ViewConfirmation = ({ value, context }: IProps) => {
           />
         </svg>
 
-        <h1 className="text-2xl font-bold">Booking Confirmed</h1>
+        <h1 className="text-2xl font-bold">
+          <RenderLabel labelId="confirmationTitle" />
+        </h1>
         <p className="text-gray-600">
           We have emailed details to {context.email}
         </p>
 
-        <div className="rounded-2xl border border-blue-200 mx-2 px-8 md:px-12 py-6 bg-blue-50 shadow">
+        <div className="mx-2 rounded-2xl border border-blue-200 bg-blue-50 px-8 py-6 shadow md:px-12">
           <p className="text-4xl md:text-6xl">{context.referenceCode}</p>
-          <p className="text-gray-600 text-sm leading-10">Booking Reference Code</p>
+          <p className="text-sm leading-10 text-gray-600">
+            Booking Reference Code
+          </p>
         </div>
       </div>
     );

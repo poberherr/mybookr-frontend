@@ -31,9 +31,16 @@ export const ExperienceItem = graphql(/* GraphQL */ `
         height
       }
     }
+    # @todo lets call this activeCategory in backend to avoid confusion
     category {
       name
       depth
+      path
+    }
+    categories {
+      name
+      depth
+      path
     }
   }
 `);

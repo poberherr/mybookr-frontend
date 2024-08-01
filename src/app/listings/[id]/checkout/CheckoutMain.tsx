@@ -20,6 +20,7 @@ import { bookingMachine } from "./bookingMachine";
 import { Client } from "urql";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
+import { RenderLabel } from "@/app/helpers/labels";
 
 export type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
 
@@ -111,7 +112,7 @@ export default function CheckoutMain({
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
       >
-        Checkout for your booking:
+        <RenderLabel labelId="bookingFormTitle" />
       </Typography>
       <Divider />
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">

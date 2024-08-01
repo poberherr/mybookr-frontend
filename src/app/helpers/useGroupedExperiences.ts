@@ -1,4 +1,4 @@
-import { Category, ExperienceItemFragment } from "@/gql/graphql";
+import { ExperienceItemFragment } from "@/gql/graphql";
 import { useMemo } from "react";
 
 export const useGroupedExperiences = (

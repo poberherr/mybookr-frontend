@@ -11,6 +11,7 @@ import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { ExperiencesListSkeleton } from "./ExperiencesListSkeleton";
 import { useGroupedExperiences } from "@/app/helpers/useGroupedExperiences";
 import { Typography } from "@mui/material";
+import { CategoryContext } from "@/app/helpers/categoryContext";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {
@@ -87,12 +88,23 @@ export default function ExperiencesList() {
       {Object.entries(groupedExperiences).map(
         ([categoryName, { category, experiences }]) => (
           <div key={categoryName}>
-            <Typography variant={`h4`}>{categoryName}:</Typography>
-            <div className="mt-2 grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {experiences.map((experience) => (
-                <ExperienceTeaser key={experience.id} experience={experience} />
-              ))}
-            </div>
+            <CategoryContext.Provider
+              value={
+                category?.path ||
+                process.env.NEXT_PUBLIC_BASE_CATEGORY ||
+                "Root"
+              }
+            >
+              <Typography variant={`h4`}>{categoryName}:</Typography>
+              <div className="mt-2 grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {experiences.map((experience) => (
+                  <ExperienceTeaser
+                    key={experience.id}
+                    experience={experience}
+                  />
+                ))}
+              </div>
+            </CategoryContext.Provider>
           </div>
         ),
       )}

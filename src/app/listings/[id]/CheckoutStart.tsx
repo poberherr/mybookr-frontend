@@ -19,6 +19,7 @@ import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromEx
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { startOfToday } from "date-fns";
+import { useRenderLabel } from "@/app/helpers/labels";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -120,6 +121,8 @@ export default function CheckoutStart({ experience }: IProps) {
 
   const isClient = useIsClient();
 
+  const bookingFormDate = useRenderLabel("bookingFormDate");
+
   if (!isClient) {
     return null;
   }
@@ -136,7 +139,7 @@ export default function CheckoutStart({ experience }: IProps) {
                 component="div"
                 variant="caption"
               >
-                Cruise Date
+                {bookingFormDate}
               </Typography>
               <Typography
                 className="cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm"
@@ -175,7 +178,7 @@ export default function CheckoutStart({ experience }: IProps) {
               </div>
             )}
 
-            <SButton fullWidth variant="contained" disabled={!price}>
+            <SButton fullWidth variant="contained" disabled={!methods.formState.isValid || !price}>
               Checkout
             </SButton>
 
