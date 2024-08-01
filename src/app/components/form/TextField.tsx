@@ -1,5 +1,5 @@
 import React from "react";
-import { Control, Controller, FieldError } from "react-hook-form";
+import { Control, Controller, FieldError, UseControllerProps } from "react-hook-form";
 
 import {
   FormHelperText,
@@ -11,7 +11,7 @@ import {
 
 interface StyledTextFieldProps {
   control: Control<any>;
-  rules?: any; // Specify your type or leave as any if unknown
+  rules?: UseControllerProps["rules"];
   errors?: FieldError;
   id: string;
   label: string;
@@ -21,6 +21,8 @@ interface StyledTextFieldProps {
   placeholder?: string;
   defaultHelper?: string;
   inputProps?: any; // Specify your type or leave as any if unknown
+  multiline?: boolean;
+  required?: boolean;
 }
 
 const Wrapper = styled("div")`
@@ -40,6 +42,8 @@ export default function StyledTextField({
   placeholder,
   defaultHelper,
   inputProps,
+  required = false,
+  multiline = false,
 }: StyledTextFieldProps) {
   return (
     <Wrapper>
@@ -73,6 +77,8 @@ export default function StyledTextField({
             variant="outlined"
             placeholder={placeholder}
             inputProps={inputProps}
+            multiline={multiline}
+            required={required}
             sx={{
               borderRadius: "8px",
               "& fieldset": { borderRadius: "8px" },

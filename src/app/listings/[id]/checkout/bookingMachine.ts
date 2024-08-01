@@ -19,13 +19,18 @@ export interface IBookingContext {
   // Booking Form
   activityId?: string;
   date?: Date;
+  name?: string;
   email?: string;
+  telephone?: string;
+  additionalInformation?: string;
 }
 
 const CreateBookingMutation = graphql(`
   mutation CreateBooking(
     $name: String!
     $email: String!
+    $telephone: String!
+    $additionalInformation: String!
     $activityId: ID!
     $bookedDate: Date!
   ) {
@@ -33,6 +38,8 @@ const CreateBookingMutation = graphql(`
       data: {
         name: $name
         email: $email
+        telephone: $telephone
+        additionalInformation: $additionalInformation
         activityId: $activityId
         bookedDate: $bookedDate
       }
@@ -47,6 +54,8 @@ const UpdateBookingMutation = graphql(`
     $bookingFlowToken: String!
     $name: String!
     $email: String!
+    $telephone: String!
+    $additionalInformation: String!
     $activityId: ID!
     $bookedDate: Date!
   ) {
@@ -55,6 +64,8 @@ const UpdateBookingMutation = graphql(`
         bookingFlowToken: $bookingFlowToken
         name: $name
         email: $email
+        telephone: $telephone
+        additionalInformation: $additionalInformation
         activityId: $activityId
         bookedDate: $bookedDate
       }
@@ -133,10 +144,11 @@ export const bookingMachine = setup({
         const result = await withMinimumDuration(
           performMutation(context.client, CreateBookingMutation, {
             activityId: formData.activityId,
-            email: formData.email,
             bookedDate: formData.bookingDate.toISOString().split("T")[0],
-            availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
-            name: "John Does (mocked - do we need this?)",
+            name: formData.name,
+            email: formData.email,
+            telephone: formData.telephone,
+            additionalInformation: formData.additionalInformation,
             numberOfSlots: 1,
           }),
         );
@@ -160,14 +172,15 @@ export const bookingMachine = setup({
           throw new Error("Incomplete data for creation");
         }
 
-        const result = await withMinimumDuration(
+        await withMinimumDuration(
           performMutation(context.client, UpdateBookingMutation, {
             bookingFlowToken: context.bookingFlowToken,
             activityId: formData.activityId,
-            email: formData.email,
             bookedDate: formData.bookingDate.toISOString().split("T")[0],
-            availabilityId: "QXZhaWxhYmlsaXR5OjE=", // @todo replace this as soon we have absences
-            name: "John Does (mocked - do we need this?)",
+            name: formData.name,
+            email: formData.email,
+            telephone: formData.telephone,
+            additionalInformation: formData.additionalInformation,
             numberOfSlots: 1,
           }),
         );
@@ -229,9 +242,8 @@ export const bookingMachine = setup({
               "Unable to redirect to payment provider. Please retry again.",
             );
           }
-          await withMinimumDuration(
-            Promise.resolve(() => window.location.replace(invoiceUrl)),
-          );
+          
+          window.location.replace(invoiceUrl);
 
           return true;
         } catch (err) {
@@ -401,7 +413,6 @@ export const bookingMachine = setup({
         input: ({ context }) => ({ context }),
         onDone: {
           target: "CheckRedirectStatus",
-          guard: ({ event }) => event.output === true,
         },
       },
     },
@@ -410,9 +421,15 @@ export const bookingMachine = setup({
         id: "checkRedirectStatus",
         src: "checkRedirectStatus",
         input: ({ context }) => ({ context }),
-        onDone: {
-          target: "CheckBookingStatus",
-        },
+        onDone: [
+          {
+            target: "CheckBookingStatus",
+            guard: ({ event }) => event.output === true,
+          },
+          {
+            target: "RedirectToPayment",
+          },
+        ],
         onError: {
           target: "DisplayError",
           actions: assign({

@@ -25,12 +25,11 @@ const ViewConfirmation = ({
 }: IProps) => {
   return (
     <>
-      {value === "BookingDetails" && (
+      {["BookingDetails", "DisplayError"].includes(value) && (
         <FormBookingDetails
           experience={experience}
           submit={submit}
           context={context}
-          value={value}
         />
       )}
       <BlaBla />

@@ -16,13 +16,15 @@ import { ExperienceItemFragment } from "@/gql/graphql";
 import CalendarSingleDay from "@/app/components/Calendar/CalendarSingleDay";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
-import { StateValueFrom } from "xstate";
-import { IBookingContext, bookingMachine } from "./bookingMachine";
+import { IBookingContext } from "./bookingMachine";
 
 export interface BookingFormData {
   bookingDate: Date;
   activityId: string;
+  name: string;
   email: string;
+  telephone: string;
+  additionalInformation: string;
 }
 
 export default function FormBookingDetails({
@@ -39,14 +41,17 @@ export default function FormBookingDetails({
   const [flagCalender, setFlagCalender] = useState(false);
   const [flagEditActivityDialog, setFlagEditActivityDialog] = useState(false);
 
-  // React Hook Form for payment method
-  // We can't put these inside the form component (PaymentMethodForm), because we need the trigger method for the Request booking button inside this (ShoppingCart) component
   const methods = useForm<BookingFormData>({
+    mode: "all",
+    reValidateMode: "onBlur",
     defaultValues: {
       bookingDate: context.date,
       activityId: context.activityId,
+      name: context.name || "",
       email:
         context.email || user.user?.primaryEmailAddress?.emailAddress || "",
+      telephone: context.telephone || "",
+      additionalInformation: context.additionalInformation || "",
     },
   });
 
@@ -138,6 +143,24 @@ export default function FormBookingDetails({
               </div>
             </StyledDialog>
 
+            {/* Name */}
+            <div className="mt-6">
+              <StyledTextField
+                control={methods.control}
+                type="name"
+                name="name"
+                id="name"
+                label="Name"
+                placeholder="Your Name"
+                errors={methods.formState.errors.name}
+                required
+                rules={{
+                  required:
+                    "We need to know your name so we can address you properly.",
+                }}
+              />
+            </div>
+
             {/* Email */}
             <div className="mt-6">
               <StyledTextField
@@ -146,11 +169,55 @@ export default function FormBookingDetails({
                 name="email"
                 id="email"
                 label="Email"
+                placeholder="you@example.com"
                 errors={methods.formState.errors.email}
+                required
                 rules={{
                   pattern: {
                     value: /^.+@.+$/,
-                    message: "Please enter a valid email",
+                    message: "Please enter a valid email address.",
+                  },
+                }}
+              />
+            </div>
+
+            {/* Telephone */}
+            <div className="mt-6">
+              <StyledTextField
+                control={methods.control}
+                type="telephone"
+                name="telephone"
+                id="telephone"
+                label="Telephone"
+                errors={methods.formState.errors.telephone}
+                placeholder="+62 876 1001 2002"
+                required
+                rules={{
+                  pattern: {
+                    value: /^\+[\d\s\/-]+$/,
+                    message:
+                      "Please enter a valid phone number, including the country code. For example: +62 876 1001 2002",
+                  },
+                }}
+              />
+            </div>
+
+            {/* Additional Information */}
+            <div className="mt-6">
+              <StyledTextField
+                multiline={true}
+                control={methods.control}
+                type="additional_information"
+                name="additional_information"
+                id="additional_information"
+                label="Additional Information"
+                errors={methods.formState.errors.additionalInformation}
+                placeholder="Any special requests or extra info for your host?"
+                rules={{
+                  pattern: {
+                    value: /^\+[\d\s\/-]+/,
+                    message:
+                      "Please enter a valid telephone number. It should contain your country code, starting with a plus and consist only out of numbers. You can use spaces. For example: +62 876 1001 2002",
                   },
                 }}
               />
