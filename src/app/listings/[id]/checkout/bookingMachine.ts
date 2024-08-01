@@ -223,12 +223,15 @@ export const bookingMachine = setup({
     redirectToPayment: fromPromise<Boolean, { context: IBookingContext }>(
       async ({ input: { context } }) => {
         try {
-          if (!context.invoiceUrl) {
+          const { invoiceUrl } = context;
+          if (!invoiceUrl) {
             throw new Error(
               "Unable to redirect to payment provider. Please retry again.",
             );
           }
-          window.location.replace(context.invoiceUrl);
+          await withMinimumDuration(
+            Promise.resolve(() => window.location.replace(invoiceUrl)),
+          );
 
           return true;
         } catch (err) {
