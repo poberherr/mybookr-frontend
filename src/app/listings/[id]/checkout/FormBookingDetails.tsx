@@ -213,13 +213,6 @@ export default function FormBookingDetails({
                 label="Additional Information"
                 errors={methods.formState.errors.additionalInformation}
                 placeholder="Any special requests or extra info for your host?"
-                rules={{
-                  pattern: {
-                    value: /^\+[\d\s\/-]+/,
-                    message:
-                      "Please enter a valid telephone number. It should contain your country code, starting with a plus and consist only out of numbers. You can use spaces. For example: +62 876 1001 2002",
-                  },
-                }}
               />
             </div>
           </div>

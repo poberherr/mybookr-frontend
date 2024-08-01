@@ -49,8 +49,11 @@ export default function ContextProviders({
 
   useEffect(() => {
     // Debugger for us
-    console.log("State updated:", searchMachineState.value);
-    console.table({ context: searchMachineState.context });
+    console.table({
+      type: "BookingState",
+      value: searchMachineState.value,
+    });
+    console.table(searchMachineState.context);
 
     // Store current state to localStorage for recovery
     localStorage.setItem(
@@ -59,7 +62,7 @@ export default function ContextProviders({
         searchMachineState.machine.getPersistedSnapshot(searchMachineState),
       ),
     );
-  }, [searchMachineState]);
+  }, [searchMachineState.value]);
   return (
     <SearchStateMachineContext.Provider
       value={{ searchMachineState, sendSearchMachineAction }}

@@ -60,13 +60,14 @@ export default function CheckoutMain({
     snapshot: initialBookingMachineSnapshot,
   });
 
-  // console.dir({ initialBookingMachineSnapshot }, {depth: null});
-
   useEffect(() => {
     // Debugger for us
-    console.log("State updated:", bookingState);
-    console.table({ context: bookingState.context });
-    if (bookingState.value === "BookingDetails") {
+    console.table({
+      type: "BookingState",
+      value: bookingState.value,
+    });
+    console.table(bookingState.context)
+    if (bookingState.value === "BookingDetails" || bookingState.value === "Confirmation") {
       return;
     }
     // Store current state to localStorage for recovery
@@ -81,7 +82,7 @@ export default function CheckoutMain({
     }
   }, [bookingState]);
 
-  // Catch confirmation
+  // Catch confirmation and remove booking from state to allow a new booking!
   useEffect(() => {
     if (bookingState.value === "Confirmation") {
       localStorage.removeItem(`experience-${experience.id}-booking-v2`);

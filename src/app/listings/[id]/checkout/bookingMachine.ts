@@ -15,6 +15,7 @@ export interface IBookingContext {
   // UI
   invoiceUrl?: string;
   bookingFlowToken?: string;
+  referenceCode?: string;
   errorMessage?: string;
   // Booking Form
   activityId?: string;
@@ -45,6 +46,7 @@ const CreateBookingMutation = graphql(`
       }
     ) {
       bookingFlowToken
+      referenceCode
     }
   }
 `);
@@ -155,6 +157,7 @@ export const bookingMachine = setup({
 
         return {
           bookingFlowToken: result.createBooking.bookingFlowToken,
+          referenceCode: result.createBooking.referenceCode,
         };
       } catch (err) {
         throw err;
@@ -242,7 +245,7 @@ export const bookingMachine = setup({
               "Unable to redirect to payment provider. Please retry again.",
             );
           }
-          
+
           window.location.replace(invoiceUrl);
 
           return true;
@@ -294,10 +297,10 @@ export const bookingMachine = setup({
           {
             guard: ({ context, event: { formData } }) =>
               !!context.bookingFlowToken &&
+              !!context.referenceCode &&
               !!context.experienceId &&
               !!formData.activityId &&
-              !!formData.bookingDate &&
-              !!formData.email,
+              !!formData.bookingDate,
             target: "UpdateBooking",
             actions: [
               assign(({ event: { formData } }) => ({
@@ -312,6 +315,8 @@ export const bookingMachine = setup({
               !!context.experienceId &&
               !!formData.activityId &&
               !!formData.bookingDate &&
+              !!formData.name &&
+              !!formData.telephone &&
               !!formData.email,
             target: "CreateBooking",
             actions: [
@@ -351,6 +356,7 @@ export const bookingMachine = setup({
           target: "CreatePayment",
           actions: assign(({ event }) => ({
             bookingFlowToken: event.output.bookingFlowToken,
+            referenceCode: event.output.referenceCode,
           })),
         },
         onError: {
