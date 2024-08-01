@@ -16,6 +16,11 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   Date: { input: any; output: any; }
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format. */
+  DateTimeISO: { input: any; output: any; }
+  File: { input: any; output: any; }
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
+  JSON: { input: any; output: any; }
 };
 
 export type Activity = {
@@ -37,6 +42,20 @@ export type ActivityBlockedDaysArgs = {
   dateStart?: InputMaybe<Scalars['Date']['input']>;
 };
 
+export type Booking = {
+  __typename?: 'Booking';
+  activity?: Maybe<Activity>;
+  additionalInformation?: Maybe<Scalars['String']['output']>;
+  booker?: Maybe<User>;
+  currency?: Maybe<Scalars['String']['output']>;
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  status: BookingStatus;
+  telephone: Scalars['String']['output'];
+  totalCost: Scalars['Int']['output'];
+};
+
 export enum BookingStatus {
   BookingCancelled = 'BOOKING_CANCELLED',
   BookingConfirmed = 'BOOKING_CONFIRMED',
@@ -49,7 +68,7 @@ export enum BookingStatus {
 
 export type Category = {
   __typename?: 'Category';
-  childs?: Maybe<Array<Category>>;
+  children?: Maybe<Array<Category>>;
   depth: Scalars['Int']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -60,15 +79,25 @@ export type Category = {
 
 export type CreateBooking = {
   activityId: Scalars['ID']['input'];
+  additionalInformation?: InputMaybe<Scalars['String']['input']>;
   /** Date of the booking */
   bookedDate: Scalars['Date']['input'];
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  telephone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateBookingResultType = {
   __typename?: 'CreateBookingResultType';
   bookingFlowToken: Scalars['String']['output'];
+};
+
+export type CreateExperience = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  location: LocationInput;
+  medias: Array<Scalars['File']['input']>;
+  operatorUser?: InputMaybe<UserInput>;
+  title: Scalars['String']['input'];
 };
 
 export type Experience = {
@@ -79,6 +108,7 @@ export type Experience = {
   id: Scalars['ID']['output'];
   location: Location;
   medias?: Maybe<Array<Media>>;
+  operator: User;
   title: Scalars['String']['output'];
 };
 
@@ -93,6 +123,10 @@ export type Location = {
   latitude?: Maybe<Scalars['Float']['output']>;
   longitude?: Maybe<Scalars['Float']['output']>;
   postalCode?: Maybe<Scalars['String']['output']>;
+};
+
+export type LocationInput = {
+  id: Scalars['ID']['input'];
 };
 
 export type Media = {
@@ -116,8 +150,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   checkBookingStatus: BookingStatus;
   createBooking: CreateBookingResultType;
+  createExperience: Experience;
   createPayment: UpdateBookingResultType;
   updateBooking: Scalars['Boolean']['output'];
+  updateExperience: Experience;
+  uploadMedia: Scalars['Boolean']['output'];
 };
 
 
@@ -131,6 +168,11 @@ export type MutationCreateBookingArgs = {
 };
 
 
+export type MutationCreateExperienceArgs = {
+  data: CreateExperience;
+};
+
+
 export type MutationCreatePaymentArgs = {
   bookingFlowToken: Scalars['String']['input'];
 };
@@ -140,12 +182,102 @@ export type MutationUpdateBookingArgs = {
   data: UpdateBooking;
 };
 
+
+export type MutationUpdateExperienceArgs = {
+  data: UpdateExperience;
+};
+
+
+export type MutationUploadMediaArgs = {
+  file: Array<Scalars['File']['input']>;
+};
+
+export type PageInfo = {
+  __typename?: 'PageInfo';
+  endCursor?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type Payment = {
+  __typename?: 'Payment';
+  amount: Scalars['Int']['output'];
+  booking?: Maybe<Booking>;
+  currency: Scalars['String']['output'];
+  date: Scalars['Date']['output'];
+  externalPaymentId: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  metadata: Scalars['JSON']['output'];
+  paymentProvider: PaymentProvider;
+  status: PaymentStatus;
+};
+
+export enum PaymentProvider {
+  Stripe = 'STRIPE',
+  Xendit = 'XENDIT'
+}
+
+export enum PaymentStatus {
+  Expired = 'Expired',
+  Paid = 'Paid',
+  Pending = 'Pending',
+  Settled = 'Settled',
+  XenditEnumDefaultFallback = 'XenditEnumDefaultFallback'
+}
+
 export type Query = {
   __typename?: 'Query';
+  activities: QueryActivitiesConnection;
+  activity?: Maybe<Activity>;
+  booking?: Maybe<Booking>;
+  bookings: QueryBookingsConnection;
+  categories: QueryCategoriesConnection;
   category?: Maybe<Category>;
   experience?: Maybe<Experience>;
   experienceAvailableActivities?: Maybe<Experience>;
+  experiences: QueryExperiencesConnection;
   filterExperiences: QueryFilterExperiencesConnection;
+  me?: Maybe<User>;
+  media?: Maybe<Media>;
+  medias: QueryMediasConnection;
+  payment?: Maybe<Payment>;
+  payments: QueryPaymentsConnection;
+  users: QueryUsersConnection;
+};
+
+
+export type QueryActivitiesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryActivityArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryBookingArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryBookingsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryCategoriesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -167,6 +299,14 @@ export type QueryExperienceAvailableActivitiesArgs = {
 };
 
 
+export type QueryExperiencesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
 export type QueryFilterExperiencesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -177,9 +317,92 @@ export type QueryFilterExperiencesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
+
+export type QueryMediaArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryMediasArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryPaymentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryPaymentsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type QueryUsersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryActivitiesConnection = {
+  __typename?: 'QueryActivitiesConnection';
+  edges: Array<Maybe<QueryActivitiesConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryActivitiesConnectionEdge = {
+  __typename?: 'QueryActivitiesConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Activity;
+};
+
+export type QueryBookingsConnection = {
+  __typename?: 'QueryBookingsConnection';
+  edges: Array<Maybe<QueryBookingsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryBookingsConnectionEdge = {
+  __typename?: 'QueryBookingsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Booking;
+};
+
+export type QueryCategoriesConnection = {
+  __typename?: 'QueryCategoriesConnection';
+  edges: Array<Maybe<QueryCategoriesConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryCategoriesConnectionEdge = {
+  __typename?: 'QueryCategoriesConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Category;
+};
+
+export type QueryExperiencesConnection = {
+  __typename?: 'QueryExperiencesConnection';
+  edges: Array<Maybe<QueryExperiencesConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryExperiencesConnectionEdge = {
+  __typename?: 'QueryExperiencesConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Experience;
+};
+
 export type QueryFilterExperiencesConnection = {
   __typename?: 'QueryFilterExperiencesConnection';
   edges: Array<Maybe<QueryFilterExperiencesConnectionEdge>>;
+  pageInfo: PageInfo;
 };
 
 export type QueryFilterExperiencesConnectionEdge = {
@@ -188,18 +411,77 @@ export type QueryFilterExperiencesConnectionEdge = {
   node: Experience;
 };
 
+export type QueryMediasConnection = {
+  __typename?: 'QueryMediasConnection';
+  edges: Array<Maybe<QueryMediasConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryMediasConnectionEdge = {
+  __typename?: 'QueryMediasConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Media;
+};
+
+export type QueryPaymentsConnection = {
+  __typename?: 'QueryPaymentsConnection';
+  edges: Array<Maybe<QueryPaymentsConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryPaymentsConnectionEdge = {
+  __typename?: 'QueryPaymentsConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: Payment;
+};
+
+export type QueryUsersConnection = {
+  __typename?: 'QueryUsersConnection';
+  edges: Array<Maybe<QueryUsersConnectionEdge>>;
+  pageInfo: PageInfo;
+};
+
+export type QueryUsersConnectionEdge = {
+  __typename?: 'QueryUsersConnectionEdge';
+  cursor: Scalars['String']['output'];
+  node: User;
+};
+
 export type UpdateBooking = {
   activityId: Scalars['ID']['input'];
+  additionalInformation?: InputMaybe<Scalars['String']['input']>;
   /** Date of the booking */
   bookedDate: Scalars['Date']['input'];
   bookingFlowToken: Scalars['String']['input'];
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
+  telephone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateBookingResultType = {
   __typename?: 'UpdateBookingResultType';
   url: Scalars['String']['output'];
+};
+
+export type UpdateExperience = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  location?: InputMaybe<LocationInput>;
+  medias?: InputMaybe<Array<Scalars['File']['input']>>;
+  operatorUser?: InputMaybe<UserInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  role: Scalars['String']['output'];
+};
+
+export type UserInput = {
+  id: Scalars['ID']['input'];
 };
 
 export type AvailableActivitiesPerExperienceQueryQueryVariables = Exact<{
