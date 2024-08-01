@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { Divider, Typography } from "@mui/material";
 
@@ -17,7 +17,7 @@ import ViewConfirmation from "./ViewConfirmation";
 import ViewBookingForms from "./ViewBookingForms";
 import Sidebar from "./Sidebar";
 import { bookingMachine } from "./bookingMachine";
-import { Client, useClient } from "urql";
+import { Client } from "urql";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 
@@ -29,14 +29,14 @@ export type BookingUIStates =
   | "checkBookingStatus"
   | "confirmation";
 
-export default function PageCheckout({
+export default function CheckoutMain({
   experience,
   initialBookingMachineSnapshot,
-  client
+  client,
 }: {
   experience: ExperienceItemFragment;
-  initialBookingMachineSnapshot: BookingSnapshot | undefined
-  client: Client
+  initialBookingMachineSnapshot: BookingSnapshot | undefined;
+  client: Client;
 }) {
   // Get price based on selected activity
   const {

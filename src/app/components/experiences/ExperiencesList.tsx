@@ -6,9 +6,9 @@ import { useQuery } from "@urql/next";
 import { graphql, useFragment } from "@/gql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 import { useIsClient } from "@/app/helpers/useIsClient";
-import PropertyItem from "./PropertyItem";
+import ExperienceTeaser from "./ExperienceTeaser";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
-import { PropertiesListSkeleton } from "./PropertiesListSkeleton";
+import { ExperiencesListSkeleton } from "./ExperiencesListSkeleton";
 import { useGroupedExperiences } from "@/app/helpers/useGroupedExperiences";
 import { Typography } from "@mui/material";
 
@@ -24,7 +24,7 @@ const ExperiencesQuery = graphql(`
   }
 `);
 
-export default function PropertiesList() {
+export default function ExperiencesList() {
   const isClient = useIsClient();
   const { searchMachineState } = useContext(SearchStateMachineContext);
   const [result, executeSearch] = useQuery({
@@ -66,7 +66,7 @@ export default function PropertiesList() {
   }
 
   if (loading) {
-    return <PropertiesListSkeleton />;
+    return <ExperiencesListSkeleton />;
   }
 
   if (!listings || listings.length === 0 || !groupedExperiences) {
@@ -87,12 +87,10 @@ export default function PropertiesList() {
       {Object.entries(groupedExperiences).map(
         ([categoryName, { category, experiences }]) => (
           <div key={categoryName}>
-            <Typography variant={`h4`}>
-              {categoryName}:
-            </Typography>
+            <Typography variant={`h4`}>{categoryName}:</Typography>
             <div className="mt-2 grid grid-flow-row grid-cols-1 grid-rows-[repeat(auto-fill,1fr)] gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {experiences.map((experience) => (
-                <PropertyItem key={experience.id} property={experience} />
+                <ExperienceTeaser key={experience.id} experience={experience} />
               ))}
             </div>
           </div>

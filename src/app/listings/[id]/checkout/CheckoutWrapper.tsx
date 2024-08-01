@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import PageCheckout, { BookingSnapshot } from "./PageCheckout";
+import CheckoutMain, { BookingSnapshot } from "./CheckoutMain";
 import { useClient } from "urql";
 import { ExperienceItemFragment } from "@/gql/graphql";
 
@@ -40,10 +40,8 @@ export default function CheckoutWrapper({
     return "Preparing booking engine...";
   }
 
-  console.dir({initialBookingMachineSnapshot})
-
   return (
-    <PageCheckout
+    <CheckoutMain
       experience={experience}
       client={client}
       initialBookingMachineSnapshot={

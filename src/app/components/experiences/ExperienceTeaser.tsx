@@ -12,10 +12,10 @@ import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { useMemo } from "react";
 
 interface IProps {
-  property: ExperienceItemFragment;
+  experience: ExperienceItemFragment;
 }
 
-export default function PropertyItem({ property: experience }: IProps) {
+export default function ExperienceTeaser({ experience }: IProps) {
   const isBoosted = false;
   const minimumPrice = useMinimumPrice(experience);
   const formattedPrice = useFormatPrice(minimumPrice);

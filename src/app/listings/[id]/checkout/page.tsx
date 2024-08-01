@@ -1,4 +1,4 @@
-import CheckoutPageComponent from "./PageCheckout";
+import CheckoutPageComponent from "./CheckoutMain";
 import { graphql, useFragment } from "@/gql";
 import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";

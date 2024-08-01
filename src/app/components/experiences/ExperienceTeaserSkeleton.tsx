@@ -2,7 +2,7 @@ import React from "react";
 
 import { Skeleton } from "@mui/material";
 
-export default function PropertyItemSkeleton() {
+export default function ExperienceTeaserSkeleton() {
   return (
     <div className="rounded-lg bg-white shadow-csm">
       <Skeleton
