@@ -43,13 +43,15 @@ export default function RootLayout({
                   <Footer />
                 </main>
                 {/* Hubspot */}
-                <Script
-                  id="hs-script-loader"
-                  async
-                  defer
-                  src="//js-eu1.hs-scripts.com/144669380.js"
-                  strategy={"lazyOnload"}
-                />
+                {process.env.NODE_ENV === "production" && (
+                  <Script
+                    id="hs-script-loader"
+                    async
+                    defer
+                    src="//js-eu1.hs-scripts.com/144669380.js"
+                    strategy={"lazyOnload"}
+                  />
+                )}
               </body>
             </html>
           </ContextProviders>
