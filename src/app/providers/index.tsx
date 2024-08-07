@@ -6,7 +6,7 @@ import {
   searchMachine,
   SearchStateMachineContext,
 } from "../state-machines/searchMachine";
-import { startOfToday, startOfTomorrow } from "date-fns";
+import { isBefore, startOfToday, startOfTomorrow } from "date-fns";
 import { useMachine } from "@xstate/react";
 import { CategoryContext } from "../helpers/categoryContext";
 
@@ -28,12 +28,15 @@ export default function ContextProviders({
       return undefined;
     }
 
+    const dateFrom = (!dumbRestore.context.dateFrom || isBefore(new Date(dumbRestore.context.dateFrom), startOfToday())) ? startOfToday(): new Date(dumbRestore.context.dateFrom);
+    const dateTo = (!dumbRestore.context.dateTo || isBefore(new Date(dumbRestore.context.dateTo), startOfTomorrow())) ? startOfTomorrow(): new Date(dumbRestore.context.dateTo);
+
     return {
       ...dumbRestore,
       context: {
         ...dumbRestore.context,
-        dateFrom: new Date(dumbRestore.context.dateFrom || startOfToday()),
-        dateTo: new Date(dumbRestore.context.dateTo || startOfTomorrow()),
+        dateFrom,
+        dateTo,
         bookingDate: new Date(
           dumbRestore.context.bookingDate || startOfTomorrow(),
         ),
