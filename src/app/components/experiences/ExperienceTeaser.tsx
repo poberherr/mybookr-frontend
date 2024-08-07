@@ -9,9 +9,9 @@ import { Typography } from "@mui/material";
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import { useRenderLabel } from "@/app/helpers/labels";
-import { CategoryContext } from "@/app/helpers/categoryContext";
+import { useExperienceURL } from "@/app/helpers/urls";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -26,6 +26,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
       (activity) => activity.blockedDays.length > 0,
     ).length;
   }, [experience]);
+  const url = useExperienceURL(experience)
 
   const teaserPhysicalItemsAvailable = useRenderLabel(
     "teaserPhysicalItemsAvailable",
@@ -40,7 +41,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
           : "col-end-[span_2] sm:col-end-[span_1]",
         availableActivityCount === 0 && "opacity-80 grayscale",
       )}
-      href={`/listings/${experience.id}`}
+      href={url}
     >
       <div className="relative aspect-video">
         {experience.medias &&

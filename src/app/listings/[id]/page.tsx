@@ -3,6 +3,7 @@ import ListingComponent from "./listing";
 import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 import { renderMarkdown } from "@/app/helpers/renderMarkdown";
+import { encodeGlobalId } from "@/app/helpers/global-ids";
 
 const ExperienceQuery = graphql(`
   query ExperienceQuery($experienceId: ID!) {
@@ -17,12 +18,13 @@ export default async function ListingPage({
 }: {
   params: { id: string };
 }) {
+  const id = params.id.split("-")[0];
   const result = await getSSRClient().query(ExperienceQuery, {
-    experienceId: params.id,
+    experienceId: encodeGlobalId("Experience", id),
   });
   const experience = useFragment(ExperienceItem, result.data?.experience);
   if (!experience) {
-    throw new Error("unable to experience detail page results");
+    throw new Error("Unable to locate experience and to generate detail page");
   }
 
   const renderedDescription = await renderMarkdown(experience.description);

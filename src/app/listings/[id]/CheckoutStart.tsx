@@ -20,6 +20,7 @@ import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { startOfToday } from "date-fns";
 import { useRenderLabel } from "@/app/helpers/labels";
+import { useExperienceURL } from "@/app/helpers/urls";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -37,6 +38,7 @@ export default function CheckoutStart({ experience }: IProps) {
 
   const [flagCalender, setFlagCalender] = useState(false);
   const activity = useGetActivityFromExperience(experience);
+  const experienceUrl = useExperienceURL(experience);
 
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
@@ -112,7 +114,7 @@ export default function CheckoutStart({ experience }: IProps) {
       methods.trigger("activityId");
       return;
     }
-    router.push(`/listings/${experience.id}/checkout`);
+    router.push(`${experienceUrl}/checkout`);
   });
 
   const price = activity?.price;

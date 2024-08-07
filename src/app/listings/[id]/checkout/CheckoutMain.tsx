@@ -21,6 +21,7 @@ import { Client } from "urql";
 import StyledDialog from "@/app/components/ui/StyledDialog";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { RenderLabel } from "@/app/helpers/labels";
+import { useExperienceURL } from "@/app/helpers/urls";
 
 export type BookingSnapshot = SnapshotFrom<typeof bookingMachine>;
 
@@ -46,6 +47,7 @@ export default function CheckoutMain({
     },
   } = useContext(SearchStateMachineContext);
   const activity = useGetActivityFromExperience(experience);
+  const experienceUrl = useExperienceURL(experience);
 
   const price = activity?.price;
 
@@ -106,7 +108,7 @@ export default function CheckoutMain({
       />
       <BackButton
         pageName={experience.title}
-        route={`/listings/${experience.id}`}
+        route={experienceUrl}
       />
       <Typography
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
