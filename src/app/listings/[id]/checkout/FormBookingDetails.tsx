@@ -41,13 +41,15 @@ export default function FormBookingDetails({
 
   const [flagCalender, setFlagCalender] = useState(false);
   const [flagEditActivityDialog, setFlagEditActivityDialog] = useState(false);
+  const defaultActivity =
+    experience.activities.length === 1 ? experience.activities[0] : undefined;
 
   const methods = useForm<BookingFormData>({
     mode: "all",
     reValidateMode: "onBlur",
     defaultValues: {
       bookingDate: context.date,
-      activityId: context.activityId,
+      activityId: context.activityId || defaultActivity?.id,
       name: context.name || "",
       email:
         context.email || user.user?.primaryEmailAddress?.emailAddress || "",
@@ -99,24 +101,29 @@ export default function FormBookingDetails({
             />
 
             {/* Activity */}
-            <div className="mt-6">
-              <Typography className="uppercase tracking-wide" variant="caption">
-                <RenderLabel labelId="bookingFormActivity" />
-              </Typography>
-
-              <div className="flex justify-between">
-                <Typography className="mt-2" variant="body1">
-                  {activity ? activity.title : "No yacht selected"}
-                </Typography>
-
+            {!defaultActivity && (
+              <div className="mt-6">
                 <Typography
-                  className="cursor-pointer !font-bold"
-                  onClick={() => setFlagEditActivityDialog(true)}
+                  className="uppercase tracking-wide"
+                  variant="caption"
                 >
-                  Edit
+                  <RenderLabel labelId="bookingFormActivity" />
                 </Typography>
+
+                <div className="flex justify-between">
+                  <Typography className="mt-2" variant="body1">
+                    {activity ? activity.title : "No yacht selected"}
+                  </Typography>
+
+                  <Typography
+                    className="cursor-pointer !font-bold"
+                    onClick={() => setFlagEditActivityDialog(true)}
+                  >
+                    Edit
+                  </Typography>
+                </div>
               </div>
-            </div>
+            )}
 
             <StyledDialog
               showDialog={flagEditActivityDialog}
