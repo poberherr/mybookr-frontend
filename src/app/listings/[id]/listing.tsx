@@ -19,6 +19,7 @@ import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { CategoryContext } from "@/app/helpers/categoryContext";
 import { RenderLabel, useRenderLabel } from "@/app/helpers/labels";
+import BackButton from "@/app/components/others/BackButton";
 
 interface IActivityCardProps {
   experience: ExperienceItemFragment;
@@ -130,6 +131,7 @@ export default function ListingComponent({
         "Root"
       }
     >
+      <BackButton pageName={"all experiences"} route={"/listings"} />
       <div className="relative flex w-full flex-col">
         {/* Hero */}
         <div className="flex flex-col gap-8">
