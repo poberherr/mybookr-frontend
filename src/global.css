@@ -10,6 +10,12 @@ label {
   @apply font-sans;
 }
 
+div,
+section,
+figure,
+img,
+svg,
+p,
 a,
 h1,
 h2,

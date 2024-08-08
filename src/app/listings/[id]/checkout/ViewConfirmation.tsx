@@ -1,10 +1,13 @@
-import { CircularProgress, Typography } from "@mui/material";
+import React from "react";
+
+import { CircularProgress } from "@mui/material";
 
 import { StateValueFrom } from "xstate";
 import { IBookingContext, bookingMachine } from "./bookingMachine";
 
 import "./ViewConfirmation.css";
 import { RenderLabel } from "@/app/helpers/labels";
+import ScrollIntoView from "@/app/components/ScrollIntoView";
 
 interface IProps {
   value: StateValueFrom<typeof bookingMachine>;
@@ -25,7 +28,9 @@ const ViewConfirmation = ({ value, context }: IProps) => {
     return (
       <div className="prose mx-auto text-center">
         <div className="flex items-center justify-center gap-8">
-          <CircularProgress size={48} value={100} variant={"indeterminate"} />
+          <ScrollIntoView>
+            <CircularProgress size={48} value={100} variant={"indeterminate"} />
+          </ScrollIntoView>
         </div>
         <p>{headlines.get(value)}</p>
         <p className="text-sm text-gray-400">
