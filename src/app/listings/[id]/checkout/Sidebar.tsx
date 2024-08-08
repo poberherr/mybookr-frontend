@@ -44,7 +44,10 @@ const Sidebar = ({ experience, price }: IProps) => {
             : "Category"}
           :{" "}
           {experience.categories?.map((category) => (
-            <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+            <span
+              key={category.path}
+              className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']"
+            >
               {category.name}
             </span>
           ))}
