@@ -41,6 +41,7 @@ export default async function ListingPage({
     <>
       <Head>
         <link rel="canonical" href={`https://mybookr.io${experienceUrl}`} />
+        <title>Book {experience.title} via mybookr.io</title>
       </Head>
       <ListingComponent
         experience={experience}
