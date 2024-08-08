@@ -4,6 +4,8 @@ import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 import { renderMarkdown } from "@/app/helpers/renderMarkdown";
 import { encodeGlobalId } from "@/app/helpers/global-ids";
+import Head from "next/head";
+import { useExperienceURL } from "@/app/helpers/urls";
 
 const ExperienceQuery = graphql(`
   query ExperienceQuery($experienceId: ID!) {
@@ -26,6 +28,7 @@ export default async function ListingPage({
   if (!experience) {
     throw new Error("Unable to locate experience and to generate detail page");
   }
+  const experienceUrl = useExperienceURL(experience);
 
   const renderedDescription = await renderMarkdown(experience.description);
   const renderedActivityDescriptions: { [key: string]: string } = {};
@@ -35,11 +38,16 @@ export default async function ListingPage({
     );
   }
   return (
-    <ListingComponent
-      experience={experience}
-      renderedDescription={renderedDescription}
-      renderedActivityDescriptions={renderedActivityDescriptions}
-    />
+    <>
+      <Head>
+        <link rel="canonical" href={`https://mybookr.io${experienceUrl}`} />
+      </Head>
+      <ListingComponent
+        experience={experience}
+        renderedDescription={renderedDescription}
+        renderedActivityDescriptions={renderedActivityDescriptions}
+      />
+    </>
   );
 }
 
