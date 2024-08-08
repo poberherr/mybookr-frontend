@@ -7,7 +7,10 @@ import { Divider, Typography } from "@mui/material";
 import PriceDetail from "@/app/components/others/PriceDetail";
 
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { useFormatPrice, useFormatPriceDollar } from "@/app/helpers/useFormatPrice";
+import {
+  useFormatPrice,
+  useFormatPriceDollar,
+} from "@/app/helpers/useFormatPrice";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -32,7 +35,7 @@ const Sidebar = ({ experience, price }: IProps) => {
           className="p-0 !text-gray-600 md:px-8 md:py-0"
           variant="body2"
         >
-          in {experience.location.city}, {experience.location.federalState},{" "}
+          in {experience.location.addressLineOne}, {experience.location.city},{" "}
           {experience.location.country}
         </Typography>
 

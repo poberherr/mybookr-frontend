@@ -92,12 +92,12 @@ export default function ExperienceTeaser({ experience }: IProps) {
         <div className="mb-6 flex flex-row justify-between">
           {isBoosted ? (
             <Typography className="!mb-4 !text-lg md:pr-20" variant="body1">
-              in {experience.location.city}, {experience.location.federalState},{" "}
+              in {experience.location.addressLineOne}, {experience.location.city}, {experience.location.federalState},{" "}
               {experience.location.country}
             </Typography>
           ) : (
             <Typography variant="body2">
-              in {experience.location.city}, {experience.location.federalState},{" "}
+              in {experience.location.addressLineOne}, {experience.location.city}, {experience.location.federalState},{" "}
               {experience.location.country}
             </Typography>
           )}

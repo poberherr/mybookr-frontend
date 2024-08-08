@@ -153,9 +153,9 @@ export default function ListingComponent({
                 variant="body2"
               >
                 <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
-                  in {experience.location.city},{" "}
-                  {experience.location.federalState},{" "}
-                  {experience.location.country}
+                  in {experience.location.addressLineOne},{" "}
+                  {experience.location.city}, {experience.location.federalState}
+                  , {experience.location.country}
                 </span>
                 {experience.categories?.map((category) => (
                   <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">

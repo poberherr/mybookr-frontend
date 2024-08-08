@@ -158,7 +158,7 @@ export default function CheckoutStart({ experience }: IProps) {
                   className="p-0 !text-gray-600 md:hidden"
                   variant="body2"
                 >
-                  in {experience.location.city},{" "}
+                  in {experience.location.addressLineOne}, {experience.location.city},{" "}
                   {experience.location.federalState},{" "}
                   {experience.location.country}
                 </Typography>
@@ -228,7 +228,9 @@ export default function CheckoutStart({ experience }: IProps) {
                   <Typography className="text-right !font-bold uppercase !text-slate-800">
                     {formattedPrice}
                     <br />
-                    <span className="text-xs text-gray-600">{formattedPriceDollar}</span>
+                    <span className="text-xs text-gray-600">
+                      {formattedPriceDollar}
+                    </span>
                   </Typography>
                 </div>
               )}
