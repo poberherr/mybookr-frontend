@@ -3,6 +3,7 @@ import { graphql, useFragment } from "@/gql";
 import { getSSRClient } from "@/app/helpers/urql";
 import { ExperienceItem } from "@/app/fragments/experience-fragments";
 import CheckoutWrapper from "./CheckoutWrapper";
+import { encodeGlobalId } from "@/app/helpers/global-ids";
 
 const CheckoutQuery = graphql(`
   query CheckoutQuery($experienceId: ID!) {
@@ -17,8 +18,9 @@ export default async function CheckoutPage({
 }: {
   params: { id: string };
 }) {
+  const id = params.id.split("-")[0];
   const result = await getSSRClient().query(CheckoutQuery, {
-    experienceId: params.id,
+    experienceId: encodeGlobalId("Experience", id),
   });
   const experience = useFragment(ExperienceItem, result.data?.experience);
   if (!experience) {
