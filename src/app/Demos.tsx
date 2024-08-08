@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const posts = [
   {
-    title: "Yacht Booking Demo",
+    title: "Experience Booking Demo",
     href: "/listings",
     imageUrl: "/mood/phinisi-vessel.png",
     sizes: [1280, 850],
