@@ -118,10 +118,8 @@ export default function ListingComponent({
 }: IListingComponentProps) {
   const [flagGallery, setFlagGallery] = useState(false);
   const checkoutStartRef = useRef<HTMLDivElement>(null);
-
-  if (!experience) {
-    return "Error - No listing found.";
-  }
+  const defaultActivity =
+    experience.activities.length === 1 ? experience.activities[0] : undefined;
 
   return (
     <CategoryContext.Provider
@@ -315,27 +313,32 @@ export default function ListingComponent({
               )}
             </div>
 
-            <Divider className="!mt-16" />
-
-            <div className="mt-16 px-4 py-0 lg:pl-40 lg:pr-16">
-              <Typography
-                className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
-                variant="h3"
-              >
-                <RenderLabel labelId="detailChooseActivity" />
-              </Typography>
-              <div className="grid gap-8">
-                {experience.activities.map((activity) => (
-                  <ActivityCard
-                    key={activity.id}
-                    experience={experience}
-                    activity={activity}
-                    renderedActivityDescriptions={renderedActivityDescriptions}
-                    checkoutStartRef={checkoutStartRef}
-                  />
-                ))}
-              </div>
-            </div>
+            {!defaultActivity && (
+              <>
+                <Divider className="!mt-16" />
+                <div className="mt-16 px-4 py-0 lg:pl-40 lg:pr-16">
+                  <Typography
+                    className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
+                    variant="h3"
+                  >
+                    <RenderLabel labelId="detailChooseActivity" />
+                  </Typography>
+                  <div className="grid gap-8">
+                    {experience.activities.map((activity) => (
+                      <ActivityCard
+                        key={activity.id}
+                        experience={experience}
+                        activity={activity}
+                        renderedActivityDescriptions={
+                          renderedActivityDescriptions
+                        }
+                        checkoutStartRef={checkoutStartRef}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
 
             <Divider className="!mt-16" />
 
