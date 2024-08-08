@@ -15,7 +15,7 @@ interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 // Set up size-related styles
 const sizeStyles = {
-  small: "h-11 text-sm leading-[14px] tracking-wider px-7",
+  small: "h-11 text-sm leading-[14px] tracking-wider px-4 md:px-7",
   medium: "h-12 text-base leading-4 tracking-wider px-8",
   large: "h-14 text-lg leading-[18px] tracking-widest px-9",
 };

@@ -19,15 +19,39 @@ const Sidebar = ({ experience, price }: IProps) => {
 
   return (
     <div className="sticky top-24 grid gap-8 bg-white px-0 py-16">
-      {/* Villa Title */}
-      <Typography
-        className="!mb-4 p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"
-        variant="h6"
-      >
-        {experience.title}
-      </Typography>
+      <div>
+        <Typography
+          className="p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"
+          variant="h6"
+        >
+          {experience.title}
+        </Typography>
 
-      {/* Villa Image */}
+        <Typography
+          className="p-0 !text-gray-600 md:px-8 md:py-0"
+          variant="body2"
+        >
+          in {experience.location.city}, {experience.location.federalState},{" "}
+          {experience.location.country}
+        </Typography>
+
+        <Typography
+          className="p-0 !text-gray-600 md:px-8 md:py-0"
+          variant="body2"
+        >
+          {experience.categories && experience.categories.length > 1
+            ? "Categories"
+            : "Category"}
+          :{" "}
+          {experience.categories?.map((category) => (
+            <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+              {category.name}
+            </span>
+          ))}
+        </Typography>
+      </div>
+
+      {/* Image */}
       {experience.medias &&
         experience.medias.length > 0 &&
         experience.medias[0].url && (

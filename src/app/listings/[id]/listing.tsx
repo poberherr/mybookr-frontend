@@ -45,20 +45,28 @@ const ActivityCard = ({
       <div className="grid justify-between gap-4 lg:flex">
         {activity.medias && (
           <div className="order-1 w-full flex-shrink-0 lg:order-2 lg:ml-4 lg:w-64">
-            <Image
-              className="w-full rounded-lg"
-              src={activity.medias[0].url}
-              alt=""
-              width={activity.medias[0].width}
-              height={activity.medias[0].height}
-              sizes={"420px"}
-            />
+            <div className="lg:aspect-skyscraper relative aspect-video">
+              <Image
+                className="w-full rounded-lg"
+                src={activity.medias[0].url}
+                alt=""
+                // width={activity.medias[0].width}
+                // height={activity.medias[0].height}
+                sizes={"420px"}
+                fill={true}
+                objectFit="cover"
+              />
+            </div>
           </div>
         )}
         <div className="prose order-2 lg:order-1">
           <h2 className="mb-0 text-2xl font-bold">{activity.title}</h2>
+          <div className="mt-4 text-sm text-gray-600">
+            Duration: {activity.durationMinutes} minutes
+          </div>
           {activity.description && (
             <div
+              className="text-sm md:text-base"
               dangerouslySetInnerHTML={{
                 __html: renderedActivityDescriptions[activity.id],
               }}
@@ -67,8 +75,9 @@ const ActivityCard = ({
         </div>
       </div>
 
-      <div className="flex w-full items-center justify-between">
+      <div className="flex flex-col sm:flex-row w-full items-center justify-between gap-6 sm:gap-0 sm:grid-cols-2">
         <SButton
+          className="order-2 md:order-1"
           size="small"
           disabled={!formattedPrice}
           onClick={() => {
@@ -82,12 +91,10 @@ const ActivityCard = ({
               });
           }}
         >
-          <span className="mr-1 hidden md:inline-block">
-            {detailSelectActivity}{" "}
-          </span>
+          <span className="mr-1">{detailSelectActivity} </span>
           <span className="font-bold">{activity.title}</span>
         </SButton>
-        <div className="flex items-center gap-2">
+        <div className="order-1 flex items-center gap-2 md:order-2">
           {formattedPrice ? (
             <>
               <span className="text-sm opacity-80">starting price:</span>
@@ -146,12 +153,15 @@ export default function ListingComponent({
                 variant="body2"
               >
                 <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
-                  <u>
-                    {experience.location.city},{" "}
-                    {experience.location.federalState},{" "}
-                    {experience.location.country}
-                  </u>
+                  in {experience.location.city},{" "}
+                  {experience.location.federalState},{" "}
+                  {experience.location.country}
                 </span>
+                {experience.categories?.map((category) => (
+                  <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                    {category.name}
+                  </span>
+                ))}
               </Typography>
 
               {/* Like and Share button */}
@@ -393,7 +403,7 @@ export default function ListingComponent({
           </div>
 
           {/* Right content - Desktop */}
-          <div className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 lg:mr-40 lg:mt-0 lg:px-0 lg:py-0">
+          <div className="border-0 border-l border-r border-solid border-gray-100 px-4 py-4 md:max-w-96">
             <CheckoutStart experience={experience} />
           </div>
         </div>

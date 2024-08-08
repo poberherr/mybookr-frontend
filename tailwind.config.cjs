@@ -11,6 +11,9 @@ module.exports = {
       // "2xl": "1536px",
     },
     extend: {
+      aspectRatio: {
+        skyscraper: "3 / 4",
+      },
       colors: {
         gray: {
           100: "#f2f2f2",

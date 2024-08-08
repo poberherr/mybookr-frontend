@@ -141,12 +141,43 @@ export default function CheckoutStart({ experience }: IProps) {
   }
 
   return (
-    <div className="sticky top-12 bg-white px-0 pb-16 pt-0 md:py-16">
+    <div className="sticky top-12 mt-16 bg-white px-0 pb-16 pt-0 md:mt-0 md:py-16">
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
           <div className="flex flex-col gap-8">
             {/* Activity + Date -> Base Price */}
             <div className="grid gap-8 md:px-8 md:py-0">
+              <div>
+                <Typography className="p-0 !font-extrabold" variant="h6">
+                  <span className="md:hidden">Book the </span>
+                  {experience.title}
+                </Typography>
+
+                <Typography
+                  className="p-0 !text-gray-600 md:hidden"
+                  variant="body2"
+                >
+                  in {experience.location.city},{" "}
+                  {experience.location.federalState},{" "}
+                  {experience.location.country}
+                </Typography>
+
+                <Typography
+                  className="p-0 !text-gray-600 md:hidden"
+                  variant="body2"
+                >
+                  {experience.categories && experience.categories.length > 1
+                    ? "Categories"
+                    : "Category"}
+                  :{" "}
+                  {experience.categories?.map((category) => (
+                    <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                      {category.name}
+                    </span>
+                  ))}
+                </Typography>
+              </div>
+
               <div>
                 <Typography
                   className="!mb-1 flex flex-1 uppercase"

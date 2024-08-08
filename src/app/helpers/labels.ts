@@ -63,6 +63,24 @@ const labels: Map<
     ]),
   ],
   [
+    "Root.Diving.Courses",
+    new Map<labelIds, string | dynamicLabelFormatter>([
+      ["listingTitle", "Book your dive course:"],
+      ["detailTitle", "About the dive course"],
+      ["detailPriceUnit", "per dive course"],
+      ["bookingFormTitle", "Your Dive Course booking:"],
+      ["bookingFormDate", "Dive Course Date"],
+      ["bookingFormDateDeselected", "Select your dive course date..."],
+      ["bookingFormActivity", "Dive Course Location"],
+      ["bookingFormActivityPlaceholder", "Please select your dive course location..."],
+      [
+        "bookingFormActivityErrorMessage",
+        "Please select your dive course location so we can determine your price.",
+      ],
+      ["confirmationTitle", "Dive Course Booking Confirmed"],
+    ]),
+  ],
+  [
     "Root.Yachts",
     new Map<labelIds, string | dynamicLabelFormatter>([
       ["listingTitle", "Book your Yacht Cruise:"],
