@@ -37,13 +37,15 @@ export default function CheckoutStart({ experience }: IProps) {
   );
 
   const [flagCalender, setFlagCalender] = useState(false);
-  const activity = useGetActivityFromExperience(experience);
+  const preselectedActivity = useGetActivityFromExperience(experience);
   const experienceUrl = useExperienceURL(experience);
+  const defaultActivity =
+    experience.activities.length === 1 ? experience.activities[0] : undefined;
 
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
     defaultValues: {
-      activityId: activity?.id,
+      activityId: preselectedActivity?.id || defaultActivity?.id,
       bookingDate:
         searchMachineState.context.bookingDate ||
         searchMachineState.context.dateFrom ||
@@ -58,8 +60,8 @@ export default function CheckoutStart({ experience }: IProps) {
   // Sync form values with state machine context
   useEffect(() => {
     if (
-      !activity ||
-      (formValueActivityId && formValueActivityId !== activity.id)
+      !preselectedActivity ||
+      (formValueActivityId && formValueActivityId !== preselectedActivity.id)
     ) {
       sendSearchMachineAction({
         type: "updateBooking",
@@ -87,9 +89,12 @@ export default function CheckoutStart({ experience }: IProps) {
 
   // Sync form fields with state machine context when the context changes
   useEffect(() => {
-    if (activity?.id && activity.id !== formValueActivityId) {
+    if (
+      preselectedActivity?.id &&
+      preselectedActivity.id !== formValueActivityId
+    ) {
       methods.reset({
-        activityId: activity?.id ? activity.id : "",
+        activityId: preselectedActivity?.id ? preselectedActivity.id : "",
       });
     }
     if (
@@ -102,7 +107,11 @@ export default function CheckoutStart({ experience }: IProps) {
         bookingDate: searchMachineState.context.bookingDate,
       });
     }
-  }, [activity?.id, searchMachineState.context.bookingDate, methods.reset]);
+  }, [
+    preselectedActivity?.id,
+    searchMachineState.context.bookingDate,
+    methods.reset,
+  ]);
 
   // Use form data and perform validation
   const onSubmit = methods.handleSubmit((data) => {
@@ -117,7 +126,7 @@ export default function CheckoutStart({ experience }: IProps) {
     router.push(`${experienceUrl}/checkout`);
   });
 
-  const price = activity?.price;
+  const price = preselectedActivity?.price;
 
   const formattedPrice = useFormatPrice(price, true);
 
@@ -155,9 +164,11 @@ export default function CheckoutStart({ experience }: IProps) {
                 )}
               </Typography>
             </div>
-            <div>
-              <ActivityForm experience={experience} />
-            </div>
+            {!defaultActivity && (
+              <div>
+                <ActivityForm experience={experience} />
+              </div>
+            )}
           </div>
 
           <Divider />
@@ -182,7 +193,11 @@ export default function CheckoutStart({ experience }: IProps) {
               </div>
             )}
 
-            <SButton fullWidth variant="contained" disabled={!methods.formState.isValid || !price}>
+            <SButton
+              fullWidth
+              variant="contained"
+              disabled={!methods.formState.isValid || !price}
+            >
               Checkout
             </SButton>
 
