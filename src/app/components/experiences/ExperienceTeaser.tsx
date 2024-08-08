@@ -26,10 +26,23 @@ export default function ExperienceTeaser({ experience }: IProps) {
       (activity) => activity.blockedDays.length > 0,
     ).length;
   }, [experience]);
-  const url = useExperienceURL(experience)
+  const url = useExperienceURL(experience);
 
   const teaserPhysicalItemsAvailable = useRenderLabel(
     "teaserPhysicalItemsAvailable",
+  );
+
+  const footerText = useMemo(
+    () =>
+      [
+        `from ${formattedPrice}`,
+        // @todo reenable as soon we have the availability fixed for activities without physical item
+        // availableActivityCount &&
+        //   `${availableActivityCount} ${teaserPhysicalItemsAvailable}`,
+      ]
+        .filter(Boolean)
+        .join(" • "),
+    [availableActivityCount, teaserPhysicalItemsAvailable],
   );
 
   return (
@@ -39,7 +52,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
         isBoosted
           ? "col-start-1 col-end-[span_2] row-start-1 row-end-[span_2]"
           : "col-end-[span_2] sm:col-end-[span_1]",
-        availableActivityCount === 0 && "opacity-80 grayscale",
+        // availableActivityCount === 0 && "opacity-80 grayscale", @todo reenable as soon we have the availability fixed for activities without physical item
       )}
       href={url}
     >
@@ -95,8 +108,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
 
         <div className="flex flex-row justify-between">
           <Typography className="!text-xs !font-semibold">
-            from {formattedPrice} • {availableActivityCount}{" "}
-            {teaserPhysicalItemsAvailable}
+            {footerText}
           </Typography>
         </div>
       </div>
