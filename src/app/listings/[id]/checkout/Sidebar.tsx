@@ -18,7 +18,7 @@ const Sidebar = ({ experience, price }: IProps) => {
   const formattedPrice = useFormatPrice(price, true);
 
   return (
-    <div className="sticky top-5 grid gap-8 bg-white px-0 py-16">
+    <div className="sticky top-24 grid gap-8 bg-white px-0 py-16">
       {/* Villa Title */}
       <Typography
         className="!mb-4 p-0 !font-extrabold md:px-8 md:py-0 md:!text-2xl"

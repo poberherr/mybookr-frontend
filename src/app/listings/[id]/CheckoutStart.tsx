@@ -141,91 +141,89 @@ export default function CheckoutStart({ experience }: IProps) {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit}>
-        <div className="sticky top-5 flex flex-col gap-8 bg-white px-0 pb-16 pt-0 md:py-16">
-          {/* Activity + Date -> Base Price */}
-          <div className="grid gap-8 md:px-8 md:py-0">
-            <div>
+    <div className="sticky top-12 bg-white px-0 pb-16 pt-0 md:py-16">
+      <FormProvider {...methods}>
+        <form onSubmit={onSubmit}>
+          <div className="flex flex-col gap-8">
+            {/* Activity + Date -> Base Price */}
+            <div className="grid gap-8 md:px-8 md:py-0">
+              <div>
+                <Typography
+                  className="!mb-1 flex flex-1 uppercase"
+                  component="div"
+                  variant="caption"
+                >
+                  {bookingFormDate}
+                </Typography>
+                <Typography
+                  className="cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm"
+                  variant="body1"
+                  onClick={() => setFlagCalender(true)}
+                >
+                  {formValueBookingDate ? (
+                    formatDate(formValueBookingDate)
+                  ) : (
+                    <RenderLabel labelId="bookingFormDateDeselected" />
+                  )}
+                </Typography>
+              </div>
+              {!defaultActivity && (
+                <div>
+                  <ActivityForm experience={experience} />
+                </div>
+              )}
+            </div>
+
+            <Divider />
+
+            {/* Price detail part */}
+            <div className="md:px-8 md:py-0">
+              <PriceDetail experience={experience} />
+            </div>
+
+            <Divider />
+
+            <div className="grid gap-4 md:px-8 md:py-0">
+              {price && (
+                <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
+                  <Typography className="!font-black uppercase !text-slate-800">
+                    Total
+                  </Typography>
+
+                  <Typography className="text-right !font-bold uppercase !text-slate-800">
+                    {formattedPrice}
+                  </Typography>
+                </div>
+              )}
+
+              <SButton fullWidth variant="contained" disabled={!price}>
+                Checkout
+              </SButton>
+
               <Typography
-                className="!mb-1 flex flex-1 uppercase"
-                component="div"
+                className="text-center !text-neutral-500"
                 variant="caption"
               >
-                {bookingFormDate}
-              </Typography>
-              <Typography
-                className="cursor-pointer rounded-lg bg-white px-5 py-3 shadow-csm"
-                variant="body1"
-                onClick={() => setFlagCalender(true)}
-              >
-                {formValueBookingDate ? (
-                  formatDate(formValueBookingDate)
-                ) : (
-                  <RenderLabel labelId="bookingFormDateDeselected" />
-                )}
+                Book the basic package online, and add extras later on.
+                <br />
+                The price includes VAT and all fees.
               </Typography>
             </div>
-            {!defaultActivity && (
-              <div>
-                <ActivityForm experience={experience} />
-              </div>
-            )}
+
+            {/* Calendar */}
+            <CalendarSingleDay
+              startDate={
+                searchMachineState.context.bookingDate ||
+                searchMachineState.context.dateFrom ||
+                new Date()
+              }
+              flagCalender={flagCalender}
+              setFlagCalender={setFlagCalender}
+              experienceId={experience.id}
+            />
           </div>
-
-          <Divider />
-
-          {/* Price detail part */}
-          <div className="md:px-8 md:py-0">
-            <PriceDetail experience={experience} />
-          </div>
-
-          <Divider />
-
-          <div className="grid gap-4 md:px-8 md:py-0">
-            {price && (
-              <div className="grid grid-cols-[1fr_max-content] items-center gap-2">
-                <Typography className="!font-black uppercase !text-slate-800">
-                  Total
-                </Typography>
-
-                <Typography className="text-right !font-bold uppercase !text-slate-800">
-                  {formattedPrice}
-                </Typography>
-              </div>
-            )}
-
-            <SButton
-              fullWidth
-              variant="contained"
-              disabled={!price}
-            >
-              Checkout
-            </SButton>
-
-            <Typography
-              className="text-center !text-neutral-500"
-              variant="caption"
-            >
-              Book the basic package online, and add extras later on.
-              <br />
-              The price includes VAT and all fees.
-            </Typography>
-          </div>
-        </div>
-
-        {/* Calendar */}
-        <CalendarSingleDay
-          startDate={
-            searchMachineState.context.bookingDate ||
-            searchMachineState.context.dateFrom ||
-            new Date()
-          }
-          flagCalender={flagCalender}
-          setFlagCalender={setFlagCalender}
-          experienceId={experience.id}
-        />
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+    </div>
   );
 }

@@ -294,7 +294,7 @@ export default function ListingComponent({
         <Divider className="!mt-16" />
 
         {/* Content */}
-        <div className="grid grid-cols-1 grid-rows-1 lg:grid-cols-[2fr_minmax(min-content,600px)]">
+        <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
           {/* Left content */}
           <div className="p-0 pt-16 lg:pb-16">
             {/* Introduction */}
@@ -390,10 +390,7 @@ export default function ListingComponent({
           </div>
 
           {/* Right content - Desktop */}
-          <div
-            className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 lg:mr-40 lg:mt-0 lg:px-0 lg:py-0"
-            ref={checkoutStartRef}
-          >
+          <div className="mt-10 border-0 border-l border-r border-t border-solid border-gray-100 px-4 py-4 lg:mr-40 lg:mt-0 lg:px-0 lg:py-0">
             <CheckoutStart experience={experience} />
           </div>
         </div>
