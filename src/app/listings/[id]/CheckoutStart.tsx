@@ -16,7 +16,7 @@ import { formatDate } from "@/app/helpers/date-format";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
-import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import { useFormatPrice, useFormatPriceDollar } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { startOfToday } from "date-fns";
 import { RenderLabel, useRenderLabel } from "@/app/helpers/labels";
@@ -131,6 +131,7 @@ export default function CheckoutStart({ experience }: IProps) {
   const price = preselectedActivity?.price;
 
   const formattedPrice = useFormatPrice(price, true);
+  const formattedPriceDollar = useFormatPriceDollar(price, true);
 
   const isClient = useIsClient();
 
@@ -171,7 +172,10 @@ export default function CheckoutStart({ experience }: IProps) {
                     : "Category"}
                   :{" "}
                   {experience.categories?.map((category) => (
-                    <span key={category.path} className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                    <span
+                      key={category.path}
+                      className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']"
+                    >
                       {category.name}
                     </span>
                   ))}
@@ -223,6 +227,8 @@ export default function CheckoutStart({ experience }: IProps) {
 
                   <Typography className="text-right !font-bold uppercase !text-slate-800">
                     {formattedPrice}
+                    <br />
+                    <span className="text-xs text-gray-600">{formattedPriceDollar}</span>
                   </Typography>
                 </div>
               )}

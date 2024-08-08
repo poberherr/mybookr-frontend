@@ -8,7 +8,10 @@ import { Typography } from "@mui/material";
 
 import { useMinimumPrice } from "@/app/helpers/useMinimumPrice";
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import {
+  useFormatPrice,
+  useFormatPriceDollar,
+} from "@/app/helpers/useFormatPrice";
 import { useMemo } from "react";
 import { useRenderLabel } from "@/app/helpers/labels";
 import { useExperienceURL } from "@/app/helpers/urls";
@@ -21,6 +24,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
   const isBoosted = false;
   const minimumPrice = useMinimumPrice(experience);
   const formattedPrice = useFormatPrice(minimumPrice);
+  const formattedDollarPrice = useFormatPriceDollar(minimumPrice);
   const availableActivityCount = useMemo(() => {
     return experience.activities.filter(
       (activity) => activity.blockedDays.length > 0,
@@ -36,12 +40,11 @@ export default function ExperienceTeaser({ experience }: IProps) {
     () =>
       [
         `from ${formattedPrice}`,
+        <span className="text-gray-500">&nbsp;{`(${formattedDollarPrice})`}</span>,
         // @todo reenable as soon we have the availability fixed for activities without physical item
         // availableActivityCount &&
         //   `${availableActivityCount} ${teaserPhysicalItemsAvailable}`,
-      ]
-        .filter(Boolean)
-        .join(" • "),
+      ].filter(Boolean),
     [availableActivityCount, teaserPhysicalItemsAvailable],
   );
 

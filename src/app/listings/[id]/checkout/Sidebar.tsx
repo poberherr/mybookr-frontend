@@ -7,7 +7,7 @@ import { Divider, Typography } from "@mui/material";
 import PriceDetail from "@/app/components/others/PriceDetail";
 
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { useFormatPrice } from "@/app/helpers/useFormatPrice";
+import { useFormatPrice, useFormatPriceDollar } from "@/app/helpers/useFormatPrice";
 
 interface IProps {
   experience: ExperienceItemFragment;
@@ -16,6 +16,7 @@ interface IProps {
 
 const Sidebar = ({ experience, price }: IProps) => {
   const formattedPrice = useFormatPrice(price, true);
+  const formattedPriceDollar = useFormatPriceDollar(price, true);
 
   return (
     <div className="sticky top-24 grid gap-8 bg-white px-0 py-16">
@@ -92,6 +93,10 @@ const Sidebar = ({ experience, price }: IProps) => {
               className="text-right !text-sm !font-black"
             >
               {formattedPrice}
+              <br />
+              <span className="text-xs text-gray-600">
+                {formattedPriceDollar}
+              </span>
             </Typography>
           </div>
         </div>
