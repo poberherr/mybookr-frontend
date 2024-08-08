@@ -58,6 +58,8 @@ const MybookrMap = ({ longitude, latitude }: MyBookrMapProps) => {
         latitude: latitude,
         zoom: 9,
       }}
+      touchPitch={false}
+      scrollZoom={false}
       style={{ width: "100%", height: 400 }}
       mapStyle="mapbox://styles/mybookrio/clw6i1re8000q01qg91ok0h12"
       onLoad={(event) => addIcon(event.target)}
