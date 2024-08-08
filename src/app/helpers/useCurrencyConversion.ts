@@ -1,19 +1,31 @@
 import { useState, useEffect } from "react";
 
+import { useQuery } from "@urql/next";
+import { graphql } from "@/gql";
+
+const CurrencyQuery = graphql(`
+  query CurrencyQuery {
+    currency {
+      idr
+    }
+  }
+`);
+
 const useCurrencyConversion = () => {
-  const [conversionRate, setConversionRate] = useState(16366.98077749);
+  const [conversionRate, setConversionRate] = useState(16000);
+
+  const [currencyResult] = useQuery({
+    query: CurrencyQuery,
+  });
 
   useEffect(() => {
     const fetchConversionRate = async () => {
       try {
-        const response = await fetch("/api/currency-conversion");
-        const data = await response.json();
-
-        if (!data.conversionRate) {
-          console.dir({ data });
+        if (!currencyResult.data) {
+          console.dir({ currencyResult });
           throw new Error("Invalid data from currency conversion endpoint");
         }
-        setConversionRate(data.conversionRate);
+        setConversionRate(currencyResult.data.currency.idr);
       } catch (error) {
         console.error("Error fetching the currency conversion rate:", error);
       }
