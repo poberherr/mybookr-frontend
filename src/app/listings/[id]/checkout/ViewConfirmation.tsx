@@ -42,25 +42,27 @@ const ViewConfirmation = ({ value, context }: IProps) => {
 
   if (value === "Confirmation") {
     return (
-      <div className="mx-auto grid gap-12 text-center">
-        <svg
-          className="checkmark mb-12"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 52 52"
-        >
-          <circle
-            className="checkmark__circle"
-            cx="26"
-            cy="26"
-            r="25"
-            fill="none"
-          />
-          <path
-            className="checkmark__check"
-            fill="none"
-            d="M14.1 27.2l7.1 7.2 16.7-16.8"
-          />
-        </svg>
+      <div className="mx-auto grid gap-6 text-center">
+        <ScrollIntoView>
+          <svg
+            className="checkmark mb-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 52 52"
+          >
+            <circle
+              className="checkmark__circle"
+              cx="26"
+              cy="26"
+              r="25"
+              fill="none"
+            />
+            <path
+              className="checkmark__check"
+              fill="none"
+              d="M14.1 27.2l7.1 7.2 16.7-16.8"
+            />
+          </svg>
+        </ScrollIntoView>
 
         <h1 className="text-2xl font-bold">
           <RenderLabel labelId="confirmationTitle" />

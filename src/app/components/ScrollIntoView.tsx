@@ -9,7 +9,11 @@ const ScrollIntoView: React.FC<ScrollIntoViewProps> = ({ children }) => {
 
   useEffect(() => {
     if (divRef.current) {
-      divRef.current.scrollIntoView({ behavior: "smooth" });
+      divRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      });
     }
   }, []);
 

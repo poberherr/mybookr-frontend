@@ -78,9 +78,13 @@ export default function FormBookingDetails({
 
               <div className="flex justify-between">
                 <Typography className="mt-2" variant="body1">
-                  {bookingDate && bookingDate instanceof Date
-                    ? formatDate(bookingDate)
-                    : "No date selected"}
+                  {bookingDate && bookingDate instanceof Date ? (
+                    formatDate(bookingDate)
+                  ) : (
+                    <span className="text-red-600">
+                      Please select a booking date...
+                    </span>
+                  )}
                 </Typography>
 
                 <Typography
@@ -112,7 +116,13 @@ export default function FormBookingDetails({
 
                 <div className="flex justify-between">
                   <Typography className="mt-2" variant="body1">
-                    {activity ? activity.title : "No yacht selected"}
+                    {activity ? (
+                      activity.title
+                    ) : (
+                      <span className="text-red-600">
+                        <RenderLabel labelId="bookingFormActivityErrorMessage" />
+                      </span>
+                    )}
                   </Typography>
 
                   <Typography

@@ -35,6 +35,10 @@ const labels: Map<
       ["bookingFormDateDeselected", "Select your booking date..."],
       ["bookingFormActivity", "Activity"],
       ["bookingFormActivityPlaceholder", "Please select your activity..."],
+      [
+        "bookingFormActivityErrorMessage",
+        "Please select your activity so we can determine your price.",
+      ],
       ["confirmationTitle", "Tourist Activity Booking Confirmed"],
     ]),
   ],
@@ -51,6 +55,10 @@ const labels: Map<
       ["bookingFormDateDeselected", "Select your dive date..."],
       ["bookingFormActivity", "Dive Location"],
       ["bookingFormActivityPlaceholder", "Please select your dive location..."],
+      [
+        "bookingFormActivityErrorMessage",
+        "Please select your dive location so we can determine your price.",
+      ],
       ["confirmationTitle", "Dive Booking Confirmed"],
     ]),
   ],
