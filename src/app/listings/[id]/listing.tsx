@@ -320,7 +320,7 @@ export default function ListingComponent({
                 className="!mb-6 w-full !text-xl !font-extrabold lg:!text-3xl"
                 variant="h3"
               >
-                Choose your yacht
+                <RenderLabel labelId="detailChooseActivity" />
               </Typography>
               <div className="grid gap-8">
                 {experience.activities.map((activity) => (

@@ -19,7 +19,7 @@ import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromEx
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { startOfToday } from "date-fns";
-import { useRenderLabel } from "@/app/helpers/labels";
+import { RenderLabel, useRenderLabel } from "@/app/helpers/labels";
 import { useExperienceURL } from "@/app/helpers/urls";
 
 interface IProps {
@@ -148,9 +148,11 @@ export default function CheckoutStart({ experience }: IProps) {
                 variant="body1"
                 onClick={() => setFlagCalender(true)}
               >
-                {formValueBookingDate
-                  ? formatDate(formValueBookingDate)
-                  : "Select your cruise date..."}
+                {formValueBookingDate ? (
+                  formatDate(formValueBookingDate)
+                ) : (
+                  <RenderLabel labelId="bookingFormDateDeselected" />
+                )}
               </Typography>
             </div>
             <div>

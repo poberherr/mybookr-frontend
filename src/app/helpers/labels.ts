@@ -9,7 +9,10 @@ type labelIds =
   | "detailSelectActivity"
   | "detailPriceUnit"
   | "bookingFormDate"
+  | "bookingFormDateDeselected"
   | "bookingFormActivity"
+  | "bookingFormActivityPlaceholder"
+  | "bookingFormActivityErrorMessage"
   | "bookingFormTitle"
   | "confirmationTitle";
 
@@ -27,9 +30,11 @@ const labels: Map<
       ["detailChooseActivity", "Choose your activity"],
       ["detailSelectActivity", (value: string) => `Select ${value}`],
       ["detailPriceUnit", "per trip"],
-      ["bookingFormDate", "Date"],
-      ["bookingFormActivity", "Activity"],
       ["bookingFormTitle", "Your Tourist Activity booking:"],
+      ["bookingFormDate", "Date"],
+      ["bookingFormDateDeselected", "Select your booking date..."],
+      ["bookingFormActivity", "Activity"],
+      ["bookingFormActivityPlaceholder", "Please select your activity..."],
       ["confirmationTitle", "Tourist Activity Booking Confirmed"],
     ]),
   ],
@@ -41,9 +46,11 @@ const labels: Map<
       ["detailChooseActivity", "Choose your dive location"],
       ["detailSelectActivity", (value: string) => `Dive at ${value}`],
       ["detailPriceUnit", "per dive trip"],
-      ["bookingFormDate", "Dive Date"],
-      ["bookingFormActivity", "Dive Location"],
       ["bookingFormTitle", "Your Dive booking:"],
+      ["bookingFormDate", "Dive Date"],
+      ["bookingFormDateDeselected", "Select your dive date..."],
+      ["bookingFormActivity", "Dive Location"],
+      ["bookingFormActivityPlaceholder", "Please select your dive location..."],
       ["confirmationTitle", "Dive Booking Confirmed"],
     ]),
   ],
@@ -56,9 +63,15 @@ const labels: Map<
       ["detailChooseActivity", "Choose your yacht"],
       ["detailSelectActivity", (value: string) => `Cruise with the ${value}`],
       ["detailPriceUnit", "per cruise"],
-      ["bookingFormDate", "Cruise Date"],
-      ["bookingFormActivity", "Yacht"],
       ["bookingFormTitle", "Your Yacht Cruise booking:"],
+      ["bookingFormDate", "Cruise Date"],
+      ["bookingFormDateDeselected", "Select your cruise date..."],
+      ["bookingFormActivity", "Yacht"],
+      ["bookingFormActivityPlaceholder", "Please select your yacht..."],
+      [
+        "bookingFormActivityErrorMessage",
+        "Please select your yacht so we can determine your price.",
+      ],
       ["confirmationTitle", "Yacht Cruise Booking Confirmed"],
     ]),
   ],

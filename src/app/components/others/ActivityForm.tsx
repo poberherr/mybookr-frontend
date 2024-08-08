@@ -29,16 +29,22 @@ export default function ActivityForm({ experience }: IProps) {
     }));
   }, [experience]);
 
+  const bookingFormActivity = useRenderLabel("bookingFormActivity");
+  const bookingFormActivityPlaceholder = useRenderLabel(
+    "bookingFormActivityPlaceholder",
+  );
+  const bookingFormActivityErrorMessage = useRenderLabel(
+    "bookingFormActivityErrorMessage",
+  );
+
   const formValidator = {
     activityId: {
       required: {
         value: true,
-        message: "Please select your yacht so we can determine your price.",
+        message: bookingFormActivityErrorMessage,
       },
     },
   };
-
-  const bookingFormActivity = useRenderLabel("bookingFormActivity");
 
   return (
     <StyledSelect
@@ -49,7 +55,7 @@ export default function ActivityForm({ experience }: IProps) {
       menuItems={activities}
       rules={formValidator.activityId}
       errors={errors.activityId}
-      placeholder="Please select your yacht..."
+      placeholder={bookingFormActivityPlaceholder}
     />
   );
 }
