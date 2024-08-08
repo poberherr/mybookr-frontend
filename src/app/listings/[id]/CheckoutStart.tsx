@@ -44,6 +44,8 @@ export default function CheckoutStart({ experience }: IProps) {
 
   // Initialize the form with react-hook-form
   const methods = useForm<CheckoutStartForm>({
+    mode: "all",
+    reValidateMode: "onBlur",
     defaultValues: {
       activityId: preselectedActivity?.id || defaultActivity?.id,
       bookingDate:
@@ -196,7 +198,7 @@ export default function CheckoutStart({ experience }: IProps) {
             <SButton
               fullWidth
               variant="contained"
-              disabled={!methods.formState.isValid || !price}
+              disabled={!price}
             >
               Checkout
             </SButton>

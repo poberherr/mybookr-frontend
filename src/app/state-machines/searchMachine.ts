@@ -124,20 +124,4 @@ export const searchMachine = setup({
       },
     },
   },
-  // Ensure dates stay dates, even when we restore them from local storage
-  // @todo check which save guard for restoration we actually need (there was another one)
-  // always: {
-  //   guard: ({ context }) =>
-  //     (!!context.dateFrom && !(context.dateFrom instanceof Date)) ||
-  //     (!!context.dateTo && !(context.dateTo instanceof Date)) ||
-  //     (!!context.bookingDate && !(context.bookingDate instanceof Date)),
-  //   actions: [
-  //     assign(({ context, self }) => ({
-  //       dateFrom: new Date(context.dateFrom),
-  //       dateTo: new Date(context.dateTo),
-  //       bookingDate: new Date(context.bookingDate || startOfToday()),
-  //     })),
-  //   ],
-  //   target: ".Init",
-  // },
 });

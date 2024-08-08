@@ -29,7 +29,16 @@ export default function ContextProviders({
     }
 
     const dateFrom = (!dumbRestore.context.dateFrom || isBefore(new Date(dumbRestore.context.dateFrom), startOfToday())) ? startOfToday(): new Date(dumbRestore.context.dateFrom);
-    const dateTo = (!dumbRestore.context.dateTo || isBefore(new Date(dumbRestore.context.dateTo), startOfTomorrow())) ? startOfTomorrow(): new Date(dumbRestore.context.dateTo);
+    const dateTo =
+      !dumbRestore.context.dateTo ||
+      isBefore(new Date(dumbRestore.context.dateTo), startOfTomorrow())
+        ? startOfTomorrow()
+        : new Date(dumbRestore.context.dateTo);
+    const bookingDate =
+      !dumbRestore.context.bookingDate ||
+      isBefore(new Date(dumbRestore.context.bookingDate), startOfToday())
+        ? startOfToday()
+        : new Date(dumbRestore.context.bookingDate);
 
     return {
       ...dumbRestore,
@@ -37,9 +46,7 @@ export default function ContextProviders({
         ...dumbRestore.context,
         dateFrom,
         dateTo,
-        bookingDate: new Date(
-          dumbRestore.context.bookingDate || startOfTomorrow(),
-        ),
+        bookingDate,
       },
     } as SearchMachineSnapshot;
   }, []);
