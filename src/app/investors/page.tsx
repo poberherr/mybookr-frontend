@@ -37,7 +37,7 @@ export default function InvestorPage() {
   }, [session]);
 
   return (
-    <div className="my-12 grid gap-12 px-4 py-0 md:px-40">
+    <div className="my-12 grid gap-12 px-4 py-0 md:px-16 lg:px-32 xl-px-40">
       <SButton onClick={openTransak}>Invest into mybookr</SButton>
       {transakActive && <TransakWrapper setTransakActive={setTransakActive} />}
 
