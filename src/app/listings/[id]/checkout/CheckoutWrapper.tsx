@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import CheckoutMain, { BookingSnapshot } from "./CheckoutMain";
 import { useClient } from "urql";
 import { ExperienceItemFragment } from "@/gql/graphql";
-import { CategoryContext } from "@/app/helpers/categoryContext";
+import { CategoryContext } from "@/app/context/categoryContext";
 
 export default function CheckoutWrapper({
   experience,

@@ -9,25 +9,27 @@ import Logo from "@/assets/mybookr.svg";
 
 import { ClerkAuth } from "./ClerkAuth";
 
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { OperatorContext } from "@/app/context/operatorContext";
+import Image from "next/image";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const hasOperator = !!process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER; // @todo should be based on operator context
+  const operator = useContext(OperatorContext);
 
   const navigation = useMemo(
     () =>
-      hasOperator
+      !!operator
         ? [{ name: "Book Now", href: "/listings" }]
         : [
             { name: "Product", href: "/#product" },
             { name: "Demos", href: "/#demos" },
             { name: "Contact", href: "/contact" },
           ],
-    [hasOperator],
+    [operator],
   );
 
   return (
@@ -38,8 +40,17 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <Link className="-m-1.5 p-1.5" href={"/#top"}>
-            <span className="sr-only">MyBookr</span>
-            <Logo className="h-4 w-auto sm:h-6" alt="MyBookr logo" />
+            {operator?.logo ? (
+              <Image
+                className="h-4 w-auto sm:h-6"
+                src={operator.logo.url}
+                width={operator.logo.width}
+                height={operator.logo.height}
+                alt={`${operator.name} logo`}
+              />
+            ) : (
+              <Logo className="h-4 w-auto sm:h-6" alt="MyBookr logo" />
+            )}
           </Link>
         </div>
         <div className="flex lg:hidden">

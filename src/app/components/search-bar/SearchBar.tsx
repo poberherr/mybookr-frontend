@@ -21,7 +21,7 @@ import { useIsClient } from "@/app/helpers/useIsClient";
 import Calendar from "../Calendar/Calendar";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { useRenderLabel } from "@/app/helpers/labels";
-import { CategoryContext } from "@/app/helpers/categoryContext";
+import { CategoryContext } from "@/app/context/categoryContext";
 
 export interface FormData {
   dateRange: Range;

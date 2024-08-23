@@ -8,12 +8,16 @@ import {
 } from "../state-machines/searchMachine";
 import { isBefore, startOfToday, startOfTomorrow } from "date-fns";
 import { useMachine } from "@xstate/react";
-import { CategoryContext } from "../helpers/categoryContext";
+import { CategoryContext } from "./categoryContext";
+import { OperatorItemFragment } from "@/gql/graphql";
+import { OperatorContext } from "./operatorContext";
 
 export default function ContextProviders({
   children,
+  operator,
 }: {
   children: React.ReactNode;
+  operator?: OperatorItemFragment;
 }) {
   const initialBookingMachineSnapshot = useMemo(() => {
     let dumbRestore;
@@ -28,7 +32,11 @@ export default function ContextProviders({
       return undefined;
     }
 
-    const dateFrom = (!dumbRestore.context.dateFrom || isBefore(new Date(dumbRestore.context.dateFrom), startOfToday())) ? startOfToday(): new Date(dumbRestore.context.dateFrom);
+    const dateFrom =
+      !dumbRestore.context.dateFrom ||
+      isBefore(new Date(dumbRestore.context.dateFrom), startOfToday())
+        ? startOfToday()
+        : new Date(dumbRestore.context.dateFrom);
     const dateTo =
       !dumbRestore.context.dateTo ||
       isBefore(new Date(dumbRestore.context.dateTo), startOfTomorrow())
@@ -75,14 +83,16 @@ export default function ContextProviders({
     );
   }, [searchMachineState.value]);
   return (
-    <CategoryContext.Provider
-      value={process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root.*"}
-    >
-      <SearchStateMachineContext.Provider
-        value={{ searchMachineState, sendSearchMachineAction }}
+    <OperatorContext.Provider value={operator}>
+      <CategoryContext.Provider
+        value={process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root.*"}
       >
-        {children}
-      </SearchStateMachineContext.Provider>
-    </CategoryContext.Provider>
+        <SearchStateMachineContext.Provider
+          value={{ searchMachineState, sendSearchMachineAction }}
+        >
+          {children}
+        </SearchStateMachineContext.Provider>
+      </CategoryContext.Provider>
+    </OperatorContext.Provider>
   );
 }

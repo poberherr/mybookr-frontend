@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { CategoryContext } from "./categoryContext";
+import { CategoryContext } from "../context/categoryContext";
 
 type labelIds =
   | "listingTitle"

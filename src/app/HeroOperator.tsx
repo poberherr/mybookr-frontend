@@ -1,6 +1,16 @@
+"use client";
+
+import { useContext } from "react";
 import Link from "next/link";
+import { OperatorContext } from "./context/operatorContext";
+import Image from "next/image";
 
 export default function HeroOperator() {
+  const operator = useContext(OperatorContext);
+
+  if (!operator) {
+    throw Error("Unable to load operator for hero");
+  }
   return (
     <div className="relative isolate overflow-hidden bg-white">
       <svg
@@ -29,7 +39,15 @@ export default function HeroOperator() {
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:pb-40 lg:pt-12">
         <div className="mx-auto lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Read to book?
+            {operator ? (
+              <>
+                {`${operator.name}:`}
+                <br />
+                Online Booking
+              </>
+            ) : (
+              `Online Booking`
+            )}
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
             Click below to start the booking process.
@@ -43,6 +61,17 @@ export default function HeroOperator() {
             </Link>
           </div>
         </div>
+        {operator.media && (
+          <div className="mx-auto mt-16 flex max-w-2xl sm:mt-24 lg:ml-10 lg:mr-0 lg:mt-0 lg:max-w-none lg:flex-none xl:ml-32">
+            <Image
+              src={operator.media.url}
+              alt="Example"
+              width={operator.media.width}
+              height={operator.media.height}
+              className="w-[62rem] max-h-40vh lg:max-h-[80vh] overflow-hidden object-cover aspect-square"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

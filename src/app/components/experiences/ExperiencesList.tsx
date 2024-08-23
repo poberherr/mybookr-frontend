@@ -11,7 +11,7 @@ import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { ExperiencesListSkeleton } from "./ExperiencesListSkeleton";
 import { useGroupedExperiences } from "@/app/helpers/useGroupedExperiences";
 import { Typography } from "@mui/material";
-import { CategoryContext } from "@/app/helpers/categoryContext";
+import { CategoryContext } from "@/app/context/categoryContext";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery(

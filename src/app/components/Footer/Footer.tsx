@@ -1,20 +1,23 @@
+"use client";
+
+import { OperatorContext } from "@/app/context/operatorContext";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { SiLinkedin } from "react-icons/si";
 
 export default function Footer() {
-  const hasOperator = !!process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER; // @todo should be based on operator context
+  const operator = useContext(OperatorContext);
 
   const navigation = useMemo(
     () =>
-      hasOperator
+      !!operator
         ? {
             main: [
               { name: "Home", href: "/#top" },
               { name: "Bookings", href: "/listings" },
-              // { name: "Privacy Policy", href: "/privacy-policy" },
-              // { name: "Site Notice", href: "/site-notice" },
-              // { name: "Terms of Service", href: "/terms-of-service" },
+              { name: "Privacy Policy", href: "/privacy-policy" },
+              { name: "Site Notice", href: "/site-notice" },
+              { name: "Terms of Service", href: "/terms-of-service" },
             ],
             social: [],
           }
@@ -37,7 +40,7 @@ export default function Footer() {
               },
             ],
           },
-    [hasOperator],
+    [operator],
   );
 
   return (
@@ -72,8 +75,27 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          &copy; {new Date().getFullYear()} <Link href="https://mybookr.io" target="_blank">Mybookr</Link>. All
-          rights reserved.
+          {operator ? (
+            <>
+              &copy; {new Date().getFullYear()}{" "}
+              <Link href={operator.website} target="_blank">
+                {operator.name}
+              </Link>{" "}
+              via{" "}
+              <Link href="https://mybookr.io" target="_blank">
+                mybookr.io
+              </Link>
+              . All rights reserved.
+            </>
+          ) : (
+            <>
+              &copy; {new Date().getFullYear()}{" "}
+              <Link href="https://mybookr.io" target="_blank">
+                Mybookr
+              </Link>
+              . All rights reserved.
+            </>
+          )}
         </p>
       </div>
     </footer>

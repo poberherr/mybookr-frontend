@@ -17,7 +17,7 @@ import { ExperienceItemFragment } from "@/gql/graphql";
 import { SButton } from "@/app/components/ui/SButton";
 import { useFormatPrice } from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
-import { CategoryContext } from "@/app/helpers/categoryContext";
+import { CategoryContext } from "@/app/context/categoryContext";
 import { RenderLabel, useRenderLabel } from "@/app/helpers/labels";
 import BackButton from "@/app/components/others/BackButton";
 
@@ -158,7 +158,7 @@ export default function ListingComponent({
                   , {experience.location.country}
                 </span>
                 {experience.categories?.map((category) => (
-                  <span className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
+                  <span key={category.path} className="[&:not(:last-child)]:after:whitespace-pre [&:not(:last-child)]:after:content-['__•__']">
                     {category.name}
                   </span>
                 ))}
