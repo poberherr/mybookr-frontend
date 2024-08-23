@@ -15,8 +15,9 @@ import { inter, montserrat } from "@/styles/fonts";
 import "../global.css";
 import { theme } from "../theme";
 import ContextProviders from "./context/providers";
-import Script from "next/script";
+
 import { loadOperator } from "./helpers/loadOperator";
+import HubspotChat from "./components/HubspotChat";
 
 export async function generateMetadata(): Promise<Metadata> {
   const operator = await loadOperator();
@@ -54,16 +55,7 @@ export default async function RootLayout({
                   {children}
                   <Footer />
                 </main>
-                {/* Hubspot */}
-                {process.env.NODE_ENV === "production" && (
-                  <Script
-                    id="hs-script-loader"
-                    async
-                    defer
-                    src="//js-eu1.hs-scripts.com/144669380.js"
-                    strategy={"lazyOnload"}
-                  />
-                )}
+                <HubspotChat />
               </body>
             </html>
           </ContextProviders>
