@@ -133,7 +133,7 @@ export default function ListingComponent({
       value={
         (experience.categories && experience.categories[0].path) ||
         process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER ||
-        "Root"
+        "Root.*"
       }
     >
       <BackButton pageName={"all experiences"} route={"/listings"} />

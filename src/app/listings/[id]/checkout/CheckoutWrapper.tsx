@@ -46,7 +46,7 @@ export default function CheckoutWrapper({
       value={
         (experience.categories && experience.categories[0].path) ||
         process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER ||
-        "Root"
+        "Root.*"
       }
     >
       <CheckoutMain

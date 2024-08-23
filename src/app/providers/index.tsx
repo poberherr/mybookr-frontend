@@ -76,7 +76,7 @@ export default function ContextProviders({
   }, [searchMachineState.value]);
   return (
     <CategoryContext.Provider
-      value={process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root"}
+      value={process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root.*"}
     >
       <SearchStateMachineContext.Provider
         value={{ searchMachineState, sendSearchMachineAction }}

@@ -43,7 +43,7 @@ export default function ExperiencesList() {
         .toISOString()
         .split("T")[0],
       dateEnd: searchMachineState.context.dateTo.toISOString().split("T")[0],
-      categories: [process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root"],
+      categories: [process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root.*"],
     },
   });
 
@@ -101,7 +101,7 @@ export default function ExperiencesList() {
               value={
                 category?.path ||
                 process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER ||
-                "Root"
+                "Root.*"
               }
             >
               <Typography variant={`h4`}>{categoryName}:</Typography>
