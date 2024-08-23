@@ -54,4 +54,4 @@ export default async function ListingPage({
   );
 }
 
-export const revalidate = false;
+export const revalidate = 60 * 60 * 4;

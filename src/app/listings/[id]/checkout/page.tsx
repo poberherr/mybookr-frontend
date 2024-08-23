@@ -30,4 +30,4 @@ export default async function CheckoutPage({
   return <CheckoutWrapper experience={experience}/>;
 }
 
-export const revalidate = false;
+export const revalidate = 60 * 60 * 1;

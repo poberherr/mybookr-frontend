@@ -11,4 +11,4 @@ export default async function ContactPage() {
   );
 }
 
-export const revalidate = false;
+export const revalidate = 60 * 60 * 4;

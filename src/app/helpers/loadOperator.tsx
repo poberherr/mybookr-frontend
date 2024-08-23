@@ -35,4 +35,4 @@ export async function loadOperator(): Promise<OperatorItemFragment | undefined> 
   return operator
 }
 
-export const revalidate = false;
+export const revalidate = 60 * 60 * 4;
