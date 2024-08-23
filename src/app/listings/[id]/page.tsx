@@ -26,7 +26,9 @@ export default async function ListingPage({
   });
   const experience = useFragment(ExperienceItem, result.data?.experience);
   if (!experience) {
-    throw new Error("Unable to locate experience and to generate detail page");
+    throw new Error(
+      `Unable to locate experience and to generate detail page: param:${params.id} extract:${id} global:${encodeGlobalId("Experience", id)}`,
+    );
   }
   const experienceUrl = useExperienceURL(experience);
 
