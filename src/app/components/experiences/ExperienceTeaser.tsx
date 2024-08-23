@@ -40,7 +40,7 @@ export default function ExperienceTeaser({ experience }: IProps) {
     () =>
       [
         `from ${formattedPrice}`,
-        <span className="text-gray-500">&nbsp;{`(${formattedDollarPrice})`}</span>,
+        <span key={formattedDollarPrice} className="text-gray-500">&nbsp;{`(${formattedDollarPrice})`}</span>,
         // @todo reenable as soon we have the availability fixed for activities without physical item
         // availableActivityCount &&
         //   `${availableActivityCount} ${teaserPhysicalItemsAvailable}`,

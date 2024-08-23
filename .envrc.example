@@ -2,6 +2,11 @@
 # export NEXT_PUBLIC_AXIOS_BASE=http://localhost
 # export NEXT_PUBLIC_AXIOS_AUTH_TOKEN="Basic XXXXX"
 
+# Project Config
+## Filter experiences by category
+# export NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER="Root.Diving.*"
+# export MYBOOKR_OPERATOR_ID=4
+
 # Clerk secrets
 export NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_XXXXX
 export CLERK_SECRET_KEY=sk_XXXXX

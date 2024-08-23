@@ -132,7 +132,7 @@ export default function ListingComponent({
     <CategoryContext.Provider
       value={
         (experience.categories && experience.categories[0].path) ||
-        process.env.NEXT_PUBLIC_BASE_CATEGORY ||
+        process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER ||
         "Root"
       }
     >

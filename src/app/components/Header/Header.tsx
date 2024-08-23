@@ -9,20 +9,26 @@ import Logo from "@/assets/mybookr.svg";
 
 import { ClerkAuth } from "./ClerkAuth";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const navigation = [
-  { name: "Product", href: "/#product" },
-  { name: "Demos", href: "/#demos" },
-  { name: "Contact", href: "/contact" },
-  // { name: "Marketplace", href: "#" },
-  // { name: "Company", href: "#" },
-];
-
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const hasOperator = !!process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER; // @todo should be based on operator context
+
+  const navigation = useMemo(
+    () =>
+      hasOperator
+        ? [{ name: "Book Now", href: "/listings" }]
+        : [
+            { name: "Product", href: "/#product" },
+            { name: "Demos", href: "/#demos" },
+            { name: "Contact", href: "/contact" },
+          ],
+    [hasOperator],
+  );
 
   return (
     <header className="sticky inset-0 z-10 border-b border-solid border-gray-100 bg-white bg-opacity-90 backdrop-blur-lg">

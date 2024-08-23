@@ -14,8 +14,16 @@ import { Typography } from "@mui/material";
 import { CategoryContext } from "@/app/helpers/categoryContext";
 
 const ExperiencesQuery = graphql(`
-  query ExperiencesQuery($dateStart: Date, $dateEnd: Date) {
-    filterExperiences(dateStart: $dateStart, dateEnd: $dateEnd) {
+  query ExperiencesQuery(
+    $dateStart: Date
+    $dateEnd: Date
+    $categories: [String!]
+  ) {
+    filterExperiences(
+      dateStart: $dateStart
+      dateEnd: $dateEnd
+      categories: $categories
+    ) {
       edges {
         node {
           ...ExperienceItem
@@ -35,6 +43,7 @@ export default function ExperiencesList() {
         .toISOString()
         .split("T")[0],
       dateEnd: searchMachineState.context.dateTo.toISOString().split("T")[0],
+      categories: [process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER || "Root"],
     },
   });
 
@@ -91,7 +100,7 @@ export default function ExperiencesList() {
             <CategoryContext.Provider
               value={
                 category?.path ||
-                process.env.NEXT_PUBLIC_BASE_CATEGORY ||
+                process.env.NEXT_PUBLIC_MYBOOKR_CATEGORY_FILTER ||
                 "Root"
               }
             >
