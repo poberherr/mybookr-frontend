@@ -54,6 +54,7 @@
     "remark-html": "^16.0.1",
     "remark-plain-text": "0.2.0",
     "remark-preset-lint-markdown-style-guide": "6.0.0",
+    "sharp": "^0.33.5",
     "urql": "^4.1.0",
     "xss": "^1.0.15",
     "xstate": "^5.13.1"
