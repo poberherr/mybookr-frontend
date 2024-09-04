@@ -184,7 +184,7 @@ export default function FormBookingDetails({
                 required
                 rules={{
                   pattern: {
-                    value: /^.+@.+$/,
+                    value: /^.+@.+\..{2,}$/,
                     message: "Please enter a valid email address.",
                   },
                 }}
