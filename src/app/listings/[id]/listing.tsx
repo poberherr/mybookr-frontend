@@ -62,7 +62,7 @@ const ActivityCard = ({
         <div className="prose order-2 lg:order-1">
           <h2 className="mb-0 text-2xl font-bold">{activity.title}</h2>
           <div className="mt-4 text-sm text-gray-600">
-            Duration: {activity.durationMinutes} minutes
+            Maximum Trip Duration: {activity.durationMinutes} minutes
           </div>
           {activity.description && (
             <div
