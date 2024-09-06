@@ -66,17 +66,19 @@ export default function ProductTraveler() {
                   </div>
                 ))}
               </dl>
-              <Link
-                href="/listings"
-                className="ml-9 mt-8 inline-block rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
-              >
-                Try it out
-              </Link>
               <a
-                href="/contact"
-                className="m-4 inline-block text-sm font-semibold leading-6 text-gray-900"
+                target="_blank"
+                href="https://ecodive.mybookr.io"
+                className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
               >
-                Talk to us <span aria-hidden="true">→</span>
+                Live Version
+              </a>
+              <a
+                target="_blank"
+                href="https://meetings-eu1.hubspot.com/smelz?uuid=77dfe9b3-7d43-4f9d-a1eb-3bcf4f690499"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Book Demo <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
