@@ -66,20 +66,22 @@ export default function ProductTraveler() {
                   </div>
                 ))}
               </dl>
-              <a
-                target="_blank"
-                href="https://ecodive.mybookr.io"
-                className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
-              >
-                Live Version
-              </a>
-              <a
-                target="_blank"
-                href="https://meetings-eu1.hubspot.com/smelz?uuid=77dfe9b3-7d43-4f9d-a1eb-3bcf4f690499"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Book Demo <span aria-hidden="true">→</span>
-              </a>
+              <div className="mt-10 flex items-center gap-x-6">
+                <a
+                  target="_blank"
+                  href="https://ecodive.mybookr.io"
+                  className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
+                >
+                  Live Version
+                </a>
+                <a
+                  target="_blank"
+                  href="https://meetings-eu1.hubspot.com/smelz?uuid=77dfe9b3-7d43-4f9d-a1eb-3bcf4f690499"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Book Demo <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
           </div>
           <div className="sm:px-6 lg:order-1 lg:px-0">
