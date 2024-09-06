@@ -9,6 +9,9 @@ import CTAContact from "./CTAContact";
 import Demos from "./Demos";
 import HeroOperator from "./HeroOperator";
 import { OperatorContext } from "./context/operatorContext";
+import Logos from "./Logos";
+import ProductProcess from "./ProductProcess";
+import Newsletter from "./Newsletter";
 
 export default function LandingPage() {
   const operator = useContext(OperatorContext)
@@ -24,10 +27,13 @@ export default function LandingPage() {
         <div>
           <a id="top" />
           <Hero />
+          <Logos />
           <ProductTraveler />
           <ProductHost />
-          <CTAContact />
+          <ProductProcess />
+          <Newsletter />
           <Demos />
+          <CTAContact />
         </div>
       ),
     [operator],

@@ -1,6 +1,7 @@
 import {
   CurrencyDollarIcon,
   CursorArrowRaysIcon,
+  RocketLaunchIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/20/solid";
 import Image from "next/image";
@@ -8,10 +9,16 @@ import Link from "next/link";
 
 const featuresTraveler = [
   {
-    name: "Better Pricing",
+    name: "More Revenue",
     description:
-      "Our experienced team keeps margins low, offering you some of the best prices in the industry.",
+      "Reduce expenses on major Online Travel Agencies (OTAs) and increase direct bookings with lower commission rates compared to other OTAs.",
     icon: CurrencyDollarIcon,
+  },
+  {
+    name: "More Bookings",
+    description:
+      "Boost direct bookings through our innovative marketing strategies.",
+    icon: RocketLaunchIcon,
   },
   {
     name: "User-Friendly Interface",
@@ -43,7 +50,7 @@ export default function ProductTraveler() {
               </p>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Enjoy a seamless and delightful booking experience tailored to
-                meet the unique needs of travelers.
+                meet the unique needs of our guests.
               </p>
               <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                 {featuresTraveler.map((feature) => (

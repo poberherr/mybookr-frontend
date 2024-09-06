@@ -9,9 +9,9 @@ import Link from "next/link";
 
 const featuresHost = [
   {
-    name: "Better Pricing",
+    name: "Enhanced Revenue Opportunities",
     description:
-      "Payments through trusted partners and low margin policies provide you with competitive pricing.",
+      "Maximize profits with ease. Our platform boosts revenue and enhances guest experiences by streamlining all your booking services, including overnight stays, to optimize earning potential.",
     icon: CurrencyDollarIcon,
   },
   {
@@ -27,9 +27,9 @@ const featuresHost = [
     icon: ChartBarSquareIcon,
   },
   {
-    name: "Innovative User Interface",
+    name: "Unlock the Potential of Integrated Payments",
     description:
-      "Regular updates ensure a user-friendly interface, enhancing ease of use and client conversion rates.",
+      "Eliminate the hassle of payment processing with an integrated gateway. MyBookr.io Payments allows you to handle transactions swiftly, securely, and with a single click. It’s that simple.",
     icon: CursorArrowRaysIcon,
   },
 ];
