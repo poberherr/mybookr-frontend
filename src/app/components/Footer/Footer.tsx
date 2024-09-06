@@ -1,6 +1,7 @@
 "use client";
 
 import { OperatorContext } from "@/app/context/operatorContext";
+import Image from "next/image";
 import Link from "next/link";
 import { useContext, useMemo } from "react";
 import { SiLinkedin } from "react-icons/si";
@@ -74,29 +75,37 @@ export default function Footer() {
             </Link>
           ))}
         </div>
-        <p className="mt-10 text-center text-xs leading-5 text-gray-500">
-          {operator ? (
-            <>
-              &copy; {new Date().getFullYear()}{" "}
-              <Link href={operator.website} target="_blank">
-                {operator.name}
-              </Link>{" "}
-              via{" "}
-              <Link href="https://mybookr.io" target="_blank">
-                mybookr.io
-              </Link>
-              . All rights reserved.
-            </>
-          ) : (
-            <>
+
+        {operator ? (
+          <p className="mt-10 text-center text-xs leading-5 text-gray-500">
+            &copy; {new Date().getFullYear()}{" "}
+            <Link href={operator.website} target="_blank">
+              {operator.name}
+            </Link>{" "}
+            via{" "}
+            <Link href="https://mybookr.io" target="_blank">
+              mybookr.io
+            </Link>
+            . All rights reserved.
+          </p>
+        ) : (
+          <>
+            <Image
+              className="mx-auto my-8 w-full max-w-[420px]"
+              src="/logos/expansion-lab-big-logo.png"
+              alt="Expansion Lab"
+              width="962"
+              height="255"
+            />
+            <p className="mt-10 text-center text-xs leading-5 text-gray-500">
               &copy; {new Date().getFullYear()}{" "}
               <Link href="https://mybookr.io" target="_blank">
                 Mybookr
               </Link>
               . All rights reserved.
-            </>
-          )}
-        </p>
+            </p>
+          </>
+        )}
       </div>
     </footer>
   );
