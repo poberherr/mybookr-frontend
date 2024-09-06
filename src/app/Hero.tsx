@@ -47,25 +47,28 @@ export default function Hero() {
             </a>
           </div> */}
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Enhancing Holiday Booking for Owners and Travelers
+            The toolkit for the next era of tourism and hospitality
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            A new seamless solution to directly attract guests and boost
-            operators' profit margins. This innovative approach ensures a
-            smoother experience for both parties.
+            Take your business to the next level. Streamline your operations,
+            increase your profits, and create outstanding guest experiences with
+            MyBookr.io: the cloud-based hospitality solution tailored to your
+            needs.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
-            <Link
-              href="/listings"
+            <a
+              target="_blank"
+              href="https://ecodive.mybookr.io"
               className="rounded-md bg-purple px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
             >
-              Try it out
-            </Link>
+              Live Version
+            </a>
             <a
-              href="#product"
+              target="_blank"
+              href="https://meetings-eu1.hubspot.com/smelz?uuid=77dfe9b3-7d43-4f9d-a1eb-3bcf4f690499"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Learn more <span aria-hidden="true">→</span>
+              Book Demo <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
