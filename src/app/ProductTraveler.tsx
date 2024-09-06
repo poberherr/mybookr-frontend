@@ -88,7 +88,7 @@ export default function ProductTraveler() {
               />
               <div className="mx-auto max-w-2xl sm:mx-0 sm:max-w-none">
                 <Image
-                  src="/screenshots/hotels-list.png"
+                  src="/screenshots/ecodive.png"
                   alt="App screenshot"
                   width={1733}
                   height={1246}
