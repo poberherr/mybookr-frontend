@@ -100,13 +100,15 @@ export default function Footer() {
           </p>
         ) : (
           <>
-            <Image
-              className="mx-auto my-8 w-full max-w-[420px]"
-              src="/logos/expansion-lab-big-logo.png"
-              alt="Expansion Lab"
-              width="962"
-              height="255"
-            />
+            <a href="https://www.betahausx.com/expansionlab" target="_blank">
+              <Image
+                className="mx-auto my-8 w-full max-w-[420px]"
+                src="/logos/expansion-lab-big-logo.png"
+                alt="Expansion Lab"
+                width="962"
+                height="255"
+              />
+            </a>
             <p className="mt-10 text-center text-xs leading-5 text-gray-500">
               &copy; {new Date().getFullYear()}{" "}
               <Link href="https://mybookr.io" target="_blank">
