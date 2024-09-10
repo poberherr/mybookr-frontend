@@ -1,12 +1,24 @@
 import { setup, assign, fromPromise } from "xstate";
 import { Client, TypedDocumentNode, AnyVariables, OperationResult } from "urql";
 import { graphql } from "@/gql";
-import {
-  BookingStatus,
-  CreateBookingResultType,
-  UpdateBookingResultType,
-} from "@/gql/graphql";
+import { BookingStatus, CreateBookingResultType } from "@/gql/graphql";
 import { BookingFormData } from "./FormBookingDetails";
+import { push } from "@socialgouv/matomo-next";
+
+const ExperienceTrackingQuery = graphql(`
+  query ExperienceTrackingQuery($experienceId: ID!) {
+    experience(id: $experienceId) {
+      id
+      title
+      slug
+      activities {
+        id
+        title
+        price
+      }
+    }
+  }
+`);
 
 export interface IBookingContext {
   // Identification
@@ -118,6 +130,72 @@ async function performMutation<TMutation, TVariables>(
   return result.data;
 }
 
+async function performQuery<TQuery, TVariables>(
+  client: Client,
+  query: TypedDocumentNode<TQuery, TVariables>,
+  variables: TVariables,
+): Promise<NonNullable<OperationResult<TQuery>["data"]>> {
+  const result = await client.query(query, variables as AnyVariables);
+
+  if (result.error) {
+    console.log("API returned error: Throwing.");
+    throw result.error;
+  }
+
+  if (!result.data) {
+    throw new Error("API returned empty response");
+  }
+
+  return result.data;
+}
+
+async function trackBookingEvent(
+  client: Client,
+  experienceId: string,
+  activityId: string,
+  eventAction: string,
+  useActivityValue = false,
+) {
+  // Load experience data from graphQl
+  const resultExperience = await performQuery(client, ExperienceTrackingQuery, {
+    experienceId: experienceId,
+  });
+
+  const activityValue = resultExperience.experience?.activities.find(
+    (activity) => (activity.id = activityId),
+  )?.price;
+
+  push([
+    "trackEvent",
+    "Booking", // Event Category
+    eventAction, // Event Action
+    [resultExperience.experience?.id, resultExperience.experience?.slug].join(
+      "-",
+    ), // Event Name
+    useActivityValue ? activityValue : 0, // Event Value
+  ]);
+}
+
+async function trackBookingError(
+  client: Client,
+  experienceId: string,
+  errorMessage: string,
+) {
+  // Load experience data from graphQl
+  const resultExperience = await performQuery(client, ExperienceTrackingQuery, {
+    experienceId: experienceId,
+  });
+  push([
+    "trackEvent",
+    "Booking Error", // Event Category
+    errorMessage, // Event Action
+    [resultExperience.experience?.id, resultExperience.experience?.slug].join(
+      "-",
+    ), // Event Name
+    0, // Event Value
+  ]);
+}
+
 export const bookingMachine = setup({
   types: {
     input: {} as {
@@ -142,6 +220,13 @@ export const bookingMachine = setup({
         if (!formData.activityId || !formData.email || !formData.bookingDate) {
           throw new Error("Incomplete data for creation");
         }
+
+        await trackBookingEvent(
+          context.client,
+          context.experienceId,
+          formData.activityId,
+          "Create",
+        );
 
         const result = await withMinimumDuration(
           performMutation(context.client, CreateBookingMutation, {
@@ -175,6 +260,13 @@ export const bookingMachine = setup({
           throw new Error("Incomplete data for creation");
         }
 
+        await trackBookingEvent(
+          context.client,
+          context.experienceId,
+          context.activityId,
+          "Update",
+        );
+
         await withMinimumDuration(
           performMutation(context.client, UpdateBookingMutation, {
             bookingFlowToken: context.bookingFlowToken,
@@ -203,6 +295,13 @@ export const bookingMachine = setup({
             throw new Error("Incomplete data for creation");
           }
 
+          await trackBookingEvent(
+            context.client,
+            context.experienceId,
+            context.activityId,
+            "Create Payment",
+          );
+
           const result = await withMinimumDuration(
             performMutation(context.client, CreatePaymentMutation, {
               bookingFlowToken: context.bookingFlowToken,
@@ -224,11 +323,26 @@ export const bookingMachine = setup({
           throw new Error("bookingFlowToken required to check booking status");
         }
 
+        await trackBookingEvent(
+          context.client,
+          context.experienceId,
+          context.activityId as string,
+          "Check Booking Status",
+        );
+
         const result = await withMinimumDuration(
           performMutation(context.client, CheckBookingMutation, {
             bookingFlowToken: context.bookingFlowToken,
           }),
           1500,
+        );
+
+        await trackBookingEvent(
+          context.client,
+          context.experienceId,
+          context.activityId as string,
+          `Booking Status: ${result.checkBookingStatus}`,
+          result.checkBookingStatus === BookingStatus.PaymentFinished,
         );
 
         return result.checkBookingStatus;
@@ -259,6 +373,7 @@ export const bookingMachine = setup({
         return await withMinimumDuration(
           (async () => {
             if (!window || !context.bookingFlowToken) {
+              console.log("window or bookingFlowToken missing");
               return false;
             }
             const searchParams = new URLSearchParams(window.location.search);
@@ -272,11 +387,20 @@ export const bookingMachine = setup({
             if (paymentStatus !== "success") {
               throw new Error("Payment failed");
             }
+
             return true;
           })(),
           1500,
         );
       },
+    ),
+    trackError: fromPromise<void, { context: IBookingContext }>(
+      async ({ input: { context } }) =>
+        trackBookingError(
+          context.client,
+          context.experienceId,
+          context.errorMessage as string,
+        ),
     ),
   },
   actions: {
@@ -413,7 +537,8 @@ export const bookingMachine = setup({
         onError: {
           target: "DisplayError",
           actions: assign({
-            errorMessage: "Unable to create new payment. Please try again.",
+            errorMessage:
+              "Unable to create a new payment. Check for typos in your email or phone number, or try a different one. Please try again.",
           }),
         },
       },
@@ -444,10 +569,12 @@ export const bookingMachine = setup({
         ],
         onError: {
           target: "DisplayError",
-          actions: assign({
-            errorMessage:
-              "Looks like you had issues with your payment. Please try again.",
-          }),
+          actions: [
+            assign({
+              errorMessage:
+                "Looks like you had issues with your payment. Please try again.",
+            }),
+          ],
         },
       },
     },
@@ -507,6 +634,11 @@ export const bookingMachine = setup({
         },
       },
       description: "State to display error messages in a modal.",
+      invoke: {
+        id: "trackError",
+        src: "trackError",
+        input: ({ context }) => ({ context }),
+      },
     },
   },
   always: {

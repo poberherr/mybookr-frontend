@@ -68,11 +68,11 @@ export default function ContextProviders({
 
   useEffect(() => {
     // Debugger for us
-    console.table({
-      type: "BookingState",
-      value: searchMachineState.value,
-    });
-    console.table(searchMachineState.context);
+    // console.table({
+    //   type: "BookingState",
+    //   value: searchMachineState.value,
+    // });
+    // console.table(searchMachineState.context);
 
     // Store current state to localStorage for recovery
     localStorage.setItem(

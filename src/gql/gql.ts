@@ -19,6 +19,7 @@ const documents = {
     "\n  fragment OperatorItem on Operator {\n    id\n    name\n    description\n    contactEmail\n    contactWhatsapp\n    website\n    websiteBooking\n    logo {\n      url\n      width\n      height\n    }\n    media {\n      url\n      width\n      height\n    }\n  }\n": types.OperatorItemFragmentDoc,
     "\n  query OperatorQuery($experienceId: ID!) {\n    operator(id: $experienceId) {\n      ...OperatorItem\n    }\n  }\n": types.OperatorQueryDocument,
     "\n  query CurrencyQuery {\n    currency {\n      idr\n    }\n  }\n": types.CurrencyQueryDocument,
+    "\n  query ExperienceTrackingQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      id\n      title\n      slug\n      activities {\n        id\n        title\n        price\n      }\n    }\n  }\n": types.ExperienceTrackingQueryDocument,
     "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $telephone: String!\n    $additionalInformation: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        telephone: $telephone\n        additionalInformation: $additionalInformation\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n      referenceCode\n    }\n  }\n": types.CreateBookingDocument,
     "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $telephone: String!\n    $additionalInformation: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        telephone: $telephone\n        additionalInformation: $additionalInformation\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    )\n  }\n": types.UpdateBookingDocument,
     "\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      url\n    }\n  }\n": types.CreatePaymentDocument,
@@ -65,6 +66,10 @@ export function graphql(source: "\n  query OperatorQuery($experienceId: ID!) {\n
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query CurrencyQuery {\n    currency {\n      idr\n    }\n  }\n"): (typeof documents)["\n  query CurrencyQuery {\n    currency {\n      idr\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query ExperienceTrackingQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      id\n      title\n      slug\n      activities {\n        id\n        title\n        price\n      }\n    }\n  }\n"): (typeof documents)["\n  query ExperienceTrackingQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      id\n      title\n      slug\n      activities {\n        id\n        title\n        price\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

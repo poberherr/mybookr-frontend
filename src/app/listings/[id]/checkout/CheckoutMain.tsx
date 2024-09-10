@@ -69,14 +69,21 @@ export default function CheckoutMain({
       type: "BookingState",
       value: bookingState.value,
     });
-    console.table(bookingState.context)
-    if (bookingState.value === "BookingDetails" || bookingState.value === "Confirmation") {
+    console.dir(bookingState.context);
+
+    if (
+      bookingState.value === "BookingDetails" ||
+      bookingState.value === "Confirmation" ||
+      bookingState.value === "DisplayError"
+    ) {
       return;
     }
+
     // Store current state to localStorage for recovery
+    console.log("Storing booking state machine to local storage")
     try {
       localStorage.setItem(
-        `experience-${experience.id}-booking-v2`,
+        `experience-${experience.id}-booking-v3`,
         JSON.stringify(bookingState.machine.getPersistedSnapshot(bookingState)),
       );
     } catch (err) {
@@ -88,7 +95,7 @@ export default function CheckoutMain({
   // Catch confirmation and remove booking from state to allow a new booking!
   useEffect(() => {
     if (bookingState.value === "Confirmation") {
-      localStorage.removeItem(`experience-${experience.id}-booking-v2`);
+      localStorage.removeItem(`experience-${experience.id}-booking-v3`);
     }
   }, [bookingState.value]);
 
@@ -106,10 +113,7 @@ export default function CheckoutMain({
         showDialog={bookingState.value === "DisplayError"}
         setShowDialog={() => sendBookingAction({ type: "closePopup" })}
       />
-      <BackButton
-        pageName={experience.title}
-        route={experienceUrl}
-      />
+      <BackButton pageName={experience.title} route={experienceUrl} />
       <Typography
         className="px-4 py-16 !text-2xl !font-extrabold md:px-40 md:!text-3xl"
         component="div"
@@ -118,7 +122,7 @@ export default function CheckoutMain({
       </Typography>
       <Divider />
       <div className="grid grid-cols-1 grid-rows-1 md:grid-cols-[2fr_minmax(min-content,480px)] xl:grid-cols-[2fr_minmax(min-content,600px)]">
-        <div className="order-2 md:order-1 grid grid-cols-1 gap-16 px-0 py-8">
+        <div className="order-2 grid grid-cols-1 gap-16 px-0 py-8 md:order-1">
           <ViewConfirmation
             value={bookingState.value}
             context={bookingState.context}
@@ -153,7 +157,7 @@ export default function CheckoutMain({
         </div>
 
         {/* Right section */}
-        <div className="order-1 md:order-2 md:mr-40 px-4 md:px-0 border-0 border-l border-r border-solid border-gray-100">
+        <div className="order-1 border-0 border-l border-r border-solid border-gray-100 px-4 md:order-2 md:mr-40 md:px-0">
           <Sidebar experience={experience} price={price} />
         </div>
       </div>

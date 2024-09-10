@@ -17,12 +17,12 @@ export default function CheckoutWrapper({
     let dumbRestore;
     try {
       const entry = localStorage.getItem(
-        `experience-${experience.id}-booking-v2`,
+        `experience-${experience.id}-booking-v3`,
       );
       if (!entry) {
-        console.log("not in localhost");
         return null;
       }
+      console.log("Restoring booking state machine")
       dumbRestore = JSON.parse(entry);
     } catch (err) {
       return null;

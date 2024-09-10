@@ -4,6 +4,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { useRouter } from "next/navigation";
+import { push } from "@socialgouv/matomo-next";
 
 import { Divider, Typography } from "@mui/material";
 
@@ -16,7 +17,10 @@ import { formatDate } from "@/app/helpers/date-format";
 import ActivityForm from "@/app/components/others/ActivityForm";
 import { useIsClient } from "@/app/helpers/useIsClient";
 import { useGetActivityFromExperience } from "@/app/helpers/useGetActivityFromExperience";
-import { useFormatPrice, useFormatPriceDollar } from "@/app/helpers/useFormatPrice";
+import {
+  useFormatPrice,
+  useFormatPriceDollar,
+} from "@/app/helpers/useFormatPrice";
 import { SearchStateMachineContext } from "@/app/state-machines/searchMachine";
 import { startOfToday } from "date-fns";
 import { RenderLabel, useRenderLabel } from "@/app/helpers/labels";
@@ -125,6 +129,14 @@ export default function CheckoutStart({ experience }: IProps) {
       methods.trigger("activityId");
       return;
     }
+    push([
+      "trackEvent",
+      "Booking", // Event Category
+      "Start Checkout", // Event Action
+      [experience.id, experience.slug].join("-"), // Event Name
+      0, // Event Value
+    ]);
+
     router.push(`${experienceUrl}/checkout`);
   });
 
@@ -158,9 +170,9 @@ export default function CheckoutStart({ experience }: IProps) {
                   className="p-0 !text-gray-600 md:hidden"
                   variant="body2"
                 >
-                  in {experience.location.addressLineOne}, {experience.location.city},{" "}
-                  {experience.location.federalState},{" "}
-                  {experience.location.country}
+                  in {experience.location.addressLineOne},{" "}
+                  {experience.location.city}, {experience.location.federalState}
+                  , {experience.location.country}
                 </Typography>
 
                 <Typography
