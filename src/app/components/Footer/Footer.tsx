@@ -4,7 +4,7 @@ import { OperatorContext } from "@/app/context/operatorContext";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext, useMemo } from "react";
-import { SiLinkedin } from "react-icons/si";
+import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 
 export default function Footer() {
   const operator = useContext(OperatorContext);
@@ -38,6 +38,16 @@ export default function Footer() {
                 name: "LinkedIn",
                 href: "https://www.linkedin.com/company/mybookr-io/",
                 icon: SiLinkedin,
+              },
+              {
+                name: "X",
+                href: "https://x.com/mybookr_io",
+                icon: SiX,
+              },
+              {
+                name: "Instagram",
+                href: "https://www.instagram.com/mybookr.io",
+                icon: SiInstagram,
               },
             ],
           },
