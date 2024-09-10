@@ -88,8 +88,11 @@ const UpdateBookingMutation = graphql(`
 `);
 
 const CreatePaymentMutation = graphql(`
-  mutation CreatePayment($bookingFlowToken: String!) {
-    createPayment(bookingFlowToken: $bookingFlowToken) {
+  mutation CreatePayment($bookingFlowToken: String!, $redirectOrigin: String!) {
+    createPayment(
+      bookingFlowToken: $bookingFlowToken
+      redirectOrigin: $redirectOrigin
+    ) {
       url
     }
   }
@@ -305,6 +308,7 @@ export const bookingMachine = setup({
           const result = await withMinimumDuration(
             performMutation(context.client, CreatePaymentMutation, {
               bookingFlowToken: context.bookingFlowToken,
+              redirectOrigin: window.origin
             }),
           );
 

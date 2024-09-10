@@ -22,7 +22,7 @@ const documents = {
     "\n  query ExperienceTrackingQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      id\n      title\n      slug\n      activities {\n        id\n        title\n        price\n      }\n    }\n  }\n": types.ExperienceTrackingQueryDocument,
     "\n  mutation CreateBooking(\n    $name: String!\n    $email: String!\n    $telephone: String!\n    $additionalInformation: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    createBooking(\n      data: {\n        name: $name\n        email: $email\n        telephone: $telephone\n        additionalInformation: $additionalInformation\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    ) {\n      bookingFlowToken\n      referenceCode\n    }\n  }\n": types.CreateBookingDocument,
     "\n  mutation UpdateBooking(\n    $bookingFlowToken: String!\n    $name: String!\n    $email: String!\n    $telephone: String!\n    $additionalInformation: String!\n    $activityId: ID!\n    $bookedDate: Date!\n  ) {\n    updateBooking(\n      data: {\n        bookingFlowToken: $bookingFlowToken\n        name: $name\n        email: $email\n        telephone: $telephone\n        additionalInformation: $additionalInformation\n        activityId: $activityId\n        bookedDate: $bookedDate\n      }\n    )\n  }\n": types.UpdateBookingDocument,
-    "\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      url\n    }\n  }\n": types.CreatePaymentDocument,
+    "\n  mutation CreatePayment($bookingFlowToken: String!, $redirectOrigin: String!) {\n    createPayment(\n      bookingFlowToken: $bookingFlowToken\n      redirectOrigin: $redirectOrigin\n    ) {\n      url\n    }\n  }\n": types.CreatePaymentDocument,
     "\n  mutation CheckBookingMutation($bookingFlowToken: String!) {\n    checkBookingStatus(bookingFlowToken: $bookingFlowToken)\n  }\n": types.CheckBookingMutationDocument,
     "\n  query CheckoutQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.CheckoutQueryDocument,
     "\n  query ExperienceQuery($experienceId: ID!) {\n    experience(id: $experienceId) {\n      ...ExperienceItem\n    }\n  }\n": types.ExperienceQueryDocument,
@@ -81,7 +81,7 @@ export function graphql(source: "\n  mutation UpdateBooking(\n    $bookingFlowTo
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      url\n    }\n  }\n"): (typeof documents)["\n  mutation CreatePayment($bookingFlowToken: String!) {\n    createPayment(bookingFlowToken: $bookingFlowToken) {\n      url\n    }\n  }\n"];
+export function graphql(source: "\n  mutation CreatePayment($bookingFlowToken: String!, $redirectOrigin: String!) {\n    createPayment(\n      bookingFlowToken: $bookingFlowToken\n      redirectOrigin: $redirectOrigin\n    ) {\n      url\n    }\n  }\n"): (typeof documents)["\n  mutation CreatePayment($bookingFlowToken: String!, $redirectOrigin: String!) {\n    createPayment(\n      bookingFlowToken: $bookingFlowToken\n      redirectOrigin: $redirectOrigin\n    ) {\n      url\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
