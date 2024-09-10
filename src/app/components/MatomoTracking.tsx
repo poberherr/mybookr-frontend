@@ -19,6 +19,7 @@ const MatomoTracking = () => {
     () => searchParams && searchParams.toString(),
     [searchParams],
   );
+  const hash = useMemo(() => window.location.hash, [window.location.hash]);
 
   useEffect(() => {
     if (
@@ -40,10 +41,17 @@ const MatomoTracking = () => {
   useEffect(() => {
     if (!pathname || !isInitialized) return;
 
-    const url = pathname + (searchParamsString ? `?${searchParamsString}` : "");
+    const url = [
+      pathname,
+      searchParamsString && `?${searchParamsString}`,
+      hash && `#${hash}`,
+    ]
+      .filter(Boolean)
+      .join("");
+
     push(["setCustomUrl", url]);
     push(["trackPageView"]);
-  }, [pathname, searchParamsString, isInitialized]);
+  }, [pathname, searchParamsString, isInitialized, hash]);
 
   return null;
 };
