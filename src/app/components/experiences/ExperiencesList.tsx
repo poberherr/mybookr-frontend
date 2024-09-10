@@ -12,6 +12,7 @@ import { ExperiencesListSkeleton } from "./ExperiencesListSkeleton";
 import { useGroupedExperiences } from "@/app/helpers/useGroupedExperiences";
 import { Typography } from "@mui/material";
 import { CategoryContext } from "@/app/context/categoryContext";
+import { push } from "@socialgouv/matomo-next";
 
 const ExperiencesQuery = graphql(`
   query ExperiencesQuery(
@@ -56,6 +57,13 @@ export default function ExperiencesList() {
 
   if (result.error) {
     console.error(result.error);
+    push([
+      "trackEvent",
+      "Experience List Error", // Event Category
+      result.error.name, // Event Action
+      result.error.message, // Event Name
+      0, // Event Value
+    ]);
     return (
       <div className="prose max-w-full">
         <h1>Oops, something went wrong!</h1>
