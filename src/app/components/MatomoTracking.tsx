@@ -49,7 +49,7 @@ const MatomoTracking = () => {
       .join("");
 
     push(["setCustomUrl", url]);
-    // push(["trackPageView"]);
+    push(["trackPageView"]);
   }, [pathname, searchParamsString, isInitialized]);
 
   return null;
