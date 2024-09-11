@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useQuery } from "@urql/next";
 
 import { graphql, useFragment } from "@/gql";
@@ -55,8 +55,10 @@ export default function ExperiencesList() {
 
   const groupedExperiences = useGroupedExperiences(listings);
 
-  if (result.error) {
-    console.error(result.error);
+  useEffect(() => {
+    if (!result.error) {
+      return;
+    }
     push([
       "trackEvent",
       "Experience List Error", // Event Category
@@ -64,6 +66,10 @@ export default function ExperiencesList() {
       result.error.message, // Event Name
       0, // Event Value
     ]);
+  }, [result.error]);
+
+  if (result.error) {
+    console.error(result.error);
     return (
       <div className="prose max-w-full">
         <h1>Oops, something went wrong!</h1>
