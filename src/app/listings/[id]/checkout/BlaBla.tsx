@@ -10,93 +10,58 @@ const BlaBla = () => (
     <Divider />
 
     {/* Cancellation policy */}
-    <div className="px-4 py-0 md:pl-40 md:pr-16">
-      <Typography
-        className="!mb-4 p-0 !font-extrabold md:!text-2xl"
-        variant="h2"
-      >
-        Cancellation policy
-      </Typography>
+    <div className="prose max-w-none px-4 py-0 prose-h2:text-4xl md:pl-40 md:pr-16">
+      <h2 className="">Cancellation policy</h2>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        Cancellation by the Client:
-      </Typography>
+      <h3>Cancellation by the Client:</h3>
 
-      <Typography variant="body1">
+      <p>
         <strong>More than 48 hours before the scheduled dive:</strong> Full
         refund, minus any processing fees.
-      </Typography>
-      <Typography variant="body1">
+      </p>
+      <p>
         <strong>Less than 48 hours before the scheduled dive:</strong> No
         refund.
-      </Typography>
+      </p>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        Cancellation Due to Weather or Safety Concerns (Force Majeure):
-      </Typography>
+      <h3>Cancellation Due to Weather or Safety Concerns (Force Majeure):</h3>
 
-      <Typography variant="body1">
+      <p>
         If the dive is canceled by the school due to unsafe weather conditions
         or other safety concerns, the client will be offered a full refund or
         the option to reschedule without any penalty.
-      </Typography>
+      </p>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        No-Show Policy:
-      </Typography>
+      <h3>No-Show Policy:</h3>
 
-      <Typography variant="body1">
+      <p>
         If the client fails to appear on the scheduled date without prior
         notice, no refund will be given.
-      </Typography>
+      </p>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        Changes to Booking:
-      </Typography>
+      <h3>Changes to Booking:</h3>
 
-      <Typography variant="body1">
+      <p>
         Changes to the booking (such as rescheduling) can be made up to 48 hours
         before the scheduled dive without penalty. After this period, additional
         fees may apply.
-      </Typography>
+      </p>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        Medical Cancellations:
-      </Typography>
+      <h3>Medical Cancellations:</h3>
 
-      <Typography variant="body1">
+      <p>
         If a client cannot participate due to a medical condition, a full refund
         may be provided upon submission of a valid medical certificate. Requests
         must be made at least 48 hours before the scheduled dive.
-      </Typography>
+      </p>
 
-      <Typography
-        className="!mb-2 !mt-8 !font-extrabold md:!text-lg"
-        variant="h3"
-      >
-        Group Bookings:
-      </Typography>
+      <h3>Group Bookings:</h3>
 
-      <Typography variant="body1">
+      <p>
         For group bookings, different terms may apply. Please consult with the
         dive school directly for specific policies regarding group
         cancellations.
-      </Typography>
+      </p>
     </div>
 
     <Divider />
