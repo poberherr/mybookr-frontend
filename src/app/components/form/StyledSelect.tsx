@@ -48,9 +48,7 @@ function StyledSelect<TFieldValues extends FieldValues>({
       <InputLabel
         id={`${id}-label`}
         sx={{
-          fontFamily: "Inter",
           fontSize: "12px",
-          color: "#303030",
           textTransform: "uppercase",
           marginBottom: "8px",
         }}
@@ -93,7 +91,6 @@ function StyledSelect<TFieldValues extends FieldValues>({
               ".MuiOutlinedInput-notchedOutline": { border: 0 },
               ".MuiSelect-select": {
                 padding: "12px 20px",
-                fontFamily: "Inter",
               },
               ".MuiSelect-icon": {
                 right: 20,
@@ -106,7 +103,6 @@ function StyledSelect<TFieldValues extends FieldValues>({
               <MenuItem
                 key={index}
                 value={item.value}
-                sx={{ fontFamily: "Inter" }}
               >
                 {item.title || item.value}
               </MenuItem>

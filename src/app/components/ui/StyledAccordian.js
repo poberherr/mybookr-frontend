@@ -46,7 +46,6 @@ export default function StyledAccordion(props) {
         >
           <Typography
             sx={{
-              fontFamily: "Inter",
               color: "#303030",
             }}
           >
@@ -54,7 +53,7 @@ export default function StyledAccordion(props) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography sx={{ fontFamily: "Inter", color: "#303030" }}>
+          <Typography sx={{ color: "#303030" }}>
             {props.detail || "Sorry! no description provided."}
           </Typography>
         </AccordionDetails>

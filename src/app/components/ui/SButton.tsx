@@ -3,7 +3,6 @@ import React, { ButtonHTMLAttributes, MouseEventHandler } from "react";
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   customWidth?: string;
-  secondaryFont?: Boolean;
   uppercase?: Boolean;
   fullWidth?: Boolean;
   variant?: keyof typeof variantStyles;
@@ -31,7 +30,6 @@ export const SButton = ({
   children,
   className,
   customWidth = "fit-content",
-  secondaryFont = false,
   uppercase = false,
   fullWidth = false,
   variant = "contained", // 'contained', 'outlined'
@@ -41,7 +39,7 @@ export const SButton = ({
   ...props
 }: IProps) => {
   // Set up base styles
-  let baseStyles = `font-${secondaryFont ? "Inter" : "Montserrat"} font-semibold text-${uppercase ? "uppercase" : "capitalize"} rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500`;
+  let baseStyles = `font-semibold text-${uppercase ? "uppercase" : "capitalize"} rounded-full shadow-none transition-all duration-500 ease-in-out disabled:cursor-not-allowed disabled:bg-gray-500`;
 
   // Responsive width classes
   const widthClass =
