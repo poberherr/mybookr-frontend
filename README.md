@@ -4,7 +4,7 @@ NextJS + TypeScript + TanStack Query + Swagger + Stripe + Clerk
 
 ## How to install
 
-- `npm install`
+- `yarn`
 - `cp .envrc.example .env` (or `.envrc` if you have direnv)
 
 ## How to develop
@@ -13,8 +13,7 @@ NextJS + TypeScript + TanStack Query + Swagger + Stripe + Clerk
 
 ## How to build
 
-- `npm install`
-- `npm run dev`
+- `npm run build`
 
 ## How to update TS types + API hooks
 

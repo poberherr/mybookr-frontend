@@ -25,19 +25,19 @@ export default function Header() {
       !!operator
         ? [{ name: "Book Now", href: "/listings" }]
         : [
+            { name: "Our Product", href: "/#product" },
+            { name: "Book Now", href: "/listings" },
             {
-              name: "Live Version",
+              name: "Customer: Ecodive",
               href: "https://ecodive.mybookr.io",
               target: "_blank",
             },
-            { name: "Demo", href: "/listings" },
             {
               name: "Investor Relations",
               href: "https://drive.google.com/drive/folders/12xt-_95Zf6n-IC8A2cVVivuz3O7t4pKZ",
               target: "_blank",
             },
             { name: "Contact", href: "/contact" },
-            { name: "Product", href: "/#product" },
           ],
     [operator],
   );
